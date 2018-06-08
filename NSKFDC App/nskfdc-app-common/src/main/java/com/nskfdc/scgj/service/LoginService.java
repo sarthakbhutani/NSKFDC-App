@@ -1,14 +1,22 @@
 package com.nskfdc.scgj.service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.LoginDao;
+import com.nskfdc.scgj.dto.SessionManagementDto;
 
 @Service
-public class LoginService {
+public class LoginService implements UserDetailsService{
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginService.class);
 	
@@ -16,26 +24,23 @@ public class LoginService {
 	private LoginDao loginDao;
 	
 	
-	public void getUserAuthentication() {
+	
+	@Override
+	public SessionManagementDto loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		//write LOGGER here
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		
-		try {
-			//write your code here & change return type
+		int status = loginDao.userExistence(username); 
+		if(status == 0) {
 			
-			loginDao.userExistence(); 			// to check if user exists
-			
-			loginDao.getValidUserDetails();		//to get the details of valid user
-			
-		} catch (Exception e) {
-			
-			//write LOGGER here
-			
-			//return default value, it can be null
+			authorities.add(new SimpleGrantedAuthority(null));
+			return new SessionManagementDto(null, null, null);
 			
 		}
 		
-		
+		return loginDao.getValidUserDetails(username);
+	
 	}
+	
 
 }

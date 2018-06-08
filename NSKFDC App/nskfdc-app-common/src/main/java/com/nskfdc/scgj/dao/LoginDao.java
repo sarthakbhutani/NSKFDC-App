@@ -1,30 +1,36 @@
 package com.nskfdc.scgj.dao;
 
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.LoginConfigSql;
+import com.nskfdc.scgj.dto.SessionManagementDto;
 
 @Repository
 public class LoginDao extends AbstractTransactionalDao{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginDao.class);
 	
+	private static LoginRowMapper loginRowMapper = new LoginRowMapper();
+	
+	
 	@Autowired
 	private LoginConfigSql loginConfigSql;
 	
 	
-	public Integer userExistence(){
+	public Integer userExistence(String username){
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - userExistence");
 		 	
@@ -35,8 +41,8 @@ public class LoginDao extends AbstractTransactionalDao{
 		LOGGER.debug("object created successfully");
 		
 		LOGGER.debug("Inserting parameters to HashMap object");
-		//parameters.put("userId", userId);
-		//parameters.put("password", password);
+    	parameters.put("username", username);
+    	
 		LOGGER.debug("Parameters inserted");
 		
 		LOGGER.debug("Executing SQL query and returning response");
@@ -45,9 +51,8 @@ public class LoginDao extends AbstractTransactionalDao{
         	
         	LOGGER.debug("In try block for user existence in Login Dao");
         	
-        	//write your code here
         	
-        	return 1;
+        	return getJdbcTemplate().queryForObject(loginConfigSql.getCheckUserSql(), parameters, Integer.class);
         	
         }catch(Exception e) {
         	
@@ -57,7 +62,7 @@ public class LoginDao extends AbstractTransactionalDao{
 		
 	}
 	
-	public void getValidUserDetails() {
+	public SessionManagementDto getValidUserDetails(String username) {
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - getValidateLoginUser");
 		
@@ -66,21 +71,41 @@ public class LoginDao extends AbstractTransactionalDao{
 		LOGGER.debug("object created successfully");
 		
 		LOGGER.debug("Inserting parameters to HashMap object");
-		//parameters.put("userId", userId);
-		//parameters.put("password", password);
+		parameters.put("username", username);
+		
 		LOGGER.debug("Parameters inserted");
 		
 		LOGGER.debug("Executing SQL query and returning response");
         try {
         	
+        	LOGGER.debug("In try block to get name of user in Login Dao");	
+        	
+        	return getJdbcTemplate().query(loginConfigSql.getGetUserName(), parameters, loginRowMapper).iterator().next();
+        	
+        	
+        	
         }catch(Exception e) {
         	
         	LOGGER.debug("Error occured while getting valid user details on login" + e);
+        	return null;
         	
         }
 	}
 	
+	private static class LoginRowMapper implements RowMapper<SessionManagementDto>{
+		
+		@Override
+		public SessionManagementDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			String username = rs.getString("username");
+			String password = rs.getString("password");
+			String userrole = rs.getString("userrole");
+				
+			return new SessionManagementDto(username, password, userrole);
+			
+		}
+		
+	}
 	
-
 
 }
