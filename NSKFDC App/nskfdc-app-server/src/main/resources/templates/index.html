@@ -6,10 +6,10 @@
     
     <!-- Add stylesheets here -->
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
+        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="css/mainApp.css" type="text/css" rel="stylesheet">
+        <link href="css/index.css" type="text/css" rel="stylesheet">
         
     
     <!-- Add javascripts here -->
@@ -22,19 +22,29 @@
 	  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.js"></script>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
     
-    	<script type="text/javascript" src="js/loginEvents.js"></script>
-   
-    <!--Add Angular main Controllers file here-->
-    	<script type="text/javascript" src="js/controllers/mainApp.js"></script>
+    	
+  
+<script type="text/javascript" src="js/controllers/indexControllerJS.js"></script>
+<script type="text/javascript" src="js/controllers/adminUserControllerJS.js"></script>
+<script type="text/javascript" src="js/controllers/trainingPartnerControllerJS.js"></script>
+
+
+<style type="text/css">
+[ng\:cloak], [ng-cloak], .ng-cloak {
+	display: none !important;
+}
+</style>
     
 </head>
     
-<body ng-app="app" >
+<body ng-app="app" ng-cloak class="ng-cloak">
+
+
 
 	 
 	 <!-- Login Module -->
 
-	<div ng-controller="mainController" class="loginPage">
+<div ng-controller="mainController" class="loginPage">
 		
 			<div class="panel col-md-5 loginContainer">
 				<div class="panel-heading">
@@ -45,11 +55,11 @@
 				<div class="panel-body">
 					<form ng-submit="login()">
 						<div class="input-group loginInputDiv">
-							<input type="email" id="username" class="form-control" ng-model="user.username" placeholder="Enter Username" required/>
+							<input type="email" id="username" class="form-control" ng-model="credential.username" placeholder="Enter Username" required/>
 							<span class="input-group-addon userIcons"><i class="glyphicon glyphicon-user "></i></span>
 						</div>
 						<div class="input-group loginInputDiv">
-							<input type="password" id="userpassword" class="form-control" ng-model="user.password" placeholder="Enter Password" required/>
+							<input type="password" id="userpassword" class="form-control" ng-model="credential.password" placeholder="Enter Password" required/>
 							<span class="input-group-addon userIcons"><i id="eyeToggle" class="glyphicon glyphicon-eye-open" onclick="showPassword()"></i></span>
 							
 				      </div>
@@ -60,28 +70,14 @@
 				</div>
 			</div>	
 		</div>
+<script type="text/javascript" src="js/loginEvents.js"></script>
 
-
-    
-
-	<script type="text/javascript" src="js/controllers/dashboard.js"></script>
-	<script type="text/javascript" src="js/controllers/dataImport.js"></script>
-	<script type="text/javascript" src="js/controllers/faq.js"></script>
-	<script type="text/javascript" src="js/controllers/generateCertificate.js"></script>
-	<script type="text/javascript" src="js/controllers/generateReports.js"></script>
-	<script type="text/javascript" src="js/controllers/manageAssessment.js"></script>
-	
-
-	
+<div ng-view></div>    	
 	
 
 </body>
 
-<footer>
 
 
-   <!-- footer code here -->
 
-
-</footer>
 </html>
