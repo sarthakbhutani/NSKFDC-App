@@ -16,6 +16,25 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	@Autowired
 	private GenerateReportConfig generateReportConfig;
 	
+	public void generateReport() {
+		
+		//write Logger here
+		
+		try {
+			
+			//write Logger here 
+			//write code here and change the return type
+			
+			
+		}catch(Exception e) {
+			
+			// write Logger
+			// return null;
+		}
+		
+		
+	}
+	
 	public void getReportHistory() {
 			
 			//write Logger here
