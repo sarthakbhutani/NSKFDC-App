@@ -1,1 +1,6 @@
 login:
+ checkUserSql: >
+   SELECT EXISTS(SELECT 1 FROM user WHERE username=:username)
+  
+ getUserName: >
+   SELECT username,password,userrole from user where username=:username
