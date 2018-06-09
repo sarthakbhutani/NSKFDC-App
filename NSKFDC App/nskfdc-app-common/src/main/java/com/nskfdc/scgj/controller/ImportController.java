@@ -6,69 +6,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nskfdc.scgj.service.GenerateReportService;
+import com.nskfdc.scgj.service.ImportService;
 
 @RestController
-public class GenerateReportController {
+public class ImportController {
 	
-	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateReportController.class);
+	private static final Logger LOGGER= LoggerFactory.getLogger(ImportController.class);
 
 	
 	@Autowired
-	private GenerateReportService generateReportService;
+	private ImportService importHistoryService;
+	
+	@RequestMapping("/importMasterSheet")
+	public void importMasterSheet() {
+		
+		//write LOGGER here
+			
+			try {
+				//write LOGGER here		
+				//change return type
+				importHistoryService.importMasterSheet();
+				
+			} catch (Exception e) {
+				
+				//write LOGGER here
+				//return the default value, it can be null
+			}
+		}
+	
+	@RequestMapping("/getImportHistory")
+	public void getImportHistory() {
+		
+		//write LOGGER here
+			
+			try {
+				//write LOGGER here		
+				// change return type
+				importHistoryService.getImportHistory();
+				
+			} catch (Exception e) {
+				
+				//write LOGGER here
+				//return the default value, it can be null
+			}
+		}
+	
+	@RequestMapping("/searchMasterSheet")
+	public void searchMasterSheet() {
+		
+		//write LOGGER here
+			
+			try {
+				//write LOGGER here		
+				// change return type
+				importHistoryService.getSearchedMasterSheet();
+				
+			} catch (Exception e) {
+				
+				//write LOGGER here
+				//return the default value, it can be null
+			}
+		}
 
-	@RequestMapping("/generateReport")
-	public void generateReport() {
-		
-		//write LOGGER here
-			
-			try {
-				//write LOGGER here		
-				//write your code here & change return type
-				generateReportService.generateReport();
-				
-			} catch (Exception e) {
-				
-				//write LOGGER here
-				//return the default value, it can be null
-			}
-		}
-	
-	
-	@RequestMapping("/getReportHistory")
-	public void getReportHistory() {
-		
-		//write LOGGER here
-			
-			try {
-				//write LOGGER here		
-				//write your code here & change return type
-				generateReportService.getReportHistory();
-				
-			} catch (Exception e) {
-				
-				//write LOGGER here
-				//return the default value, it can be null
-			}
-		}
-	
-	
-	
-	
-	@RequestMapping("/getReportByReportId")
-	public void getReportByReportId() {
-		
-		//write LOGGER here
-			
-			try {
-				//write LOGGER here		
-				//write your code here & change return type
-				generateReportService.getReportByReportId();
-				
-			} catch (Exception e) {
-				
-				//write LOGGER here
-				//return the default value, it can be null
-			}
-		}
 }
