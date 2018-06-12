@@ -9,7 +9,7 @@
         <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="css/index.css" type="text/css" rel="stylesheet">
+        <link href="css/indexCSS.css" type="text/css" rel="stylesheet">
         
     
     <!-- Add javascripts here -->
@@ -23,7 +23,7 @@
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
     
     	
-  
+
 <script type="text/javascript" src="js/controllers/indexControllerJS.js"></script>
 <script type="text/javascript" src="js/controllers/adminUserControllerJS.js"></script>
 <script type="text/javascript" src="js/controllers/trainingPartnerControllerJS.js"></script>
@@ -44,7 +44,7 @@
 	 
 	 <!-- Login Module -->
 
-<div ng-controller="mainController" class="loginPage">
+<div ng-controller="mainController" class="loginPage" ng-hide="authenticated">
 		
 			<div class="panel col-md-5 loginContainer">
 				<div class="panel-heading">
@@ -72,7 +72,7 @@
 		</div>
 <script type="text/javascript" src="js/loginEvents.js"></script>
 
-<div ng-view></div>    	
+<div ng-view ng-show="authenticated" ></div>    	
 	
 
 </body>
