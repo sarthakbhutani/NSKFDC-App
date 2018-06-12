@@ -1,10 +1,12 @@
 package com.nskfdc.scgj.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.UploadDocumentConfig;
 
+@Repository	
 public class UploadDocumentsDao extends AbstractTransactionalDao{
 
 	@Autowired
