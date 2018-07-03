@@ -16,7 +16,7 @@ import com.nskfdc.scgj.dao.LoginDao;
 import com.nskfdc.scgj.dto.SessionManagementDto;
 
 @Service
-public class LoginService implements UserDetailsService{
+public class LoginService {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(LoginService.class);
 	
@@ -25,7 +25,7 @@ public class LoginService implements UserDetailsService{
 	
 	
 	
-	@Override
+	
 	public void loadUserByUsername() {
 		
 		

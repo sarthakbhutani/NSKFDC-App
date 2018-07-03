@@ -23,7 +23,7 @@ public class LoginDao extends AbstractTransactionalDao{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginDao.class);
 	
-	private static LoginRowMapper loginRowMapper = new LoginRowMapper();
+	
 	
 	
 	@Autowired
