@@ -17,26 +17,6 @@ public class LoginController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 	
 	
-	@RequestMapping("/user")
-	public Principal loginDetailsAuthentication(Principal user){
-		
-		LOGGER.debug("In LoginController, to get the authenticated user details");
-		LOGGER.debug("Request received from the frontend for authorised login");
-		
-		try {
-			
-			LOGGER.debug("In TRY block of LoginController");
-			
-			return user;
-			
-			
-		}catch(Exception e) {
-			LOGGER.debug("In CATCH block of LoginControlller");
-			LOGGER.error("ERROR: Encountered an exception.");
-			LOGGER.error("Exception is :"+e);
-			LOGGER.debug("returning NULL");
-			return user;
-		}
-	}
+	
 
 }

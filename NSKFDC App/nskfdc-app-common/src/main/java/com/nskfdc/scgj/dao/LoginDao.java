@@ -30,7 +30,7 @@ public class LoginDao extends AbstractTransactionalDao{
 	private LoginConfigSql loginConfigSql;
 	
 	
-	public Integer userExistence(String username){
+	public void userExistence(String username){
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - userExistence");
 		 	
@@ -52,17 +52,17 @@ public class LoginDao extends AbstractTransactionalDao{
         	LOGGER.debug("In try block for user existence in Login Dao");
         	
         	
-        	return getJdbcTemplate().queryForObject(loginConfigSql.getCheckUserSql(), parameters, Integer.class);
+        	
         	
         }catch(Exception e) {
         	
         	LOGGER.debug("Error occured while checking user existence for Login" + e);
-        	return null;
+        	
         }
 		
 	}
 	
-	public SessionManagementDto getValidUserDetails(String username) {
+	public void getValidUserDetails() {
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - getValidateLoginUser");
 		
@@ -71,7 +71,7 @@ public class LoginDao extends AbstractTransactionalDao{
 		LOGGER.debug("object created successfully");
 		
 		LOGGER.debug("Inserting parameters to HashMap object");
-		parameters.put("username", username);
+		
 		
 		LOGGER.debug("Parameters inserted");
 		
@@ -80,32 +80,19 @@ public class LoginDao extends AbstractTransactionalDao{
         	
         	LOGGER.debug("In try block to get name of user in Login Dao");	
         	
-        	return getJdbcTemplate().query(loginConfigSql.getGetUserName(), parameters, loginRowMapper).iterator().next();
+        	
         	
         	
         	
         }catch(Exception e) {
         	
         	LOGGER.debug("Error occured while getting valid user details on login" + e);
-        	return null;
+        	
         	
         }
 	}
 	
-	private static class LoginRowMapper implements RowMapper<SessionManagementDto>{
-		
-		@Override
-		public SessionManagementDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			String username = rs.getString("username");
-			String password = rs.getString("password");
-			String userrole = rs.getString("userrole");
-				
-			return new SessionManagementDto(username, password, userrole);
-			
-		}
-		
-	}
+	
 	
 
 }

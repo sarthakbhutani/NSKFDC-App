@@ -26,19 +26,10 @@ public class LoginService implements UserDetailsService{
 	
 	
 	@Override
-	public SessionManagementDto loadUserByUsername(String username) throws UsernameNotFoundException {
+	public void loadUserByUsername() {
 		
-		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		
-		int status = loginDao.userExistence(username); 
-		if(status == 0) {
-			
-			authorities.add(new SimpleGrantedAuthority(null));
-			return new SessionManagementDto(null, null, null);
-			
-		}
-		
-		return loginDao.getValidUserDetails(username);
+		loginDao.getValidUserDetails();
 	
 	}
 	
