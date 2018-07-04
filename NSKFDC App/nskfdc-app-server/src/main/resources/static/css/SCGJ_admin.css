@@ -1,0 +1,238 @@
+@import "https://fonts.googleapis.com/css?family=Open+Sans";
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    background: #fafafa;
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1488px;
+    }
+}
+p {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.1em;
+    font-weight: 300;
+    line-height: 1.7em;
+    color: #999;
+}
+
+a, a:hover, a:focus {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+a span{
+    font-size: 10pt;
+}
+.navbar-right{
+    padding: 1%;
+    width:15%;
+}
+.navbar {
+    height: 10vh;
+    padding: 9pt 10pt;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    box-shadow: 1pt 1pt 3pt rgba(0, 0, 0, 0.1);
+}
+
+.navbar-btn {
+    box-shadow: none;
+    outline: none !important;
+    border: none;
+}
+
+i, span {
+    display: inline-block;
+}
+.navbar-default .navbar-collapse {
+    border-color: #e7e7e7;
+    text-align: center;
+}
+/* ---------------------------------------------------
+    SIDEBAR STYLE
+----------------------------------------------------- */
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 188pt;
+    max-width: 188pt;
+    background: #19b2cc;
+    color: #fff;
+    transition: all 0.3s;
+}
+
+#sidebar ul li a {
+    text-align: left;
+}
+
+#sidebar ul.components {
+    padding: 4% 5%;
+
+}
+
+#sidebar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+#sidebar ul li a:hover {
+    color: #ffffff;
+    background: #0a90a8;
+}
+#sidebar ul li a i {
+    margin-right: 10px;
+}
+
+
+
+/* ---------------------------------------------------
+    CONTENT STYLE
+----------------------------------------------------- */
+#content {
+    width:100%;
+    padding: 20px;
+    min-height: 80vh;
+    transition: all 0.3s;
+}
+/* ---------------------------------------------------
+    FOOTER
+----------------------------------------------------- */
+
+.page-footer{
+    background: #ffffff;
+}
+.upperFooter{
+    background-color: #1fb1cb;
+    /*height: 50px;*/
+    padding-top: 13pt;
+    padding-bottom: 13pt;
+    text-align: center;
+    margin-top: 3%;
+}
+.link{
+    font-size: 12pt;
+}
+
+.vert-bars{
+    color: #ffffff;
+}
+.link-wrapper a:hover{
+    color: lightgrey;
+}
+.lowerFooter{
+    background-color: #1da5be;
+    /*height: 30px;*/
+    text-align: center;
+}
+
+.copyright{
+    padding: 7pt 0pt;
+    font-size: 11pt;
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.6);
+}
+h4,h5{
+    margin: 0 0;
+    color: white;
+}
+
+h2,h3{
+    margin: 0;
+}
+h6{
+    margin: 0;
+    color: #ffffff;
+}
+
+.link-wrapper a{
+    padding: 10pt;
+    color: white;
+    /*color: black;*/
+}
+
+.link-wrapper a:link{
+    text-decoration: none;
+}
+
+.navbar-header{
+    display: inline;
+}
+.navbar-brand{
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.page-footer .container-fluid{
+    padding: 0;
+}
+
+/* ---------------------------------------------------
+    MEDIAQUERIES
+----------------------------------------------------- */
+@media (max-width: 768px) {
+    #sidebar {
+        margin-left: 0 !important;
+        min-width: 80px;
+        max-width: 80px;
+        text-align: center;
+        background: #19b2cc;
+        color: #fff;
+        transition: all 0.3s;
+    }
+    .navbar-brand img{
+        width: 40%;
+    }
+    .navbar-right img {
+        width: 6%;
+    }
+    .navbar-right h5{
+        display: inline-block;
+
+    }
+    .navbar-right{
+        margin-left: 30%;
+    }
+    .logo{
+        display: inline;
+    }
+    #sidebar .sidebar-header h3, #sidebar .CTAs {
+        display: none;
+    }
+
+    #sidebar .sidebar-header strong {
+        display: block;
+    }
+    #sidebar ul li a {
+        padding: 18pt 10pt;
+        text-align: center;
+        font-size: 0.85em;
+    }
+
+    #sidebar ul li a i {
+        margin-right:  0;
+        display: block;
+        font-size: 1.8em;
+        margin-bottom: 4pt;
+    }
+
+    #sidebar ul ul a {
+        padding: 10pt !important;
+    }
+
+    /*   #sidebar a[aria-expanded="false"]::before, #sidebar a[aria-expanded="true"]::before {
+           top: auto;
+           bottom: 5px;
+           right: 50%;
+           -webkit-transform: translateX(50%);
+           -ms-transform: translateX(50%);
+           transform: translateX(50%);
+       }*/
+}
