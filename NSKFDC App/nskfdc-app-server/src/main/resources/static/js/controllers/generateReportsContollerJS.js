@@ -1,6 +1,6 @@
-var report = angular.module('app');
+var tp = angular.module('app');
 
-report.controller('reportController',function($scope, $http) {
+tp.controller('reportController',function($scope, $http) {
 	
 	//write your code here
 

@@ -1,19 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SCGJ</title>
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/SCGJ_admin.css">
-</head>
-<body>
+<div>
+
+ <link rel="stylesheet" href="css/SCGJ_admin.css">
 
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header navbar-brand">
-            <a >
+            <a>
                 <img src="images/SCGJlogo.png" alt="SCGJ logo" width="10%" >
             </a>
 
@@ -29,25 +21,25 @@
     <nav id="sidebar">
         <ul class="list-unstyled components">
             <li class="active">
-                <a href="#">
+                <a ng-click="page='dashboard'">
                     <i class="glyphicon glyphicon-home"></i>
                     Dashboard
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='faq'">
                     <i class="glyphicon glyphicon-briefcase"></i>
                     FAQ
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='viewDocuments'">
                     <i class="glyphicon glyphicon-duplicate"></i>
                     View Documents
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='generateCredentials'">
                     <i class="glyphicon glyphicon-link"></i>
                     Generate Credentials
                 </a>
@@ -58,9 +50,29 @@
     <!-- Page Content Holder -->
     <div id="content" class="container-fluid">
 
+		<div ng-switch on="page">
+                <div ng-switch-when="dashboard">
+
+                    <div ng-include src="'partials/dashboard.html'"></div>
+                </div>
+                <div ng-switch-when="faq">
+
+                    <div ng-include src="'partials/faq.html'"></div>
+                </div>
+                <div ng-switch-when="viewDocuments">
+
+                    <div ng-include src="'partials/viewDocuments.html'"></div>
+                </div>
+                <div ng-switch-when="generateCredentials">
+
+                    <div ng-include src="'partials/generateCredentials.html'"></div>
+                </div>
+                
+            </div>
+		
     </div>
 </div>
-</div>
+
 <footer class="page-footer">
     <div class="container-fluid">
         <div class="upperFooter">
@@ -80,9 +92,4 @@
     </div>
 
 </footer>
-</body>
-</html>
-
-
-</body>
-</html>
+</div>

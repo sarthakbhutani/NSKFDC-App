@@ -1,23 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<div>
 
-    <title>Dashboard</title>
-
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Our Custom CSS -->
-    <link rel="stylesheet" href="css/trainingPartner.css">
-</head>
-<body>
+ <link rel="stylesheet" href="css/SCGJ_admin.css">
 
 <nav class="navbar">
     <div class="container-fluid">
         <div class="navbar-header navbar-brand">
-            <a >
+            <a>
                 <img src="images/SCGJlogo.png" alt="SCGJ logo" width="10%" >
             </a>
 
@@ -31,27 +19,27 @@
 <div class="wrapper">
     <!-- Sidebar Holder -->
     <nav id="sidebar">
-       <ul class="list-unstyled components">
+        <ul class="list-unstyled components">
             <li class="active">
-                <a href="#">
+                <a ng-click="page='masterSheetImport'">
                     <i class="glyphicon glyphicon-home"></i>
                     Master Sheet Import
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='generateReports'">
                     <i class="glyphicon glyphicon-briefcase"></i>
                     Generate Reports
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='uploadDocuments'">
                     <i class="glyphicon glyphicon-duplicate"></i>
                     Upload Documents
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a ng-click="page='generateBatchReport'">
                     <i class="glyphicon glyphicon-link"></i>
                     Generate Batch Report
                 </a>
@@ -62,9 +50,29 @@
     <!-- Page Content Holder -->
     <div id="content" class="container-fluid">
 
-        </div>
+		<div ng-switch on="page">
+                <div ng-switch-when="masterSheetImport">
+
+                    <div ng-include src="'partials/masterSheetImport.html'"></div>
+                </div>
+                <div ng-switch-when="generateReports">
+
+                    <div ng-include src="'partials/generateReports.html'"></div>
+                </div>
+                <div ng-switch-when="uploadDocuments">
+
+                    <div ng-include src="'partials/uploadDocument.html'"></div>
+                </div>
+                <div ng-switch-when="generateBatchReport">
+
+                    <div ng-include src="'partials/generateBatchReport.html'"></div>
+                </div>
+                
+            </div>
+		
     </div>
 </div>
+
 <footer class="page-footer">
     <div class="container-fluid">
         <div class="upperFooter">
@@ -84,5 +92,4 @@
     </div>
 
 </footer>
-</body>
-</html>
+</div>
