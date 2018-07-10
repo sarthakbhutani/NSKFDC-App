@@ -3,8 +3,111 @@
 </head>
 
 <div ng-controller="uploadDocumentController">
- <h1>UPLOAD DOCUMENTS</h1>
- 
- 	<!-- write code here -->
+        <div class="container-fluid background">
+             <div id="r1" class="row">
+                <div  class="col-md-10">
+                <h3>Upload Documents</h3>
+                </div>
+            <div id="r1c2" class="col-md-2">
+                <p><a><u>Upload Guidelines</u></a></p>
+                </div>
+            
+            
+            
+            </div>
+        <div id="drop" class="row">
+            <div id="r2d" class="col-md-5">
+                <form>
+  
+  <select ng-model="myVar" id="d1" required>
+    <option value=""disabled selected>Select document to be uploaded
+    <option value="oc">Occupation Certificate
+    <option value="msc">Signed Minutes of Selection Committee 
+    <option value="dsnsk">Data Sheet forNSKFDC
+        <option value="dssdms">Data Sheet for SDMS
+            <option value="fbr">Final Batch Report
+                <option value="as">Attendence Sheet
+  </select>
+</form>
+                
+            </div>
+            <div id="r2t1" class="col-md-2">
+                
+                
+            <input type="text" class="form-control" id="First" placeholder="Batch ID" required>
+            
+            </div>
+            
+           <div id="r2t2" class="col-md-2" ng-switch="myVar" >
+                <div ng-switch-when="fbr">
+     
+  
+                
+            <input type="text" class="form-control" id="First" placeholder="SCGJ Batch ID" required>
+            </div>
+            </div>
+            
+        
+            <div id="r2b1" class="col-md-2">
+                <span class="btn btn-default btn-file">
+    Browse <input type="file">
+</span>
+                
+        
+         
+      
+                
+            
+            </div>
+            <div id="r2b2" class="col-md-1">
+                <button type="submit" class="btn btn-primary btn-upload">Upload</button>
+         
+        
+      
+                
+            
+            </div>
+            </div>
 
+
+
+
+
+
+<!-- BHUTANI -->
+        
+        <div class="container-fluid background" >
+    <div ng-controller="searchForDocByTpController">
+    <!-- <button type="button" ng-click="click()" class="btn btn-primary">Click me</button>  -->
+        <div class="row">
+            <!-- heading -->
+            <div class="col-md-12 paddingrem">
+                <h3>Search Documents</h3>
+            </div>
+        </div>
+        <!-- form name -->
+            <form name="searchForDocByTp">
+        <div class="row background ">
+            <!-- button & input/dropdown -->
+            <div class="col-md-4 col-sm-4">
+                <input type="text" class="form-control form-rounded" placeholder="Enter Batch ID" name="batchID" ng-model="batchID">
+                <!-- NOT SURE ABOUT DOWN -->
+                <span style="color:red" ng-show="searchForDocByTp.formData.batchID.$touched">
+                 <span ng-show="searchForDocByTp.batchID.$error.required">Invalid Batch ID.</span>
+                </span>
+            </div>
+            <div class="col-md-2 col-sm-4">
+                <button type="submit" class="btn btn-primary btncolor" ng-disabled="searchForDocByTp.$invalid" ng-click="submitForm()">  
+            Search</button></div>
+        </div>
+</form>
+    <div class="row">
+            <!-- grid via angular -->
+            <div class="table">
+              <div ui-grid="details"  class="grid grid-align grid-small " ui-grid-auto-resize ></div> 
+   </div>
+<div ng-view></div>  
+        </div>
+    </div>
+</div>
 </div>

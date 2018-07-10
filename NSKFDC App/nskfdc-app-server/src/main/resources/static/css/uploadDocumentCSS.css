@@ -1,0 +1,185 @@
+@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
+
+
+
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+
+.r2d{
+    
+     padding: 2rem;
+  font-family: Arial;
+}
+.btn-primary {
+    color: #fff;
+    background-color: #1d8cea;
+    border-color: #1d8cea;
+}
+
+#r1c1{
+    color: darkgray;
+    
+}
+.select{
+    
+     box-sizing: border-box;
+    box-decoration-break: clone;
+    outline: 1;
+    padding: 10px;
+    width: 100%;
+}
+#inp {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+#drop{
+    background-color: white;
+    margin-left: 1rem;
+    margin-right: 2rem;
+}
+#d1{
+    margin-top: 1rem;
+}
+#r2t1{
+    margin-top: .5rem;
+}
+#r2t2{
+    margin-top: .5rem;
+}
+#r2b1{
+    
+    margin-top: .5rem;
+}
+#r2b2{
+    margin-top:.5rem;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    background-color: #00B0F0;
+    color: white;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.btn-upload{
+    background-color: #4472C4;
+}
+#d1{
+    
+    background-color: white;
+
+        height: 2.5rem;
+    width: 28rem;
+}
+
+
+
+.btncolor{
+    background-color: #02B0F0;
+    width: 12rem;
+    font-size: 1.7rem;
+    padding: 0.3rem;
+}
+
+
+.background{
+background: #fbfbfb;
+}
+
+body {margin:2rem;}
+
+.form-rounded {
+border-radius: 1rem;
+}
+
+.paddingrem{
+	padding-left: 0px;
+}
+
+.abc{
+    font-size : 10em;
+}
+
+.ui-grid-cell-contents{
+	background-color:#e7e6e6;
+}
+
+.ui-grid-cell{
+	background:#e7e6e6;	
+}
+
+.pointer{
+	width : 10%;
+	margin-left: 10rem;
+}
+
+
+.ui-grid-row{
+	background : green;
+	
+}
+.ng-scope{
+	/*background : #e7e6e6;*/
+}
+
+.table{
+	 border-color: #ffffff;
+    height : 7rem;
+    padding:2%;
+}
+
+.ui-grid-header-cell{
+	border-color: #ffffff;
+}
+
+.ui-grid-header-cell-row{
+  text-align: center;
+  color:#ffffff;
+}
+
+.ui-grid-header-cell-primary-focus{
+  text-align: center;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-color: white;
+  background-color: #008AAC;
+}
+
+h3{
+	color : #767671;
+}
+
+.ui-grid-coluiGrid-0004{
+	background:#e7e6e6;
+}
+
+.ui-grid-coluiGrid-0005{
+	background:#e7e6e6;
+}
+
+.ui-grid-coluiGrid-0006{
+	background:#e7e6e6;
+}
+
+.ui-grid-coluiGrid-0007{
+	background:#e7e6e6;
+}
