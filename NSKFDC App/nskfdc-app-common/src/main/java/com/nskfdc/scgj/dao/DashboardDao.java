@@ -14,8 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DashboardConfig;
-import com.nskfdc.scgj.dto.CandidatesTrainedInLast6Months;
-import com.nskfdc.scgj.dto.StateDetails;
+import com.nskfdc.scgj.dto.CandidatesTrainedInLast6MonthsDto;
+import com.nskfdc.scgj.dto.StateDetailsDto;
 
 
 @Repository
@@ -197,7 +197,7 @@ public int getNumberOfUpcomingAssessments(){
  * @return total number of candidates trained in last 6 months
  */
 
-public Collection<CandidatesTrainedInLast6Months> getTotalNumberOfCandidatesTrainedInLast6Months(){
+public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesTrainedInLast6Months(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In DashboardDao, to get total number of Candidates Trained in last 6 months ");
@@ -236,7 +236,7 @@ public Collection<CandidatesTrainedInLast6Months> getTotalNumberOfCandidatesTrai
 	  * @description method to find details of states
 	  */
 
-public Collection<StateDetails> getShowStateDetails(){
+public Collection<StateDetailsDto> getShowStateDetails(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In DashboardDao, to get StateChart Detail");
@@ -258,29 +258,29 @@ public Collection<StateDetails> getShowStateDetails(){
 }
 
 
-private static class BarchartRowmapper implements RowMapper<StateDetails>{
+private static class BarchartRowmapper implements RowMapper<StateDetailsDto>{
 	
 	@Override
-	public StateDetails mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public StateDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		String states=rs.getString("centreState");
 		int centers=rs.getInt("centers");
-		return new StateDetails(states,centers);
+		return new StateDetailsDto(states,centers);
 		
 	}
 	
 }
 
-private static class BarchartRowmapper1 implements RowMapper<CandidatesTrainedInLast6Months>{
+private static class BarchartRowmapper1 implements RowMapper<CandidatesTrainedInLast6MonthsDto>{
 	
 	@Override
-	public CandidatesTrainedInLast6Months mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public CandidatesTrainedInLast6MonthsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		
 		
 		String month = rs.getString("month");
 		int count = rs.getInt("count");
-		return new CandidatesTrainedInLast6Months(month,count);
+		return new CandidatesTrainedInLast6MonthsDto(month,count);
 		
 	}
 	

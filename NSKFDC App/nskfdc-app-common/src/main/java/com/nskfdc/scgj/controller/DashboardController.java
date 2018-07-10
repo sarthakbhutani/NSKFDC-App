@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-import com.nskfdc.scgj.dto.CandidatesTrainedInLast6Months;
-import com.nskfdc.scgj.dto.StateDetails;
+import com.nskfdc.scgj.dto.CandidatesTrainedInLast6MonthsDto;
+import com.nskfdc.scgj.dto.StateDetailsDto;
 import com.nskfdc.scgj.service.DashboardService;
 
 
@@ -134,7 +134,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * 
 	 */
 	@RequestMapping("/getTotalNumberOfCandidatesTrainedInLast6Months")
-	public Collection<CandidatesTrainedInLast6Months> getTotalNumberOfCandidatesTrainedInLast6Months(){
+	public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesTrainedInLast6Months(){
 		LOGGER.debug("Request received from frontend to get Total Number Of Candidates Trained In Last 6 Months");
 		LOGGER.debug("In total number of Candidates Trained in last 6 months Controller");
 
@@ -158,7 +158,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 */
 	
 	@RequestMapping("/getStateDetails")
-	public Collection<StateDetails> getdetails(){
+	public Collection<StateDetailsDto> getdetails(){
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In State Controller");
 
