@@ -1,58 +1,68 @@
-<!doctype html>
 <html>
-<head>
+  <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    
+    <title>NSKFDC</title>
     <!-- Add stylesheets here -->
+    <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="css/indexCSS.css" type="text/css" rel="stylesheet">
 
-        <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link href="css/indexCSS.css" type="text/css" rel="stylesheet">
-        
-    
     <!-- Add javascripts here -->
-	   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js" type="text/javascript"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js" type="text/javascript"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
-	   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js" type="text/javascript"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
-	   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
-	  	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.js"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="js/controllers/indexControllerJS.js"></script>
+    <script type="text/javascript" src="js/controllers/SCGJ_adminControlllerJS.js"></script>
+    <script type="text/javascript" src="js/controllers/trainingPartnerControllerJS.js"></script>
+    <script type="text/javascript" src="js/controllers/dashboardController.js"></script>
+    <script type="text/javascript" src="js/controllers/faqController.js"></script>
+    <script type="text/javascript" src="js/controllers/generateBatchReportController.js"></script>
+    <script type="text/javascript" src="js/controllers/generateCredentialsController.js"></script>
+    <script type="text/javascript" src="js/controllers/generateReportsContollerJS.js"></script>
+    <script type="text/javascript" src="js/controllers/masterSheetImportControllerJs.js"></script>
+    <script type="text/javascript" src="js/controllers/uploadDocumentControllerJS.js"></script>
+    <script type="text/javascript" src="js/controllers/viewDocumentController.js"></script>
+  </head>
+  <body ng-app="app">
+    <div ng-controller="mainController">
     
-    	
-
-		<script type="text/javascript" src="js/controllers/indexControllerJS.js"></script>
-		<script type="text/javascript" src="js/controllers/SCGJ_adminControlllerJS.js"></script>
-		<script type="text/javascript" src="js/controllers/trainingPartnerControllerJS.js"></script>
-		<script type="text/javascript" src="js/controllers/dashboardController.js"></script>
-		<script type="text/javascript" src="js/controllers/faqController.js"></script>
-		<script type="text/javascript" src="js/controllers/generateBatchReportController.js"></script>
-		<script type="text/javascript" src="js/controllers/generateCredentialsController.js"></script>
-		<script type="text/javascript" src="js/controllers/generateReportsContollerJS.js"></script>
-		<script type="text/javascript" src="js/controllers/masterSheetImportControllerJs.js"></script>
-		<script type="text/javascript" src="js/controllers/uploadDocumentControllerJS.js"></script>
-		<script type="text/javascript" src="js/controllers/viewDocumentController.js"></script>
-
-
-
-    
-</head>
-    
-<body ng-app="app">
- 
-
-<div ng-controller="mainController">
-		
-			<!-- Login Module -->
-			
-</div>
-
-<div ng-view></div>    	
-	
-
-</body>
-
+      <div class="container-fluid">
+        <div class="row">
+          <img src="images/loginbackground.jpg" id="bg-image" class="img-responsive" />
+          <div class="col-md-6 form">
+            <img src="images/SCGJlogo.png" id="scgj-logo" class="img-responsive" />
+            <img src="images/nskfdc-logo.png" id="nskfdc-logo"/>
+            <hr >
+            <br>
+            <!-- Main Form -->
+            <div class="login">
+              <form id="login-form" name="LoginForm" >
+                <div class="main-login-form">
+                  <div class="login-group">
+                    <div class="username-text">
+                      <input type="email" class="form-control" id="email"  placeholder="Enter Username" name="email" ng-model="user.email" required>
+                      <span class="glyphicon glyphicon-user user-icon"></span>
+                    </div>
+                    <div class="password-text">
+                      <br>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" required>
+                      <div id="eye" class="password-icon" ng-model="collapsed" ng-click="collapsed=!collapsed"><span  ng-class="{'glyphicon glyphicon-eye-open pull-right pan_arrow1': !collapsed, 'glyphicon glyphicon-eye-close pull-right pan_arrow1': collapsed}"></span></div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" class="login-button" ng-disabled="LoginForm.$invalid">Login</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
