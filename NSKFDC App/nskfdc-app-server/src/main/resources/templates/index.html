@@ -17,6 +17,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
+   
+   
+   
     <script type="text/javascript" src="js/controllers/indexControllerJS.js"></script>
     <script type="text/javascript" src="js/controllers/SCGJ_adminControlllerJS.js"></script>
     <script type="text/javascript" src="js/controllers/trainingPartnerControllerJS.js"></script>
@@ -29,9 +32,11 @@
     <script type="text/javascript" src="js/controllers/uploadDocumentControllerJS.js"></script>
     <script type="text/javascript" src="js/controllers/viewDocumentController.js"></script>
   </head>
+  
+  
   <body ng-app="app">
     <div ng-controller="mainController">
-    
+ <!--    
       <div class="container-fluid">
         <div class="row">
           <img src="images/loginbackground.jpg" id="bg-image" class="img-responsive" />
@@ -41,7 +46,7 @@
             <hr >
             <br>
             <!-- Main Form -->
-            <div class="login">
+  <!--          <div class="login">
               <form id="login-form" name="LoginForm" >
                 <div class="main-login-form">
                   <div class="login-group">
@@ -62,7 +67,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>   -->
     </div>
+    
+    <div ng-view></div>
   </body>
 </html>

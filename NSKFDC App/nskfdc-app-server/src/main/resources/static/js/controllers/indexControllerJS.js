@@ -32,18 +32,18 @@ app.config(function($routeProvider, $httpProvider){
 // main controller of the App
 app.controller('mainController', function($scope, $http) {
 		
-	var pwd = document.getElementById('password')
-	var eye = document.getElementById('eye')
-	
-	eye.addEventListener('click',togglePass);
-	function togglePass()
-	{
-		eye.classList.toggle('active');
-		
-		(pwd.type == 'password') ? pwd.type = 'text' :
-		pwd.type = 'password';
-	}
-	
+//	var pwd = document.getElementById('password')
+//	var eye = document.getElementById('eye')
+//	
+//	eye.addEventListener('click',togglePass);
+//	function togglePass()
+//	{
+//		eye.classList.toggle('active');
+//		
+//		(pwd.type == 'password') ? pwd.type = 'text' :
+//		pwd.type = 'password';
+//	}
+//	
 
 	
 });
