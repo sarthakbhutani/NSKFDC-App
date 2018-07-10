@@ -44,6 +44,7 @@
     margin-right: 2rem;
 }
 #d1{
+	width : 24rem;
     margin-top: 1rem;
 }
 #r2t1{
@@ -103,9 +104,16 @@
 
 .background{
 background: #fbfbfb;
+    padding-right: 0px;
+    padding-left: 0px;
+    padding-top: 20px;
+    padding-bottom: 0px;
 }
 
-body {margin:2rem;}
+#marginForSearch{
+    margin-left: 2rem;
+
+}
 
 .form-rounded {
 border-radius: 1rem;
@@ -182,4 +190,8 @@ h3{
 
 .ui-grid-coluiGrid-0007{
 	background:#e7e6e6;
+}
+#upguide{
+	font-size: 1rem;
+	color:blue;
 }
