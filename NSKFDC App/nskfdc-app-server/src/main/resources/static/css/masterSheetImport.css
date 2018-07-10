@@ -1,0 +1,183 @@
+.cointainer-fluid
+{
+    margin: 0rem;
+    padding: 2rem;
+}
+
+.heading
+{
+      
+    padding: 1.5rem;
+}
+
+.panel-s
+{
+        width: 13rem;
+   
+        color: white;
+    
+}
+.panel-body
+{
+       text-align: center;
+    padding: 1.625rem;
+        height: 4rem;
+}
+.panel_footer
+{
+        text-align: center;
+    padding: 0rem;
+}
+#panel
+{
+       margin: auto;
+    padding: 1rem;
+}
+#panel-1
+{
+    background-color: #866561;
+}
+#panel-2
+{
+        background-color:#ea8b1b;
+}
+#panel-3
+{
+        background-color: #019cb7;
+}
+#panel-4
+{
+   background: #83be29;
+}
+#underline
+{
+        padding: 2rem;
+}
+#col
+{
+        text-align: center;
+}
+#button
+{
+            margin-top: 1rem;
+    /* margin-top: 2rem; */
+    float: right;
+    background-color: dodgerblue;
+    color: white;
+    border-radius: .7rem;
+     height: 2.5rem;
+   
+    padding: 0rem;
+    width: 16rem;
+}
+/*
+#update
+{
+        margin-left: 1rem;
+    
+}
+*/
+#Id
+{
+      border-color: black;
+}
+#wrapper #div li {
+    list-style-type: none;
+    margin-top: .625rem;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+#wrapper #div li input[type="text"] {
+    margin-top: .625rem;
+    width: 100%;
+    height: 3rem;
+    border-radius: .32rem;
+    padding-left: .625rem;
+    font-size: 1.125rem;
+    border: 1px solid #767171;
+}
+#color
+{
+    background-color: #019cb7;
+    margin-left: 4rem;
+}
+.dropdown{
+    margin-top: 25px;
+}
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+#style
+{
+        padding: 2rem;
+}
+.wrapper
+{
+    padding: 1rem;
+}
+.state
+{
+     margin-top: .625rem;
+    width: 100%;
+    height: 3rem;
+    border-radius: .32rem;
+    padding-left: .625rem;
+    font-size: 1.125rem;
+    border: 1px solid #767171;
+}
+
+.margin
+{
+    
+
+    margin-top: 0.6rem;
+}
+#padding
+{
+    padding: 2rem;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 6.325rem;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+#upload{
+    margin-top: 1.562rem;
+}
+#uploadFile{
+    margin-right: 1.562rem;
+}
+#headmargin
+{
+	    margin-top: -3rem;
+}
