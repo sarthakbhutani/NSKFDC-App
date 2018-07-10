@@ -1,4 +1,13 @@
 <head>
+<title>Dashboard</title>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>		
+	<script src="http://code.highcharts.com/highcharts.js"></script>
+		<script src="js/controller/dashboardController.js"></script>
+
+		
+	
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 		
+	<script src="http://code.highcharts.com/highcharts.js"></script>
         <link href="css/dashboard.css" type="text/css" rel="stylesheet">
 </head>
 
@@ -53,13 +62,13 @@
 		<!-- 2 images charts	 -->
 			<div class="row">
 				<div class="col-md-12">
-					<!-- chart no. 1 -->
+					<div id="container"></div>
 				</div>
 			</div>
 
 			<div class="row">
 				<div class="col-md-12">
-					<!-- chart no. 2 -->		
+					<div id="container1" style="height: 400px"></div>		
 				</div>
 			</div>
 		</div>
