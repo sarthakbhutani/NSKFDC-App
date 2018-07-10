@@ -3,8 +3,8 @@ package com.nskfdc.scgj.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-
 import com.nskfdc.scgj.dao.ImportDao;
 
 @Service
@@ -75,5 +75,40 @@ public class ImportService {
 			//return the default value, it can be null
 		}
 	}
+
+
+/*---------------Method to create Batch----------------------------*/
+
+	
+	public int getGenerateBatchService(String trainingPartnerEmail){
+		
+		LOGGER.debug("Request received from Controller to create batch for email id: " + trainingPartnerEmail);
+		
+		LOGGER.debug("In Import Service to create batch for email id: " + trainingPartnerEmail );
+		
+		try{
+			
+			LOGGER.debug("In try block to generate batch for training partner with email id: " + trainingPartnerEmail);
+			
+			return importHistoryDao.generateBatchDao(trainingPartnerEmail);
+		
+		}
+		
+		catch(DataAccessException d) {
+		
+			LOGGER.error("DataAccessException in service to create Batch" + d);
+			
+			return -1;
+		}
+		
+		catch(Exception e) {
+			
+			LOGGER.error("An error occurred while creating the Batch"+ e);
+			
+			return -1;
+		}
+	}
+
+
 
 }
