@@ -1,10 +1,55 @@
 <head>
-        <link href="css/uploadDocumentCSS.css" type="text/css" rel="stylesheet">
+        <link href="css/viewDocument.css" type="text/css" rel="stylesheet">
 </head>
+ <!-- main module div start here -->
+ <div ng-controller="viewDocumentController"  >
+  <!-- container div -->
+  
+	<div  class= "container-fluid main background">
+				<div>
+				<h3 id="searchdocuments">Search Documents</h3>
+				</div>
+			<!-- form div -->
+						
+			<div class="row " id="formcolor" >
+				<form class="form-group " >
+						<div class="col-sm-4" >
+						<input  id="tpname" type="text" class="form-control"  placeholder="Enter Training Partner Name"  ng-model="tpName" >
+						</div>
+					
+						<div class="col-sm-2 ">
+						<input  id="enterBatchId" type="text" class="form-control" placeholder="Enter Batch ID" ng-model="batchId" ng-disabled="scgjBtNumber">
+						</div> 
+									
+						<div id="or" class="col-sm-1"  >
+						or
+						</div>
+						
+						<div class="col-sm-3"><input  id="scgjbtno" type="text" class="form-control" placeholder="SCGJ Batch Number" ng-model="scgjBtNumber" ng-disabled="batchId">
+						</div>
+												
+						<div class="col-sm-2">
+						<button type="submit" class="btn btn-info" id="button" ng-click="searchDocuments()">Search</button>
+						</div>
+														
+						<p ng-bind="errorMessage" id="errormessage"></p>
+																						
+			
+				</form>	
+				</div >		
+				<!-- form div end here -->	
+					
+			    			<!-- ui-grid start here --> 
+			    			<div class="container-fluid main">
+							<div class="row background" id="upload">
+							<h3>Uploaded Documents</h3>
+							</div>	
+							<div class=table>
+							<div ui-grid="uploadedDocument"  class="grid grid-align " ui-grid-auto-resize ></div> 
+   							</div>
+   							</div>
 
-<div ng-controller="viewDocumentController">
- <h1>VIEW DOCUMENTS</h1>
- 
- 	<!-- write code here -->
-
+					
+					
+		</div>
 </div>

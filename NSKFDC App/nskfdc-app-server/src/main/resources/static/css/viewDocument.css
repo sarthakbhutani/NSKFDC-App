@@ -1,0 +1,79 @@
+#or
+{
+	margin-top: 1%;
+    margin-bottom: 1%;
+	width: auto;
+	}
+.size{
+	size: 0%;
+}
+#enterBatchId{
+	border: solid 1px darkslategray;
+	font-family: calibri;
+	width: 115%;
+	padding: 1%;
+     
+}
+
+#tpname{
+	border: solid 1px darkslategray;
+	font-family: calibri;
+	padding: 1%;
+	width: 107%;
+	    
+}
+#scgjbtno{
+	border: solid 1px darkslategray;
+	font-family: calibri;
+	    padding: 1%;
+       	
+}
+.background{
+	    background-color: #FbFbFb;
+ }
+ #errormessage{
+    margin-right: 41%;
+    color:red;
+}
+#formcolor
+{
+	background-color: #ffffff;
+	padding-top: 1%;
+	margin-left: 1%;
+    margin-right: 5%;
+    padding: 1%;
+}
+#searchdocuments{
+	color: grey;
+	font-family: calibri;
+	margin-left: 2%;
+}
+#upload{
+	 margin-left: 1%;
+	color: grey;
+	font-family: calibri;
+	margin-top: 4%;
+    margin-bottom: 2%;
+	
+}
+#button{
+	color:  #ffffff;
+	font-family: calibri;
+}
+.table{
+	border-color:#ffffff;
+	height:9rem;
+	padding:2%;
+}
+div.ui-grid-header-cell-primary-focus{
+	background-color: #0090af;
+	text-align: center;
+	color: #ffffff;
+	font-family: calibri;
+
+}
+div.ui-grid-canvas{
+	 text-align: center;
+	 color: black;
+	 
+}
