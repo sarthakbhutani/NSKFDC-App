@@ -1,10 +1,102 @@
+<html>
 <head>
         <link href="css/generateReportsCSS.css" type="text/css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+
+<!-- Optional theme -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+			<base href="/">
+			
+			<!--CDN css-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
+
+    <link rel="stylesheet" href="css/generateReportsCSS.css" type="text/css" />
+
+    <!--CDN javascripts-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-sanitize.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-cookies.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.11.0/ui-bootstrap-tpls.js"></script>
+<script src="js/controllers/generateReportsControllerJS.js"></script>
+	 
+			
+			
 </head>
+<body >
+			<div class="container-fluid"  >
+			
+			
+			<div id="color">
+			
+			<div class="generate_reports row">
+			<div class="generateReports col-md-6">
+				<h4>Generate Reports:</h4><br>
+				</div></div>
+								
+				<div class="selectReportButton row">
+				<div class="select_report_dropdown col-md-4" >
+				<select class="selectReport form-control" name="Type" required ng-model="myVar" >
+				<option selected disabled value=""  > Select Report to be generated</option> 
+    <option>Occupation Certificate</option>
+    <option>Attendance Sheet</option>
+     <option>Data sheet for NSKFDC</option>
+     <option>Data sheet for SDMS</option>
+     <option>Minutes Of Selection Committee Meeting</option>
+    </select>
+   </div>
+   
+   <div class="select_report_dropdown col-md-4" >
+   <div ng-if="(myVar=='Occupation Certificate'|| myVar=='Attendance Sheet' || myVar == 'Data sheet for NSKFDC' || myVar=='Data sheet for SDMS' || myVar=='Minutes Of Selection Committee Meeting')" id="myVar-1" >
+   <div>
+  <input type="text" name="batchid" class=" selectReport" name="batchid" placeholder="enter batch id" required>
+   </div>
+    </div>
+            </div> 
+            
+ <div class= "generatereportbutton col-md-4">
+	<button type="button" class=" generatereportbutton btn-primary">Generate Report</button><br>
+	</div>	</div>
+	
+	
+	<div ng-app="app" ng-controller="reportController">
+	 
+	
+	     
+	
+	
+<div class="reportHistory row">
+<div class="batchidtoenter">										
+				<form class="form-inline" action="/action_page.php">
+				<div class="form-group">
+				<label for="batch-id"></label>
+					<input type="batch-id" ng-model="batchId"  class="form-control" id="batch-id" placeholder="enter batch id" required>
+					</div>
+					</form>
+									
+				<button type="button" class="searchreportbutton btn-info" ng-click="onSearch(batchId)">Search</button><br>
+				</div></div>
+				
+				<div class="table">
+			<div ui-grid="searchReport"  class="searchreport grid-align "  ui-grid-auto-resize ></div> 
 
-<div ng-controller="reportController">
- 
- <h1>GENERATE REPORTS</h1>
- 			<!-- write code here -->
-
-</div>
+		</div>
+			
+			</div>	</div>	</div>
+		</body>
+       </html>
+       

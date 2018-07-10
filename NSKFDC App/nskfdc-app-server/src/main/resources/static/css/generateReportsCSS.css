@@ -1,0 +1,88 @@
+  .generateReports{
+	padding: 1%;
+}
+	#color{
+	background-color:lightgrey;
+}
+
+
+#color h4{
+	margin:5%;
+}
+
+#color h3{
+	margin:3%;
+}
+
+
+.report_history{
+padding: 3%;
+	    }
+		
+		
+		#batch-id{
+		margin: 2%;}
+		
+		#batch-idenabled{
+		margin-bottom: 3%;
+    margin-top: 4%;
+		}
+		
+		.batchidtoenter{
+		margin-left:4%;
+		}
+		
+		
+		
+		.select_report_dropdown{
+		margin-top: 2%;
+    margin-bottom: 2%;
+		}
+		
+		.generatereportbutton{
+		margin: 0%;
+		margin-bottom: 0%;
+    margin-top: 2%;
+		}
+		
+		.sel select{
+		margin-top: 5%;
+		}
+		
+		
+		
+		.searchreportbutton{
+		margin:10%;
+		}
+		
+		.selectReportButton{
+		background-color:white;
+		margin-left: 3%;
+    margin-right: 4%;
+	
+		}
+		
+		
+		
+		
+		.ui-grid-header-cell-primary-focus{
+		background-color:dodgerblue;
+		}
+		
+		
+		
+		
+		.searchreport{
+		height:10%;
+		margin-left:2%;
+		margin-right:1%;
+		margin-bottom:2%;
+		}
+		
+		
+		.reporthistory{
+		display:inline-flex;
+		}
+		.batchidtoenter{
+		display:inline-flex;
+		}
