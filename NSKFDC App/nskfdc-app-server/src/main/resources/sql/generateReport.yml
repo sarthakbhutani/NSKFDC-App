@@ -1,1 +1,7 @@
 generateReport:
+ showOccupationCertificateReportDetails: >
+  select firstName,lastName,gender,age,firstNameFather,lastNameFather,aadharCardNumber,residentialAddress,workplaceAddress from candidate where batchId= :batchId;
+  
+ showAttendanceSheetDetails: >  
+  select candidate.batchId, batchStartDate,firstName,lastName,firstNameFather,lastNameFather,mobileNumber FROM candidate JOIN batchdetails ON candidate.batchId=batchdetails.batchId where batchdetails.batchId= :batchId;
+  
