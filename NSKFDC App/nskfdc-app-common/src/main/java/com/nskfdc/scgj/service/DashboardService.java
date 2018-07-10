@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.DashboardDao;
-import com.nskfdc.scgj.dto.CandidatesTrainedInLast6Months;
-import com.nskfdc.scgj.dto.StateDetails;
+import com.nskfdc.scgj.dto.CandidatesTrainedInLast6MonthsDto;
+import com.nskfdc.scgj.dto.StateDetailsDto;
 
 @Service
 public class DashboardService {
@@ -109,7 +109,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 * @author Shivanshu Garg
 	 * @return total number of candidates trained in last 6 momths
 	 */
-	public Collection<CandidatesTrainedInLast6Months> getShowTotalNumberOfCandidatesTrainedInLast6Months(){
+	public Collection<CandidatesTrainedInLast6MonthsDto> getShowTotalNumberOfCandidatesTrainedInLast6Months(){
 	LOGGER.debug("Request received from Control");
 	LOGGER.debug("In Dashboard Service, to get total Number of Candidates Trained in last 6 months");
 	
@@ -131,7 +131,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 * @description method to get details of states
 	 * 
 	 */
-	public Collection<StateDetails> getShowStateDetails(){
+	public Collection<StateDetailsDto> getShowStateDetails(){
 		LOGGER.debug("Request received from Control");
 		LOGGER.debug("In Dashboard Service, to get state details");
 		
