@@ -3,8 +3,76 @@
 </head>
 
 <div ng-controller="dashboardController">
- <h1>DASHBOARD</h1>
- 
- 	<!-- write code here -->
+ 	<div class="container-fluid marginless">
+	
+	<div class="row">
+		<!-- Panels -->
+		<div class="col-md-3">
+			<div class="panel panel-default FourPanels PanelOne">
+      			<div class=" PanelOne FourPanels PanelHeadingTxt">
+
+      				<p id="PanelOneStatistics" ng-bind="ongoingTrainings">Sample No.</p>
+      			</div>
+      			<div class="panel-body PanelOne FourPanelsTxt">Ongoing Trainings</div>
+    		</div>
+		</div>
+
+		<div class="col-md-3 ">
+			<div class="panel panel-default FourPanels PanelTwo ">
+      			<div class="PanelTwo FourPanels PanelHeadingTxt" id="PanelTwoStatistics" ng-bind="candidatesTrained">
+      			</div>
+      			<div class="panel-body PanelTwo FourPanelsTxt">Candidates Trained</div>
+    		</div>
+		</div>
+
+		<div class="col-md-3">
+			<!-- FAULTY CODE -->
+			<div class="panel panel-default PanelThree FourPanels">
+      			<div class="PanelThree FourPanels PanelHeadingTxt" id="PanelThreeStatistics" ng-bind="trainingPartners" >
+      				<!-- Modify this innerHTML w/ fresh stats -->
+      		<!-- 	   {{candidatesTrained}}  -->
+      			</div>
+      			<div class="panel-body PanelThree FourPanelsTxt ">Training Partners</div>
+    		</div>
+		</div>
+	
+
+		<div class="col-md-3">
+			<div class="panel panel-default PanelFour FourPanels">
+      			<div class="PanelFour FourPanels PanelHeadingTxt" id="PanelFourStatistics" ng-bind="upcomingAssesments">
+      				<!-- Modify this innerHTML w/ fresh stats -->
+      				Sample No.
+      			</div>
+      			<div class="panel-body PanelFour FourPanelsTxt">Upcoming Assesments</div>
+    		</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6">
+		<!-- 2 images charts	 -->
+			<div class="row">
+				<div class="col-md-12">
+					<!-- chart no. 1 -->
+				<img src="images/barChart1.jpg" class="pocimg">
+							
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12">
+					<!-- chart no. 2 -->		
+				<img src="images/barChart2.png" class="pocimg">
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+		<!-- Indian Map -->
+	 <img src="images/map1.png" class="pocimg"> 
+		</div>
+		
+	</div>
+
+</div>
 
 </div>
