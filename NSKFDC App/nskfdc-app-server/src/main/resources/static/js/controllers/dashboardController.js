@@ -28,9 +28,9 @@ scgj.controller("dashboardController" , function($scope, $http){
     });
 	
 
-});
 
-      /* $(document).ready(function() {
+
+       $(document).ready(function() {
          var processed_json = new Array();   
          $.getJSON('/getStateDetails', function(data) {
              // Populate series
@@ -42,7 +42,10 @@ scgj.controller("dashboardController" , function($scope, $http){
              $('#container').highcharts({
              chart: {
                  type: "column",
-                 	width: 500  
+                   
+             },
+             credits : {
+            	 enabled : false
              },
              title: {
                  text: "Top 5 States with training centers"
@@ -83,8 +86,12 @@ scgj.controller("dashboardController" , function($scope, $http){
              chart: {
                  type: "column"
              },
+             
              title: {
                  text: "Candidates Trained"
+             },
+             credits : {
+            	 enabled : false
              },
              xAxis: {
                  type: 'category',
@@ -105,5 +112,5 @@ scgj.controller("dashboardController" , function($scope, $http){
          }); 
      });
  });
-*/
+});
 
