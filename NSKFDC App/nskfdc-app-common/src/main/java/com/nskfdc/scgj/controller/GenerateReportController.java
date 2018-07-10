@@ -18,7 +18,7 @@ public class GenerateReportController {
 	int success;
 	
 	@RequestMapping("/generateOccupationCertificateReport")
-	public void generateOccupationCertificateReport(@RequestParam("batchId") String batchId) {
+	public String generateOccupationCertificateReport(@RequestParam("batchId") String batchId) {
 		
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In Generate Occupation Certificate Controller");
@@ -32,14 +32,14 @@ public class GenerateReportController {
 			LOGGER.error("In catch block of Generate Occupation Certificate Controller"+e);
 		}
 		
-//		if(success==1) 
-//			return "Occupation Certificate generated successfully";
-//		else
-//			return "Occupation Certificate not generated";
+		if(success==1) 
+			return "Occupation Certificate generated successfully";
+		else
+			return "Occupation Certificate not generated";
 	}
 
 	@RequestMapping("/generateAttendanceSheet")
-	public void generateAttendanceSheet(@RequestParam("batchId") String batchId) {
+	public String generateAttendanceSheet(@RequestParam("batchId") String batchId) {
 		
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In Generate Attendance Sheet Controller");
@@ -53,10 +53,10 @@ public class GenerateReportController {
 			LOGGER.error("In catch block of Generate Attendance Sheet Controller"+e);
 		}
 		
-//		if(success==1) 
-//	    	return "Attendance Sheet generated successfully";
-//	    else
-//	    	return "Attendance Sheet not generated";
+		if(success==1) 
+	    	return "Attendance Sheet generated successfully";
+	    else
+	    	return "Attendance Sheet not generated";
 	}
 	
 }
