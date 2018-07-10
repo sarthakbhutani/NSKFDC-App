@@ -27,12 +27,13 @@ a span{
     font-size: 10pt;
 }
 .navbar-right{
+	margin-top:6pt;
     padding: 1%;
-    width:15%;
+    width:13%;
 }
 .navbar {
-    height: 10vh;
-    padding: 9pt 10pt;
+    height: 11vh;
+    padding: 4pt 8pt;
     background: #fff;
     border: none;
     border-radius: 0;
@@ -91,7 +92,16 @@ i, span {
 #sidebar ul li a i {
     margin-right: 10px;
 }
-
+.navbar-right img{
+	cursor:pointer;
+}
+.navbar-right span:hover{
+	cursor:pointer;
+	color:black;
+}
+.navbar-right span{
+	color:grey;
+}
 
 
 /* ---------------------------------------------------
@@ -119,7 +129,7 @@ i, span {
     margin-top: 3%;
 }
 .link{
-    font-size: 12pt;
+    font-size: 10pt;
 }
 
 .vert-bars{
@@ -136,7 +146,7 @@ i, span {
 
 .copyright{
     padding: 7pt 0pt;
-    font-size: 11pt;
+    font-size: 9pt;
     pointer-events: none;
     color: rgba(255, 255, 255, 0.6);
 }
@@ -173,6 +183,7 @@ h6{
 .page-footer .container-fluid{
     padding: 0;
 }
+
 
 /* ---------------------------------------------------
     MEDIAQUERIES
