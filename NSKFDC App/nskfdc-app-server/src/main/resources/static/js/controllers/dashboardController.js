@@ -1,11 +1,12 @@
 var scgj = angular.module("app");
 
+
 scgj.controller("dashboardController" , function($scope, $http){
-	
+		
 	$http.get('/getNumberOfOngoingTrainings')
     .then(function (response) {
-    	$scope.ongoingTrainings = response.data;
 
+    	$scope.ongoingTrainings = response.data;
     });
 
 	$http.get('/getNumberOfCandidatesTrained')
@@ -23,10 +24,13 @@ scgj.controller("dashboardController" , function($scope, $http){
 	$http.get('/getNumberOfUpcomingAssessments')
     .then(function (response) {
     	$scope.upcomingAssesments = response.data;
-
+    	
     });
 	
-	 $(function () {
+
+});
+
+      /* $(document).ready(function() {
          var processed_json = new Array();   
          $.getJSON('/getStateDetails', function(data) {
              // Populate series
@@ -64,15 +68,15 @@ scgj.controller("dashboardController" , function($scope, $http){
      });
  });
 
-	 $(function () {
-         var processed_json = new Array();   
+       $(document).ready(function() {
+         var processed_json1 = new Array();   
          $.getJSON('/getTotalNumberOfCandidatesTrainedInLast6Months', function(data) {
              // Populate series
              console.log(data.length);
              for (i = 0; i<data.length; i++){
-                 processed_json.push([data[i].month, data[i].count]);
+                 processed_json1.push([data[i].month, data[i].count]);
              }
-             console.log(processed_json);
+             console.log(processed_json1);
           
              // draw chart
              $('#container1').highcharts({
@@ -96,11 +100,10 @@ scgj.controller("dashboardController" , function($scope, $http){
              },
              series: [{
                  name: 'Candidates',
-                 data: processed_json
+                 data: processed_json1
              }]
          }); 
      });
  });
+*/
 
-
-});
