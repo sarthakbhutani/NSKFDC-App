@@ -1,14 +1,5 @@
 <head>
-<title>Dashboard</title>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>		
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-		<script src="js/controller/dashboardController.js"></script>
-
-		
-	
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 		
-	<script src="http://code.highcharts.com/highcharts.js"></script>
-        <link href="css/dashboard.css" type="text/css" rel="stylesheet">
+ <link href="css/dashboard.css" type="text/css" rel="stylesheet">
 </head>
 
 <div ng-controller="dashboardController">
@@ -20,7 +11,7 @@
 			<div class="panel panel-default FourPanels PanelOne">
       			<div class=" PanelOne FourPanels PanelHeadingTxt">
 
-      				<p id="PanelOneStatistics" ng-bind="ongoingTrainings">Sample No.</p>
+      				<p id="PanelOneStatistics">{{ongoingTrainings}}</p>
       			</div>
       			<div class="panel-body PanelOne FourPanelsTxt">Ongoing Trainings</div>
     		</div>
@@ -29,34 +20,35 @@
 		<div class="col-md-3 ">
 			<div class="panel panel-default FourPanels PanelTwo ">
       			<div class="PanelTwo FourPanels PanelHeadingTxt" id="PanelTwoStatistics" ng-bind="candidatesTrained">
+      			<p id="candidatesTrained">{{candidatesTrained}}</p>
       			</div>
       			<div class="panel-body PanelTwo FourPanelsTxt">Candidates Trained</div>
     		</div>
 		</div>
 
 		<div class="col-md-3">
-			<!-- FAULTY CODE -->
+			
 			<div class="panel panel-default PanelThree FourPanels">
       			<div class="PanelThree FourPanels PanelHeadingTxt" id="PanelThreeStatistics" ng-bind="trainingPartners" >
-      				<!-- Modify this innerHTML w/ fresh stats -->
-      		<!-- 	   {{candidatesTrained}}  -->
+      			<p id="trainingPartners">{{trainingPartners}}</p>
       			</div>
       			<div class="panel-body PanelThree FourPanelsTxt ">Training Partners</div>
     		</div>
 		</div>
 	
 
-		<div class="col-md-3">
+		<div class="col-md-3">	
 			<div class="panel panel-default PanelFour FourPanels">
       			<div class="PanelFour FourPanels PanelHeadingTxt" id="PanelFourStatistics" ng-bind="upcomingAssesments">
-      				<!-- Modify this innerHTML w/ fresh stats -->
-      				Sample No.
+      				<p id="upcomingAssesments">{{upcomingAssesments}}</p>
       			</div>
       			<div class="panel-body PanelFour FourPanelsTxt">Upcoming Assesments</div>
     		</div>
 		</div>
 	</div>
 
+</div>
+</div>
 	<div class="row">
 		<div class="col-md-6">
 		<!-- 2 images charts	 -->
@@ -68,7 +60,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<div id="container1" style="height: 400px"></div>		
+					<div id="container1"></div>		
 				</div>
 			</div>
 		</div>
@@ -77,7 +69,3 @@
 		</div>
 		
 	</div>
-
-</div>
-
-</div>
