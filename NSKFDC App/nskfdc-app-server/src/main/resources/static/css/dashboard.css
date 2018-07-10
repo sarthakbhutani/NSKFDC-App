@@ -1,0 +1,96 @@
+
+.PanelOne{
+	background: #866561;
+}
+.PanelTwo{
+	background: #EA8B1B;
+	    /*padding: 1em;*/
+	
+}
+.PanelThree{
+	background: #019CB7;
+}
+.PanelFour{
+    background: #83BE29;
+}
+
+.FourPanels{
+	color: white;
+	text-align: center;
+	/*margin : -1rem; */
+}
+
+.PanelHeadingTxt{
+	font-size: 3.5 rem;
+	 margin-top: 1rem;
+	 font-size : 5rem;
+	
+    /*margin-bottom: -5.4rem;
+     font-size : 0.9rem;*/
+}
+
+.FourPanelsTxt{
+	    padding : 0.9rem;
+	     font-size : 1.2rem;
+	     margin-top : -1rem;
+}
+
+.pocimg{
+	width: 100%
+/*	margin: 1rem; */
+}
+
+.barOne{
+margin bottom: 1rem;
+margin-right: 1rem;
+}
+
+.barTwo{
+	margin-right: 1rem;
+}
+
+.map{
+	margin-left: 1rem;
+}
+/*.poc{
+font-size: 3rem;
+}*/
+
+#PanelOneStatistics{
+    COLOR: WHITE;
+    line-height: 4rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin-bottom : -1 rem;
+}
+
+#PanelTwoStatistics{
+        COLOR: WHITE;
+    line-height: 4rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+    
+}
+
+#PanelThreeStatistics{
+        COLOR: WHITE;
+    line-height: 4rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+#PanelFourStatistics{
+        COLOR: WHITE;
+    line-height: 4rem;
+    font-size: 2.2rem;
+    font-weight: bold;
+}
+
+p{
+	margin : 0 0;
+}
+
+.marginless{
+	margin-top : -2rem;
+	padding-top : 0 rem;
+}
