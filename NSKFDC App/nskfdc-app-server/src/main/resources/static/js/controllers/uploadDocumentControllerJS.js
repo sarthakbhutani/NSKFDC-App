@@ -1,9 +1,4 @@
-var uploadDocument = angular.module("app",['ngRoute','ui.grid',
-	                                      'ui.grid.edit',
-	                                      'ui.grid.cellNav',
-	                                      'ui.grid.autoResize',
-	                                      'ui.bootstrap',
-	                                      'ui.grid.pagination']);
+var uploadDocument = angular.module("app");
 
 uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	console.log("working");
