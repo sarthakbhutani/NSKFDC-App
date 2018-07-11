@@ -1,3 +1,20 @@
+function checkforblank() {
+    
+    var location = document.getElementById('Location');
+    var invalid = location.value == "none";
+ 
+    if (invalid) {
+    	alert('First Choose Ward Type');
+        location.className = 'state';
+    }
+    else {
+        location.className = 'state';
+    }
+    
+    return !invalid;
+
+
+}
 var app = angular.module('app');
 app.controller('importController',function($scope, $http) {
 	
@@ -23,7 +40,7 @@ $scope.isDisabled13=false;
 
 $scope.showAlert = function () {
 	
-	$http.get("/generateBatch")
+	$http.get("/getDataImport")
 	.then(function (response) {
 		
 		console.log("Inside controller");
@@ -41,22 +58,25 @@ $scope.showAlert = function () {
         }
     };
 
-$scope.setFile = function(element) {
-$scope.$apply(function($scope) {
-$scope.theFile = element.files[0];
-$scope.FileMessage = '';
-var filename = $scope.theFile.name;
-console.log(filename.length)
-var index = filename.lastIndexOf(".");
-var strsubstring = filename.substring(index, filename.length);
-if (strsubstring == '.xls' || strsubstring == '.xlsx' )
-{
-console.log('File Uploaded sucessfully');
-}
-else {
-$scope.theFile = '';
-$scope.FileMessage = 'please upload correct File ,File extension should be .xls or .xlsx';
-}
-});
+
+    $scope.setFile = function(element) {
+    $scope.$apply(function($scope) {
+        $scope.theFile = element.files[0];
+        $scope.FileMessage = '';
+        var filename = $scope.theFile.name;
+        console.log(filename.length)
+        var index = filename.lastIndexOf(".");
+        var strsubstring = filename.substring(index, filename.length);
+        if (strsubstring == '.xls' || strsubstring == '.xlsx' )
+        {
+          console.log('File Uploaded sucessfully');
+        }
+        else {
+            $scope.theFile = '';
+              $scope.FileMessage = 'please upload correct File ,File extension should be .xls or .xlsx';
+        }
+
+    });
 };
+
 });
