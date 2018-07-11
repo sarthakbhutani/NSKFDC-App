@@ -1,5 +1,5 @@
 dataImport:
- importBatchDetails: >
+ generateBatch: >
   insert into batchdetails(trainingPartnerEmail) values (:trainingPartnerEmail);
- 
+  
  
