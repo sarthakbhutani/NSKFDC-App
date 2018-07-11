@@ -86,7 +86,7 @@ public class ImportDao extends AbstractTransactionalDao{
 			
 			try{
 			        
-				Integer result = getJdbcTemplate().update(dataImportConfig.getImportBatchDetails(),parameters);
+				Integer result = getJdbcTemplate().update(dataImportConfig.getGenerateBatch(),parameters);
 						
 				LOGGER.debug("The result of the query is : " + result);
 						

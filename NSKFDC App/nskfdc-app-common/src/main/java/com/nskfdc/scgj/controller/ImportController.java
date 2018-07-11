@@ -69,7 +69,7 @@ public class ImportController {
 			}
 		}
 
-	 @RequestMapping("/getDataImport")
+	 @RequestMapping("/generateBatch")
 	 public int generateBatchController(){
 		 String trainingPartnerEmail = "snb@gmail.com";
 		 LOGGER.debug("Request received from frontend to create batch for email id : " + trainingPartnerEmail);
