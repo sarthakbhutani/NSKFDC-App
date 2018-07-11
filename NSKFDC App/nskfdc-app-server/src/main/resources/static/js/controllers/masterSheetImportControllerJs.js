@@ -1,16 +1,16 @@
-function checkforblank() {
-    var location = document.getElementById('Location');
-    var invalid = location.value == "none";
-    if (invalid) {
-        alert('First Choose Ward Type');
-        location.className = 'state';
-    } else {
-        location.className = 'state';
-    }
-    return !invalid;
-}
+
 var app = angular.module('app');
 app.controller('importController', function($scope, $http) {
+	$scope.checkselection = function () {
+		if ($scope.userSelect != "" && $scope.userSelect != undefined)
+		$scope.msg = 'Selected Value: '+$scope.userSelect;
+		else
+		$scope.msg = 'Please Select Ward Type';
+		}
+	$scope.sendForm = function () {
+		$scope.msg = "Form Validated";	
+	
+	}
 
     var url = '/getBatchIdfortrainer';
     $scope.ids = [];
@@ -62,11 +62,11 @@ app.controller('importController', function($scope, $http) {
             console.log(filename.length)
             var index = filename.lastIndexOf(".");
             var strsubstring = filename.substring(index, filename.length);
-            if (strsubstring == '.xls' || strsubstring == '.xlsx') {
+            if (strsubstring == '.xlsx') {
                 console.log('File Uploaded sucessfully');
             } else {
                 $scope.theFile = '';
-                $scope.FileMessage = 'please upload correct File ,File extension should be .xls or .xlsx';
+                $scope.FileMessage = 'please upload correct File ,File extension should be .xlsx';
             }
         });
     };
