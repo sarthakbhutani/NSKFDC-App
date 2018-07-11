@@ -1,8 +1,12 @@
 package com.nskfdc.scgj.controller;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.nskfdc.scgj.dto.BatchIdDto;
 
 import com.nskfdc.scgj.service.UploadDocumentService;
 
@@ -35,6 +39,20 @@ public class UploadDocumentsController {
 		
 		uploadDocumentService.getSearchedDocument();
 	}
+	
+	
+	@RequestMapping("/getBatchIdDet")
+	public Collection<BatchIdDto> getBatchIdDetails(){
+		try{
+			System.out.println("in controller");
+			return uploadDocumentService.getBatchDetails();
+		}
+		catch(Exception e){
+			System.out.println(e);
+			return null;
+		}
+	}
+	
 
 	
 }
