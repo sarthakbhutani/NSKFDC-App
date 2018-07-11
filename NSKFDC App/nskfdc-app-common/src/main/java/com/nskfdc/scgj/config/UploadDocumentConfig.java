@@ -7,6 +7,15 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="uploadDocuments",locations="classpath:sql/uploadDocuments.yml")
 public class UploadDocumentConfig {
 
-	//write your code here
+	private String showBatchIdDetails;
+
+	public String getShowBatchIdDetails() {
+		return showBatchIdDetails;
+	}
+
+	public void setShowBatchIdDetails(String showBatchIdDetails) {
+		this.showBatchIdDetails = showBatchIdDetails;
+	}
+	
 	
 }
