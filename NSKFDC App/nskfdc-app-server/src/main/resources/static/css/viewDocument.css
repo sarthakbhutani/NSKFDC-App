@@ -8,7 +8,7 @@
 	size: 0%;
 }
 #enterBatchId{
-	border: solid 1px darkslategray;
+	border: solid 1px #939393;
 	font-family: calibri;
 	width: 115%;
 	padding: 1%;
@@ -16,14 +16,14 @@
 }
 
 #tpname{
-	border: solid 1px darkslategray;
+	border: solid 1px #939393;
 	font-family: calibri;
 	padding: 1%;
 	width: 107%;
 	    
 }
 #scgjbtno{
-	border: solid 1px darkslategray;
+	border: solid 1px #939393;
 	font-family: calibri;
 	    padding: 1%;
        	
