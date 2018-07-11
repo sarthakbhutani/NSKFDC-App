@@ -1,5 +1,8 @@
 package com.nskfdc.scgj.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,10 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
+import com.nskfdc.scgj.dto.BatchDto;
 
 @Repository
 public class DataImportDao extends AbstractTransactionalDao{
@@ -111,6 +116,39 @@ public class DataImportDao extends AbstractTransactionalDao{
 	}
 			
 			//write Rowmapper class here
+	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
 	
+	
+	public Collection<BatchDto> getBatchDetail(){
+		
+	
+		
+		
+		try {
+			
+		
+			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(), BATCH_RowMapper);
+			
+		} catch (Exception e) {
+			
+			
+			return null;
+			
+		}
+		
+	}
+	
+	private static class BATCHRowmapper implements RowMapper<BatchDto>{
+		
+		@Override
+		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			String batchId = rs.getString("batchId");
+			
+			return new BatchDto(batchId);
+			
+		}
+	}
+
 
 }
