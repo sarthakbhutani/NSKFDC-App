@@ -1,0 +1,3 @@
+batchIdQuery:
+ showBatchId: >
+  select batchId from batchdetails where scgjBatchNumber=:batchnumber;

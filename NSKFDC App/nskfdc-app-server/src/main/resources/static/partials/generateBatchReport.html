@@ -3,8 +3,130 @@
 </head>
 
 <div ng-controller="generateBatchReportController">
- <h1>GENERATE BATCH REPORT</h1>
- 
- 	<!-- write code here -->
+ <div class="container outline">
+    	<div class="row" >
+        	<div class="col-md-11">
+            	<div class="col-md-5">
+                	<label><h4>Generate Batch Report</h4></label>
+                </div>
+                <div class="col-md-3">
+                	<select ng-model="selectedName" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
+                	<span id="Error"></span>
+                	</select>
+                </div>
+                <div class="col-md-3">
+                	<input ng-blur="ngBlur(batchnumber)" class="form-control txt" type="text" placeholder="Enter SCGJ NUmber" name="batchnumber" ng-model="batchnumber" required>
+                 </div>
+            </div>
+        </div>
+        <div class="container innerline">
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Day 1" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Day 2" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Day 3" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                   
+             </div>
+        </div>
+        <div class="row boxes" >
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Day 4" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+         <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Day 5" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Assessment" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control" placeholder="Enter Images of Medical Exam" />
+                    </div>
+                    <div class="col-md-3">
+                      <button class="btn btn-primary btncolor">Browse</button>
+                    </div>
+                    
+             </div>
+        </div>
+        <center><button class="btn btn-primary boxes" >Generate Report</button></center>
+        </div>
+     <div class="container">
+        <div class="row col-md-4">
+        	<h4>&nbsp;Search Report</h4>
+        </div>
+        <div class="row">
+        	<div class="col-md-12">
+            		
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control" placeholder="Enter Batch Id" />
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-primary btncolor">Search</button>
+                    </div>
+                    <div class="col-md-3"></div>
+             </div>
+        </div>
+        <div class="table">
+		    
+		    <div ui-grid="details"  class="grid grid-align properties " ui-grid-auto-resize></div> 
+		</div>
+       </div>
+    </div>
 
 </div>
