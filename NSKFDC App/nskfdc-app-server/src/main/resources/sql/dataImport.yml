@@ -3,5 +3,10 @@ dataImport:
   insert into batchdetails(trainingPartnerEmail) values (:trainingPartnerEmail);
  showbatchId: > 
   SELECT batchId FROM batchdetails JOIN user WHERE batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
+  
+ 
+
+
  
  
+
