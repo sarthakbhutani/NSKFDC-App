@@ -30,7 +30,8 @@
 }
 .background{
 	    background-color: #FbFbFb;
- }
+	    margin-left: 1%;
+}
  #errormessage{
     margin-right: 41%;
     color:red;
@@ -77,3 +78,7 @@ div.ui-grid-canvas{
 	 color: black;
 	 
 }
+#content{
+	    background-color: #FbFbFb;
+}
+
