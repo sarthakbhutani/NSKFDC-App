@@ -1,5 +1,7 @@
 package com.nskfdc.scgj.controller;
 
+import java.util.Collection;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.service.DataImportService;
 
 @RestController
@@ -96,5 +99,23 @@ public class DataImportController {
 		 }
 
 	 }
+		@RequestMapping("/getBatchIdfortrainer")
+		public Collection<BatchDto> getBatchDetail(){
+			
+			LOGGER.debug("Request received from frontend to show batch ID");
+			
+			
+			try {
+				
+			
+				return importHistoryService.getBatchDetail();
+				
+			}catch(Exception e) {
+				
+			
+				return null;
+				
+			}
+		}
  
 }
