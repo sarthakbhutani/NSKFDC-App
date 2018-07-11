@@ -51,7 +51,7 @@
       </div>
    </div>
    <!--       text feild section-->
-   <form  method="post" onsubmit="return checkforblank()">
+   <form name="personForm" novalidate ng-submit="personForm.$valid &&sendForm()" >
       <div class="row" "cointainer-fluid" id="style">
          <div class="col-sm-3" >
             <font size="4">Update Existing Batch</font>
@@ -63,11 +63,12 @@
             </select>
          </div>
          <div class="col-sm-3">
-            <select name="Location" id="Location" onchange="checkforblank()" ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
+            <select  ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
                <option value="none" selected  >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
             </select>
+            <span style="color:red; font-size:1.2rem;">{{msg}}</span>
          </div>
          <div class="col-sm-3">
             <div ng-if="myVar === 'Single Ward'"  id="general-1" >
@@ -79,7 +80,8 @@
       </div>
       <div class="row" id= "wrapper">
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="value == undefined"  type="text" required placeholder="Center Id" id="Id1"></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="Id1" ng-model="txtId" ng-pattern="/^[0-9]{1,15}$/" required />
+           <span style="color:Red; font-size=1.2rem;" ng-show="personForm.CenterId.$dirty&&personForm.CenterId.$error.pattern">Only Numbers Allowed</span></li>
             <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
          </div>
@@ -117,18 +119,18 @@
                   <option value="Telangana">Telangana</option>
                </select>
             </li>
-            <li><input ng-disabled="value == undefined" required type="text" placeholder="Trainer Name" id="Id6" ></li>
+            <li><input ng-disabled="value == undefined"  type="text" placeholder="Trainer Name" id="Id6" ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ></li>
          </div>
          <div class="col-sm-3" id="div">
             <li><input  ng-disabled="value == undefined" required type="text" placeholder="City" id="Id8" ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch Start Date"  ></li>
-            <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Name" id="Id10" ></li>
+            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Name" id="Id10" ></li>
          </div>
          <div class="col-sm-3" id="div">
             <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
-            <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Number" id="Id13" ></li>
+            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Number" id="Id13" ></li>
          </div>
       </div>
       <div id="padding">
@@ -153,7 +155,7 @@
                   <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
-                     <input id="uploadBtn" ng-disabled="value == undefined" type="submit"  class="upload" />
+                     <input id="uploadBtn" ng-disabled="value == undefined" ng-click="checkselection()"  type="submit"  class="upload" />
                   </div>
                </div>
             </div>
