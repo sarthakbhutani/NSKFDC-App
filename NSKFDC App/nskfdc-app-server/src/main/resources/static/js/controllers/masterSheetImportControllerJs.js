@@ -40,7 +40,7 @@ $scope.isDisabled13=false;
 
 $scope.showAlert = function () {
 	
-	$http.get("/getDataImport")
+	$http.get("/generateBatch")
 	.then(function (response) {
 		
 		console.log("Inside controller");
