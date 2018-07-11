@@ -18,7 +18,7 @@ public class GenerateReportController {
 	int success;
 	
 	@RequestMapping("/generateOccupationCertificateReport")
-	public String generateOccupationCertificateReport(@RequestParam("batchId") String batchId) {
+	public int generateOccupationCertificateReport(@RequestParam("batchId") String batchId, @RequestParam("trainingPartnerEmail") String trainingPartnerEmail) {
 		
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In Generate Occupation Certificate Controller");
@@ -26,20 +26,17 @@ public class GenerateReportController {
 		try {
 			
 			LOGGER.debug("In try block of Generate Occupation Certificate Controller");
-			success = generateReportService.generateOccupationCertificateReport(batchId);	
+			success = generateReportService.generateOccupationCertificateReport(batchId,trainingPartnerEmail);	
 			
 		}catch(Exception e) {
 			LOGGER.error("In catch block of Generate Occupation Certificate Controller"+e);
 		}
 		
-		if(success==1) 
-			return "Occupation Certificate generated successfully";
-		else
-			return "Occupation Certificate not generated";
+		return success;
 	}
 
 	@RequestMapping("/generateAttendanceSheet")
-	public String generateAttendanceSheet(@RequestParam("batchId") String batchId) {
+	public int generateAttendanceSheet(@RequestParam("batchId") String batchId,  @RequestParam("trainingPartnerEmail") String trainingPartnerEmail) {
 		
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In Generate Attendance Sheet Controller");
@@ -47,16 +44,13 @@ public class GenerateReportController {
 		try {		
 			
 			LOGGER.debug("In try block of Generate Attendance Sheet Controller");
-			success = generateReportService.generateAttendanceSheet(batchId);	
+			success = generateReportService.generateAttendanceSheet(batchId,trainingPartnerEmail);	
 			
 		}catch(Exception e) {
 			LOGGER.error("In catch block of Generate Attendance Sheet Controller"+e);
 		}
 		
-		if(success==1) 
-	    	return "Attendance Sheet generated successfully";
-	    else
-	    	return "Attendance Sheet not generated";
+		return success;
 	}
 	
 }

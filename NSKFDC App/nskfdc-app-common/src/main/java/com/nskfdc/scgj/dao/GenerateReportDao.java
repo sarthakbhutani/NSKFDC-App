@@ -3,11 +3,13 @@ package com.nskfdc.scgj.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.GenerateReportConfig;
 import com.nskfdc.scgj.dto.GenerateAttendanceSheetDto;
@@ -27,7 +29,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateReportDao.class);
 	
-	public Collection<GenerateOccupationCertificateReportDto> generateOccupationCertificateReport(String batchId) {
+	public Collection<GenerateOccupationCertificateReportDto> generateOccupationCertificateReport(String batchId,String trainingPartnerEmail) {
 		
 		LOGGER.debug("Request received from service");
 		LOGGER.debug("In Generate Occupation Certificate Dao");
@@ -37,6 +39,9 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			LOGGER.debug("In try block of Generate Occupation Certificate Dao");
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("batchId",batchId);
+			parameters.put("trainingPartnerEmail", trainingPartnerEmail);
+			
+			
 			return getJdbcTemplate().query(generateReportConfig.getShowOccupationCertificateReportDetails(), parameters ,generateOccupationCertificateReportRowMapper);
 			
 		}catch(Exception e) {
@@ -46,7 +51,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}
 	}	
 	
-	public Collection<GenerateAttendanceSheetDto> generateAttendanceSheet(String batchId) {
+	public Collection<GenerateAttendanceSheetDto> generateAttendanceSheet(String batchId,String trainingPartnerEmail) {
 		
 		LOGGER.debug("Request received from service");
 		LOGGER.debug("In Generate Attendance Sheet Dao");
@@ -56,6 +61,8 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			LOGGER.debug("In try block of Generate Attendance Sheet Dao");
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("batchId",batchId);
+			parameters.put("trainingPartnerEmail", trainingPartnerEmail);
+			
 			return getJdbcTemplate().query(generateReportConfig.getShowAttendanceSheetDetails(), parameters ,generateAttendanceSheetRowMapper);
 			
 		}catch(Exception e) {
