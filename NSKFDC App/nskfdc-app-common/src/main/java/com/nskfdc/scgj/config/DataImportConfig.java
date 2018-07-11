@@ -8,15 +8,16 @@ import org.springframework.stereotype.Component;
 public class DataImportConfig {
 
 	//write your code here
-	private String importBatchDetails;
+	private String generateBatch;
 
-	public String getImportBatchDetails() {
-		return importBatchDetails;
+	public String getGenerateBatch() {
+		return generateBatch;
 	}
 
-	public void setImportBatchDetails(String importBatchDetails) {
-		this.importBatchDetails = importBatchDetails;
+	public void setGenerateBatch(String generateBatch) {
+		this.generateBatch = generateBatch;
 	}
 
+  
 	
 }
