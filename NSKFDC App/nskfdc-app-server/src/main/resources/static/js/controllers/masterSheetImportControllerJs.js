@@ -1,23 +1,29 @@
 function checkforblank() {
-    
-    var location = document.getElementById('Location');
-    var invalid = location.value == "none";
- 
-    if (invalid) {
-    	alert('First Choose Ward Type');
-        location.className = 'state';
-    }
-    else {
-        location.className = 'state';
-    }
-    
-    return !invalid;
-
-
+var location = document.getElementById('Location');
+var invalid = location.value == "none";
+if (invalid) {
+alert('First Choose Ward Type');
+location.className = 'state';
+}
+else {
+location.className = 'state';
+}
+return !invalid;
 }
 var app = angular.module('app');
 app.controller('importController',function($scope, $http) {
 	
+var url='/getBatchIdfortrainer';
+$scope.ngClick = function () {
+$scope.ids = [];
+$http.get(url)
+.then(function (response) {
+let dt = response.data;	
+for(i in dt){
+$scope.ids.push(response.data[i].batchId); 
+}
+});
+}
 $scope.myVar='none';
 //	 $scope.value = 'select';
 $scope.enable = function() {
@@ -37,46 +43,36 @@ $scope.isDisabled11=false;
 $scope.isDisabled12=false;
 $scope.isDisabled13=false;
 };
-
 $scope.showAlert = function () {
-	
-	$http.get("/generateBatch")
-	.then(function (response) {
-		
-		console.log("Inside controller");
-		$scope.data = response.data;
-		
-	});
-	
-    if ($scope.data == -1) {
-    	
-    	console.log("Inside if");
-        console.log("Batch not generated");
-    }
-        else{
-        	console.log("Batch successfully generated");
-        }
-    };
-
-
-    $scope.setFile = function(element) {
-    $scope.$apply(function($scope) {
-        $scope.theFile = element.files[0];
-        $scope.FileMessage = '';
-        var filename = $scope.theFile.name;
-        console.log(filename.length)
-        var index = filename.lastIndexOf(".");
-        var strsubstring = filename.substring(index, filename.length);
-        if (strsubstring == '.xls' || strsubstring == '.xlsx' )
-        {
-          console.log('File Uploaded sucessfully');
-        }
-        else {
-            $scope.theFile = '';
-              $scope.FileMessage = 'please upload correct File ,File extension should be .xls or .xlsx';
-        }
-
-    });
+$http.get("/generateBatch")
+.then(function (response) {
+console.log("Inside controller");
+$scope.data = response.data;
+});
+if ($scope.data == -1) {
+console.log("Inside if");
+console.log("Batch not generated");
+}
+else{
+console.log("Batch successfully generated");
+}
 };
-
+$scope.setFile = function(element) {
+$scope.$apply(function($scope) {
+$scope.theFile = element.files[0];
+$scope.FileMessage = '';
+var filename = $scope.theFile.name;
+console.log(filename.length)
+var index = filename.lastIndexOf(".");
+var strsubstring = filename.substring(index, filename.length);
+if (strsubstring == '.xls' || strsubstring == '.xlsx' )
+{
+console.log('File Uploaded sucessfully');
+}
+else {
+$scope.theFile = '';
+$scope.FileMessage = 'please upload correct File ,File extension should be .xls or .xlsx';
+}
+});
+};
 });
