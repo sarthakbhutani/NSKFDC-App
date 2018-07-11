@@ -14,6 +14,7 @@ import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.GenerateReportConfig;
 import com.nskfdc.scgj.dto.GenerateAttendanceSheetDto;
 import com.nskfdc.scgj.dto.GenerateOccupationCertificateReportDto;
+import com.nskfdc.scgj.dto.SearchReportDto;
 
 @Repository
 public class GenerateReportDao extends AbstractTransactionalDao {
@@ -23,6 +24,9 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	
 	/* Creating object of Generate Attendance Sheet Report Rowmapper */
 	private static final GenerateAttendanceSheetRowmapper generateAttendanceSheetRowMapper = new GenerateAttendanceSheetRowmapper();
+	
+	
+	private static final SearchReportRowmapper SearchReport_RowMapper = new SearchReportRowmapper();
 	
 	@Autowired
 	private GenerateReportConfig generateReportConfig;
@@ -67,9 +71,36 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			
 		}catch(Exception e) {
 		
-			LOGGER.debug("In catch block of Generate Attendance Sheet Dao"+e);
+			LOGGER.error("In catch block of Generate Attendance Sheet Dao"+e);
 			return null;
 		}	
+	}
+	
+	
+	public Collection<SearchReportDto> getReport(String batchId, String trainingPartnerEmail) {
+		Map<String, Object> parameters = new HashMap<>();
+		
+		parameters.put("batchId",batchId);
+		parameters.put("trainingPartnerEmail", trainingPartnerEmail);
+		
+		
+
+		try {  
+			
+			
+			LOGGER.debug("In try block");
+			LOGGER.debug("Execute query to get BATCH details ");
+			return getJdbcTemplate().query(generateReportConfig.getShowReport(), parameters, SearchReport_RowMapper);
+	
+			
+		} catch (Exception e) {
+			
+			LOGGER.error("In Catch Block");
+			LOGGER.error("An error occured while getting the REPORT" + e);
+			return null;
+			
+		}
+		
 	}
 	
 	/* Declaring inner class Generate Occupation Certificate Report Rowmapper */
@@ -110,4 +141,19 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
     }
     
+    /* Declaring inner class search report Rowmapper */
+    private static class SearchReportRowmapper implements RowMapper<SearchReportDto>{
+		
+		@Override
+		public SearchReportDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			String batchId = rs.getString("batchId");
+			String trainingPartnerEmail = rs.getString("trainingPartnerEmail");
+							
+			return new SearchReportDto(batchId,trainingPartnerEmail);
+			
+		}
+
+	}
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.nskfdc.scgj.dao.GenerateReportDao;
 import com.nskfdc.scgj.dto.GenerateAttendanceSheetDto;
 import com.nskfdc.scgj.dto.GenerateOccupationCertificateReportDto;
+import com.nskfdc.scgj.dto.SearchReportDto;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -147,4 +148,21 @@ public class GenerateReportService {
 			}
 			return success;
 		}		
+    
+    
+    public Collection<SearchReportDto> getReport(String batchId,String trainingPartnerEmail){
+		
+		LOGGER.debug("REQUEST RECEIVED");
+		LOGGER.debug("GET REPORT");
+		
+		try {
+			LOGGER.debug("In try block to get BATCH details");
+			
+			return generateReportDao.getReport(batchId,trainingPartnerEmail);
+		} catch (Exception e) {
+		
+			LOGGER.error("An error occurred while getting REPORT"+ e);
+			return null;
+		}
+	}
 }

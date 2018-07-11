@@ -1,4 +1,0 @@
-searchReportQuery:
- showReport: >
-  select * from searchreport
-   where batchid = :batchid;

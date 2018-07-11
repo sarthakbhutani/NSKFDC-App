@@ -13,8 +13,7 @@ public class GenerateReportConfig {
 	/* For Attendance Sheet*/
 	private String showAttendanceSheetDetails;
 	
-	/* For NSKFDC Excel Sheet*/
-	private String showNSKFDCExcelSheet;
+	private String showReport;
 
 	public String getShowOccupationCertificateReportDetails() {
 		return showOccupationCertificateReportDetails;
@@ -30,10 +29,11 @@ public class GenerateReportConfig {
 		this.showAttendanceSheetDetails = showAttendanceSheetDetails;
 	}
 
-	public String getShowNSKFDCExcelSheet() {
-		return showNSKFDCExcelSheet;
+	public String getShowReport() {
+		return showReport;
 	}
-	public void setShowNSKFDCExcelSheet(String showNSKFDCExcelSheet) {
-		this.showNSKFDCExcelSheet = showNSKFDCExcelSheet;
-	}	
+	public void setShowReport(String showReport) {
+		this.showReport = showReport;
+	}
+    	
 }
