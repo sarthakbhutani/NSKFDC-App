@@ -2,7 +2,7 @@ var scgj = angular.module("app");
 
 scgj.controller("generateCredentialsController" , function($scope, $http){
 	
-	 $scope.details = {
+	 $scope.detailsData = {
 		        enableGridMenus: false,
 		        enableSorting: false,
 		        enableFiltering: false,
@@ -17,7 +17,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 		        columnDefs: [
 		            {
 		            	name: 'NSDC Registration Number', 
-		                displayName: 'NSDC Registration Number',
+		                displayName: 'NSDC Reg. Number',
 		             
 		            },
 		            {
@@ -34,25 +34,29 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 		            },
 		            {
 		                name: 'Generated on',
-		                displayName: 'Generated on'
+		                displayName: 'Generated On'
 		             },
 		             
 		        ]
 		    };
+	 
+	 $http.get('')
+	 .then(function (response) {
+	 	 $scope.detailsData.data= response.data;
+
+	 });
 		   
 		    
 	var pwd = document.getElementById('password')
-	 var eye = document.getElementById('eye')
+	var eye = document.getElementById('eye')
 
 
 	 eye.addEventListener('click',togglePass);
 
 	 function togglePass()
 	 {
-	        eye.classList.toggle('active');
-	        
-	        (
-	     pwd.type == 'password') ? pwd.type = 'text' :
+        eye.classList.toggle('active');	    
+	     pwd.type == ('password') ? pwd.type = 'text' :
 	        pwd.type = 'password';
 	 }
 
