@@ -110,6 +110,12 @@
     font-size: 1.125rem;
     border: 1px solid #767171;
 }
+
+#wrapper #div li input[type="number"] {
+	
+-moz-appearance: textfield;
+	
+}
 #color
 {
     background-color: #019cb7;
