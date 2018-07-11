@@ -11,13 +11,11 @@
       <div class="col-sm-6" >
          <div class="col-sm-5" ></div>
          <div class="col-sm-6" >
-       			
-    		<div><button id="button" type="button" class="btn btn-info" ng-click="showAlert()">Generate Batch ID</button>
-    		</div> 
-		</div>
+            <div><button id="button" type="button" class="btn btn-info" ng-click="showAlert()">Generate Batch ID</button>
+            </div>
          </div>
       </div>
-   
+   </div>
    <div class="row"  "cointainer-fluid" id="panel" >
       <div class="col-sm-3">
          <div class="panel-s panel-default" id="panel-1">
@@ -52,124 +50,114 @@
          </div>
       </div>
    </div>
-
-<!--       text feild section-->
-<form  method="post" onsubmit="return checkforblank()">
-<div class="row" "cointainer-fluid" id="style">
-   <div class="col-sm-3" >
-      <font size="4">Update Existing Batch</font>
-   </div>
-   <div class="col-sm-3">
-      <select class="state form-control" name="Type" ng-change="enable()" ng-model="value">
-         <option selected disabled value="">Enter Batch ID</option>
-         <option value="B-001">B-001</option>
-         <option value="B-002">B-002</option>
-         <option value="B-003">B-003</option>
-      </select>
-   </div>
-   <div class="col-sm-3">
-      <select name="Location" id="Location" onchange="checkforblank()" ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
-         <option value="none" selected  >Choose Ward Type</option>
-         <option value="Single Ward" >Single Ward</option>
-         <option value="Multiple Ward">Multiple Ward</option>
-      </select>
-   </div>
-   <div class="col-sm-3">
-      <div ng-if="myVar === 'Single Ward'"  id="general-1" >
-         <div >
-            <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" >
+   <!--       text feild section-->
+   <form  method="post" onsubmit="return checkforblank()">
+      <div class="row" "cointainer-fluid" id="style">
+         <div class="col-sm-3" >
+            <font size="4">Update Existing Batch</font>
+         </div>
+         <div class="col-sm-3">
+            <select ng-click="ngClick()" ng-change="enable()" ng-model="value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
+               <option selected disabled value="">Enter Batch ID</option>
+               <span id="Error"></span>
+            </select>
+         </div>
+         <div class="col-sm-3">
+            <select name="Location" id="Location" onchange="checkforblank()" ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
+               <option value="none" selected  >Choose Ward Type</option>
+               <option value="Single Ward" >Single Ward</option>
+               <option value="Multiple Ward">Multiple Ward</option>
+            </select>
+         </div>
+         <div class="col-sm-3">
+            <div ng-if="myVar === 'Single Ward'"  id="general-1" >
+               <div >
+                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" >
+               </div>
+            </div>
          </div>
       </div>
-   </div>
-</div>
-<div class="row" id= "wrapper">
-   <div class="col-sm-3" id="div">
-      <li><input ng-disabled="value == undefined"  type="text" required placeholder="Center Id" id="Id1"></li>
-      <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
-      <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
-   </div>
-   <div class="col-sm-3 margin" id="div" >
-      <li>
-         <select name="Location" id="Location" onchange="checkforblank()" required ng-disabled="value == undefined"  required class="state form-control" name="Type">
-            <option value="State">State</option>
-            <option value="AP">Andra Pradesh</option>
-            <option value="AP">Arunachal Pradesh</option>
-            <option value="AS">Assam</option>
-            <option value="Bihar">Bihar</option>
-            <option value="Chhattisgarh">Chhattisgarh</option>
-            <option value="Goa">Goa</option>
-            <option value="Gujarat">Gujarat</option>
-            <option value="Haryana">Haryana</option>
-            <option value="HM">Himachal Pradesh</option>
-            <option value="J&K">Jammu and Kashmir</option>
-            <option value="Jharkhand">Jharkhand</option>
-            <option value="Karnataka">Karnataka</option>
-            <option value="Kerala">Kerala</option>
-            <option value="MP">Madya Pradesh</option>
-            <option value="Maharashtra">Maharashtra</option>
-            <option value="Manipur">Manipur</option>
-            <option value="Meghalaya">Mizoram</option>
-            <option value="Nagaland">Nagaland</option>
-            <option value="Orissa">Orissa</option>
-            <option value="Punjab">Punjab</option>
-            <option value="Rajasthan">Rajasthan</option>
-            <option value="Sikkim">Sikkim</option>
-            <option value="Tamil Nadu">Tamil Nadu</option>
-            <option value="Tripura">Tripura</option>
-            <option value="Uttaranchal">Uttaranchal</option>
-            <option value="Uttar Pradesh">Uttar Pradesh</option>
-            <option value="West Bengal">West Bengal</option>
-            <option value="Telangana">Telangana</option>
-         </select>
-      </li>
-      <li><input ng-disabled="value == undefined" required type="text" placeholder="Trainer Name" id="Id6" ></li>
-      <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ></li>
-   </div>
-   <div class="col-sm-3" id="div">
-      <li><input  ng-disabled="value == undefined" required type="text" placeholder="City" id="Id8" ></li>
-      <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch Start Date"  ></li>
-      <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Name" id="Id10" ></li>
-   </div>
-   <div class="col-sm-3" id="div">
-      <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
-      <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
-      <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Number" id="Id13" ></li>
-   </div>
-</div>
-<div id="padding">
-             <div class="row" >
-                
-                <div class="col-sm-4" > 
-                </div>
-                <div class="col-sm-6">
-                     <input type="file" name="img[]" class="file">
-                    <div class="input-group col-xs-12" id="upload">
-                    <input type="text" id="uploadFile" required  placeholder="Upload .xls File" {{theFile.name}} disabled="disabled" />
-                
-                 
-                    
-                <button class="btn btn-default btn-file btn-primary" ng-disabled="value == undefined" type="button" ng-click="browse()">
-                    Browse <input type="file"
-               onchange="angular.element(this).scope().setFile(this)">
-        
-                    </button>
-                        <br>
-   {{FileMessage}}
-                </div>
-                
-            
+      <div class="row" id= "wrapper">
+         <div class="col-sm-3" id="div">
+            <li><input ng-disabled="value == undefined"  type="text" required placeholder="Center Id" id="Id1"></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
+         </div>
+         <div class="col-sm-3 margin" id="div" >
+            <li>
+               <select name="Location" id="Location" onchange="checkforblank()" required ng-disabled="value == undefined"  required class="state form-control" name="Type">
+                  <option value="State">State</option>
+                  <option value="AP">Andra Pradesh</option>
+                  <option value="AP">Arunachal Pradesh</option>
+                  <option value="AS">Assam</option>
+                  <option value="Bihar">Bihar</option>
+                  <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Goa">Goa</option>
+                  <option value="Gujarat">Gujarat</option>
+                  <option value="Haryana">Haryana</option>
+                  <option value="HM">Himachal Pradesh</option>
+                  <option value="J&K">Jammu and Kashmir</option>
+                  <option value="Jharkhand">Jharkhand</option>
+                  <option value="Karnataka">Karnataka</option>
+                  <option value="Kerala">Kerala</option>
+                  <option value="MP">Madya Pradesh</option>
+                  <option value="Maharashtra">Maharashtra</option>
+                  <option value="Manipur">Manipur</option>
+                  <option value="Meghalaya">Mizoram</option>
+                  <option value="Nagaland">Nagaland</option>
+                  <option value="Orissa">Orissa</option>
+                  <option value="Punjab">Punjab</option>
+                  <option value="Rajasthan">Rajasthan</option>
+                  <option value="Sikkim">Sikkim</option>
+                  <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Tripura">Tripura</option>
+                  <option value="Uttaranchal">Uttaranchal</option>
+                  <option value="Uttar Pradesh">Uttar Pradesh</option>
+                  <option value="West Bengal">West Bengal</option>
+                  <option value="Telangana">Telangana</option>
+               </select>
+            </li>
+            <li><input ng-disabled="value == undefined" required type="text" placeholder="Trainer Name" id="Id6" ></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ></li>
+         </div>
+         <div class="col-sm-3" id="div">
+            <li><input  ng-disabled="value == undefined" required type="text" placeholder="City" id="Id8" ></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch Start Date"  ></li>
+            <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Name" id="Id10" ></li>
+         </div>
+         <div class="col-sm-3" id="div">
+            <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
+            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
+            <li><input ng-disabled="value == undefined" required type="text" placeholder="Employer Number" id="Id13" ></li>
+         </div>
+      </div>
+      <div id="padding">
+         <div class="row" >
+            <div class="col-sm-4" > 
+            </div>
+            <div class="col-sm-6">
+               <input type="file" name="img[]" class="file">
+               <div class="input-group col-xs-12" id="upload">
+                  <input type="text" id="uploadFile" required  placeholder="Upload .xls File" {{theFile.name}} disabled="disabled" />
+                  <button class="btn btn-default btn-file btn-primary" ng-disabled="value == undefined" type="button" ng-click="browse()">
+                  Browse <input type="file"
+                     onchange="angular.element(this).scope().setFile(this)">
+                  </button>
+                  <br>
+                  {{FileMessage}}
+               </div>
             </div>
             <div class="row">
-            <div class="col-sm-4"></div>
-            <div class="col-sm-4"> <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
-                  <div class="col-xs-4">  <span>Submit</span>
-                       </div>
-                        <input id="uploadBtn" ng-disabled="value == undefined" type="submit"  class="upload" />
-                        
-                    </div>
-                </div>
-       </div>
-                </div>
+               <div class="col-sm-4"></div>
+               <div class="col-sm-4">
+                  <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
+                     <div class="col-xs-4">  <span>Submit</span>
+                     </div>
+                     <input id="uploadBtn" ng-disabled="value == undefined" type="submit"  class="upload" />
+                  </div>
                </div>
-           </form>     
+            </div>
+         </div>
+      </div>
+   </form>
 </div>
