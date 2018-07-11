@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nskfdc.scgj.service.DataImportService;
+import com.nskfdc.scgj.service.ImportService;
 
 @RestController
 public class DataImportController {
@@ -16,7 +16,7 @@ public class DataImportController {
 
 	
 	@Autowired
-	private DataImportService importHistoryService;
+	private ImportService importHistoryService;
 	
 	@RequestMapping("/importMasterSheet")
 	public void importMasterSheet() {
