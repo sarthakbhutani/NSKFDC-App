@@ -1,1 +1,3 @@
 uploadDocuments:
+ showBatchIdDetails: >
+  select batchId from batchdetails join user where batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
