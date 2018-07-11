@@ -195,3 +195,10 @@ h3{
 	font-size: 1rem;
 	color:blue;
 }
+
+#content {
+    width: 95%;
+    padding: 0px;
+    min-height: 80vh;
+    transition: all 0.3s;
+}
