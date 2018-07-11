@@ -18,15 +18,15 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 
     columnDefs: [
         {
-        	name: 'customer_Id', 
+        	name: 'Batch_Id', 
             displayName: 'Batch Id'
         },
         {
-        	name: 'customerName',
+        	name: 'trainingPartner',
         	displayName: 'Training Partner'
         },
         {
-            name: 'address',
+            name: 'uploadedOn',
             displayName: 'Uploaded On'
         },
         
