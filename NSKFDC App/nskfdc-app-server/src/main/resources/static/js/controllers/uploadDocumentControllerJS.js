@@ -1,4 +1,4 @@
-var uploadDocument = angular.module("app");
+var uploadDocument = angular.module('app');
 
 uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	console.log("working");
@@ -14,8 +14,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	    
 	    
 	  };
-	  
-	  console.log("working bef grid");
+
 	  
 	  $scope.details = {
 		        enableGridMenus: false,
@@ -49,6 +48,32 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 		             }
 		        ]
 		    };
+    
+//  			$scope.getBatchId = function()
+//  			{
+//  				$scope.ids=[];
+//  				$http.get("/getBatchIdDet").then(function (response) {
+//  			    	 
+//  					let batchId = response.data;
+//  					for(i in batchId)
+//  						{
+//  						   $scope.ids.push(response.data[i].batchId);
+//  						}
+//
+//  			    });
+//  			}
+  			
+  			$scope.ids=[];
+				$http.get("/getBatchIdDet").then(function (response) {
+			    	 
+					let batchId = response.data;
+					for(i in batchId)
+						{
+						   $scope.ids.push(response.data[i].batchId);
+						}
+
+		    });
+
 	  
 	});
 	
