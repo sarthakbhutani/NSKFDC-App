@@ -6,7 +6,7 @@
         <div id="content" class="container-fluid background">
              <div id="r1" class="row">
                 <div  class="col-md-10">
-                <h3>Upload Documents</h3>
+                <h3 id="marginForUpload">Upload Documents</h3>
                 </div>
             <div id="r1c2" class="col-md-2">
                 <p ><a><u id ="upguide">Upload Guidelines</u></a></p>
@@ -43,7 +43,7 @@
      
   
                 
-            <input type="text" class="form-control" id="First" placeholder="SCGJ Batch ID" required>
+            <input type="text" class="form-control" id="Second" placeholder="SCGJ Batch ID" required>
             </div>
             </div>
             
@@ -72,7 +72,6 @@
 
 <!-- BHUTANI -->
         
-        <div class="container-fluid background" >
     <!-- <button type="button" ng-click="click()" class="btn btn-primary">Click me</button>  -->
         <div class="row">
             <!-- heading -->
@@ -91,17 +90,19 @@
                  <span ng-show="searchForDocByTp.batchID.$error.required">Invalid Batch ID.</span>
                 </span> -->
             </div>
-            <div class="col-md-2 col-sm-4">
-                <button type="submit" class="btn btn-primary btncolor" ng-disabled="searchForDocByTp.$invalid" ng-click="submitForm()">  
+            <div class="col-md-2 col-sm-4 searchDocumentTxt">
+                <button type="submit" class="btn btn-primary btncolor" ng-click="submitForm()">  
             Search</button></div>
         </div>
 </form>
     <div class="row">
             <!-- grid via angular -->
+            <div class="col-md-11">
             <div class="table">
               <div ui-grid="details"  class="grid grid-align grid-small " ui-grid-auto-resize ></div> 
    </div>
         </div>
     </div>
+    </div>
 </div>
-</div>
+
