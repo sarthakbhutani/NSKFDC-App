@@ -17,6 +17,15 @@ public class DataImportConfig {
 	public void setGenerateBatch(String generateBatch) {
 		this.generateBatch = generateBatch;
 	}
+	private String showbatchId;
+
+	public String getshowbatchId() {
+		return showbatchId;
+	}
+
+	public void setshowbatchId(String showbatchId) {
+		this.showbatchId = showbatchId;
+	}
 
   
 	
