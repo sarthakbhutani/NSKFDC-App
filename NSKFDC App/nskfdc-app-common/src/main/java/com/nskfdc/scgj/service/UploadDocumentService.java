@@ -1,9 +1,13 @@
 package com.nskfdc.scgj.service;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.nskfdc.scgj.dao.UploadDocumentsDao;
+import com.nskfdc.scgj.dto.BatchIdDto;
 
 @Service
 public class UploadDocumentService {
@@ -60,5 +64,20 @@ public class UploadDocumentService {
 			}
 		}		
 	
+	
+	
+	public Collection<BatchIdDto> getBatchDetails(){
+		
+		try {
+			 System.out.println("in service");
+			return uploadDocumentsDao.getBatchDetail();
+			
+		}
+		catch(Exception e){
+		 System.out.println(e);
+			return null;
+		}
+		
+	}
 	
 }
