@@ -58,6 +58,7 @@
          </div>
          <div class="col-sm-3">
             <select  ng-change="enable()" ng-model="value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
+            <option selected disabled value="">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>
          </div>
