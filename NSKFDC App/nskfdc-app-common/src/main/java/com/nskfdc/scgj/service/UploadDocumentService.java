@@ -2,8 +2,11 @@ package com.nskfdc.scgj.service;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 
 import com.nskfdc.scgj.dao.UploadDocumentsDao;
@@ -11,7 +14,7 @@ import com.nskfdc.scgj.dto.BatchIdDto;
 
 @Service
 public class UploadDocumentService {
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(UploadDocumentService.class);
 	@Autowired
 	private UploadDocumentsDao uploadDocumentsDao;
 	
@@ -67,14 +70,16 @@ public class UploadDocumentService {
 	
 	
 	public Collection<BatchIdDto> getBatchDetails(){
+		LOGGER.debug("Request received from upload documents Controller to upload documents service");
+		
 		
 		try {
-			 System.out.println("in service");
+			LOGGER.debug("In try block of upload documents service");
 			return uploadDocumentsDao.getBatchDetail();
 			
 		}
 		catch(Exception e){
-		 System.out.println(e);
+			LOGGER.debug("An error occurred in upload documents service"+ e);
 			return null;
 		}
 		
