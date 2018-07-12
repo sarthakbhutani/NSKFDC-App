@@ -2,16 +2,18 @@ package com.nskfdc.scgj.controller;
 
 import java.util.Collection;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nskfdc.scgj.dto.BatchIdDto;
-
 import com.nskfdc.scgj.service.UploadDocumentService;
 
 @RestController
 public class UploadDocumentsController {
+	private static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsController.class);
 	
 	@Autowired
 	private UploadDocumentService uploadDocumentService;
@@ -43,12 +45,16 @@ public class UploadDocumentsController {
 	
 	@RequestMapping("/getBatchIdDet")
 	public Collection<BatchIdDto> getBatchIdDetails(){
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("In upload Controller");
 		try{
-			System.out.println("in controller");
+			LOGGER.debug("In try block of upload documents");
+			LOGGER.debug("Sending request to uploadservice");
+			
 			return uploadDocumentService.getBatchDetails();
 		}
 		catch(Exception e){
-			System.out.println(e);
+			LOGGER.debug("An error occurred in upload controller" + e);
 			return null;
 		}
 	}
