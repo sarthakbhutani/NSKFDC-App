@@ -1,5 +1,5 @@
 .outline{
-	background-color:#E2E2E2;
+	
 	margin-top:1%;
 	width:70%;
 	height:inherit;
@@ -9,12 +9,13 @@
 	background-color:#FFF;
 	margin:1%;
 	width:95%;
-	height:80%;
+	height:95%;
 	padding-top:2%;
 }
 .txt{
-	padding-top:3%;
+	padding-top:1%;
 	margin-top:6%;
+	
 }
 .boxes{
 	padding-top:1%;
@@ -50,4 +51,7 @@ h4{
 .btn-primary {
     color: #fff;
     border-color: #ffffff5c;
+}
+input[type="text"] {
+  font-size: 1.2rem;
 }
