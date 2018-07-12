@@ -51,7 +51,7 @@
       </div>
    </div>
    <!--       text feild section-->
-   <form name="personForm" novalidate ng-submit="personForm.$valid &&sendForm()" >
+   <form name="pattern" method="post" onsubmit="return checkforward() || checkforstate()"  >
       <div class="row" "cointainer-fluid" id="style">
          <div class="col-sm-3" >
             <font size="4">Update Existing Batch</font>
@@ -63,12 +63,13 @@
             </select>
          </div>
          <div class="col-sm-3">
-            <select  ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
-               <option value="none" selected  >Choose Ward Type</option>
+                        <select name="Loca" id="Loca" onchange="checkforward()" ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
+              <option value="none" selected  >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
             </select>
-            <span style="color:red; font-size:1.2rem;">{{msg}}</span>
+            
+            
          </div>
          <div class="col-sm-3">
             <div ng-if="myVar === 'Single Ward'"  id="general-1" >
@@ -80,14 +81,14 @@
       </div>
       <div class="row" id= "wrapper">
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="Id1" ng-model="txtId" ng-pattern="/^[0-9]{1,15}$/" required />
-           <span style="color:Red; font-size=1.2rem;" ng-show="personForm.CenterId.$dirty&&personForm.CenterId.$error.pattern">Only Numbers Allowed</span></li>
+            <li><input  ng-disabled="value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="CenterId" ng-model="txtId" ng-pattern="/^[0-9]{1,15}$/" required />
+         <span id="warning"  ng-show="pattern.CenterId.$error.pattern">enter only number</span> </li>
             <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
          </div>
          <div class="col-sm-3 margin" id="div" >
             <li>
-               <select name="Location" id="Location" onchange="checkforblank()" required ng-disabled="value == undefined"  required class="state form-control" name="Type">
+               <select  required name="State" id="State" onchange="checkforstate()" ng-disabled="value == undefined"  required class="state form-control" name="Type">
                   <option value="State">State</option>
                   <option value="AP">Andra Pradesh</option>
                   <option value="AP">Arunachal Pradesh</option>
@@ -155,11 +156,12 @@
                   <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
-                     <input id="uploadBtn" ng-disabled="value == undefined" ng-click="checkselection()"  type="submit"  class="upload" />
+                     <input id="uploadBtn" ng-disabled="value == undefined" type="submit"  class="upload" />
                   </div>
                </div>
             </div>
          </div>
       </div>
+
    </form>
 </div>
