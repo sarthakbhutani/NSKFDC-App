@@ -61,11 +61,13 @@ i, span {
     width: 100%;
     display: flex;
     align-items: stretch;
+    padding: 0% !important;
 }
 
 #sidebar {
     min-width: 188pt;
     max-width: 188pt;
+    min-height: 100vh !important;
     background: #19b2cc;
     color: #fff;
     transition: all 0.3s;
