@@ -1,12 +1,17 @@
 dataImport:
  generateBatch: >
-  insert into batchdetails(trainingPartnerEmail) values (:trainingPartnerEmail);
+  insert into batchdetails(userEmail) values (userEmail);
+ 
  showbatchId: > 
-  SELECT batchId FROM batchdetails JOIN user WHERE batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
+  SELECT batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail = user.userEmail;
+ 
+ ShowTotalTargets: >
+  SELECT SUM(targets) FROM trainingpartnerdetails;
+ 
+ ShowRemainingTargets: >
+  SELECT ( SELECT SUM(targets) FROM trainingpartnerdetails) - ( SELECT count(enrollmentNumber) FROM trainingpartnerdetails JOIN batchdetails ON trainingpartnerdetails.userEmail = batchdetails.userEmail INNER JOIN candidate ON batchdetails.batchId = candidate.batchIdFK where batchEndDate);
   
- 
-
-
- 
- 
+ ShowTargetAchieved: >
+   SELECT count(enrollmentNumber) FROM trainingpartnerdetails JOIN batchdetails ON trainingpartnerdetails.userEmail = batchdetails.userEmail INNER JOIN candidate ON batchdetails.batchId = candidate.batchIdFK where batchEndDate; 
+  
 
