@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nskfdc.scgj.dto.BatchDto;
+
 import com.nskfdc.scgj.service.DataImportService;
 
 @RestController
@@ -117,5 +118,71 @@ public class DataImportController {
 				
 			}
 		}
- 
+		
+		//Author:Sagun Saluja
+		
+		@RequestMapping("/getTotalTargets")
+		public int getTotalTargets(){
+			
+			LOGGER.debug("Request received from frontend to get Total Targets");
+			LOGGER.debug("In get Total Targets Controller");
+			
+			try {
+				
+				LOGGER.debug("In try block to get Total Targets");
+				LOGGER.debug("Sending request to service");
+				return importHistoryService.getTotalTargets();
+				
+				}
+			catch(Exception e) {
+				
+				LOGGER.error("An exception occurred while getting the Total Targets" + e);
+				return 0;
+				
+								}
+		}
+		
+		@RequestMapping("/getTargetAchieved")
+		public int getTargetAchieveds(){
+			
+			LOGGER.debug("Request received from frontend to get Target Achieved");
+			LOGGER.debug("In get Target Achieved Controller");
+			
+			try {
+				
+				LOGGER.debug("In try block to get Target Achieved");
+				LOGGER.debug("Sending request to service");
+				return importHistoryService.getTargetAchieved();
+				
+				}
+			catch(Exception e) {
+				
+				LOGGER.error("An exception occurred while getting the Target Achieved" + e);
+				return 0;
+				
+								}
+		}
+		
+		
+		
+		@RequestMapping("/getRemainingTargets")
+		public int getRemainingTargets(){
+			
+			LOGGER.debug("Request received from frontend to get Remaining Target");
+			LOGGER.debug("In get Remaining Target Controller");
+			
+			try {
+				
+				LOGGER.debug("In try block to get Remaining Target");
+				LOGGER.debug("Sending request to service");
+				return importHistoryService.getRemainingTargets();
+				
+				}
+			catch(Exception e) {
+				
+				LOGGER.error("An exception occurred while getting the Target Achieved" + e);
+				return 0;
+				
+								}
+		}
 }
