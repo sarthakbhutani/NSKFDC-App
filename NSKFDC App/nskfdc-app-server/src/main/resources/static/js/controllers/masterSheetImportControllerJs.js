@@ -32,22 +32,27 @@ function checkforstate() {
 
 var app = angular.module('app');
 app.controller('importController', function($scope, $http) {
-//	$scope.checkselection = function () {
-//		if ($scope.userSelect != "" && $scope.userSelect != undefined)
-//		$scope.msg = 'Selected Value: '+$scope.userSelect;
-//		else
-//		$scope.msg = 'Please Select Ward Type';
-//		}
-//	$scope.sendForm = function () {
-//		$scope.msg = "Form Validated";	
-//	
-//	}
 	
+	$http.get('/getTotalTargets')
+    .then(function (response) {
 
+    	$scope.totaltargets = response.data;
+    });
 
+	$http.get('/getTargetAchieved')
+    .then(function (response) {
+    	$scope.targetachieved = response.data;
 
+    });
+	
+	$http.get('/getRemainingTargets')
+    .then(function (response) {
+    	 $scope.remainingtargets = response.data;
 
-    var url = '/getBatchIdfortrainer';
+    });
+	
+	
+	 var url = '/getBatchIdfortrainer';
     $scope.ids = [];
     $http.get(url)
 	    .then(function(response) {
