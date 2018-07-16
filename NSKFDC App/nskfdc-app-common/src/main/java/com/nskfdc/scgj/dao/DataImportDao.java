@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.PanelDataImportDto;
 
 @Repository
 public class DataImportDao extends AbstractTransactionalDao{
@@ -149,6 +150,97 @@ public class DataImportDao extends AbstractTransactionalDao{
 			
 		}
 	}
+	
+	
+	
+	
+	
+public int getTotalTargets(){
+		
+		LOGGER.debug("Request received from Service");
+		LOGGER.debug("In Total Targets Dao, to get Total Targets");
+		
+		
+		try {
+			
+			LOGGER.debug("In try block");
+			LOGGER.debug("Execute query to get TotalTargets");
+			Map<String,Object> parameters = new HashMap<> ();
+			return getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
+			
+		} 
+		catch(DataAccessException de)
+		{
+			LOGGER.error("A data access exception has occured: " + de);
+			LOGGER.error("Returning zero");
+			return 0;
+		}
+		
+		catch(Exception e)
+		{
+			LOGGER.error("An Exception occured: " + e);
+			return 0;
+		}
+		
+	}
+
+public int getTargetAchieved(){
+	
+	LOGGER.debug("Request received from Service");
+	LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
+	
+	
+	try {
+		
+		LOGGER.debug("In try block");
+		LOGGER.debug("Execute query to get Target Achieved");
+		Map<String,Object> parameters = new HashMap<> ();
+		return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
+		
+	} 
+	catch(DataAccessException de)
+	{
+		LOGGER.error("A data access exception has occured: " + de);
+		LOGGER.error("Returning zero");
+		return 0;
+	}
+	
+	catch(Exception e)
+	{
+		LOGGER.error("An Exception occured: " + e);
+		return 0;
+	}
+	
+}
+public int getRemainingTargets(){
+	
+	LOGGER.debug("Request received from Service");
+	LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
+	
+	
+	try {
+		
+		LOGGER.debug("In try block");
+		LOGGER.debug("Execute query to get Target Achieved");
+		Map<String,Object> parameters = new HashMap<> ();
+		return getJdbcTemplate().queryForObject(dataImportConfig.getShowRemainingTargets(),parameters,Integer.class);
+		
+	} 
+	catch(DataAccessException de)
+	{
+		LOGGER.error("A data access exception has occured: " + de);
+		LOGGER.error("Returning zero");
+		return 0;
+	}
+	
+	catch(Exception e)
+	{
+		LOGGER.error("An Exception occured: " + e);
+		return 0;
+	}
+	
+}
+
 
 
 }
