@@ -26,6 +26,47 @@ public class DataImportConfig {
 	public void setshowbatchId(String showbatchId) {
 		this.showbatchId = showbatchId;
 	}
+	
+	
+	//Author: Sagun Saluja
+	
+	private String ShowTotalTargets;
+	
+	public String getShowTotalTargets() {
+		return ShowTotalTargets;
+	}
+
+	public void setShowTotalTargets(String ShowTotalTargets) {
+		this.ShowTotalTargets = ShowTotalTargets;
+	}
+
+
+	
+
+
+private String ShowTargetAchieved;
+	
+public String getShowTargetAchieved() {
+		return ShowTargetAchieved;
+}
+
+public void setShowTargetAchieved(String ShowTargetAchieved) {
+	this.ShowTargetAchieved = ShowTargetAchieved;
+}
+
+	
+	
+
+private String ShowRemainingTargets;
+
+public String getShowRemainingTargets() {
+	return ShowRemainingTargets;
+}
+
+public void setShowRemainingTargets(String showRemainingTargets) {
+	ShowRemainingTargets = showRemainingTargets;
+}
+		
 
   
 	
