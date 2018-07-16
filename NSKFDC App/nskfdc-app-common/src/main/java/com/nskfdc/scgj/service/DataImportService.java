@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.PanelDataImportDto;
 
 @Service
 public class DataImportService {
@@ -127,6 +128,57 @@ public class DataImportService {
 	}
 
 
+		
+  //Author: Sagun Saluja
 
+public int getTotalTargets(){
+	
+	LOGGER.debug("Request received from Control to get Total Targets");
+	LOGGER.debug("In CandidatesTrained Service, to get Total Targets ");
+	
+	try {
+		
+		LOGGER.debug("In try block to get Total Targets");
+		return importHistoryDao.getTotalTargets();
+	}
+	catch (Exception e) {
+	
+		LOGGER.error("An error occurred while getting the Total Targets"+ e);
+		return 0;
+	}
+}
+
+public int getTargetAchieved(){
+	
+	LOGGER.debug("Request received from Control to get Target Achieved");
+	LOGGER.debug("In CandidatesTrained Service, to get Target Achieved ");
+	
+	try {
+		
+		LOGGER.debug("In try block to get Target Achieved");
+		return importHistoryDao.getTargetAchieved();
+	}
+	catch (Exception e) {
+	
+		LOGGER.error("An error occurred while getting the Target Achieved"+ e);
+		return 0;
+	}
+}
+public int getRemainingTargets(){
+	
+	LOGGER.debug("Request received from Control to get Remaining Targets");
+	LOGGER.debug("In CandidatesTrained Service, to get Remaining Targets ");
+	
+	try {
+		
+		LOGGER.debug("In try block to get Remaining Targets");
+		return importHistoryDao.getRemainingTargets();
+	}
+	catch (Exception e) {
+	
+		LOGGER.error("An error occurred while getting the Remaining Targets"+ e);
+		return 0;
+	}
+}
 
 }
