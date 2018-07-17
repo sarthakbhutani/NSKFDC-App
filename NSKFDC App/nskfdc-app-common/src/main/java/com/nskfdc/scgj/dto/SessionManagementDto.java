@@ -10,16 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class SessionManagementDto implements UserDetails{
 	
 	private static final long serialVersionUID = 1L;
-	private String username;
+	private String userEmail;
 	private String password;
 	private Collection<SimpleGrantedAuthority> authorities;
 	
-	public SessionManagementDto(String username, String password, String userrole) {
+	public SessionManagementDto(String userEmail, String password, String role) {
 		super();
-		this.username = username;
+		this.userEmail = userEmail;
 		this.password = password;
 		authorities = new ArrayList<SimpleGrantedAuthority>();
-		authorities.add(new SimpleGrantedAuthority(userrole));
+		authorities.add(new SimpleGrantedAuthority(role));
 		
 	}
 
@@ -32,7 +32,7 @@ public class SessionManagementDto implements UserDetails{
 	@Override
 	public String getUsername() {
 
-		return username;
+		return userEmail;
 	}
 
 	@Override
