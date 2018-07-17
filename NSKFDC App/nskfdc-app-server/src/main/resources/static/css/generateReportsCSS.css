@@ -39,7 +39,7 @@ input.ng-invalid {
 	margin-bottom:3%;
 }
 .table{
-	margin-left: 2%;
+	margin-left: 1%;
 }
 .ui-grid-header-cell-primary-focus{
 	background-color: rgb(0,139,172);
@@ -47,4 +47,8 @@ input.ng-invalid {
 }
 .ui-grid-header-cell-label{
 	color:white;
+}
+#error_msg{
+	color: red;
+    padding-left: 16%;
 }

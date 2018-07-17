@@ -13,8 +13,18 @@ public class GenerateReportConfig {
 	/* For Attendance Sheet*/
 	private String showAttendanceSheetDetails;
 	
-	private String showReport;
-
+	/* For Updating Database*/
+	private String updateGenerateReportsTable;
+	
+	/* For NSKFDC Excel Sheet*/
+	private String showNSKFDCExcelSheet;
+	
+	/* For SDMS Excel Sheet*/
+	private String showSDMSExcelSheet;
+	
+	/* For Displaying Audit Table Records*/
+	private String showAuditTableRecords;
+	
 	public String getShowOccupationCertificateReportDetails() {
 		return showOccupationCertificateReportDetails;
 	}
@@ -28,12 +38,31 @@ public class GenerateReportConfig {
 	public void setShowAttendanceSheetDetails(String showAttendanceSheetDetails) {
 		this.showAttendanceSheetDetails = showAttendanceSheetDetails;
 	}
+	
+	public String getShowNSKFDCExcelSheet() {
+		return showNSKFDCExcelSheet;
+	}
+	public void setShowNSKFDCExcelSheet(String showNSKFDCExcelSheet) {
+		this.showNSKFDCExcelSheet = showNSKFDCExcelSheet;
+	}
 
-	public String getShowReport() {
-		return showReport;
+	public String getUpdateGenerateReportsTable() {
+		return updateGenerateReportsTable;
 	}
-	public void setShowReport(String showReport) {
-		this.showReport = showReport;
+	public void setUpdateGenerateReportsTable(String updateGenerateReportsTable) {
+		this.updateGenerateReportsTable = updateGenerateReportsTable;
+	}	
+
+	public String getShowAuditTableRecords() {
+		return showAuditTableRecords;
 	}
-    	
+	public void setShowAuditTableRecords(String showAuditTableRecords) {
+		this.showAuditTableRecords = showAuditTableRecords;
+	}
+	public String getShowSDMSExcelSheet() {
+		return showSDMSExcelSheet;
+	}
+	public void setShowSDMSExcelSheet(String showSDMSExcelSheet) {
+		this.showSDMSExcelSheet = showSDMSExcelSheet;
+	}	
 }
