@@ -30,10 +30,66 @@ app.config(function($routeProvider, $httpProvider){
 
 
 // main controller of the App
-app.controller('mainController', function($scope, $http, $rootScope) {
+app.controller('mainController', function($rootScope, $scope, $http, $location, $route)  {
 		
 	$rootScope.mainTemplate=true;
+	
+	$scope.credential={userEmail: '',password:''}
+	
+var authenticate = function(credentials){
+		
+		var headers = credentials? { authorization : "Basic " + btoa(credentials.userEmail + ":" + credentials.password)}:{};
+	
+		$http.get('/user', {headers : headers}).then(function(response){
+			
+			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);			
+			$rootScope.mainTemplate=false;
+
+			
+			// Routing between templates based on user-role
+			
+			if($rootScope.userRole == '"scgj"'){
+				$rootScope.mainTemplate=false;
+				$location.path("/scgj");
+			}
+			else if($rootScope.userRole == '"TP"'){
+				$rootScope.mainTemplate=false;
+				$location.path("/trainingPartner");
+			}
+			else
+				$location.path("/");
+
+			
+		}, function(data){
+			// function which executes when the user is not authenticated
+			$rootScope.mainTemplate= true;
+		});
+	}
+	
+	// Calling authenticate function, if user is already logged in and gave the reload command
+	authenticate();
+	
+	$scope.login= function(){
+		authenticate($scope.credential);		
+	}
+	
 
 	
+	
+	
+	
+	// function for logout action
+	$scope.logout = function($route) {
+        $rootScope.type = "logout"; 	
+        $http.post('logout', {}).finally(function() {
+        $rootScope.mainTemplate= true;
+        $location.path("/");
+        	
+        });
+	}
+	
 });
+
+
+
 

@@ -1,7 +1,10 @@
- #bg-image {
-     height:100%;
+
+.backgroundImageForLogin{
+	 background-image: url("../images/loginbackground.jpg");
+	 background-size: cover;
+	  height:100%;
      width: 100%;
-     background-size: cover;
+   
 }
  .form {
      height:55%;
@@ -15,9 +18,9 @@
      border: 1px solid red;
 }
  #scgj-logo {
-     height:18%;
-     width:35%;
-     display:inline;
+    height: 23%;
+    width: 47%;
+    display: inline;
 }
  #valid-email {
      margin-left:50%;
@@ -82,10 +85,10 @@
      display:inline;
 }
  #nskfdc-logo {
-     height:17%;
-     width:15%;
-     display:inline;
-     margin-left: 40%;
-     margin-top:4%;
+    height: 16%;
+    width: 11%;
+    display: inline;
+    margin-left: 35%;
+    margin-top: 1%;
 }
  

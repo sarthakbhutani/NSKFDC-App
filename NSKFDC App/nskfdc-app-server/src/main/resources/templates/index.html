@@ -36,53 +36,55 @@
     
     <!-- High charts libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-<script src="https://code.highcharts.com/modules/exporting.js"></script>
-<script src="https://code.highcharts.com/modules/export-data.js"></script>
+     <script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 
-<script src="http://code.highcharts.com/maps/modules/map.js"></script>
-        <script src="http://code.highcharts.com/mapdata/countries/in/in-all.js"></script>
+	<script src="http://code.highcharts.com/maps/modules/map.js"></script>
+	<script src="http://code.highcharts.com/mapdata/countries/in/in-all.js"></script>
     
   </head>
   
   
   <body ng-app="app">
-    <div ng-controller="mainController">
- <!--    
-      <div class="container-fluid">
+    <div ng-controller="mainController" ng-show="mainTemplate" class="backgroundImageForLogin">
+      <div class="container-fluid ">
         <div class="row">
-          <img src="images/loginbackground.jpg" id="bg-image" class="img-responsive" />
-          <div class="col-md-6 form">
+          <div class="col-md-6 form" >
             <img src="images/SCGJlogo.png" id="scgj-logo" class="img-responsive" />
             <img src="images/nskfdc-logo.png" id="nskfdc-logo"/>
             <hr >
             <br>
             <!-- Main Form -->
-  <!--          <div class="login">
+          <div class="login">
               <form id="login-form" name="LoginForm" >
                 <div class="main-login-form">
                   <div class="login-group">
                     <div class="username-text">
-                      <input type="email" class="form-control" id="email"  placeholder="Enter Username" name="email" ng-model="user.email" required>
+                      <input type="email" class="form-control" id="email"  placeholder="Enter Username" name="email" ng-model="credential.userEmail" required>
                       <span class="glyphicon glyphicon-user user-icon"></span>
                     </div>
                     <div class="password-text">
                       <br>
-                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="user.password" required>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="credential.password" required>
                       <div id="eye" class="password-icon" ng-model="collapsed" ng-click="collapsed=!collapsed"><span  ng-class="{'glyphicon glyphicon-eye-open pull-right pan_arrow1': !collapsed, 'glyphicon glyphicon-eye-close pull-right pan_arrow1': collapsed}"></span></div>
                     </div>
                     <br>
-                    <button type="submit" class="btn btn-primary" class="login-button" ng-disabled="LoginForm.$invalid">Login</button>
+                    <button type="submit" class="btn btn-primary" class="login-button" ng-disabled="LoginForm.$invalid" ng-click="login()">Login</button>
                   </div>
                 </div>
               </form>
             </div>
           </div>
         </div>
-      </div>   -->
+      </div>   
     </div>
+  
+    <div ng-view ng-hide="mainTemplate"></div>
     
-    <div ng-view></div>
+      <!-- Vanilla js -->
+   <script src="js/indexEvent.js"></script>
+    
+    
   </body>
 </html>
