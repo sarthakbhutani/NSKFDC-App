@@ -24,6 +24,8 @@ public class DashboardDao extends AbstractTransactionalDao{
 	private static final Logger LOGGER= LoggerFactory.getLogger(DashboardDao.class);
 	private static final BarchartRowmapper rm = new BarchartRowmapper();
 	private static final BarchartRowmapper1 rm1 = new BarchartRowmapper1();
+	private static final MapchartRowmapper rm2 = new MapchartRowmapper();
+	
 	
 
 	@Autowired
@@ -41,7 +43,7 @@ public class DashboardDao extends AbstractTransactionalDao{
 	 * to fulfill queryForObject Syntax
 	 */
 	
-	public int getNumberOfCandidatesTrained(){
+	public Integer getNumberOfCandidatesTrained(){
 		
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In NumberOfCandidatesTrained Dao, to get Number of CandidatesTrained");
@@ -59,13 +61,14 @@ public class DashboardDao extends AbstractTransactionalDao{
 		{
 			LOGGER.error("A data access exception has occured: " + de);
 			LOGGER.error("Returning zero");
-			return 0;
+			return null;
 		}
 		
 		catch(Exception e)
 		{
 			LOGGER.error("An Exception occured: " + e);
-			return 0;
+			LOGGER.error("Returning 0");
+			return null;
 		}
 		
 	}
@@ -81,7 +84,7 @@ public class DashboardDao extends AbstractTransactionalDao{
 	 * to fulfill queryForObject Syntax
 	 */
 	
-	public int getNumberOfOngoingTrainings(){
+	public Integer getNumberOfOngoingTrainings(){
 		
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In get Number Of Ongoing Trainings Dao, to get Number of OngoingTrainings");
@@ -98,14 +101,14 @@ public class DashboardDao extends AbstractTransactionalDao{
 		catch(DataAccessException de)
 		{
 			LOGGER.error("A data access exception has occured: " + de);
-			LOGGER.error("Returning NULL");
-			return 0;
+			LOGGER.error("Returning 0");
+			return null;
 		}
 		
 		catch(Exception e)
 		{
 			LOGGER.error("An exception occured: " + e);
-			return 0;
+			return null;
 		}
 		
 		
@@ -121,7 +124,7 @@ public class DashboardDao extends AbstractTransactionalDao{
 	 * to fulfill queryForObject Syntax
 	 */
 	
-public int getNumberOfTrainingPartners(){
+public Integer getNumberOfTrainingPartners(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Number Of Training Partners Dao, to get Number Of TrainingPartners");
@@ -138,14 +141,14 @@ public int getNumberOfTrainingPartners(){
 	catch(DataAccessException de)
 	{
 		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.error("Returning NULL");
-		return 0;
+		LOGGER.error("Returning 0");
+		return null;
 	}
 	
 	catch(Exception e)
 	{
 		LOGGER.error("An exception occured: " + e);
-		return 0;
+		return null;
 	}
 	
 	
@@ -161,7 +164,7 @@ public int getNumberOfTrainingPartners(){
 	 * to fulfill queryForObject Syntax
 	 */
 
-public int getNumberOfUpcomingAssessments(){
+public Integer getNumberOfUpcomingAssessments(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Number Of Upcoming Assessments Dao, to get Number Of UpcomingAssessments");
@@ -178,14 +181,14 @@ public int getNumberOfUpcomingAssessments(){
 	catch(DataAccessException de)
 	{
 		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.error("Returning NULL");
-		return  0;
+		LOGGER.error("Returning 0");
+		return  null;
 	}
 	catch (Exception e) {
 		
 		LOGGER.debug("In Catch Block");
 		LOGGER.error("An exception occured while getting the Number Of Upcoming Assessments" + e);
-		return 0;
+		return null;
 		
 	}
 	
@@ -215,7 +218,7 @@ public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesT
 	catch(DataAccessException de)
 	{
 		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.debug("Returning NULL");
+		LOGGER.debug("Returning 0");
 		return null;
 	}
 	catch (Exception e) {
@@ -285,25 +288,45 @@ private static class BarchartRowmapper1 implements RowMapper<CandidatesTrainedIn
 	}
 	
 }
+/**
+ * @author Aman
+ * @description method to find details of Map states
+ */
 
+public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
+
+LOGGER.debug("Request received from Service");
+LOGGER.debug("In DashboardDao, to get  Map StateChart Detail");
+
+
+try {
+	LOGGER.debug("In try block");
+	LOGGER.debug("Execute query to get Map Statechart details");
+	Map<String,Object> parameters= new HashMap<>();
+	return getJdbcTemplate().query(dashboardConfig.getshowStateDetailsForMapChart(),parameters,rm2);
 	
+} catch (Exception e) {
+	LOGGER.debug("In Catch Block");
+	LOGGER.debug("An error occured while getting the Map state chart details" + e);
+	return null;
+	
+}
+
+}
 
 
+private static class MapchartRowmapper implements RowMapper<StateDetailsDto>{
 
+@Override
+public StateDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	
+	String states=rs.getString("centreState");
+	int centers=rs.getInt("centers");
+	return new StateDetailsDto(states,centers);
+	
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 }
 

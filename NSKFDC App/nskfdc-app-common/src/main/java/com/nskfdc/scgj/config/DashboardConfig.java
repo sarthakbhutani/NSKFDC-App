@@ -101,4 +101,22 @@ public void setShowStateDetails(String showStateDetails) {
 	this.showStateDetails = showStateDetails;
 }
 
+
+/**
+ * @author Aman
+ * @return Map details
+ * @description method to return details of Map chart
+ */
+private String showStateDetailsForMapChart;
+
+public String getshowStateDetailsForMapChart() {
+
+return showStateDetailsForMapChart;
+}
+
+public void setshowStateDetailsForMapChart(String showStateDetailsForMapChart) {
+this.showStateDetailsForMapChart = showStateDetailsForMapChart;
+}
+
+
 }

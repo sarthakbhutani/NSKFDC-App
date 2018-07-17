@@ -91,6 +91,18 @@ p{
 }
 
 .marginless{
-	margin-top : -2rem;
+	margin-top : -1rem;
 	padding-top : 0 rem;
+}
+#container2{
+	height: 62rem;
+	width: 36rem;
+}
+#container{
+	height:30rem;
+	width:36rem;
+}
+#container1{
+	height:30rem;
+	width:36rem;
 }

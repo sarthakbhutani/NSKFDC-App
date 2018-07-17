@@ -29,7 +29,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @description Method to Get Number of candidates trained 
 	 */
 	@RequestMapping("/getNumberOfCandidatesTrained")
-	public int getNumberOfCandidatesTrained(){
+	public Integer getNumberOfCandidatesTrained(){
 		
 		LOGGER.debug("Request received from frontend to get Number of Candidates Trained");
 		LOGGER.debug("In get Number of CandidatesTrained Controller");
@@ -44,7 +44,7 @@ import com.nskfdc.scgj.service.DashboardService;
 		catch(Exception e) {
 			
 			LOGGER.error("An exception occurred while getting the Number of CandidatesTrained" + e);
-			return 0;
+			return null;
 			
 							}
 	}
@@ -55,7 +55,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @description Method to get Number of Training Partners
 	 */
 	@RequestMapping("/getNumberOfTrainingPartners")
-	public int getNumberOfTrainingPartners(){
+	public Integer getNumberOfTrainingPartners(){
 		
 		LOGGER.debug("Request received from frontend to get Number of Training partners");
 		LOGGER.debug("In get Number of TrainingPartners Controller to get Number of training Partners");
@@ -69,7 +69,7 @@ import com.nskfdc.scgj.service.DashboardService;
 		}catch(Exception e) {
 			
 			LOGGER.error("An exception occurred while getting the Number of TrainingPartners" + e);
-			return 0;
+			return null;
 			
 		}
 	}
@@ -82,7 +82,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 */
 	
 	@RequestMapping("/getNumberOfUpcomingAssessments")
-	public int getNumberOfUpcomingAssessments(){
+	public Integer getNumberOfUpcomingAssessments(){
 		
 		LOGGER.debug("Request received from frontend to get number of Upcoming assessments");
 		LOGGER.debug("In get Number of UpcomingAssessments Controller");
@@ -97,7 +97,7 @@ import com.nskfdc.scgj.service.DashboardService;
 		catch(Exception e) {
 			
 			LOGGER.error("An exception occurred while getting the Number of UpcomingAssessments" + e);
-			return 0;
+			return null;
 			
 		}
 	}
@@ -109,7 +109,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 */
 	
 	@RequestMapping("/getNumberOfOngoingTrainings")
-	public int getNumberOfOngoingTrainings(){
+	public Integer getNumberOfOngoingTrainings(){
 		
 		LOGGER.debug("Request received from frontend to get Number of Ongoing Trainings");
 		LOGGER.debug("In get Number of OngoingTrainings Controller");
@@ -123,7 +123,7 @@ import com.nskfdc.scgj.service.DashboardService;
 		}catch(Exception e) {
 			
 			LOGGER.error("An exception occurred while getting the Number Of OngoingTrainings" + e);
-			return 0;
+			return null;
 			
 		}
 	}
@@ -174,6 +174,29 @@ import com.nskfdc.scgj.service.DashboardService;
 		}
 	}
 
+	/**
+	 * @author Aman
+	 * @description method to get details of Map
+	 */
+	
+	@RequestMapping("/getshowStateDetailsForMapChart")
+	public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("In Map State Controller");
+
+		
+		try {
+			LOGGER.debug("In try block to get Map State details");
+			LOGGER.debug("Sending request to service");
+			return dashboardService.getshowStateDetailsForMapChart();
+			
+		}catch(Exception e) {
+			return null;
+			
+		}
+	}
+
+	
 	}
 
 

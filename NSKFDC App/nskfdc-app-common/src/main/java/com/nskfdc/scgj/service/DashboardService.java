@@ -21,7 +21,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 *@author Shivanshu Garg 
 	 * @return number of candidates trained
 	 */
-	public int getNumberOfCandidatesTrained(){
+	public Integer getNumberOfCandidatesTrained(){
 		
 		LOGGER.debug("Request received from Control to get Number Of Candidates Trained");
 		LOGGER.debug("In CandidatesTrained Service, to get Number Of CandidatesTrained ");
@@ -34,7 +34,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 		catch (Exception e) {
 		
 			LOGGER.error("An error occurred while getting the Number Of CandidatesTrained"+ e);
-			return 0;
+			return null;
 		}
 	}
 
@@ -45,7 +45,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 * @description Method to find number of Ongoing Training
 	 */
 
-	public int getNumberOfOngoingTrainings(){
+	public Integer getNumberOfOngoingTrainings(){
 		
 		LOGGER.debug("Request received from Control to get number of Ongoing Trainings");
 		LOGGER.debug("In OngoingTrainings Service, to get number of OngoingTrainings ");
@@ -57,7 +57,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 		catch (Exception e) {
 		
 			LOGGER.error("An error occurred while getting the Number Of OngoingTrainings"+ e);
-			return 0;
+			return null;
 			}
 	}
 
@@ -67,7 +67,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 * @description Method to find Number of Training Partners
 	 */
 
-	public int getNumberOfTrainingPartners(){
+	public Integer getNumberOfTrainingPartners(){
 	
 	LOGGER.debug("Request received from Control to get number of Training Partners  ");
 	LOGGER.debug("In TrainingPartners Service, to get number of TrainingPartners ");
@@ -79,7 +79,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	catch (Exception e) {
 	
 		LOGGER.error("An error occurred while getting the Number Of TrainingPartners"+ e);
-		return 0;
+		return null;
 	}
 }
 
@@ -89,7 +89,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	 * @descriptiopn Method to find Number of Upcoming Assessments
 	 */
 
-	public int getNumberOfUpcomingAssessments(){
+	public Integer getNumberOfUpcomingAssessments(){
 	
 	LOGGER.debug("Request received from Control to get Number of Upcoming assessments");
 	LOGGER.debug("In UpcomingAssessments Service, to get the number of upcoming assessments");
@@ -101,7 +101,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 	catch (Exception e) {
 	
 		LOGGER.error("An error occurred while getting the Number Of UpcomingAssessments"+ e);
-		return 0;
+		return null;
 	}
 }
 
@@ -142,6 +142,25 @@ private static final Logger LOGGER = LoggerFactory.getLogger(DashboardService.cl
 		} catch (Exception e) {
 		
 			LOGGER.debug("An error occurred while getting the state details"+ e);
+			return null;
+		}
+	}
+	
+	/**@author Aman
+	 * @description method to get details of Map of states
+	 * 
+	 */
+	public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
+		LOGGER.debug("Request received from Control");
+		LOGGER.debug("In Dashboard Service, to get Map state details");
+		
+		
+		try {
+			LOGGER.debug("In try block to get Map state details");
+			return dashboardDao.getshowStateDetailsForMapChart();
+		} catch (Exception e) {
+		
+			LOGGER.debug("An error occurred while getting the Map state details"+ e);
 			return null;
 		}
 	}

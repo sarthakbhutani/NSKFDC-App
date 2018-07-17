@@ -21,3 +21,6 @@ DashboardStatistics:
   
  showStateDetails: >
   SELECT centreState, COUNT(centreState) as centers FROM centredetails GROUP BY centreState ORDER BY COUNT(centreState) DESC limit 5;
+  
+ showStateDetailsForMapChart: >
+  SELECT centreState, COUNT(centreState) as centers FROM centredetails GROUP BY centreState ORDER BY COUNT(centreState);
