@@ -15,6 +15,14 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+
+
+DROP DATABASE IF EXISTS `NSKFDC`;
+
+CREATE DATABASE `NSKFDC`;
+
+use `NSKFDC`;
+
 --
 -- Table structure for table `bankdetails`
 --
@@ -26,7 +34,7 @@ CREATE TABLE `bankdetails` (
   `accountNumber` bigint(20) NOT NULL,
   `ifscCode` varchar(45) DEFAULT NULL,
   `bankName` varchar(100) DEFAULT NULL,
-  `enrollmentNumber` varchar(30) DEFAULT NULL,
+  `enrollmentNumber` varchar(30) NOT NULL,
   PRIMARY KEY (`accountNumber`),
   KEY `enrollmentNumber_idx` (`enrollmentNumber`),
   CONSTRAINT `enrollmentNumber` FOREIGN KEY (`enrollmentNumber`) REFERENCES `candidate` (`enrollmentNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -52,8 +60,8 @@ CREATE TABLE `batchdetails` (
   `wardNumber` varchar(20) DEFAULT NULL,
   `scgjBatchNumber` varchar(50) DEFAULT NULL,
   `principalTrainerName` varchar(50) DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
-  `centreId` bigint(20) DEFAULT NULL,
+  `userEmail` varchar(100) NOT NULL,
+  `centreId` bigint(20) NOT NULL,
   PRIMARY KEY (`batchId`),
   KEY `tpEmail_idx` (`userEmail`),
   KEY `centreId_idx` (`centreId`),
@@ -96,10 +104,10 @@ CREATE TABLE `candidate` (
   `workplaceAddress` varchar(100) DEFAULT NULL,
   `assessmentResult` varchar(45) DEFAULT NULL,
   `medicalExamConducted` tinyint(1) DEFAULT NULL,
-  `batchId-FK` bigint(20) DEFAULT NULL,
+  `batchId` bigint(20) NOT NULL,
   PRIMARY KEY (`enrollmentNumber`),
-  KEY `batchId_idx` (`batchId-FK`),
-  CONSTRAINT `batchId` FOREIGN KEY (`batchId-FK`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `batchId_idx` (`batchId`),
+  CONSTRAINT `batchId` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -115,11 +123,29 @@ CREATE TABLE `centredetails` (
   `centreId` bigint(20) DEFAULT NULL,
   `centreState` varchar(60) DEFAULT NULL,
   `centreCity` varchar(60) DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
+  `userEmail` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `centreId_UNIQUE` (`centreId`),
   KEY `traningPartnerEmail_idx` (`userEmail`),
   CONSTRAINT `traningPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `employerdetails`
+--
+
+DROP TABLE IF EXISTS `employerdetails`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employerdetails` (
+  `employerId` int(11) NOT NULL,
+  `employerName` varchar(60) DEFAULT NULL,
+  `employerContactNumber` bigint(12) DEFAULT NULL,
+  `enrollmentNumber` varchar(30) NOT NULL,
+  PRIMARY KEY (`employerId`),
+  KEY `enrollNumber_idx` (`enrollmentNumber`),
+  CONSTRAINT `enrollNumber` FOREIGN KEY (`enrollmentNumber`) REFERENCES `candidate` (`enrollmentNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -133,9 +159,9 @@ DROP TABLE IF EXISTS `generatereports`;
 CREATE TABLE `generatereports` (
   `generateReportId` varchar(100) NOT NULL,
   `reportType` varchar(40) DEFAULT NULL,
-  `scGeneratedOn` datetime DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
-  `batchId` bigint(20) DEFAULT NULL,
+  `generatedOn` datetime DEFAULT NULL,
+  `userEmail` varchar(100) NOT NULL,
+  `batchId` bigint(20) NOT NULL,
   PRIMARY KEY (`generateReportId`),
   KEY `tpreportmail_idx` (`userEmail`),
   KEY `batchIdReport_idx` (`batchId`),
@@ -157,7 +183,8 @@ CREATE TABLE `trainingpartnerdetails` (
   `sectorSkillCouncil` varchar(350) DEFAULT NULL,
   `targets` bigint(12) DEFAULT NULL,
   `jobRole` varchar(400) DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
+  `userEmail` varchar(100) NOT NULL,
+  `financialYear` date DEFAULT NULL,
   PRIMARY KEY (`nsdcRegNumber`),
   KEY `trainingPartnerEmail_idx` (`userEmail`),
   CONSTRAINT `trainingPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -172,7 +199,7 @@ DROP TABLE IF EXISTS `uploadeddocuments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `uploadeddocuments` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `finalBatchReport` tinyint(1) DEFAULT NULL,
   `occupationCertificate` tinyint(1) DEFAULT NULL,
   `minuteOfSelectionCommittee` tinyint(1) DEFAULT NULL,
@@ -186,8 +213,8 @@ CREATE TABLE `uploadeddocuments` (
   `dataSheetForNSKFCPath` varchar(500) DEFAULT NULL,
   `attendanceSheetPath` varchar(500) DEFAULT NULL,
   `dateUploaded` date DEFAULT NULL,
-  `batchId` bigint(20) DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
+  `batchId` bigint(20) NOT NULL,
+  `userEmail` varchar(100) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `batchIds_idx` (`batchId`),
   KEY `tpmail_idx` (`userEmail`),
@@ -208,9 +235,10 @@ CREATE TABLE `user` (
   `userEmail` varchar(100) DEFAULT NULL,
   `password` varchar(250) DEFAULT NULL,
   `role` varchar(45) DEFAULT NULL,
+  `generatedOn` date DEFAULT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `trainingPartnerEmail_UNIQUE` (`userEmail`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -222,4 +250,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-13 13:52:38
+-- Dump completed on 2018-07-17 18:06:54
