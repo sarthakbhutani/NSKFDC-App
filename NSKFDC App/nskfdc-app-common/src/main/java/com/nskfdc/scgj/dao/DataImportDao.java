@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
 import com.nskfdc.scgj.dto.BatchDto;
-import com.nskfdc.scgj.dto.PanelDataImportDto;
+import com.nskfdc.scgj.dto.FinancialDto;
+
 
 @Repository
 public class DataImportDao extends AbstractTransactionalDao{
@@ -155,7 +156,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 	
 	//Author: Sagun Saluja
 	
-public int getTotalTargets(){
+public Integer getTotalTargets(){
 		
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In Total Targets Dao, to get Total Targets");
@@ -173,18 +174,18 @@ public int getTotalTargets(){
 		{
 			LOGGER.error("A data access exception has occured: " + de);
 			LOGGER.error("Returning zero");
-			return 0;
+			return null;
 		}
 		
 		catch(Exception e)
 		{
 			LOGGER.error("An Exception occured: " + e);
-			return 0;
+			return null;
 		}
 		
 	}
 
-public int getTargetAchieved(){
+public Integer getTargetAchieved(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
@@ -202,17 +203,17 @@ public int getTargetAchieved(){
 	{
 		LOGGER.error("A data access exception has occured: " + de);
 		LOGGER.error("Returning zero");
-		return 0;
+		return null;
 	}
 	
 	catch(Exception e)
 	{
 		LOGGER.error("An Exception occured: " + e);
-		return 0;
+		return null;
 	}
 	
 }
-public int getRemainingTargets(){
+public Integer getRemainingTargets(){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
@@ -230,17 +231,77 @@ public int getRemainingTargets(){
 	{
 		LOGGER.error("A data access exception has occured: " + de);
 		LOGGER.error("Returning zero");
-		return 0;
+		return null;
 	}
 	
 	catch(Exception e)
 	{
 		LOGGER.error("An Exception occured: " + e);
-		return 0;
+		return null;
+	}
+	
+}
+public Integer ShowFinancialYear(){
+	
+	LOGGER.debug("Request received from Service");
+	LOGGER.debug("In Remaining Target Dao, to get FinancialYear");
+	
+	
+	try {
+		
+		LOGGER.debug("In try block");
+		LOGGER.debug("Execute query to get FinancialYear");
+		Map<String,Object> parameters = new HashMap<> ();
+		return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
+		
+	} 
+	catch(DataAccessException de)
+	{
+		LOGGER.error("A data access exception has occured: " + de);
+		LOGGER.error("Returning zero");
+		return null;
+	}
+	
+	catch(Exception e)
+	{
+		LOGGER.error("An Exception occured: " + e);
+		return null;
+	}
+	
+}
+private static final FinancialRowmapper Financial_RowMapper = new FinancialRowmapper();
+
+
+public Collection<FinancialDto> FinancialRowmapper(){
+	try {
+		
+	
+		return getJdbcTemplate().query(dataImportConfig.getShowFinancialYear(), Financial_RowMapper);
+		
+	} catch (Exception e) {
+		
+		
+		return null;
+		
 	}
 	
 }
 
-
-
+private static class FinancialRowmapper implements RowMapper<FinancialDto>{
+	
+	@Override
+	public FinancialDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		
+		String financialYear = rs.getString("FinancialDto");
+		
+		return new FinancialDto(financialYear);
+		
+	}
 }
+}
+
+
+
+
+
+
