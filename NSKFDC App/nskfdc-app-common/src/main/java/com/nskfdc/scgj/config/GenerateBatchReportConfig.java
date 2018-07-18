@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import com.nskfdc.scgj.dao.GenerateBatchReportDao;
 
 @Component
-@ConfigurationProperties(prefix="batchIdQuery" , locations="classpath:sql/getBatchId.yml")
+@ConfigurationProperties(prefix="batchIdQuery" , locations="classpath:sql/generateBatchReport.yml")
 public class GenerateBatchReportConfig {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateBatchReportDao.class);
@@ -38,6 +38,49 @@ public class GenerateBatchReportConfig {
 	public void setShowBatchId(String showBatchId) {
 		this.showBatchId = showBatchId;
 	}
+	
+	private String showLocationDetails;
+
+	public String getShowLocationDetails() {
+		return showLocationDetails;
+	}
+
+	public void setShowLocationDetails(String showLocationDetails) {
+		this.showLocationDetails = showLocationDetails;
+	}
+	
+	private String showTrainingDetails;
+
+	public String getShowTrainingDetails() {
+		return showTrainingDetails;
+	}
+
+	public void setShowTrainingDetails(String showTrainingDetails) {
+		this.showTrainingDetails = showTrainingDetails;
+	}
+	
+	private String showCandidateDetails;
+
+	public String getShowCandidateDetails() {
+		return showCandidateDetails;
+	}
+
+	public void setShowCandidateDetails(String showCandidateDetails) {
+		this.showCandidateDetails = showCandidateDetails;
+	}
+	
+	private String showUpdateBatchNumber;
+
+	public String getShowUpdateBatchNumber() {
+		LOGGER.debug("Entered the Get Block of Config "+showUpdateBatchNumber);
+		return showUpdateBatchNumber;
+	}
+
+	public void setShowUpdateBatchNumber(String showUpdateBatchNumber) {
+		this.showUpdateBatchNumber = showUpdateBatchNumber;
+	}
+
+	
 	
 	
 }

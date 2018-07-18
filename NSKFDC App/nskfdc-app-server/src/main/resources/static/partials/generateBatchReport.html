@@ -3,23 +3,30 @@
 </head>
 
 <div ng-controller="generateBatchReportController">
- <div class="container outline">
-    	<div class="row" >
+ <div class="container outline" >
+    	<div class="row"  >
         	<div class="col-md-11">
             	<div class="col-md-5">
                 	<label><h4>Generate Batch Report</h4></label>
                 </div>
                 <div class="col-md-3">
-                	<select ng-model="selectedName" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
-                	<span id="Error"></span>
+                	<select ng-model="batchId" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
+                	<span id="error_msg"></span>
                 	</select>
                 </div>
                 <div class="col-md-4">
-                	<input ng-blur="ngBlur(batchnumber)" class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" required>
+                	<input class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" >
+                 	<p id="Error"></p>
                  </div>
             </div>
         </div>
         <div class="container innerline">
+        
+        	<p><input type="file" name="file" id="file"></p>
+        	<input type="submit" ng-click="upload()">
+        
+        
+        
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -32,6 +39,7 @@
                     
              </div>
         </div>
+        
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -104,7 +112,7 @@
                     
              </div>
         </div>
-        <center><button class="btn btn-primary boxes" >Generate Report</button></center>
+        <center><button class="btn btn-primary boxes" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button></center>
         </div>
      <div class="container">
         <div class="row col-md-4">
