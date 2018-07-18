@@ -9,8 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
-
 import com.nskfdc.scgj.service.DataImportService;
 
 @RestController
@@ -21,6 +21,10 @@ public class DataImportController {
 	
 	@Autowired
 	private DataImportService importHistoryService;
+	@Autowired
+	private SessionUserUtility sessionUserUtility;
+	
+	
 	
 	@RequestMapping("/importMasterSheet")
 	public void importMasterSheet() {
@@ -39,49 +43,17 @@ public class DataImportController {
 			}
 		}
 	
-	@RequestMapping("/getImportHistory")
-	public void getImportHistory() {
-		
-		//write LOGGER here
-			
-			try {
-				//write LOGGER here		
-				// change return type
-				importHistoryService.getImportHistory();
-				
-			} catch (Exception e) {
-				
-				//write LOGGER here
-				//return the default value, it can be null
-			}
-		}
-	
-	@RequestMapping("/searchMasterSheet")
-	public void searchMasterSheet() {
-		
-		//write LOGGER here
-			
-			try {
-				//write LOGGER here		
-				// change return type
-				importHistoryService.getSearchedMasterSheet();
-				
-			} catch (Exception e) {
-				
-				//write LOGGER here
-				//return the default value, it can be null
-			}
-		}
+
 
 	 @RequestMapping("/generateBatch")
 	 public int generateBatchController(){
-		 String trainingPartnerEmail = "snb@gmail.com";
-		 LOGGER.debug("Request received from frontend to create batch for email id : " + trainingPartnerEmail);
+		 String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+		 LOGGER.debug("Request received from frontend to create batch for email id : " + userEmail);
 		
-		 LOGGER.debug("In Import Controller to create batch for rmail id: " + trainingPartnerEmail);
+		 LOGGER.debug("In Import Controller to create batch for rmail id: " + userEmail);
 		 try{
 			
-			 return importHistoryService.getGenerateBatchService(trainingPartnerEmail);
+			 return importHistoryService.getGenerateBatchService(userEmail);
 				
 		 }
 		
@@ -102,16 +74,15 @@ public class DataImportController {
 	 }
 		@RequestMapping("/getBatchIdfortrainer")
 		public Collection<BatchDto> getBatchDetail(){
-			
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("Request received from frontend to show batch ID");
 			
 			
 			try {
+				return importHistoryService.getBatchDetail(userEmail);
 				
-			
-				return importHistoryService.getBatchDetail();
-				
-			}catch(Exception e) {
+			}
+			catch(Exception e) {
 				
 			
 				return null;
@@ -123,7 +94,7 @@ public class DataImportController {
 		
 		@RequestMapping("/getTotalTargets")
 		public Integer getTotalTargets(){
-			
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("Request received from frontend to get Total Targets");
 			LOGGER.debug("In get Total Targets Controller");
 			
@@ -131,7 +102,7 @@ public class DataImportController {
 				
 				LOGGER.debug("In try block to get Total Targets");
 				LOGGER.debug("Sending request to service");
-				return importHistoryService.getTotalTargets();
+				return importHistoryService.getTotalTargets(userEmail);
 				
 				}
 			catch(Exception e) {
@@ -144,7 +115,7 @@ public class DataImportController {
 		
 		@RequestMapping("/getTargetAchieved")
 		public Integer getTargetAchieveds(){
-			
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("Request received from frontend to get Target Achieved");
 			LOGGER.debug("In get Target Achieved Controller");
 			
@@ -152,7 +123,7 @@ public class DataImportController {
 				
 				LOGGER.debug("In try block to get Target Achieved");
 				LOGGER.debug("Sending request to service");
-				return importHistoryService.getTargetAchieved();
+				return importHistoryService.getTargetAchieved(userEmail);
 				
 				}
 			catch(Exception e) {
@@ -166,8 +137,9 @@ public class DataImportController {
 		
 		
 		@RequestMapping("/getRemainingTargets")
+		
 		public Integer getRemainingTargets(){
-			
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("Request received from frontend to get Remaining Target");
 			LOGGER.debug("In get Remaining Target Controller");
 			
@@ -175,7 +147,7 @@ public class DataImportController {
 				
 				LOGGER.debug("In try block to get Remaining Target");
 				LOGGER.debug("Sending request to service");
-				return importHistoryService.getRemainingTargets();
+				return importHistoryService.getRemainingTargets(userEmail);
 				
 				}
 			catch(Exception e) {
@@ -187,7 +159,7 @@ public class DataImportController {
 		}
 			@RequestMapping("/getFinancialYear")
 			public Integer getFinancialYear(){
-				
+				String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 				LOGGER.debug("Request received from frontend to get FinancialYear");
 				LOGGER.debug("In get Remaining Target Controller");
 				
@@ -195,7 +167,7 @@ public class DataImportController {
 					
 					LOGGER.debug("In try block to get FinancialYear");
 					LOGGER.debug("Sending request to service");
-					return importHistoryService.getFinancialYear();
+					return importHistoryService.getFinancialYear(userEmail);
 					
 					}
 				catch(Exception e) {
