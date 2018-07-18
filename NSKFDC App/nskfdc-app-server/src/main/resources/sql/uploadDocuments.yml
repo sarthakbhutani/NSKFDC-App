@@ -1,3 +1,9 @@
 uploadDocuments:
+ uploadDocumentsQuery: >
+  select * from uploadeddocuments where batchId= :batchId and userEmail= :userEmail;
+  
  showBatchIdDetails: >
-  select batchId from batchdetails join user where batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
+  select batchId from batchdetails join user where batchdetails.userEmail = user.userEmail;
+  
+ showScgjDetails: >
+  select exists (Select 1 from batchdetails where batchId = :batchId and scgjBatchNumber = :scgjBatchNumber);
