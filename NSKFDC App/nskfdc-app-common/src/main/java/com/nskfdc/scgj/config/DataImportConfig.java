@@ -67,7 +67,15 @@ public void setShowRemainingTargets(String showRemainingTargets) {
 	ShowRemainingTargets = showRemainingTargets;
 }
 		
+private String ShowFinancialYear;
 
+public String getShowFinancialYear() {
+	return ShowFinancialYear;
+}
+
+public void setShowFinancialYear(String showFinancialYear) {
+	ShowFinancialYear = showFinancialYear;
+}
   
 	
 }
