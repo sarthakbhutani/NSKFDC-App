@@ -43,37 +43,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 				
 			}
 	
-	public void getImportHistory() {
-		//write Logger here
-		
-				try {
-					
-					//write Logger here 
-					//write code here and change the return type
-				}catch(Exception e) {
-					
-					// write Logger
-					// return null;
-				}
-				
-				
-			}
-	
-	public void getSearchedMasterSheet() {
-		//write Logger here
-		
-				try {
-					
-					//write Logger here 
-					//write code here and change the return type
-				}catch(Exception e) {
-					
-					// write Logger
-					// return null;
-				}
-				
-				
-			}
+
 
 	
 	public Integer generateBatchDao(String trainingPartnerEmail){
@@ -121,19 +91,18 @@ public class DataImportDao extends AbstractTransactionalDao{
 	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
 	
 	
-	public Collection<BatchDto> getBatchDetail(){
-		
+	public Collection<BatchDto> getBatchDetail(String userEmail){
 	
-		
-		
 		try {
 			
+			Map<String,Object> parameters = new HashMap<>();
+			parameters.put("userEmail", userEmail);
 		
-			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(), BATCH_RowMapper);
+			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(),parameters, BATCH_RowMapper);
 			
 		} catch (Exception e) {
 			
-			
+			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
 			return null;
 			
 		}
@@ -146,7 +115,6 @@ public class DataImportDao extends AbstractTransactionalDao{
 		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
 			String batchId = rs.getString("batchId");
-			
 			return new BatchDto(batchId);
 			
 		}
@@ -156,7 +124,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 	
 	//Author: Sagun Saluja
 	
-public Integer getTotalTargets(){
+public Integer getTotalTargets(String userEmail){
 		
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In Total Targets Dao, to get Total Targets");
@@ -167,6 +135,7 @@ public Integer getTotalTargets(){
 			LOGGER.debug("In try block");
 			LOGGER.debug("Execute query to get TotalTargets");
 			Map<String,Object> parameters = new HashMap<> ();
+			parameters.put("userEmail", userEmail);
 			return getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
 			
 		} 
@@ -185,7 +154,7 @@ public Integer getTotalTargets(){
 		
 	}
 
-public Integer getTargetAchieved(){
+public Integer getTargetAchieved(String userEmail){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
@@ -196,6 +165,7 @@ public Integer getTargetAchieved(){
 		LOGGER.debug("In try block");
 		LOGGER.debug("Execute query to get Target Achieved");
 		Map<String,Object> parameters = new HashMap<> ();
+		parameters.put("userEmail", userEmail);
 		return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
 		
 	} 
@@ -213,7 +183,7 @@ public Integer getTargetAchieved(){
 	}
 	
 }
-public Integer getRemainingTargets(){
+public Integer getRemainingTargets(String userEmail){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
@@ -224,6 +194,7 @@ public Integer getRemainingTargets(){
 		LOGGER.debug("In try block");
 		LOGGER.debug("Execute query to get Target Achieved");
 		Map<String,Object> parameters = new HashMap<> ();
+		parameters.put("userEmail", userEmail);
 		return getJdbcTemplate().queryForObject(dataImportConfig.getShowRemainingTargets(),parameters,Integer.class);
 		
 	} 
@@ -241,7 +212,7 @@ public Integer getRemainingTargets(){
 	}
 	
 }
-public Integer ShowFinancialYear(){
+public Integer ShowFinancialYear(String userEmail){
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In Remaining Target Dao, to get FinancialYear");
@@ -252,6 +223,7 @@ public Integer ShowFinancialYear(){
 		LOGGER.debug("In try block");
 		LOGGER.debug("Execute query to get FinancialYear");
 		Map<String,Object> parameters = new HashMap<> ();
+		parameters.put("userEmail", userEmail);
 		return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
 		
 	} 
