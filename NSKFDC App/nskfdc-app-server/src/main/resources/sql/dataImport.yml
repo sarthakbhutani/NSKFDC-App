@@ -14,4 +14,8 @@ dataImport:
  ShowTargetAchieved: >
    SELECT count(enrollmentNumber) FROM trainingpartnerdetails JOIN batchdetails ON trainingpartnerdetails.userEmail = batchdetails.userEmail INNER JOIN candidate ON batchdetails.batchId = candidate.batchIdFK where batchEndDate; 
   
-
+ ShowFinancialYear: >
+  SELECT
+   CASE WHEN MONTH(curdate())>=4 THEN
+          concat(YEAR(curdate()),YEAR(curdate())+1)
+   ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
