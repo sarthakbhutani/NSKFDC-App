@@ -122,7 +122,7 @@ public class DataImportController {
 		//Author:Sagun Saluja
 		
 		@RequestMapping("/getTotalTargets")
-		public int getTotalTargets(){
+		public Integer getTotalTargets(){
 			
 			LOGGER.debug("Request received from frontend to get Total Targets");
 			LOGGER.debug("In get Total Targets Controller");
@@ -137,13 +137,13 @@ public class DataImportController {
 			catch(Exception e) {
 				
 				LOGGER.error("An exception occurred while getting the Total Targets" + e);
-				return 0;
+				return null;
 				
 								}
 		}
 		
 		@RequestMapping("/getTargetAchieved")
-		public int getTargetAchieveds(){
+		public Integer getTargetAchieveds(){
 			
 			LOGGER.debug("Request received from frontend to get Target Achieved");
 			LOGGER.debug("In get Target Achieved Controller");
@@ -158,7 +158,7 @@ public class DataImportController {
 			catch(Exception e) {
 				
 				LOGGER.error("An exception occurred while getting the Target Achieved" + e);
-				return 0;
+				return null;
 				
 								}
 		}
@@ -166,7 +166,7 @@ public class DataImportController {
 		
 		
 		@RequestMapping("/getRemainingTargets")
-		public int getRemainingTargets(){
+		public Integer getRemainingTargets(){
 			
 			LOGGER.debug("Request received from frontend to get Remaining Target");
 			LOGGER.debug("In get Remaining Target Controller");
@@ -181,8 +181,28 @@ public class DataImportController {
 			catch(Exception e) {
 				
 				LOGGER.error("An exception occurred while getting the Target Achieved" + e);
-				return 0;
+				return null;
 				
 								}
+		}
+			@RequestMapping("/getFinancialYear")
+			public Integer getFinancialYear(){
+				
+				LOGGER.debug("Request received from frontend to get FinancialYear");
+				LOGGER.debug("In get Remaining Target Controller");
+				
+				try {
+					
+					LOGGER.debug("In try block to get FinancialYear");
+					LOGGER.debug("Sending request to service");
+					return importHistoryService.getFinancialYear();
+					
+					}
+				catch(Exception e) {
+					
+					LOGGER.error("An exception occurred while getting the FinancialYear" + e);
+					return null;
+					
+									}
 		}
 }
