@@ -4,6 +4,8 @@
 	import com.nskfdc.scgj.common.BaseDto;
 
 	public class BatchDto extends BaseDto{
+		
+		
 		public BatchDto(String batchId) {
 			super();
 			this.batchId = batchId;
