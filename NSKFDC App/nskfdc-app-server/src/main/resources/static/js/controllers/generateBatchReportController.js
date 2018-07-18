@@ -71,7 +71,7 @@ tp.controller("generateBatchReportController" , function($scope, $http){
 	   			var downloadURL = URL.createObjectURL(pdfFile);
 	   			var link = document.createElement('a');
 	   			link.href = downloadURL;
-	   			link.download = "Occupation Certificate.pdf"
+	   			link.download = "Final Batch Report.pdf"
 	   			document.body.appendChild(link);
 	   			link.click();
    			}
