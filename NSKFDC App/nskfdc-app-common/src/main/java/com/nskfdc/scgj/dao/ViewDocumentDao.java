@@ -16,7 +16,6 @@ import org.springframework.stereotype.Repository;
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.common.CreateZipFile;
 import com.nskfdc.scgj.config.ViewDocumentConfig;
-import com.nskfdc.scgj.config.ViewDocumentConfig2;
 import com.nskfdc.scgj.dto.ViewDocumentDto;
 
 @Repository
