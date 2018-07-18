@@ -249,12 +249,12 @@ scgj.controller("dashboardController" , function($scope, $http){
                         
                     }
 
-                    var mapData = Highcharts.geojson(Highcharts.maps["countries/in/in-all"]);
+                    var mapData = Highcharts.geojson(Highcharts.maps["countries/in/custom/in-all-disputed"]);
 
                     $('#container2').highcharts('Map', {
                     chart : {
                         borderWidth : 0,
-                        map: 'countries/in/in-all'
+                        map: 'countries/in/custom/in-all-disputed'
                     },
                     credits : {
                    	 enabled : false
@@ -265,12 +265,10 @@ scgj.controller("dashboardController" , function($scope, $http){
 
                         legend: {
                         enabled: true,
-                         title: {
-                                  text: 'States with training centers'
-                                }
+                         
                             },
                     series : [{
-                        name: 'Centers',
+                        name: 'Number of Centers',
                         mapData: mapData,
                         type:'map',
                         data: processed_json2,
