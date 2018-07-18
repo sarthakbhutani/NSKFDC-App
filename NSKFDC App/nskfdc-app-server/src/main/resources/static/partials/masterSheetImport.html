@@ -20,7 +20,7 @@
       <div class="col-sm-3">
          <div class="panel-s panel-default" id="panel-1">
             <div class="panel-body">
-               <font size="4">2018-19</font>
+               <font size="4">{{financialyear}}</font>
             </div>
             <div class="panel_footer"><font size="1.5">Financial Year</font></div>
          </div>
@@ -131,7 +131,8 @@
          <div class="col-sm-3" id="div">
             <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
             <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Number" id="Id13" ></li>
+            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Number" name="Employer" ng-model="txteId" ng-pattern="/^[0-9]{1,15}$/" id="Id13" >
+            <span id="warning"  ng-show="pattern.Employer.$error.pattern">enter only number</span></li>
          </div>
       </div>
       <div id="padding">
