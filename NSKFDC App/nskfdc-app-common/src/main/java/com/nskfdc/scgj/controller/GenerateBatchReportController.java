@@ -20,6 +20,7 @@ import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
+import com.nskfdc.scgj.dto.SearchReportDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 import com.nskfdc.scgj.service.GenerateBatchReportService;
 
@@ -133,6 +134,35 @@ if(report!=null) {
 		
 		catch (Exception e) {
 			LOGGER.debug("Error Occurred"+e);
+		}
+	}
+	
+	
+	
+	/**
+	 
+	 *@author shivangi singh
+	 *@description This method is a Controller Method that maps the request for getting reports of particular batchids.. 
+	 **/
+	
+	@RequestMapping("/getReports")
+	public Collection<SearchReportDto> getReport(@RequestParam("batchId") String batchId, @RequestParam("userEmail") String userEmail,HttpServletResponse response){
+
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("In Generate batchreport Controller");
+		
+		try {
+			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
+			
+			LOGGER.debug("In try block to get BATCH detail");
+			LOGGER.debug("Sending request to service");
+			return generateBatchReportService.getReport(batchId,userEmail);
+			
+		}catch(Exception e) {
+			
+			LOGGER.error("An error occurred while getting the REPORT" + e);
+			return null;
+			
 		}
 	}
 }

@@ -80,6 +80,17 @@ public class GenerateBatchReportConfig {
 		this.showUpdateBatchNumber = showUpdateBatchNumber;
 	}
 
+	private String showReport;
+	
+	public String getShowReport() {
+		return showReport;
+	}
+
+	public void setShowReport(String showReport) {
+		this.showReport = showReport;
+	}
+
+	
 	
 	
 	

@@ -13,3 +13,6 @@ batchIdQuery:
   
  showCandidateDetails: >
   select firstName,lastName,aadharCardNumber,mobileNumber,enrollmentNumber from nskfdc.candidate where batchId=:batchId;
+  
+ showReport: >
+  select batchId,userEmail from batchdetails where batchdetails.batchId= :batchId and userEmail= :userEmail;

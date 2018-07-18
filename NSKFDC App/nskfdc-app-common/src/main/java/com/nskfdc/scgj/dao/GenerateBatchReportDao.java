@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.nskfdc.scgj.config.GenerateBatchReportConfig;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
+import com.nskfdc.scgj.dto.SearchReportDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 
 @Repository
@@ -33,6 +35,8 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	private static final TrainingDetailsRowmapper trainingDetailsRowmapper=new TrainingDetailsRowmapper();
 	private static final CandiateDetailsRowmapper candiateDetailsRowmapper=new CandiateDetailsRowmapper();
 	
+	/* Creating object of Generate  Report Rowmapper */
+	private static final SearchReportRowmapper SearchReport_RowMapper = new SearchReportRowmapper();
 	/**
 	 
 	 *@author Samridhi Srivastava
@@ -103,6 +107,36 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		catch (Exception e) {
 			return null;
 		}
+	}
+	
+	/**
+	 
+	 *@author Shivangi Singh
+	 *@description This method is a DAO Method that generates the Reports of particular batchId entered.
+	 
+	 
+	 **/
+	
+	
+	public Collection<SearchReportDto> getReport(String batchId, String userEmail) {
+		Map<String, Object> parameters = new HashMap<>();
+		
+		parameters.put("batchId",batchId);
+		parameters.put("userEmail", userEmail);
+		
+		try {  
+			
+			LOGGER.debug("In try block");
+			LOGGER.debug("Execute query to get BATCH details ");
+			return getJdbcTemplate().query(generateBatchReportConfig.getShowReport(), parameters, SearchReport_RowMapper);
+	
+			
+		} catch (Exception e) {
+			
+			LOGGER.error("In Catch Block");
+			LOGGER.error("An error occured while getting the REPORT" + e);
+			return null;
+			}
 	}
 
 	
@@ -190,6 +224,30 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		catch(Exception e){
 		return -1;
 		}
+	}
+	
+	
+	/* Declaring inner class search report Rowmapper */
+    private static class SearchReportRowmapper implements RowMapper<SearchReportDto>{
+    	
+    	/**
+		 
+		 *@author Shivangi singh
+		 *@description This method is a RowMapper Method that gets the reports of the particular batchid entered. 
+		 *@return  reports  corresponding to the particular BatchId to the searchreportDto Parameterized Constructor.
+		 
+		 **/
+		
+		@Override
+		public SearchReportDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			String batchId = rs.getString("batchId");
+			String userEmail = rs.getString("userEmail");
+							
+			return new SearchReportDto(batchId,userEmail);
+			
+		}
+
 	}
 	
 }

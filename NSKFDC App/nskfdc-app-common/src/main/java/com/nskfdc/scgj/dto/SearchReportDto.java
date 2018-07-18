@@ -8,40 +8,76 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class SearchReportDto extends BaseDto{
 	private String batchId;  
-	//private String generatedOn;
-	private String trainingPartnerEmail;
 	
-	
-	 
-	
+	private String userEmail;
 	
 	public String getBatchId() {
 		return batchId;
 	}
 
-	public void setBatchid(String batchId) {
+	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
 
-	
-
-	
-
-	public String getTrainingPartnerEmail() {
-		return trainingPartnerEmail;
+	public String getUserEmail() {
+		return userEmail;
 	}
 
-	public void setTrainingPartnerEmail(String trainingPartnerEmail) {
-		this.trainingPartnerEmail = trainingPartnerEmail;
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
 	}
 
-	public SearchReportDto(String batchId, String trainingPartnerEmail){
+
+	public SearchReportDto(String batchId, String userEmail){
 		super();
 		this.batchId=batchId;
 	
-		this.trainingPartnerEmail=trainingPartnerEmail;
+		this.userEmail=userEmail;
 		
 	}
 	
 }
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+	
 

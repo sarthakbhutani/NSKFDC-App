@@ -24,6 +24,7 @@ import com.nskfdc.scgj.dao.GenerateBatchReportDao;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
+import com.nskfdc.scgj.dto.SearchReportDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -168,6 +169,22 @@ public class GenerateBatchReportService {
 	public int embeddimages(MultipartFile file) {
 		
 		return 0;
+	}
+	
+public Collection<SearchReportDto> getReport(String batchId,String userEmail){
+		
+		LOGGER.debug("REQUEST RECEIVED");
+		LOGGER.debug("GET REPORT");
+		
+		try {
+			LOGGER.debug("In try block to get BATCH details");
+			
+			return generateBatchReportDao.getReport(batchId,userEmail);
+		} catch (Exception e) {
+		
+			LOGGER.error("An error occurred while getting REPORT"+ e);
+			return null;
+		}
 	}
 	
 }
