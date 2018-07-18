@@ -33,21 +33,58 @@ function checkforstate() {
 var app = angular.module('app');
 app.controller('importController', function($scope, $http) {
 	
+	
+	
+	
+	
+	
+	
+	$http.get('/getFinancialYear')
+    .then(function (response) {
+    	console.log("the data for financial year is " + response.data);
+    	let year = response.data;
+    	let first = year%10000;
+    	let second = year/10000;
+    	
+//    	str.substr(4,1)
+    	console.log(year);
+    	$scope.financialyear = Math.floor(second) + " - " + first;
+    })
+    .catch((response) => console.log("error in getting the value " + response + " " + response.status + " "  + response.data));
+	
 	$http.get('/getTotalTargets')
     .then(function (response) {
-
-    	$scope.totaltargets = response.data;
+    	if(response.data == null)
+    		{
+    	$scope.totaltargets = 0;
+    		}
+    	else{
+    		$scope.totaltargets = response.data;
+    	}
     });
 
 	$http.get('/getTargetAchieved')
     .then(function (response) {
-    	$scope.targetachieved = response.data;
+    	if(response.data == null)
+		{
+	$scope.targetachieved = 0;
+		}
+	else{
+		$scope.targetachieved = response.data;
+	}
 
     });
 	
 	$http.get('/getRemainingTargets')
     .then(function (response) {
-    	 $scope.remainingtargets = response.data;
+    	
+    	if(response.data == null)
+		{
+	$scope.remainingtargets = 0;
+		}
+	else{
+		$scope.remainingtargets = response.data;
+	}
 
     });
 	
