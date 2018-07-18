@@ -6,7 +6,15 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix="uploadDocuments",locations="classpath:sql/uploadDocuments.yml")
 public class UploadDocumentConfig {
+	private String uploadDocumentsQuery;
 
+	public String getUploadDocumentsQuery() {
+		return uploadDocumentsQuery;
+	}
+
+	public void setUploadDocumentsQuery(String uploadDocumentsQuery) {
+		this.uploadDocumentsQuery = uploadDocumentsQuery;
+	}
 	private String showBatchIdDetails;
 
 	public String getShowBatchIdDetails() {
@@ -16,6 +24,12 @@ public class UploadDocumentConfig {
 	public void setShowBatchIdDetails(String showBatchIdDetails) {
 		this.showBatchIdDetails = showBatchIdDetails;
 	}
-	
+	private String showScgjDetails;
+	public String getShowScgjDetails() {
+		return showScgjDetails;
+	}
+	public void setShowScgjDetails(String showScgjDetails) {
+		this.showScgjDetails = showScgjDetails;
+	}
 	
 }
