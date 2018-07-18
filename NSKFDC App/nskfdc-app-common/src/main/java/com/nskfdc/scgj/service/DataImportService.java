@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dto.BatchDto;
-import com.nskfdc.scgj.dto.PanelDataImportDto;
+
 
 @Service
 public class DataImportService {
@@ -131,7 +131,7 @@ public class DataImportService {
 		
   //Author: Sagun Saluja
 
-public int getTotalTargets(){
+public Integer getTotalTargets(){
 	
 	LOGGER.debug("Request received from Control to get Total Targets");
 	LOGGER.debug("In CandidatesTrained Service, to get Total Targets ");
@@ -144,11 +144,11 @@ public int getTotalTargets(){
 	catch (Exception e) {
 	
 		LOGGER.error("An error occurred while getting the Total Targets"+ e);
-		return 0;
+		return null;
 	}
 }
 
-public int getTargetAchieved(){
+public Integer getTargetAchieved(){
 	
 	LOGGER.debug("Request received from Control to get Target Achieved");
 	LOGGER.debug("In CandidatesTrained Service, to get Target Achieved ");
@@ -161,10 +161,10 @@ public int getTargetAchieved(){
 	catch (Exception e) {
 	
 		LOGGER.error("An error occurred while getting the Target Achieved"+ e);
-		return 0;
+		return null;
 	}
 }
-public int getRemainingTargets(){
+public Integer getRemainingTargets(){
 	
 	LOGGER.debug("Request received from Control to get Remaining Targets");
 	LOGGER.debug("In CandidatesTrained Service, to get Remaining Targets ");
@@ -177,8 +177,23 @@ public int getRemainingTargets(){
 	catch (Exception e) {
 	
 		LOGGER.error("An error occurred while getting the Remaining Targets"+ e);
-		return 0;
+		return null;
 	}
 }
-
+public Integer getFinancialYear(){
+	
+	LOGGER.debug("Request received from Control to get FinancialYear");
+	LOGGER.debug("In CandidatesTrained Service, to get FinancialYear ");
+	
+	try {
+		
+		LOGGER.debug("In try block to get Remaining Targets");
+		return importHistoryDao.ShowFinancialYear();
+	}
+	catch (Exception e) {
+	
+		LOGGER.error("An error occurred while getting the FinancialYear"+ e);
+		return null;
+	}
+}
 }
