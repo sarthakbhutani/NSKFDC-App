@@ -15,18 +15,19 @@ scgj.controller("viewDocumentController" , function($scope, $http){
     paginationPageSizes: [5, 10, 20, 30],
     paginationPageSize: 10,
     useExternalPagination: true,
-
+    
     columnDefs: [
         {
-        	name: 'Batch_Id', 
-            displayName: 'Batch Id'
+        	name: 'batchId', 
+            displayName: 'batchId'
+            	
         },
         {
-        	name: 'trainingPartner',
+        	name: 'trainingPartnerName',
         	displayName: 'Training Partner'
         },
         {
-            name: 'uploadedOn',
+            name: 'uplodedOn',
             displayName: 'Uploaded On'
         },
         
@@ -43,14 +44,31 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 
 
 
-$http.get('')
-.then(function (response) {
-	 $scope.details.data= response.data;
-
-});
 
 $scope.searchDocuments=function(){
 	console.log("working");
+    if($scope.batchId!=null){
+	console.log($scope.tpName);
+	
+	$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
+		.then(function (response) {	
+		
+
+		 $scope.uploadedDocument.data= response.data;
+		 console.log("batchid");
+
+	});
+    }
+    else{
+	$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
+	.then(function (response) {	
+		
+
+		 $scope.uploadedDocument.data= response.data;
+		 console.log("scgj");
+
+	});
+    }
 	if($scope.tpName==null){
 		$scope.errorMessage="Please enter Training Partner Name";
 		

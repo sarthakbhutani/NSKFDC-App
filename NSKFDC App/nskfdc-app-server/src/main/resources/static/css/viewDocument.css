@@ -6,7 +6,7 @@
 	}
 
 #enterBatchId{
-	border: solid 1px #939393;
+	border: solid 1px grey;
 	font-family: calibri;
 	width: 120%;
 	padding: 1%;
@@ -15,7 +15,7 @@
 }
 
 #tpname{
-	border: solid 1px #939393;
+	border: solid 1px grey;
 	font-family: calibri;
 	padding: 1%;
 	width: 107%;
@@ -23,7 +23,7 @@
 	    
 }
 #scgjbtno{
-	border: solid 1px #8c8686;
+	border: solid 1px grey;
 	font-family: calibri;
 	padding: 1%;
 	margin-left: -4%;
@@ -69,7 +69,7 @@
 }
 .table{
 	border-color:#ffffff;
-	height:9rem;
+	
 	padding:2%;
 }
 div.ui-grid-header-cell-primary-focus{
