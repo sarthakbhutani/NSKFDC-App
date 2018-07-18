@@ -27,23 +27,27 @@
           </select>
         </form>
       </div>
-      <div id="r2t1" class="col-md-2">
-       <select ng-click="getBatchId()" ng-model="myVa2r"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
-       <option value=""disabled selected>BatchID	
+      <div id="r2t1" class="col-md-2" >
+       <select ng-click="getBatchId()" ng-change="enable()"  ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
+       <option value=""disabled selected>BatchID	</option>
        </select>
+       <span id="error_msg1"></span>
       </div>
       <div id="r2t2" class="col-md-2" ng-switch="myVar" >
-        <div ng-switch-when="fbr">
-          <input type="text" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID" required>
+        <div ng-show="myVar=='fbr'"> 
+        
+          <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="myVar3" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID" required>
+        <span id="error_msg2"></span>
         </div>
       </div>
       <div id="r2b1" class="col-md-2">
-        <span class="btn btn-default btn-file">
+        <span class="btn btn-default btn-file" ng-model=" browse"  >
         Browse <input type="file">
         </span>
       </div>
       <div id="r2b2" class="col-md-1">
-        <button type="submit" class="btn btn-primary btn-upload">Upload</button>
+      
+        <button type="submit" class="btn btn-primary btn-upload" ng-click="submitForm1()" >Upload</button>
       </div>
     </div>
    

@@ -165,12 +165,12 @@ border-radius: .5rem;
 
 .pointer{
 	width : 10%;
-	margin-left: 10rem;
 }
 
 
 .ui-grid-row{
 	background : green;
+	background : black;
 	
 }
 .ng-scope{
@@ -242,3 +242,30 @@ h3{
 	border-color: #8c8c8c;
 }
 
+
+.ui-grid-render-container-body .ui-grid-header-cell,
+.ui-grid-render-container-left .ui-grid-header-cell,
+.grid .ui-grid-row,
+.grid .ui-grid-cell,
+.grid .ui-grid-cell .ui-grid-vertical-bar {
+ 
+  font-size: 8px;
+  text-align: center;
+  /*line-height: 30px;*/
+  
+}
+
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: #e7e6e6; 
+}
+
+#error_msg1{
+	color: red;
+    
+    font-size:1rem;
+}
+#error_msg2{
+	color: red;
+    
+    font-size:1rem;
+}
