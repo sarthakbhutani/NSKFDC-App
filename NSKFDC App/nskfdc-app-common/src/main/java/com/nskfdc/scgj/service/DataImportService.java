@@ -32,7 +32,8 @@ public class DataImportService {
 			//write your logic here & change return type
 			importHistoryDao.importMasterSheet();
 			
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			
 			//write LOGGER here
 			//return the default value, it can be null
@@ -40,62 +41,22 @@ public class DataImportService {
 	}
 	
 	
-	
-	
-/*--------------Method to get Import History----------------*/
-	
-	public void getImportHistory() {
-		
-	//write LOGGER here
-		
-		try {
-			//write LOGGER here		
-			//write your logic here & change return type
-			importHistoryDao.getImportHistory();
-			
-		} catch (Exception e) {
-			
-			//write LOGGER here
-			//return the default value, it can be null
-		}
-	}
-	
-	
-	
-	
-/*--------------Method to get searched Master sheet----------------*/
-	
-	public void getSearchedMasterSheet() {
-		
-	//write LOGGER here
-		
-		try {
-			//write LOGGER here		
-			//write your logic here & change return type
-			importHistoryDao.getSearchedMasterSheet();
-			
-		} catch (Exception e) {
-			
-			//write LOGGER here
-			//return the default value, it can be null
-		}
-	}
 
 
 /*---------------Method to create Batch----------------------------*/
 
 	
-	public int getGenerateBatchService(String trainingPartnerEmail){
+	public int getGenerateBatchService(String userEmail){
 		
-		LOGGER.debug("Request received from Controller to create batch for email id: " + trainingPartnerEmail);
+		LOGGER.debug("Request received from Controller to create batch for email id: " + userEmail);
 		
-		LOGGER.debug("In Import Service to create batch for email id: " + trainingPartnerEmail );
+		LOGGER.debug("In Import Service to create batch for email id: " + userEmail );
 		
 		try{
 			
-			LOGGER.debug("In try block to generate batch for training partner with email id: " + trainingPartnerEmail);
+			LOGGER.debug("In try block to generate batch for training partner with email id: " + userEmail);
 			
-			return importHistoryDao.generateBatchDao(trainingPartnerEmail);
+			return importHistoryDao.generateBatchDao(userEmail);
 		
 		}
 		
@@ -113,16 +74,15 @@ public class DataImportService {
 			return -1;
 		}
 	}
-    public Collection<BatchDto> getBatchDetail(){
-		
-		
-		
-		try {
+
+	public Collection<BatchDto> getBatchDetail(String userEmail){
+    try {
 			
-			return importHistoryDao.getBatchDetail();
-		} catch (Exception e) {
+			return importHistoryDao.getBatchDetail(userEmail);
+		}
+    catch (Exception e) {
 		
-			
+			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
 			return null;
 		}
 	}
@@ -131,7 +91,7 @@ public class DataImportService {
 		
   //Author: Sagun Saluja
 
-public Integer getTotalTargets(){
+public Integer getTotalTargets(String userEmail){
 	
 	LOGGER.debug("Request received from Control to get Total Targets");
 	LOGGER.debug("In CandidatesTrained Service, to get Total Targets ");
@@ -139,7 +99,7 @@ public Integer getTotalTargets(){
 	try {
 		
 		LOGGER.debug("In try block to get Total Targets");
-		return importHistoryDao.getTotalTargets();
+		return importHistoryDao.getTotalTargets(userEmail);
 	}
 	catch (Exception e) {
 	
@@ -148,7 +108,7 @@ public Integer getTotalTargets(){
 	}
 }
 
-public Integer getTargetAchieved(){
+public Integer getTargetAchieved(String userEmail){
 	
 	LOGGER.debug("Request received from Control to get Target Achieved");
 	LOGGER.debug("In CandidatesTrained Service, to get Target Achieved ");
@@ -156,7 +116,7 @@ public Integer getTargetAchieved(){
 	try {
 		
 		LOGGER.debug("In try block to get Target Achieved");
-		return importHistoryDao.getTargetAchieved();
+		return importHistoryDao.getTargetAchieved(userEmail);
 	}
 	catch (Exception e) {
 	
@@ -164,7 +124,7 @@ public Integer getTargetAchieved(){
 		return null;
 	}
 }
-public Integer getRemainingTargets(){
+public Integer getRemainingTargets(String userEmail){
 	
 	LOGGER.debug("Request received from Control to get Remaining Targets");
 	LOGGER.debug("In CandidatesTrained Service, to get Remaining Targets ");
@@ -172,7 +132,7 @@ public Integer getRemainingTargets(){
 	try {
 		
 		LOGGER.debug("In try block to get Remaining Targets");
-		return importHistoryDao.getRemainingTargets();
+		return importHistoryDao.getRemainingTargets(userEmail);
 	}
 	catch (Exception e) {
 	
@@ -180,7 +140,7 @@ public Integer getRemainingTargets(){
 		return null;
 	}
 }
-public Integer getFinancialYear(){
+public Integer getFinancialYear(String userEmail){
 	
 	LOGGER.debug("Request received from Control to get FinancialYear");
 	LOGGER.debug("In CandidatesTrained Service, to get FinancialYear ");
@@ -188,7 +148,7 @@ public Integer getFinancialYear(){
 	try {
 		
 		LOGGER.debug("In try block to get Remaining Targets");
-		return importHistoryDao.ShowFinancialYear();
+		return importHistoryDao.ShowFinancialYear(userEmail);
 	}
 	catch (Exception e) {
 	
