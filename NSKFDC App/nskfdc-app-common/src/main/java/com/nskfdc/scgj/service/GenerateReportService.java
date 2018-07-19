@@ -30,11 +30,6 @@ public class GenerateReportService {
 	
 	int success=0;
 	Date date=new Date();
-	DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-	Calendar c=Calendar.getInstance();
-	String hour = Integer.toString(c.get(Calendar.HOUR_OF_DAY)); 
-	String minute = Integer.toString(c.get(Calendar.MINUTE));
-	String second = Integer.toString(c.get(Calendar.SECOND));
 	String reportType;
 	String generateReportsId;
 	String outputFile;

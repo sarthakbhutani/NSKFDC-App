@@ -9,14 +9,14 @@ generateReport:
  
  showNSKFDCExcelSheet: >
   select candidate.batchId,firstName,lastName,age,dob,gender,educationLevel,aadharCardNumber,firstNameFather,lastNameFather,motherName,
-   residentialAddress,mobileNumber,occupationType,msId,idProofType,idProofNumber,trainingPartnerName,bankName,ifscCode,accountNumber from candidate,
+   residentialAddress,mobileNumber,occupationType,msId,idProofType,relationWithSKMS,idProofNumber,trainingPartnerName,bankName,ifscCode,accountNumber from candidate,
     batchdetails,bankdetails,trainingpartnerdetails where candidate.enrollmentNumber=bankdetails.enrollmentNumber and 
      candidate.batchId=batchdetails.batchId and candidate.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;  
  
  showSDMSExcelSheet: >
   select nsdcRegNumber,batchdetails.centreId,candidate.enrollmentNumber,firstName,lastName,dob,firstNameFather,lastNameFather,guardianType,
    salutation,gender,state,district,mobileNumber,educationLevel,sectorSkillCouncil,jobRole,batchStartDate,batchEndDate,assessmentDate,employerName,
-    employerContactNumber,employmentType  from candidate,batchdetails,trainingpartnerdetails,centredetails,employerdetails where 
+    employerContactNumber,employmentType,aadharCardNumber,disabilityType  from candidate,batchdetails,trainingpartnerdetails,centredetails,employerdetails where 
      centredetails.userEmail=trainingpartnerdetails.userEmail and employerdetails.enrollmentNumber = candidate.enrollmentNumber and 
       batchdetails.centreId=centredetails.centreId and candidate.batchId=batchdetails.batchId and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
  

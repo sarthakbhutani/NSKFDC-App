@@ -215,7 +215,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			String lastName = rs.getString("lastName");
 			int age=rs.getInt("age");
 			String gender = rs.getString("gender");
-			String dob = rs.getString("dob");
+			Date dob = rs.getDate("dob");
 			String educationLevel = rs.getString("educationLevel");	
 			String firstNameFather = rs.getString("firstNameFather");	
 			String lastNameFather = rs.getString("lastNameFather");
@@ -232,10 +232,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			String accountNumber = rs.getString("accountNumber");
 			String batchId=rs.getString("batchId");
 			String trainingPartnerName=rs.getString("trainingPartnerName");
+			String relationWithSKMS=rs.getString("relationWithSKMS");
 			
 			return new GenerateNSKFDCExcelSheetDto(firstName,lastName,age,gender,dob,educationLevel,firstNameFather,
 					lastNameFather,motherName,aadharCardNumber,residentialAddress,mobileNumber,occupationType,
-					msId,idProofType,idProofNumber,bankName,ifscCode,accountNumber,batchId,trainingPartnerName);	
+					msId,idProofType,idProofNumber,bankName,ifscCode,accountNumber,batchId,trainingPartnerName,relationWithSKMS);	
 		}	
     }
     
@@ -250,7 +251,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     		String enrollmentNumber = rs.getString("enrollmentNumber");
     		String firstName = rs.getString("firstName");
     		String lastName = rs.getString("lastName");
-    		String dob = rs.getString("dob");
+    		Date dob = rs.getDate("dob");
     		String firstNameFather = rs.getString("firstNameFather");
     		String lastNameFather = rs.getString("lastNameFather");
     		String guardianType = rs.getString("guardianType");
@@ -262,16 +263,18 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     		String educationLevel = rs.getString("educationLevel");
     		String sectorSkillCouncil = rs.getString("sectorSkillCouncil");
     		String jobRole = rs.getString("jobRole");
-    		String batchStartDate = rs.getString("batchStartDate");
-    		String batchEndDate = rs.getString("batchEndDate");
-    		String assessmentDate = rs.getString("assessmentDate");
+    		Date batchStartDate = rs.getDate("batchStartDate");
+    		Date batchEndDate = rs.getDate("batchEndDate");
+    		Date assessmentDate = rs.getDate("assessmentDate");
     		String employerName = rs.getString("employerName");
     		String employerContactNumber = rs.getString("employerContactNumber");
     		String employmentType = rs.getString("employmentType");
+    		String aadharCardNumber = rs.getString("aadharCardNumber");
+    		String disabilityType = rs.getString("disabilityType");
     		
     		return new GenerateSDMSExcelSheetDto(nsdcRegNumber,id,enrollmentNumber,firstName,lastName,dob,firstNameFather,
-    				 lastNameFather,guardianType,salutation,gender,state,district,mobileNumber,educationLevel, 
-    				 sectorSkillCouncil,jobRole, batchStartDate,batchEndDate, assessmentDate,employerName,employerContactNumber,employmentType);
+    				 lastNameFather,guardianType,salutation,gender,state,district,mobileNumber,educationLevel,sectorSkillCouncil,jobRole,
+    				 batchStartDate,batchEndDate, assessmentDate,employerName,employerContactNumber,employmentType,aadharCardNumber,disabilityType);
     	}	
     }	
     				/* Declaring inner class GetRecordsForAuditTableRowMapper */

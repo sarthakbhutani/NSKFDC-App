@@ -1,5 +1,10 @@
 package com.nskfdc.scgj.dto;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateSDMSExcelSheetDto extends BaseDto {
@@ -9,6 +14,7 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 	private String enrollmentNumber;
 	private String firstName;
 	private String lastName;
+	private Date date_dob;
 	private String dob;
 	private String firstNameFather;
 	private String lastNameFather;
@@ -21,12 +27,21 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 	private String educationLevel;
 	private String sectorSkillCouncil;
 	private String jobRole;
+	private Date date_batchStartDate;
+	private Date date_batchEndDate;
+	private Date date_assessmentDate;
 	private String batchStartDate;
 	private String batchEndDate;
 	private String assessmentDate;
 	private String employerName;
 	private String employerContactNumber;
 	private String employmentType;
+	private String aadharCardNumber;
+	private String disabilityType;
+	
+	Calendar c=Calendar.getInstance();
+	DateFormat df=new SimpleDateFormat("dd-MM-yyyy");
+	
 	
 	public String getNsdcRegNumber() {
 		return nsdcRegNumber;
@@ -58,11 +73,11 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getDob() {
-		return dob;
+	public Date getDate_dob() {
+		return date_dob;
 	}
-	public void setDob(String dob) {
-		this.dob = dob;
+	public void setDate_dob(Date dob) {
+		this.date_dob = dob;
 	}
 	public String getFirstNameFather() {
 		return firstNameFather;
@@ -133,20 +148,20 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 	public String getBatchStartDate() {
 		return batchStartDate;
 	}
-	public void setBatchStartDate(String batchStartDate) {
-		this.batchStartDate = batchStartDate;
+	public void setBatchStartDate() {
+		this.batchStartDate = df.format(date_batchStartDate);
 	}
 	public String getBatchEndDate() {
 		return batchEndDate;
 	}
-	public void setBatchEndDate(String batchEndDate) {
-		this.batchEndDate = batchEndDate;
+	public void setBatchEndDate() {
+		this.batchEndDate = df.format(date_batchEndDate);
 	}
 	public String getAssessmentDate() {
 		return assessmentDate;
 	}
-	public void setAssessmentDate(String assessmentDate) {
-		this.assessmentDate = assessmentDate;
+	public void setAssessmentDate() {
+		this.assessmentDate = df.format(date_assessmentDate);
 	}
 	
 	public String getEmployerName() {
@@ -167,16 +182,58 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 	public void setEmploymentType(String employmentType) {
 		this.employmentType = employmentType;
 	}
-	public GenerateSDMSExcelSheetDto(String nsdcRegNumber,int id,String enrollmentNumber, String firstName,String lastName,String dob,String firstNameFather,
-	 String lastNameFather,String guardianType, String salutation,String gender, String state,String district,String mobileNumber,String educationLevel, 
-	 String sectorSkillCouncil,String jobRole,String batchStartDate,String batchEndDate, String assessmentDate,String employerName,String employerContactNumber,String employmentType) {
+	public String getAadharCardNumber() {
+		return aadharCardNumber;
+	}
+	public void setAadharCardNumber(String aadharCardNumber) {
+		this.aadharCardNumber = aadharCardNumber;
+	}
+	public String getDisabilityType() {
+		return disabilityType;
+	}
+	public void setDisabilityType(String disabilityType) {
+		this.disabilityType = disabilityType;
+	}
+	public String getDob() {
+		return dob;
+	}
+	public void setDob(String dob) {
+		this.dob = df.format(date_dob);
+	}
+	public Date getDate_batchStartDate() {
+		return date_batchStartDate;
+	}
+	public void setDate_batchStartDate(Date batchStartDate) {
+		this.date_batchStartDate = batchStartDate;
+	}
+	public Date getDate_batchEndDate() {
+		return date_batchEndDate;
+	}
+	public void setDate_batchEndDate(Date batchEndDate) {
+		this.date_batchEndDate = batchEndDate;
+	}
+	public Date getDate_assessmentDate() {
+		return date_assessmentDate;
+	}
+	public void setDate_assessmentDate(Date assessmentDate) {
+		this.date_assessmentDate = assessmentDate;
+	}
 	
+	
+	public GenerateSDMSExcelSheetDto(String nsdcRegNumber, int id, String enrollmentNumber, String firstName,
+			String lastName, Date dob, String firstNameFather, String lastNameFather, String guardianType,
+			String salutation, String gender, String state, String district, String mobileNumber, String educationLevel,
+			String sectorSkillCouncil, String jobRole, Date batchStartDate, Date batchEndDate,
+			Date assessmentDate, String employerName, String employerContactNumber, String employmentType,
+			String aadharCardNumber, String disabilityType) {
+		super();
 		this.nsdcRegNumber = nsdcRegNumber;
-		this.id=id;
+		this.id = id;
 		this.enrollmentNumber = enrollmentNumber;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.dob = dob;
+		this.date_dob = dob;
+		this.dob = df.format(date_dob);
 		this.firstNameFather = firstNameFather;
 		this.lastNameFather = lastNameFather;
 		this.guardianType = guardianType;
@@ -188,14 +245,17 @@ public class GenerateSDMSExcelSheetDto extends BaseDto {
 		this.educationLevel = educationLevel;
 		this.sectorSkillCouncil = sectorSkillCouncil;
 		this.jobRole = jobRole;
-		this.batchStartDate = batchStartDate;
-		this.batchEndDate = batchEndDate;
-		this.assessmentDate = assessmentDate;
+		this.setDate_batchStartDate(batchStartDate);
+		this.batchStartDate = df.format(date_batchStartDate);
+		this.setDate_batchEndDate(batchEndDate);
+		this.batchEndDate = df.format(date_batchEndDate);
+		this.setDate_assessmentDate(assessmentDate);
+		this.assessmentDate = df.format(date_assessmentDate);
 		this.employerName = employerName;
 		this.employerContactNumber = employerContactNumber;
 		this.employmentType = employmentType;
-		
+		this.aadharCardNumber = aadharCardNumber;
+		this.disabilityType = disabilityType;
 	}
-	
 
 }
