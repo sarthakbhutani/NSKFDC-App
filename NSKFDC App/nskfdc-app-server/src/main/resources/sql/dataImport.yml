@@ -22,3 +22,9 @@ dataImport:
    CASE WHEN MONTH(curdate())>=4 THEN
           concat(YEAR(curdate()),YEAR(curdate())+1)
    ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
+   
+ BatchDetails: >
+  Select distinct centredetails.centreId,batchdetails.batchId,state,centreCity,municipality,selectionCommitteeDate,principalTrainerName,batchStartDate,
+   batchEndDate,assessmentDate,medicalExamDate,employerName,employerContactNumber
+    from nskfdc.centredetails INNER Join nskfdc.batchdetails On centredetails.userEmail=batchdetails.userEmail
+     INNER JOIN nskfdc.candidate on batchdetails.batchId=candidate.batchId INNER JOIN nskfdc.employerdetails on candidate.enrollmentNumber=employerdetails.enrollmentNumber INNER JOIN User on employerdetails.enrollmentNumber=candidate.enrollmentNumber where User.userEmail= :userEmail and batchdetails.batchId= :batchId;
