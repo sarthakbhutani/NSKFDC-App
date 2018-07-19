@@ -1,0 +1,5 @@
+viewDocumentQueryForSearchAndDownload:
+ showTrainingPartnerDetailsForDownload: >
+  select batchdetails.batchId,trainingpartnerdetails.trainingPartnerName,dateUploaded,finalBatchReport,occupationCertificate,minuteOfSelectionCommittee,dataSheetForSDDMS,dataSheetForNSKFC,attendanceSheet,finalBatchReportPath,occupatioCertificatePath,minuteOfSelectionCommitteePath,dataSheetForSDMSPath,dataSheetForNSKFCPath,attendanceSheetPath from uploadeddocuments JOIN batchdetails JOIN trainingpartnerdetails on uploadeddocuments.batchId=batchdetails.batchId  WHERE (trainingpartnerdetails.trainingPartnerName= :trainingPartnerName and((batchdetails.batchId= :batchId)OR(batchdetails.scgjBatchNumber= :scgjBatchNumber)));
+                                                                                                                        
+      
