@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.UploadDocumentsDao;
@@ -53,19 +54,22 @@ public class UploadDocumentService {
 				
 			}
 		}		
-		public Collection<BatchIdDto> getBatchDetails(){
-			LOGGER.debug("Request received from upload documents Controller to upload documents service");
+		public int getBatchDetails(String userEmail){
+			LOGGER.debug("Request received from upload documents Controller to upload documents service"+ userEmail);
 			
 			
 			try {
-				LOGGER.debug("In try block of upload documents service");
-				return uploadDocumentsDao.getBatchDetail();
+				LOGGER.debug("In try block of upload documents service"+ userEmail);
+				return uploadDocumentsDao.getBatchDetail(userEmail);
 				
 			}
-			catch(Exception e){
-				LOGGER.debug("An error occurred in upload documents service"+ e);
-				return null;
+			catch(Exception d) {
+				
+				LOGGER.error("DataAccessException in service to create Batch" + d);
+				
+				return -1;
 			}
+
 			
 		}
 		public int scgjBatchIdField(String batchId, String scgjBatchId) {
@@ -78,6 +82,25 @@ public class UploadDocumentService {
 					LOGGER.debug("In try block of Scgj Details Service");
 					
 				return uploadDocumentsDao.scgjBatchIdField(batchId, scgjBatchId);
+				
+					
+					
+			         
+				}
+				catch(Exception e){
+				return 0;	
+				}
+		}
+		public int BatchIdField(String batchId) {
+			
+			LOGGER.debug("Request received from controller");
+			LOGGER.debug("In Scgj Details Service");
+			
+				try {	
+					
+					LOGGER.debug("In try block of Scgj Details Service");
+					
+				return uploadDocumentsDao.BatchIdField(batchId);
 				
 					
 					
