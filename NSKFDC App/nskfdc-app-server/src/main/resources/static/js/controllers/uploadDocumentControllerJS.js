@@ -2,6 +2,22 @@ var uploadDocument = angular.module('app');
 
 uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	console.log("working");
+	
+	var url ='/getBatchIdDet';
+    $scope.ids = [];
+    $http.get(url)
+	    .then(function(response) {
+	    	console.log("working before for");
+	        let dt = response.data;
+	        console.log(response.data);
+//	        for(i in dt){
+//          		$scope.ids.push(response.data[i].batchId); 
+//          	}
+	        $scope.ids.push(response.data);
+	        
+	    });
+	
+	
 	  $scope.submitForm = function () {
 		  console.log("inside submit form"+$scope.batchID);
 	    /*alert("Send a request to the server: "+$scope.batchID);*/
@@ -87,16 +103,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 //  			    });
 //  			}
   			
-  			$scope.ids=[];
-				$http.get("/getBatchIdDet").then(function (response) {
-			    	 
-					let batchId = response.data;
-					for(i in batchId)
-						{
-						   $scope.ids.push(response.data[i].batchId);
-						}
-
-		    });
+  		
+				 
 
 	  
 	  $scope.getTableHeight = function(){
@@ -112,37 +120,54 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 		  $scope.url = (window.URL || window.webkitURL).createObjectURL( blob );
 		  
 		  
-		  $scope.submitForm1 = function (){
-				 console.log("working3");
-				
-			
-			console.log($scope.myVar2);
-			console.log($scope.myVar3 );
-			$http.get("/getScgjDetails?batchId="+$scope.myVar2+"&scgjBatchNumber="+$scope.myVar3)
-			.then(function (response){
-				console.log("working5");
-				$scope.status= response.data;
-				if($scope.status==1 || $scope.scgjId!=null){
-					document.getElementById("error_msg1").innerHTML="";	
-					document.getElementById("error_msg2").innerHTML="";	
-					alert("upload successfull!!");
+		  $scope.submitForm1=function(){
+				if($scope.myVar=='fbr'){
+					$http.get("/getScgjDetails?batchId="+$scope.myVar2+"&scgjBatchNumber="+$scope.myVar3)
+					.then(function (response){
+						console.log("working5");
+						$scope.status= response.data;
+						if($scope.status==1 || $scope.scgjBatchNumber!=null){
+							document.getElementById("error_msg1").innerHTML="";	
+							document.getElementById("error_msg2").innerHTML="";	
+							alert("upload successfull!!");
+							
+						}
+						else{
+							console.log("working10");
+							 document.getElementById("error_msg1").innerHTML="Invalid BatchId";
+							 document.getElementById("error_msg2").innerHTML="Invalid ScgjID";
+							 
+							
+				               
+						}
 					
+					});
 				}
 				else{
-					console.log("working10");
-					 document.getElementById("error_msg1").innerHTML="Invalid BatchId";
-					 document.getElementById("error_msg2").innerHTML="Invalid ScgjID";
-					 
+					$http.get("/getBatchDetails?batchId="+$scope.myVar2)
+					.then(function (response){
+						console.log("working5");
+						$scope.status= response.data;
+						if($scope.status==1){
+							document.getElementById("error_msg1").innerHTML="";	
+							alert("upload successfull!!");
+							
+						}
+						else{
+							console.log("working10");
+							 document.getElementById("error_msg1").innerHTML="Invalid BatchId";
+							 
+							
+				               
+						}
 					
-		               
+					});
 				}
-			
-			});
-			 };
-			 $scope.enable = function() {
+			};
+			/* $scope.enable = function() {
 			        console.log("inside function " + $scope.value);
 			        $scope.isDisabled = false;
-			 };
+			 };*/
 			 
 			 
 			

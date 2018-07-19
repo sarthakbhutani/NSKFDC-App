@@ -41,6 +41,7 @@
     background-color: white;
     margin-left: 1rem;
     margin-right: 1rem;
+    height:5.5rem;
 }
 
 
@@ -266,6 +267,6 @@ h3{
 }
 #error_msg2{
 	color: red;
-    
+    margin-left:12%;
     font-size:1rem;
 }
