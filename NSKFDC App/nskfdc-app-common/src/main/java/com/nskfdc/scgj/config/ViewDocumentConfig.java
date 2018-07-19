@@ -4,31 +4,18 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
-@ConfigurationProperties(prefix="viewDocumentQueryBatchId",locations="classpath:sql/ViewDocumentBatchId.yml")
+@ConfigurationProperties(prefix="viewDocumentQueryForSearchAndDownload",locations="classpath:sql/ViewDocument.yml")
 
 public class ViewDocumentConfig {
-	private String  showTrainingPartnerDetailsForBatchId;
-	/*private String showTrainingPartnerDetailsForBatchId;*/
+	private String  showTrainingPartnerDetailsForDownload;
 
-		public String getShowTrainingPartnerDetailsForBatchId() {
-		return showTrainingPartnerDetailsForBatchId;
+	public String getShowTrainingPartnerDetailsForDownload(){
+		return showTrainingPartnerDetailsForDownload;
 	}
 
-	public void setShowTrainingPartnerDetailsForBatchId(
-			String showTrainingPartnerDetailsForBatchId) {
-		this.showTrainingPartnerDetailsForBatchId = showTrainingPartnerDetailsForBatchId;
+	public void setShowTrainingPartnerDetailsForDownload(
+			String showTrainingPartnerDetailsForDownload) {
+		this.showTrainingPartnerDetailsForDownload = showTrainingPartnerDetailsForDownload;
 	}
 	
-	/*public String getShowTrainingPartnerDetailsForscgjBatchNumber() {
-		return showTrainingPartnerDetailsForscgjBatchNumber;
 	}
-
-	public void setShowTrainingPartnerDetailsForscgjBatchNumber(
-			String showTrainingPartnerDetailsForscgjBatchNumber) {
-		this.showTrainingPartnerDetailsForscgjBatchNumber = showTrainingPartnerDetailsForscgjBatchNumber;
-	}*/
-
-		
-	
-	
-}
