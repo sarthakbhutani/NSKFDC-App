@@ -154,9 +154,9 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 				parameters.put("userEmail", userEmail);
 				LOGGER.debug("Parameters inserted into database");
 				
-				Integer test =  getJdbcTemplate().queryForObject(generateCredentialConfig.getCheckUserExistence(), parameters, Integer.class);
-				LOGGER.debug("The value of check user existence status is : " + test);
-				return test;
+				Integer userCredentialGenerationStatus =  getJdbcTemplate().queryForObject(generateCredentialConfig.getCheckUserExistence(), parameters, Integer.class);
+				LOGGER.debug("The value of check user existence status is : " + userCredentialGenerationStatus);
+				return userCredentialGenerationStatus;
 			}
 			catch(Exception e)
 			{

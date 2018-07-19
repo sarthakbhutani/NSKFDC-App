@@ -10,7 +10,7 @@ public class GenerateCredentialDto extends BaseDto{
 	private String password;
 	private String jobRole;
 	private String sectorSkillCouncil;
-	private String targets;
+	private int targets;
 	
 	public String getTrainingPartnerName() {
 		return trainingPartnerName;
@@ -24,17 +24,17 @@ public class GenerateCredentialDto extends BaseDto{
 	public void setNsdcRegNumber(String nsdcRegNumber) {
 		this.nsdcRegNumber = nsdcRegNumber;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public String getUserEmail() {
 		return userEmail;
 	}
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	public String getJobRole() {
 		return jobRole;
@@ -48,18 +48,15 @@ public class GenerateCredentialDto extends BaseDto{
 	public void setSectorSkillCouncil(String sectorSkillCouncil) {
 		this.sectorSkillCouncil = sectorSkillCouncil;
 	}
-	public String getTargets() {
+	public int getTargets() {
 		return targets;
 	}
-	public void setTargets(String targets) {
+	public void setTargets(int targets) {
 		this.targets = targets;
 	}
-
-	
-	public GenerateCredentialDto(String trainingPartnerName,String nsdcRegNumber, String userEmail, String password,
-			String jobRole, String sectorSkillCouncil, String targets) {
+	public GenerateCredentialDto(String trainingPartnerName, String nsdcRegNumber, String userEmail, String password,
+			String jobRole, String sectorSkillCouncil, int targets) {
 		super();
-
 		this.trainingPartnerName = trainingPartnerName;
 		this.nsdcRegNumber = nsdcRegNumber;
 		this.userEmail = userEmail;
@@ -72,7 +69,6 @@ public class GenerateCredentialDto extends BaseDto{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
 	
-	
+		
 }

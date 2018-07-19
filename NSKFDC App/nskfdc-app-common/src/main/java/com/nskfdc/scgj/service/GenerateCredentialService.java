@@ -59,6 +59,8 @@ private static final Logger LOGGER= LoggerFactory.getLogger(GenerateCredentialSe
 		
 		userCredentialStatus = generatecredentialDao.generateCredential(generateCredentialDto, role);
 		
+		LOGGER.debug("The status of generation of credentials of user with email : " + generateCredentialDto.getUserEmail() + " is : " + userCredentialStatus);
+		
 		if(userCredentialStatus == 1)
 		{
 			LOGGER.debug("Credentials generated for training partner with email : " + generateCredentialDto.getUserEmail());
