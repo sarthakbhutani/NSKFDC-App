@@ -1,32 +1,24 @@
 package com.nskfdc.scgj.service;
 
 import java.util.Collection;
-import org.apache.commons.collections.CollectionUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dto.BatchDto;
-import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
-import java.io.File;
-import java.io.*;
-import java.util.*;
-import org.springframework.core.io.ClassPathResource;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.ooxml.JRXlsxExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
+import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+
 
 @Service
 public class DataImportService {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(DataImportService.class);
-	
-	String outputFile;
 	
 	@Autowired
 	private DataImportDao importHistoryDao;
@@ -37,18 +29,16 @@ public class DataImportService {
 	public void importMasterSheet() {
 		
 	//write LOGGER here
-		
-		try {
-			//write LOGGER here		
-			//write your logic here & change return type
-			importHistoryDao.importMasterSheet();
-			
-		} 
-		catch (Exception e) {
-			
-			//write LOGGER here
-			//return the default value, it can be null
-		}
+//		
+//		try {
+//			//write LOGGER here		
+//			//write your logic here & change return type
+//			//importHistoryDao.importMasterSheet();
+//			
+//			
+//			//write LOGGER here
+//			//return the default value, it can be null
+//		}
 	}
 	
 	
@@ -85,99 +75,7 @@ public class DataImportService {
 			return -1;
 		}
 	}
-	
-/*-------------------------Method to Download Final Master Sheet---------------------------*/
-	
-	public String downloadMasterSheetService(String userEmail) {
-		
-		LOGGER.debug("Request received from controller");
-		LOGGER.debug("In Download Final Master Sheet Service");
-		
-		try {
-				
-			LOGGER.debug("In try block of Download Final Master Sheet Service");
-				
-			Collection<DownloadFinalMasterSheetDto> downloadMasterSheetInformation = importHistoryDao.downloadMasterSheetDao(userEmail);
-			
-			if (CollectionUtils.isNotEmpty(downloadMasterSheetInformation))
-				{	
-					
-					LOGGER.debug("Creating object of JRBean Collection Data Source ");					
-					
-					JRBeanCollectionDataSource masterSheetBeans = new JRBeanCollectionDataSource(downloadMasterSheetInformation);
-				
-					/* Map to hold Jasper Report Parameters */
-				
-					LOGGER.debug("Creating Map to hold Jasper Report Parameters ");					
-				
-					Map<String,Object> parameters=new HashMap<String,Object>();					
-				
-					parameters.put("DataSource",masterSheetBeans);
-				
-					LOGGER.debug("Creating object of Class Path Resource ");					
-				
-					ClassPathResource resource = new ClassPathResource("/static/FinalMasterSheet.jasper");				           
-			    
-					String userHomeDirectory = System.getProperty("user.home");
-			        				   
-					LOGGER.debug("Getting input stream");				        
-			    
-					InputStream inputStream = resource.getInputStream();				    
-			    
-					LOGGER.debug("Input Stream successfully generated");			    
-		        
-					LOGGER.debug("Creating the jrprint file..");
-		        
-					JasperPrint printFileName = JasperFillManager.fillReport(inputStream, parameters, new JREmptyDataSource());
-		        
-					LOGGER.debug("Successfuly created the jrprint file >> " + printFileName);    
-		           
-		        if (printFileName != null) {
-		         
-		                /*------------------------- In Excel---------------------------------------------*/
-		                
-		        		LOGGER.debug("Exporting the file to excel..");
-		                
-		                JRXlsxExporter exporter = new JRXlsxExporter();
-		                
-		                exporter.setExporterInput(new SimpleExporterInput(printFileName));
-		                
-		                outputFile=userHomeDirectory + File.separatorChar + "FinalMasterSheet.xlsx";
-		               
-		                exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
-		                SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration(); 
-		                configuration.setDetectCellType(true);
-		                configuration.setCollapseRowSpan(false);
-		                exporter.setConfiguration(configuration);
-		                exporter.exportReport();
-		                			                
-		                LOGGER.debug("Successfully Generated excel..");               
-				                
-		            } else {
-		                LOGGER.debug("jrprint file is empty..");
-		            }
 
-		            LOGGER.debug("Excel Sheet generated successfully....!!!");
-		            
-				}
-			else {
-					outputFile=null;
-					LOGGER.debug("Collection is null");
-				}
-		        
-		}catch (Exception e) {
-            LOGGER.debug("Exception caught, error in downloading Final Master Sheet" + e);
-            
-        }
-		        return outputFile;
-	}
-
-	
-	
-	
-	
-	
-	
 	public Collection<BatchDto> getBatchDetail(String userEmail){
     try {
 			
@@ -259,4 +157,32 @@ public Integer getFinancialYear(String userEmail){
 		return null;
 	}
 }
+
+
+
+
+	public Collection<GetBatchDetailsDto> BatchDetails(String userEmail,String batchId){
+			
+			LOGGER.debug("Request received from Controller");
+			LOGGER.debug("In BatchDetailsService");
+				
+				try {
+				
+					LOGGER.debug("email is" + userEmail);
+					LOGGER.debug("In try block of BatchDetailsService to get search results for user Email1: " + userEmail);
+					return importHistoryDao.BatchDetails(userEmail,batchId);
+					
+				} catch (Exception e) {
+					
+					LOGGER.debug("An error occurred while getting the batch details for userEmail"+ e);
+					LOGGER.debug("Return NULL");
+					return null;
+					
+				}
+			}		
+						
+
+
+
+
 }

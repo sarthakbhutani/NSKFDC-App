@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.nskfdc.scgj.common.SessionUserUtility;
+import com.nskfdc.scgj.dto.GetBatchDetailsDto;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.service.DataImportService;
 
@@ -128,14 +130,12 @@ public class DataImportController {
 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("Request received from frontend to show batch ID");
 			
-			
 			try {
+				
 				return importHistoryService.getBatchDetail(userEmail);
-				
 			}
-			catch(Exception e) {
-				
-			
+			catch(Exception e) 
+			{
 				return null;
 				
 			}
@@ -161,7 +161,7 @@ public class DataImportController {
 				LOGGER.error("An exception occurred while getting the Total Targets" + e);
 				return null;
 				
-								}
+		     	}
 		}
 		
 		@RequestMapping("/getTargetAchieved")
@@ -228,4 +228,31 @@ public class DataImportController {
 					
 									}
 		}
+				
+			/**
+			 * @author Shivanshu Garg
+			 * @param batchId
+			 * @return
+			 */
+				
+			@RequestMapping("/batchDetails")
+			public Collection<GetBatchDetailsDto> BatchDetails(@RequestParam("batchId") String batchId){				
+			
+		try {
+			
+			 String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();		
+					LOGGER.debug("Email is "+ userEmail);
+					LOGGER.debug("In try block ");
+					LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
+					return importHistoryService.BatchDetails(userEmail,batchId);
+				}
+				catch(Exception e) {	
+					LOGGER.debug("An error occurred while searching for batch details" + e);
+					LOGGER.debug("Returning NULL!");
+					return null;
+					
+				}	
+			
+			}
+
 }
