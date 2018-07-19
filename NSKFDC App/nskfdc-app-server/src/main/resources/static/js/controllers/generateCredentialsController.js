@@ -57,12 +57,12 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 			if(response.data==-25)
 				{
 				$scope.credentialErrorMessage=true;
-				$scope.checkcredential=true;
+				$scope.credentialSuccessMessage=false;
 				}
 			else
 				{
 				$scope.credentialErrorMessage=false;
-				$scope.checkcredential=false;
+				$scope.credentialSuccessMessage=true;
 				}
 		 });
 
