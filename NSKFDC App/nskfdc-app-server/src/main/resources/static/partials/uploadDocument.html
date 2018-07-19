@@ -32,17 +32,17 @@
        <select ng-click="getBatchId()"   ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
        <option value=""disabled selected>BatchID</option>
        </select>
-       <span id="error_msg1"></span>
+       
       </div>
       <div id="r2t2" class="col-md-2" ng-switch="myVar" >
         <div ng-show="myVar=='fbr'" ng-model="myVar"> 
         
           <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="myVar3" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID" required>
-        <span id="error_msg2"></span>
+       
         </div>
       </div>
       <div id="r2b1" class="col-md-2">
-        <span class="btn btn-default btn-file" ng-model=" browse"  >
+        <span class="btn btn-default btn-file" ng-model=" browse">
         Browse <input type="file">
         </span>
       </div>
@@ -50,6 +50,7 @@
       
         <button type="submit" class="btn btn-primary btn-upload" ng-click="submitForm1()" >Upload</button>
       </div>
+      <span id="error_msg1"></span>
     </div>
    
     <div class="row">
@@ -63,11 +64,8 @@
       <div class="row background ">
         <!-- button & input/dropdown -->
         <div class="col-md-4 col-sm-4">
-          <input type="text" class="form-control form-roundedOne placeholderfont " placeholder="Enter Batch ID" name="batchID" ng-model="batchID">
-          <!-- NOT SURE ABOUT DOWN -->
-          <!--  <span style="color:red" ng-show="searchForDocByTp.formData.batchID.$touched">
-            <span ng-show="searchForDocByTp.batchID.$error.required">Invalid Batch ID.</span>
-            </span> -->
+          <input type="text" class="form-control form-roundedOne placeholderfont " placeholder="Enter Batch ID" name="batchID" ng-model="batchID" >
+     <span id="searchBox"></span>
         </div>
         <div class="col-md-2 col-sm-4 searchDocumentTxt">
           <button type="submit" class="btn btn-primary btncolor" ng-click="submitForm()">  

@@ -9,10 +9,10 @@ dataImport:
   SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail;
 
  ShowRemainingTargets: >
-  SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - ( Select  count(Distinct enrollmentNumber) from batchdetails inner join Candidate on ( batchdetails.userEmail= :userEmail and batchEndDate) = candidate.batchId );
+  SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - (select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail) as remainingTarget;
   
  ShowTargetAchieved: >
-  Select  count(Distinct enrollmentNumber) from batchdetails inner join Candidate on ( batchdetails.userEmail= :userEmail and batchEndDate) = candidate.batchId;
+  select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail;
     
  ShowFinancialYear: >
   SELECT
