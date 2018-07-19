@@ -12,11 +12,11 @@ dataImport:
   SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail;
  
  ShowRemainingTargets: >
-  SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - ( SELECT count(enrollmentNumber)  FROM candidate WHERE ( select batchid from batchdetails where batchdetails.userEmail= :userEmail and batchEndDate ) = candidate.batchId);
+  SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - ( Select  count(Distinct enrollmentNumber) from batchdetails inner join Candidate on ( batchdetails.userEmail= :userEmail and batchEndDate) = candidate.batchId );
   
  ShowTargetAchieved: >
-  SELECT count(enrollmentNumber)  FROM candidate WHERE ( select batchid from batchdetails where batchdetails.userEmail= :userEmail and batchEndDate ) = candidate.batchId;
- 
+  Select  count(Distinct enrollmentNumber) from batchdetails inner join Candidate on ( batchdetails.userEmail= :userEmail and batchEndDate) = candidate.batchId;
+    
  ShowFinancialYear: >
   SELECT
    CASE WHEN MONTH(curdate())>=4 THEN
