@@ -1,6 +1,7 @@
 package com.nskfdc.scgj.service;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.nskfdc.scgj.dao.UploadDocumentsDao;
+import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchIdDto;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
 
@@ -54,12 +56,12 @@ public class UploadDocumentService {
 				
 			}
 		}		
-		public int getBatchDetails(String userEmail){
-			LOGGER.debug("Request received from upload documents Controller to upload documents service"+ userEmail);
+		public List<BatchDto> getBatchDetails(String userEmail){
+			LOGGER.debug("Request received from upload documents Controller to get batch id corresponding to user : " + userEmail);
 			
 			
 			try {
-				LOGGER.debug("In try block of upload documents service"+ userEmail);
+				LOGGER.debug("In try block of upload documents service to get batch id " + userEmail);
 				return uploadDocumentsDao.getBatchDetail(userEmail);
 				
 			}
@@ -67,7 +69,7 @@ public class UploadDocumentService {
 				
 				LOGGER.error("DataAccessException in service to create Batch" + d);
 				
-				return -1;
+				return null;
 			}
 
 			

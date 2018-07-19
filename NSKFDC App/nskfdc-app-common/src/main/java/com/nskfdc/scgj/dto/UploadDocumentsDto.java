@@ -5,15 +5,14 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class UploadDocumentsDto extends BaseDto{
 
-	String batchId;
+	int batchId;
 	String dateUploaded;
 	StringBuilder documentsUploaded;
 	String zipFileLink;
-	
-	public String getBatchId() {
+	public int getBatchId() {
 		return batchId;
 	}
-	public void setBatchId(String batchId) {
+	public void setBatchId(int batchId) {
 		this.batchId = batchId;
 	}
 	public String getDateUploaded() {
@@ -25,8 +24,8 @@ public class UploadDocumentsDto extends BaseDto{
 	public StringBuilder getDocumentsUploaded() {
 		return documentsUploaded;
 	}
-	public void setDocumentsUploaded(StringBuilder s2) {
-		this.documentsUploaded = s2;
+	public void setDocumentsUploaded(StringBuilder documentsUploaded) {
+		this.documentsUploaded = documentsUploaded;
 	}
 	public String getZipFileLink() {
 		return zipFileLink;
@@ -34,12 +33,17 @@ public class UploadDocumentsDto extends BaseDto{
 	public void setZipFileLink(String zipFileLink) {
 		this.zipFileLink = zipFileLink;
 	}
-	public UploadDocumentsDto(String batchId, String dateUploaded,
-			StringBuilder documentsUploaded, String zipFileLink) {
+	public UploadDocumentsDto(int batchId, String dateUploaded, StringBuilder documentsUploaded, String zipFileLink) {
 		super();
 		this.batchId = batchId;
 		this.dateUploaded = dateUploaded;
 		this.documentsUploaded = documentsUploaded;
 		this.zipFileLink = zipFileLink;
 	}
+	public UploadDocumentsDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

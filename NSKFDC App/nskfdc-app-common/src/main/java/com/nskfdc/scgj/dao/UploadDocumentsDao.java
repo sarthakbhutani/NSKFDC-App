@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -35,7 +36,7 @@ import com.nskfdc.scgj.dto.UploadDocumentsDto;
 public class UploadDocumentsDao extends AbstractTransactionalDao{
 	static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsDao.class);   
 	private static final UploadDocumentsRowMapper uploadDocumentsRowMapper = new UploadDocumentsRowMapper();
-	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
+	private static final BATCHRowmapper getBatchIdRowMapper = new BATCHRowmapper();
 	static StringBuilder s2 = new StringBuilder("");
 
 	@Autowired
@@ -89,12 +90,13 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				
 				
 			}
-	public int getBatchDetail(String trainingPartnerEmail){
-		LOGGER.debug("Request received from UploadService");
-		LOGGER.debug("In UploadDocumentsDao"+ trainingPartnerEmail);
+	public List<BatchDto> getBatchDetail(String userEmail){
+		LOGGER.debug("Request received from UploadService to get batch Id");
+		LOGGER.debug("In UploadDocumentsDao" + userEmail);
 		Map<String, Object> parameters = new HashMap<>();
-		
-		parameters.put("userEmail",trainingPartnerEmail);
+		LOGGER.debug("Generating hashmap of parameters");
+		parameters.put("userEmail",userEmail);
+		LOGGER.debug("The username put into hashmap is : " + parameters.get(userEmail));
 		if(parameters.isEmpty())
 		{
 			LOGGER.error("Null Parameter");
@@ -102,8 +104,8 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		
 try {
 			
-	LOGGER.debug("In try block of upload documents dao");
-	return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,Integer.class);
+	LOGGER.debug("In try block of upload documents dao to get batch ID");
+	return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,getBatchIdRowMapper );
 			
 		}
 
@@ -113,30 +115,30 @@ catch(Exception e) {
 			
 	LOGGER.error("In Catch Block");
 			
-	LOGGER.error("An error occured while generating the batch" + e);
+	LOGGER.error("An error occured while fetching the batch ID " + e);
 			
-	return -1;
+	return null;
 }
 	}
 	
 	
-	public Collection<BatchDto> showBatchIdDetails(String userEmail){
-		
-		try {
-			
-			Map<String,Object> parameters = new HashMap<>();
-			parameters.put("userEmail", userEmail);
-		
-			return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters, BATCH_RowMapper);
-			
-		} catch (Exception e) {
-			
-			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
-			return null;
-			
-		}
-		
-	}
+//	public Collection<BatchDto> showBatchIdDetails(String userEmail){
+//		
+//		try {
+//			
+//			Map<String,Object> parameters = new HashMap<>();
+//			parameters.put("userEmail", userEmail);
+//		
+//			return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters, BATCH_RowMapper);
+//			
+//		} catch (Exception e) {
+//			
+//			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
+//			return null;
+//			
+//		}
+//		
+//	}
 
 	
 
@@ -145,12 +147,12 @@ catch(Exception e) {
 		@Override
 		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
-			String batchId = rs.getString("batchId");
+			int batchId = rs.getInt("batchId");
 			return new BatchDto(batchId);
 			
 		}
 	}
-//KAMBIJ DONE\
+
 	
 	public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
 		
@@ -200,7 +202,7 @@ catch(Exception e) {
 		@Override
 		public UploadDocumentsDto mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
-			  String batchId = rs.getString("batchId");
+			  int batchId = rs.getInt("batchId");
 			  String dateUploaded = rs.getString("dateUploaded");
 			  int finalBatchReport = rs.getInt("finalBatchReport");
 			  int occupationCertificate = rs.getInt("occupationCertificate");

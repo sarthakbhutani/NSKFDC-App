@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
+import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchIdDto;
 
 import javax.servlet.http.HttpServletResponse;
@@ -107,15 +109,15 @@ try {
 		}
 		}
 	@RequestMapping("/getBatchIdDet")
-	public int getBatchIdDetails(){
+	public List<BatchDto> getBatchIdDetails(){
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In upload Controller");
 		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
-		LOGGER.debug("afgausgaisgdd"+userEmail);
+		LOGGER.debug("The username retreived from session is : " + userEmail);
 		try{
 			
-			LOGGER.debug("In try block of upload documents"+ userEmail);
-			LOGGER.debug("Sending request to uploadservice"+ userEmail);
+			LOGGER.debug("In try block of upload documents" + userEmail);
+			LOGGER.debug("Sending request to uploadservice to fetch batch ID for user with username" + userEmail);
 			
 			return uploadDocumentService.getBatchDetails(userEmail);
 		}
@@ -124,7 +126,7 @@ try {
 		
 			 LOGGER.error("An error occurred while sending Batch" + e);
 				
-			 return -1;
+			 return null;
 		 }
 	}
 	 @RequestMapping("/getScgjDetails")

@@ -342,7 +342,7 @@ private static class BATCHRowmapper implements RowMapper<BatchDto>{
 	@Override
 	public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
-		String batchId = rs.getString("batchId");
+		int batchId = rs.getInt("batchId");
 		return new BatchDto(batchId);
 		
 	}
