@@ -16,3 +16,6 @@ batchIdQuery:
   
  showReport: >
   select batchId,userEmail from batchdetails where batchdetails.batchId= :batchId and userEmail= :userEmail;
+  
+ updateGenerateReportsTable: >
+  replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);

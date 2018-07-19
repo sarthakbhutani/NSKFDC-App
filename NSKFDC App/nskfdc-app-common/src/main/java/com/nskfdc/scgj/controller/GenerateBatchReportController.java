@@ -105,7 +105,7 @@ public class GenerateBatchReportController {
 		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 		try{
 			report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail);
-if(report!=null) {
+				if(report!=null) {
 				
 				LOGGER.debug("Creating object of File");
 				File file = new File(report);
@@ -145,7 +145,7 @@ if(report!=null) {
 	 *@description This method is a Controller Method that maps the request for getting reports of particular batchids.. 
 	 **/
 	
-	@RequestMapping("/getReports")
+	/*@RequestMapping("/getReports")
 	public Collection<SearchReportDto> getReport(@RequestParam("batchId") String batchId, @RequestParam("userEmail") String userEmail,HttpServletResponse response){
 
 		LOGGER.debug("Request received from frontend");
@@ -164,5 +164,5 @@ if(report!=null) {
 			return null;
 			
 		}
-	}
+	}*/
 }

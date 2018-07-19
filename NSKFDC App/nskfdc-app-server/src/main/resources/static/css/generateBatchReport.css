@@ -9,7 +9,7 @@
 	background-color:#FFF;
 	margin:1%;
 	width:95%;
-	height:95%;
+	height:100%;
 	padding-top:2%;
 }
 .txt{
@@ -19,17 +19,32 @@
 }
 .boxes{
 	padding-top:1%;
-	margin-top:0.5%;
+	margin-top:0.15%;
+}
+.boxes1{
+	padding-top:1%;
+	margin-bottom:0.5%;
+	margin-left: 45%;
+	padding:0.65rem;
 }
 .btncolor{
-	background-color: #33ccff;
-	width: 60%;
-	height:50%;
+	background-color: #02B0F0;
+	margin-top:0.5rem;
+	width: 8rem;
+    font-size: 1.5rem;
+    padding:0rem;
+}
+.btncolor1{
+	background-color: #02B0F0;
+	margin-top:2.5rem;
+	width: 8rem;
+    font-size: 1.5rem;
+    padding:0rem;
 }
 .grid{
 	
 	width: 100%;
-	height: 30%;
+	height: 5%;
 	margin-top: 2%;
 	margin-left:-1.5%;
 	border-collapse: separate;
@@ -58,6 +73,10 @@ input[type="text"] {
 .file {
   visibility: hidden;
   position: absolute;
+}
+
+.btn-primary{
+	height:50%;
 }
 .btn-file {
     position: relative;

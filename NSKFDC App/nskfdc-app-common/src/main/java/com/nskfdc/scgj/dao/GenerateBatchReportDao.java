@@ -4,8 +4,12 @@ package com.nskfdc.scgj.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+
+
 
 
 
@@ -248,6 +252,32 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			
 		}
 
+	}
+	public void updateTableGenerateReports(String generateReportsId, Date date,
+			String reportType, String batchId, String userEmail) {
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("generateReportsId", generateReportsId);
+		parameters.put("generatedOn",date);
+		parameters.put("reportType",reportType);
+		parameters.put("batchId",batchId);
+		parameters.put("userEmail",userEmail);
+		
+int result;
+		
+		LOGGER.debug("Request received from service");
+		LOGGER.debug("In  Dao");
+		
+		try {
+			
+			LOGGER.debug("In try block of  Dao");
+			result = getJdbcTemplate().update(generateBatchReportConfig.getUpdateGenerateReportsTable(),parameters);
+			LOGGER.debug("The result of the query is : " + result);
+			
+		}catch(Exception e) {
+			LOGGER.error("In catch block of Update Database Dao"+e);
+		
+		}	
+		
 	}
 	
 }

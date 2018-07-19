@@ -90,6 +90,16 @@ public class GenerateBatchReportConfig {
 		this.showReport = showReport;
 	}
 
+	public String updateGenerateReportsTable;
+
+	public String getUpdateGenerateReportsTable() {
+		return updateGenerateReportsTable;
+	}
+
+	public void setUpdateGenerateReportsTable(String updateGenerateReportsTable) {
+		this.updateGenerateReportsTable = updateGenerateReportsTable;
+	}
+
 	
 	
 	

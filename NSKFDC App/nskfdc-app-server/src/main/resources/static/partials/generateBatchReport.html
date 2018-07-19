@@ -20,21 +20,26 @@
                  </div>
             </div>
         </div>
-        <div class="container innerline">
-        
-        	<p><input type="file" name="file" id="file"></p>
-        	<input type="submit" ng-click="upload()">
-        
-        
+    <div class="container innerline">
         
         <div class="row boxes">
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 1" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="elephant" placeholder="Enter Images of Day 1" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <!--  <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file" file-model="myFile1">
+	       				  </span>-->
+					<form>
+                		<div class="form-group">
+                    		<label for="myFileField">Select a file: </label>
+                    		<input type="file" demo-file-model="myFile"  class="form-control" id ="myFileField"/>
+                		</div>
+               			 <button ng-click="uploadFile()" class = "btn btn-primary">Upload File</button>
+            		</form>
+            			       				  
                     </div>
                     
              </div>
@@ -43,11 +48,13 @@
         <div class="row boxes">
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 2" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Day 2" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file">
+	       				  </span>
                     </div>
                     
              </div>
@@ -55,11 +62,13 @@
         <div class="row boxes">
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 3" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 3" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file">
+	       				  </span>
                     </div>
                    
              </div>
@@ -67,11 +76,13 @@
         <div class="row boxes" >
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 4" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 4" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file">
+	       				  </span>
                     </div>
                     
              </div>
@@ -79,23 +90,13 @@
          <div class="row boxes">
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 5" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 5" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
-                    </div>
-                    
-             </div>
-        </div>
-        <div class="row boxes">
-        	<div class="col-md-10">
-            		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Assessment" />
-                    </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file">
+	       				  </span>
                     </div>
                     
              </div>
@@ -103,29 +104,47 @@
         <div class="row boxes">
         	<div class="col-md-10">
             		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Medical Exam" />
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Assessment" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file">
+	       				  </span>
                     </div>
                     
              </div>
         </div>
-        <center><button class="btn btn-primary boxes" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button></center>
+        <div class="row boxes">
+        	<div class="col-md-10">
+            		
+                	<div class="col-md-5">
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Medical Examinaion" required>
+                    </div>
+                    <div class="col-md-4">
+	                      <span class="btncolor btn btn-default btn-file">
+	        					   Browse <input type="file" >
+	       				  </span>
+                    </div>
+                    
+             </div>
+        </div>
+        <br><button class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
         </div>
      <div class="container">
-        <div class="row col-md-4">
-        	<h4>&nbsp;Search Report</h4>
+        <div class="col-md-10">
+        	<div class="row">
+        		<h4>&nbsp;Search Report</h4>
+        	</div>
         </div>
         <div class="row">
         	<div class="col-md-12">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control" placeholder="Enter Batch Id" />
+                    	<br><input type="text" class="form-control" placeholder="Enter Batch Id" />
                     </div>
                     <div class="col-md-2">
-                      <button class="btn btn-primary btncolor">Search</button>
+                      <button class="btn btn-primary btncolor1">Search</button>
                     </div>
                     <div class="col-md-3"></div>
              </div>
