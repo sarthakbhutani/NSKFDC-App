@@ -8,6 +8,7 @@ public class BatchDetailsDto  extends BaseDto{
 		String state;
 		String centreCity;
 		String municipality;
+		String WardType;
 		Date selectionCommitteeDate;
 		String principalTrainerName;
 		Date batchStartDate;
@@ -43,6 +44,16 @@ public class BatchDetailsDto  extends BaseDto{
 
 		public void setState(String state) {
 			this.state = state;
+		}
+
+		
+		public String getWardType() {
+			return WardType;
+		}
+
+
+		public void setWardType(String wardType) {
+			WardType = wardType;
 		}
 
 
