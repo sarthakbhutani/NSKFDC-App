@@ -17,15 +17,22 @@ import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.FinancialDto;
+import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 
 
 @Repository
 public class DataImportDao extends AbstractTransactionalDao{
 	
+	
 	private static final Logger LOGGER= LoggerFactory.getLogger(DataImportDao.class);
+	
+	/*  Object of Master Sheet RowMapper */
+	private static final DownloadMasterSheetRowmapper downloadMasterSheetRowMapper = new DownloadMasterSheetRowmapper();
+	
 	
 	@Autowired
 	private DataImportConfig dataImportConfig;
+	
 	
 	public void importMasterSheet() {
 		//write Logger here
@@ -46,16 +53,16 @@ public class DataImportDao extends AbstractTransactionalDao{
 	
 
 
-	
-	public Integer generateBatchDao(String trainingPartnerEmail){
+	/*--------------------------Generate BatchId------------------------------------*/
+	public Integer generateBatchDao(String userEmail){
 					
 			LOGGER.debug("Request received from Service");
 					
-			LOGGER.debug("In  Import Dao, to get create batch for email id:" + trainingPartnerEmail);
+			LOGGER.debug("In  Import Dao, to get create batch for email id:" + userEmail);
 					
 			Map<String, Object> parameters = new HashMap<>();
 					
-			parameters.put("trainingPartnerEmail",trainingPartnerEmail);
+			parameters.put("userEmail",userEmail);
 					
 			if(parameters.isEmpty())
 			{
@@ -88,7 +95,37 @@ public class DataImportDao extends AbstractTransactionalDao{
 			}
 	}
 			
-			//write Rowmapper class here
+	/*--------------------------Download Final Master Sheet------------------------------------*/
+	
+	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(String userEmail){
+				
+				LOGGER.debug("Request received from service");
+				LOGGER.debug("In Generate Occupation Certificate Dao");
+				
+				Map<String, Object> parameters = new HashMap<>();
+				parameters.put("userEmail", userEmail);
+				
+				try {
+					
+					LOGGER.debug("In try block to download Final Master Sheet");
+					
+					return getJdbcTemplate().query(dataImportConfig.getDownloadMasterSheet(), parameters, downloadMasterSheetRowMapper);
+				}
+				
+				catch(Exception e) {
+							
+					LOGGER.error("In Catch Block");			
+					LOGGER.error("An error occured while downloading the Final Master Sheet" + e);
+							
+					return null;
+			   }
+	}
+	
+	
+	
+	
+	
+	
 	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
 	
 	
@@ -271,6 +308,24 @@ private static class FinancialRowmapper implements RowMapper<FinancialDto>{
 		
 	}
 }
+
+/*------------------------------RowMapper to download Master Sheet-----------------------------*/
+		private static class DownloadMasterSheetRowmapper implements RowMapper<DownloadFinalMasterSheetDto>{
+		
+			@Override
+			public DownloadFinalMasterSheetDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+							
+				String trainingPartnerName = rs.getString("trainingPartnerName");
+				String sectorSkillCouncil = rs.getString("sectorSkillCouncil");
+				String jobRole = rs.getString("jobRole");
+				String nsdcRegNumber = rs.getString("nsdcRegNumber");
+				String batchId = rs.getString("batchId");
+				
+				return new DownloadFinalMasterSheetDto(trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId);	
+			}	
+		}
+
+
 }
 
 

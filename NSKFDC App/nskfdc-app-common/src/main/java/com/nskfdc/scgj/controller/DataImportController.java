@@ -1,14 +1,14 @@
 package com.nskfdc.scgj.controller;
 
 import java.util.Collection;
-
+import java.io.*;
+import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.service.DataImportService;
@@ -44,8 +44,9 @@ public class DataImportController {
 		}
 	
 
-
-	 @RequestMapping("/generateBatch")
+	/*--------------------Method to Generate BatchId-------------------*/
+	 
+	@RequestMapping("/generateBatch")
 	 public int generateBatchController(){
 		 String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 		 LOGGER.debug("Request received from frontend to create batch for email id : " + userEmail);
@@ -72,6 +73,56 @@ public class DataImportController {
 		 }
 
 	 }
+	
+	
+	/*--------------------Method to Download Final Master Sheet------------------*/
+	
+	@RequestMapping("/downloadFinalMasterSheet")
+	public void downloadMasterSheetController(HttpServletResponse response){
+		
+		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+		String report;
+		LOGGER.debug("Request received from frontend"+userEmail);
+		LOGGER.debug("In downloadMasterSheetController");
+		
+		try {
+			
+			LOGGER.debug("In try block of Download Master Sheet Controller");
+			
+			report = importHistoryService.downloadMasterSheetService(userEmail);
+			
+			if(report!=null) {
+				
+				LOGGER.debug("Creating object of File");
+				File file = new File(report);
+			
+				LOGGER.debug("Setting Content Type and Header");
+				response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+				response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+		    
+				LOGGER.debug("Creating object of BufferedInputStream, BufferedOutputStream");
+		    	BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
+		    	BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
+		    	byte[] buffer = new byte[1024];
+		    	int bytesRead = 0;
+		    	while ((bytesRead = inStrem.read(buffer)) != -1) {
+		    		outStream.write(buffer, 0, bytesRead);
+		    	}
+		    
+		    	LOGGER.debug("Excel Sheet Generated successfully");
+		    
+		    	outStream.flush();
+		    	inStrem.close();
+			} else {
+				LOGGER.debug("Path not found");
+			}
+		}catch(Exception e) {
+			LOGGER.error("Error while downloading the Final Master Sheet"+e);
+		}	
+	}
+	
+	
+	
 		@RequestMapping("/getBatchIdfortrainer")
 		public Collection<BatchDto> getBatchDetail(){
 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();

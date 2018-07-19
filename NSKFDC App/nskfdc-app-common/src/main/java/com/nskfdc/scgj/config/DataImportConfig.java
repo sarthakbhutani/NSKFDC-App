@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="dataImport",locations="classpath:sql/dataImport.yml")
 public class DataImportConfig {
 
-	//write your code here
+	/*---------------------------Generate BatchId--------------------------------*/
 	private String generateBatch;
 
 	public String getGenerateBatch() {
@@ -26,6 +26,25 @@ public class DataImportConfig {
 	public void setshowbatchId(String showbatchId) {
 		this.showbatchId = showbatchId;
 	}
+	
+	
+	
+	/*--------------------------Download Final Master Sheet-------------------------*/
+
+		
+		private String downloadMasterSheet;
+
+		public String getDownloadMasterSheet() {
+			return downloadMasterSheet;
+		}
+
+		public void setDownloadMasterSheet(String downloadMasterSheet) {
+			this.downloadMasterSheet = downloadMasterSheet;
+		}
+
+	
+	
+	
 	
 	
 	//Author: Sagun Saluja

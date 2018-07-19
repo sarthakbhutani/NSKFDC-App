@@ -31,14 +31,7 @@ function checkforstate() {
 
 
 var app = angular.module('app');
-app.controller('importController', function($scope, $http) {
-	
-	
-	
-	
-	
-	
-	
+app.controller('importController', function($scope, $http) {	
 	$http.get('/getFinancialYear')
     .then(function (response) {
     	console.log("the data for financial year is " + response.data);
@@ -118,7 +111,7 @@ app.controller('importController', function($scope, $http) {
         $scope.isDisabled12 = false;
         $scope.isDisabled13 = false;
     };
-    $scope.showAlert = function() {
+    $scope.generateBatchId = function() {
         $http.get("/generateBatch")
             .then(function(response) {
                 console.log("Inside controller");
@@ -131,6 +124,26 @@ app.controller('importController', function($scope, $http) {
             console.log("Batch successfully generated");
         }
     };
+    
+    
+    $scope.downloadMasterSheet=function(){
+    	var url='/downloadFinalMasterSheet';  	  
+    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+    	{
+    		
+    			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Final Master Sheet.xls"
+    			document.body.appendChild(link);
+    			link.click();
+    			
+    	}); 
+    };
+    
+    
+        
     $scope.setFile = function(element) {
         $scope.$apply(function($scope) {
             $scope.theFile = element.files[0];

@@ -1,6 +1,9 @@
 dataImport:
  generateBatch: >
-  insert into batchdetails(userEmail) values (userEmail);
+  insert into batchdetails(userEmail) values (:userEmail);
+  
+ downloadMasterSheet: >
+  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails WHERE userEmail= :userEmail);
  
  showbatchId: > 
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
