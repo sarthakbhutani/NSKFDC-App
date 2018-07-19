@@ -2,6 +2,17 @@ var uploadDocument = angular.module('app');
 
 uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	
+	   $scope.ids = [];
+	    $http.get('/getBatchIdDet')
+		    .then(function(response) {
+		        let dt = response.data;
+		        console.log(dt);
+		        for (i in dt) {
+		            $scope.ids.push(response.data[i].batchId);
+		            console.log(dt[i]);
+		        }
+		    });
+	
 	 $scope.submitForm = function () {
 		  
 		  if($scope.batchID==null)
@@ -20,7 +31,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	    });
 	    
 	  }
-	    
+			
+			 
 	    
 	  };
 
