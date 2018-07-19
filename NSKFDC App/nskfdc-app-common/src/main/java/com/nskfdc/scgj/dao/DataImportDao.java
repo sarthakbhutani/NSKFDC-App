@@ -64,6 +64,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 					
 			parameters.put("userEmail",userEmail);
 					
+			
 			if(parameters.isEmpty())
 			{
 				LOGGER.error("Null Parameter");
