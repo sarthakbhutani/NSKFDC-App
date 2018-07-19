@@ -1,7 +1,7 @@
 var scgj = angular.module("app");
 
 scgj.controller("generateCredentialsController" , function($scope, $http){
-	
+	$scope.credentialErrorMessage=false;
 	 $scope.detailsData = {
 		        enableGridMenus: false,
 		        enableSorting: false,
@@ -16,29 +16,58 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 
 		        columnDefs: [
 		            {
-		            	name: 'NSDC Registration Number', 
+		            	name: 'nsdcRegNumber', 
 		                displayName: 'NSDC Reg. Number',
 		             
 		            },
 		            {
-		            	name: 'Training Partner',
+		            	name: 'trainingPartner',
 		            	displayName: 'Training Partner'
 		            },
 		            {
-		                name: 'Email ID',
+		                name: 'userEmail',
 		                displayName: 'Email ID'
 		            },
 		            {
-		                name: 'Password',
+		                name: 'password',
 		                displayName: 'Password'
 		            },
 		            {
-		                name: 'Generated on',
+		                name: 'generatedOn',
 		                displayName: 'Generated On'
 		             },
 		             
 		        ]
 		    };
+	 
+	 
+	 $scope.check=function()
+	 {
+		 var generatecredential="/getGenerateCredential";
+		 console.log("Our credentials"+angular.toJson($scope.data));
+		 $http({
+			 url: generatecredential,
+			 method: "POST",
+			 data: angular.toJson($scope.data),
+			 headers: {
+				 'Content-Type': 'application/json'
+			 }
+		 }).then(function(response){
+			 console.log(response);
+			if(response.data==-25)
+				{
+				$scope.credentialErrorMessage=true;
+				$scope.checkcredential=true;
+				}
+			else
+				{
+				$scope.credentialErrorMessage=false;
+				$scope.checkcredential=false;
+				}
+		 });
+
+	 }
+	 
 	 
 	 $http.get('')
 	 .then(function (response) {
@@ -59,8 +88,17 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 	     pwd.type == ('password') ? pwd.type = 'text' :
 	        pwd.type = 'password';
 	 }
+	 
+//	 $scope.emailadd = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
-	 $scope.emailadd = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
+	 $scope.search=function(nsdcRegNumber) {
+		 console.log($scope.nsdcRegNumber);
+		 $http.get("/SearchService?nsdcRegNumber="+$scope.nsdcRegNumber)
+			.then(function (response) {	
+				 console.log(response.data);
+		 $scope.detailsData.data=response.data;
+			});
+	 }
+	 
 
 });
