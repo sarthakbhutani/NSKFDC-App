@@ -22,7 +22,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
-import com.nskfdc.scgj.common.ReadApplicationConstants;
 import com.nskfdc.scgj.config.UploadDocumentConfig;
 import com.nskfdc.scgj.dto.BatchIdDto;
 //import com.nskfdc.scgj.common.POCZipMultipleFile;
