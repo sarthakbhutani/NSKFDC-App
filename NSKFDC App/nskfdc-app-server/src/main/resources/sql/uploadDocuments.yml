@@ -3,7 +3,10 @@ uploadDocuments:
   select * from uploadeddocuments where batchId= :batchId and userEmail= :userEmail;
   
  showBatchIdDetails: >
-  select batchId from batchdetails join user where batchdetails.userEmail = user.userEmail;
+  SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
   
  showScgjDetails: >
   select exists (Select 1 from batchdetails where batchId = :batchId and scgjBatchNumber = :scgjBatchNumber);
+
+ batchidDetails: >
+  Select 1 from batchdetails where batchId = :batchId;

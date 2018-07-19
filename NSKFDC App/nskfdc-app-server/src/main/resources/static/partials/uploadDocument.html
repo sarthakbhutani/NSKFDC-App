@@ -29,13 +29,13 @@
         </form>
       </div>
       <div id="r2t1" class="col-md-2" >
-       <select ng-click="getBatchId()" ng-change="enable()"  ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
-       <option value=""disabled selected>BatchID	</option>
+       <select ng-click="getBatchId()"   ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
+       <option value=""disabled selected>BatchID</option>
        </select>
        <span id="error_msg1"></span>
       </div>
       <div id="r2t2" class="col-md-2" ng-switch="myVar" >
-        <div ng-show="myVar=='fbr'"> 
+        <div ng-show="myVar=='fbr'" ng-model="myVar"> 
         
           <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="myVar3" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID" required>
         <span id="error_msg2"></span>

@@ -8,11 +8,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import com.nskfdc.scgj.dto.BatchIdDto;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -86,10 +88,8 @@ try {
 				LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:" +id);
 				File file = new File(zipFileLink);
 			    response.setContentType("application/zip");
-			    //no contentlenght being set here
-			    
+			   
 			    response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
-//			    response.setContentType("app);
 			    BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
 			    BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
 			    byte[] buffer = new byte[1024];
@@ -107,19 +107,25 @@ try {
 		}
 		}
 	@RequestMapping("/getBatchIdDet")
-	public Collection<BatchIdDto> getBatchIdDetails(){
+	public int getBatchIdDetails(){
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In upload Controller");
+		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+		LOGGER.debug("afgausgaisgdd"+userEmail);
 		try{
-			LOGGER.debug("In try block of upload documents");
-			LOGGER.debug("Sending request to uploadservice");
 			
-			return uploadDocumentService.getBatchDetails();
+			LOGGER.debug("In try block of upload documents"+ userEmail);
+			LOGGER.debug("Sending request to uploadservice"+ userEmail);
+			
+			return uploadDocumentService.getBatchDetails(userEmail);
 		}
-		catch(Exception e){
-			LOGGER.debug("An error occurred in upload controller" + e);
-			return null;
-		}
+		
+		 catch(Exception e) {
+		
+			 LOGGER.error("An error occurred while sending Batch" + e);
+				
+			 return -1;
+		 }
 	}
 	 @RequestMapping("/getScgjDetails")
 	 public int scgjDetails(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber) {
@@ -128,6 +134,7 @@ try {
 	 		LOGGER.debug("In Scgj Controller");
 	 		
 	 		try {
+	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 	 			
 	 			LOGGER.debug("In try block of Scgj Controller");
 	 			return uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);	
@@ -138,6 +145,26 @@ try {
 	 		}
 	 		
 	 	}
+	 @RequestMapping("/getBatchDetails")
+	 public int scgjDetails(@RequestParam("batchId") String batchId) {
+	 		
+	 		LOGGER.debug("Request received from frontend");
+	 		LOGGER.debug("In Scgj Controller");
+	 		
+	 		try {
+	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+	 			
+	 			LOGGER.debug("In try block of Scgj Controller");
+	 			return uploadDocumentService.BatchIdField(batchId);	
+	 			
+	 		}catch(Exception e) {
+	 			LOGGER.error("In catch block of Scgj Controller"+e);
+	 			return 0;
+	 		}
+	 		
+	 	}
+	
+
 }
 
 	

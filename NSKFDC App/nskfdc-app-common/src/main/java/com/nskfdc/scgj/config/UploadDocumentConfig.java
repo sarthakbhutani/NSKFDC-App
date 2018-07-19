@@ -25,6 +25,14 @@ public class UploadDocumentConfig {
 		this.showBatchIdDetails = showBatchIdDetails;
 	}
 	private String showScgjDetails;
+    private String batchidDetails;
+	public String getBatchidDetails() {
+		return batchidDetails;
+	}
+
+	public void setBatchidDetails(String batchidDetails) {
+		this.batchidDetails = batchidDetails;
+	}
 	public String getShowScgjDetails() {
 		return showScgjDetails;
 	}
