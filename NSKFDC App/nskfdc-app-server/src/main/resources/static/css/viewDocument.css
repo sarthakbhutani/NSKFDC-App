@@ -91,3 +91,12 @@ div.ui-grid-canvas{
 	height: auto;
 }
 
+#errorMessage{
+	color:red;
+	font-size:1.5rem;
+}
+#errorMessageBatch
+{
+	color:red;
+	font-size:1.5rem;	
+}

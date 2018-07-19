@@ -14,25 +14,28 @@
 			<div class="row " id="formcolor" >
 				<form class="form-group " >
 						<div class="col-sm-4" >
-						<input  id="tpname" type="text" class="form-control"  placeholder="Enter Training Partner Name"  ng-model="tpName" >
+						<input type="text" id="tpname" type="text" class="form-control"  placeholder="Enter Training Partner Name"  ng-model="tpName" >
+						<span id="errorMessage"></span>	
 						</div>
 					
 						<div class="col-sm-2 ">
-						<input  id="enterBatchId" type="text" class="form-control" placeholder="Enter Batch ID" ng-model="batchId" ng-disabled="scgjBtNumber">
+						<input  type = "number" id="enterBatchId" type="text" class="form-control" placeholder="Enter Batch ID" ng-model="batchId" ng-disabled="scgjBtNumber">
 						</div> 
 									
 						<div id="or" class="col-sm-1"  >
 						or
 						</div>
 						
-						<div class="col-sm-3"><input  id="scgjbtno" type="text" class="form-control" placeholder="SCGJ Batch Number" ng-model="scgjBtNumber" ng-disabled="batchId">
+						<div class="col-sm-3"><input type="number"  id="scgjbtno" type="text" class="form-control" placeholder="SCGJ Batch Number" ng-model="scgjBtNumber" ng-disabled="batchId">
 						</div>
-												
+											
 						<div class="col-sm-2">
 						<button type="submit" class="btn btn-info" id="button" ng-click="searchDocuments()">Search</button>
 						</div>
+						
+						<span id="errorMessageBatch"></span>
 														
-						<p ng-bind="errorMessage" id="errormessage"></p>
+						
 																						
 			
 				</form>	

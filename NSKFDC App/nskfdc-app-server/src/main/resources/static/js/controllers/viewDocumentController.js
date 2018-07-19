@@ -82,7 +82,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 
 
 $scope.searchDocuments=function(){
-	console.log("working");
+	//console.log("working");
     if($scope.batchId!=null){
 	console.log($scope.tpName);
 	
@@ -106,19 +106,16 @@ $scope.searchDocuments=function(){
 	});
     }
 	if($scope.tpName==null){
-		$scope.errorMessage="Please enter Training Partner Name";
+		document.getElementById("errorMessage").innerHTML="Please enter Training Partner Name";
 		
 	}
 	else{
-		$scope.errorMessage="";
+		
 		if(($scope.batchId==null)&&($scope.scgjBtNumber==null)){
-			console.log("working");
-    		$scope.errorMessage="Please enter Batch Id or SCGJ Batch Number";
+			
+			document.getElementById("errorMessageBatch").innerHTML="Please enter BatchId or SCGJ Batch Number";
     		}
-    	else{
-    		$scope.errorMessage="";
-    		
-    	}
+
 	}
 	
 	
