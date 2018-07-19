@@ -1,16 +1,13 @@
 dataImport:
- generateBatch: >
-  insert into batchdetails(userEmail) values (:userEmail);
-  
+ 
  downloadMasterSheet: >
-  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails WHERE userEmail= :userEmail);
- 
- showbatchId: > 
-  SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
- 
+  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on
+   trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails 
+    WHERE userEmail= :userEmail);
+    
  ShowTotalTargets: >
   SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail;
- 
+
  ShowRemainingTargets: >
   SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - ( Select  count(Distinct enrollmentNumber) from batchdetails inner join Candidate on ( batchdetails.userEmail= :userEmail and batchEndDate) = candidate.batchId );
   
@@ -28,3 +25,13 @@ dataImport:
    batchEndDate,assessmentDate,medicalExamDate,employerName,employerContactNumber
     from nskfdc.centredetails INNER Join nskfdc.batchdetails On centredetails.userEmail=batchdetails.userEmail
      INNER JOIN nskfdc.candidate on batchdetails.batchId=candidate.batchId INNER JOIN nskfdc.employerdetails on candidate.enrollmentNumber=employerdetails.enrollmentNumber INNER JOIN User on employerdetails.enrollmentNumber=candidate.enrollmentNumber where User.userEmail= :userEmail and batchdetails.batchId= :batchId;
+     
+ generateBatch: >
+  insert into batchdetails(userEmail) values (:userEmail);
+  
+ showbatchId: > 
+  SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
+  
+      
+ 
+    

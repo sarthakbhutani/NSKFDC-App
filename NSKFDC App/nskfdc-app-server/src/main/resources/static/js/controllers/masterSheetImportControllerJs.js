@@ -127,7 +127,7 @@ app.controller('importController', function($scope, $http) {
     
     
     $scope.downloadMasterSheet=function(){
-    	var url='/downloadFinalMasterSheet';  	  
+    	var url='/generateMasterSheet';  	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{
     		
