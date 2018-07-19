@@ -18,12 +18,15 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.UploadDocumentConfig;
-import com.nskfdc.scgj.dto.BatchIdDto;
+
+import com.nskfdc.scgj.dto.BatchDto;
+
 //import com.nskfdc.scgj.common.POCZipMultipleFile;
 //import com.nskfdc.scgj.config.UploadDocumentsConfig;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
@@ -32,10 +35,9 @@ import com.nskfdc.scgj.dto.UploadDocumentsDto;
 public class UploadDocumentsDao extends AbstractTransactionalDao{
 	static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsDao.class);   
 	private static final UploadDocumentsRowMapper uploadDocumentsRowMapper = new UploadDocumentsRowMapper();
-	private static final BatchIdRowmapper BatchId_RowMapper = new BatchIdRowmapper();
-	
+	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
 	static StringBuilder s2 = new StringBuilder("");
-	
+
 	@Autowired
 	private UploadDocumentConfig uploadDocumentsConfig;
 	
@@ -87,61 +89,112 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				
 				
 			}
-	public Collection<BatchIdDto> getBatchDetail(){
+	public int getBatchDetail(String trainingPartnerEmail){
 		LOGGER.debug("Request received from UploadService");
-		LOGGER.debug("In UploadDocumentsDao");
+		LOGGER.debug("In UploadDocumentsDao"+ trainingPartnerEmail);
+		Map<String, Object> parameters = new HashMap<>();
+		
+		parameters.put("userEmail",trainingPartnerEmail);
+		if(parameters.isEmpty())
+		{
+			LOGGER.error("Null Parameter");
+		}
 		
 try {
 			
 	LOGGER.debug("In try block of upload documents dao");
-			return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(), BatchId_RowMapper);
+	return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,Integer.class);
+			
+		}
+
+
+		
+catch(Exception e) {
+			
+	LOGGER.error("In Catch Block");
+			
+	LOGGER.error("An error occured while generating the batch" + e);
+			
+	return -1;
+}
+	}
+	
+	
+	public Collection<BatchDto> showBatchIdDetails(String userEmail){
+		
+		try {
+			
+			Map<String,Object> parameters = new HashMap<>();
+			parameters.put("userEmail", userEmail);
+		
+			return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters, BATCH_RowMapper);
 			
 		} catch (Exception e) {
 			
-			LOGGER.debug("In Catch Block");
-			LOGGER.debug("An error occured in upload documents dao" + e);
+			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
 			return null;
 			
 		}
-	}
-private static class BatchIdRowmapper implements RowMapper<BatchIdDto>{
-		
-		@Override
-		public BatchIdDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			String batchId = rs.getString("batchId");
-						
-			
-			return new BatchIdDto(batchId);
-			
-		}
-		
 		
 	}
-public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
-	
-	LOGGER.debug("Request received from scgj service");
-	LOGGER.debug("In scgj Dao");
-	
-	try {
-		
-		LOGGER.debug("In try block of scgj Dao");
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("batchId",batchId);
-		parameters.put("scgjBatchNumber", scgjBatchNumber);
-		
-		
-		return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowScgjDetails(), parameters,Integer.class);
-		
-	}catch(Exception e) {
-		
-		LOGGER.debug("In catch block of scgj Dao"+e);
-		return 0;
-	}
-}	
-	
+
 	
 
+	private static class BATCHRowmapper implements RowMapper<BatchDto>{
+		
+		@Override
+		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			String batchId = rs.getString("batchId");
+			return new BatchDto(batchId);
+			
+		}
+	}
+//KAMBIJ DONE\
+	
+	public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
+		
+		LOGGER.debug("Request received from scgj service");
+		LOGGER.debug("In scgj Dao");
+		
+		try {
+			
+			LOGGER.debug("In try block of scgj Dao");
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("batchId",batchId);
+			parameters.put("scgjBatchNumber", scgjBatchNumber);
+			
+			
+			return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowScgjDetails(), parameters,Integer.class);
+			
+		}catch(Exception e) {
+			
+			LOGGER.debug("In catch block of scgj Dao"+e);
+			return 0;
+		}
+	}	
+	public int BatchIdField(String batchId) {
+		
+		LOGGER.debug("Request received from scgj service");
+		LOGGER.debug("In scgj Dao");
+		
+		try {
+			
+			LOGGER.debug("In try block of scgj Dao");
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("batchId",batchId);
+			return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getBatchidDetails(), parameters,Integer.class);
+			
+		}catch(Exception e) {
+			
+			LOGGER.debug("In catch block of scgj Dao"+e);
+			return 0;
+		}
+	}	
+
+
+
+//bhutano
 
 	static class UploadDocumentsRowMapper implements RowMapper<UploadDocumentsDto>{
 		@Override
@@ -217,14 +270,14 @@ public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
 				
 			  String zipFileLink = " ";
 
-if(s2!=null){
-	LOGGER.debug("STRING NOT NULL");
-}else{
-	LOGGER.debug("STRING NULL");
-}
-//String zipLocationRead = readApplicationConstantsObj.getCreateZipFileAtLocation();  //should be actual thing
-String zipLocationRead = System.getProperty("user.dir");  //getting working directory
-LOGGER.debug("the current working directory is " + zipLocationRead);
+			  if(s2!=null){
+				  LOGGER.debug("STRING NOT NULL");
+			  }else{
+				  LOGGER.debug("STRING NULL");
+			  }
+			  //String zipLocationRead = readApplicationConstantsObj.getCreateZipFileAtLocation();  //should be actual thing
+			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
+			  LOGGER.debug("the current working directory is " + zipLocationRead);
 			  if(s2!=null){
 				   File folder = new File(zipLocationRead);
 				  LOGGER.debug(zipLocationRead);
