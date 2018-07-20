@@ -139,111 +139,120 @@ scgj.controller("dashboardController" , function($scope, $http){
          }); 
      });
  });
+       
+       
        $(document).ready(function () {
            var processed_json2 = new Array();  
            $.getJSON('/getshowStateDetailsForMapChart', function (data) {
                     for (i = 0; i < data.length; i++){
-                        if(data[i].states=='Puducherry'){
+                        if(data[i].states=='Puducherry'.toLowerCase()||data[i].states=='Puducherry'){
                             processed_json2.push(['in-py', data[i].centers]);
                         }
-                        if(data[i].states=='Lakshadeep'){
+                        if(data[i].states=='Lakshadweep'.toLowerCase()||data[i].states=='Lakshadweep'){
                             processed_json2.push(['in-ld', data[i].centers]);
                         }
-                        if(data[i].states=='West Bengal'){
+                        if(data[i].states=='West Bengal'.toLowerCase()||data[i].states=='West Bengal'){
                             processed_json2.push(['in-wb', data[i].centers]);
                         }
-                        if(data[i].states=='Orrisa'){
+                        if(data[i].states=='Odisha'.toLowerCase()||data[i].states=='Odisha'){
                             processed_json2.push(['in-or', data[i].centers]);
                         }
-                        if(data[i].states=='Bihar'){
+                        if(data[i].states=='Bihar'.toLowerCase()||data[i].states=='Bihar'){
                             processed_json2.push(['in-br', data[i].centers]);
                         }
-                        if(data[i].states=='Sikkim'){
+                        if(data[i].states=='Sikkim'.toLowerCase()||data[i].states=='Sikkim'){
                             processed_json2.push(['in-sk', data[i].centers]);
                         }
-                        if(data[i].states=='Chhatisgarh'){
+                        if(data[i].states=='Chhattisgarh'.toLowerCase()||data[i].states=='Chhattisgarh'){
                             processed_json2.push(['in-ct', data[i].centers]);
                         }
-                        if(data[i].states=='Tamil Nadu'){
+                        if(data[i].states=='Tamil Nadu'.toLowerCase()||data[i].states=='Tamil Nadu'){
                             processed_json2.push(['in-tn', data[i].centers]);
                         }
-                        if(data[i].states=='Madhya Pradesh'){
+                        if(data[i].states=='Madhya Pradesh'.toLowerCase()||data[i].states=='Madhya Pradesh'){
                             processed_json2.push(['in-mp', data[i].centers]);
                         }
-                        if(data[i].states=='Gujrat'){
+                        if(data[i].states=='Gujarat'.toLowerCase()||data[i].states=='Gujarat'){
                             processed_json2.push(['in-2984', data[i].centers]);
                         }
-                        if(data[i].states=='Goa'){
+                        if(data[i].states=='Goa'.toLowerCase()||data[i].states=='Goa'){
                             processed_json2.push(['in-ga', data[i].centers]);
                         }
-                        if(data[i].states=='Nagaland'){
+                        if(data[i].states=='Nagaland'.toLowerCase()||data[i].states=='Nagaland'){
                             processed_json2.push(['in-nl', data[i].centers]);
                         }
-                        if(data[i].states=='Manipur'){
+                        if(data[i].states=='Manipur'.toLowerCase()||data[i].states=='Manipur'){
                             processed_json2.push(['in-mn', data[i].centers]);
                         }
-                        if(data[i].states=='Arunanchal Pradesh'){
+                        if(data[i].states=='Arunachal Pradesh'.toLowerCase()||data[i].states=='Arunachal Pradesh'){
                             processed_json2.push(['in-ar', data[i].centers]);
                         }
-                        if(data[i].states=='Mizoram'){
+                        if(data[i].states=='Mizoram'.toLowerCase()||data[i].states=='Mizoram'){
                             processed_json2.push(['in-mz', data[i].centers]);
                         }
-                        if(data[i].states=='Tripura'){
+                        if(data[i].states=='Tripura'.toLowerCase()||data[i].states=='Tripura'){
                             processed_json2.push(['in-tr', data[i].centers]);
                         }
-                        if(data[i].states=='Daman and Diu'){
+                        if(data[i].states=='Daman and Diu'.toLowerCase()||data[i].states=='Daman and Diu'){
                             processed_json2.push(['in-3464', data[i].centers]);
                         }
-                        if(data[i].states=='Delhi'){
+                        if(data[i].states=='Delhi'.toLowerCase()||data[i].states=='Delhi'){
                             processed_json2.push(['in-dl', data[i].centers]);
                         }
-                        if(data[i].states=='Haryana'){
+                        if(data[i].states=='Haryana'.toLowerCase()||data[i].states=='Haryana'){
                             processed_json2.push(['in-hr', data[i].centers]);
                         }
-                        if(data[i].states=='Himachal Pradesh'){
+                        if(data[i].states=='Himachal Pradesh'.toLowerCase()||data[i].states=='Himachal Pradesh'){
                             processed_json2.push(['in-hp', data[i].centers]);
                         }
-                        if(data[i].states=='Jammu and Kashmir'){
+                        if(data[i].states=='Jammu and Kashmir'.toLowerCase()||data[i].states=='Jammu and Kashmir'){
                             processed_json2.push(['in-jk', data[i].centers]);
                         }
-                        if(data[i].states=='Kerela'){
+                        if(data[i].states=='Kerala'.toLowerCase()||data[i].states=='Kerala'){
                             processed_json2.push(['in-kl', data[i].centers]);
                         }
-                        if(data[i].states=='Karnataka'){
+                        if(data[i].states=='Karnataka'.toLowerCase()||data[i].states=='Karnataka'){
                             processed_json2.push(['in-ka', data[i].centers]);
                         }
-                        if(data[i].states=='Maharashtra'){
+                        if(data[i].states=='Maharashtra'.toLowerCase()||data[i].states=='Maharashtra'){
                             processed_json2.push(['in-mh', data[i].centers]);
                         }
-                        if(data[i].states=='Assam'){
+                        if(data[i].states=='Assam'.toLowerCase()||data[i].states=='Assam'){
                             processed_json2.push(['in-as', data[i].centers]);
                         }
-                        if(data[i].states=='Andhra Pradesh'){
+                        if(data[i].states=='Andhra Pradesh'.toLowerCase()||data[i].states=='Andhra Pradesh'){
                             processed_json2.push(['in-ap', data[i].centers]);
                         }
-                        if(data[i].states=='Meghalaya'){
+                        if(data[i].states=='Meghalaya'.toLowerCase()||data[i].states=='Meghalaya'){
                             processed_json2.push(['in-ml', data[i].centers]);
                         }
-                        if(data[i].states=='Punjab'){
+                        if(data[i].states=='Punjab'.toLowerCase()||data[i].states=='Punjab'){
                             processed_json2.push(['in-pb', data[i].centers]);
                         }
-                        if(data[i].states=='Rajasthan'){
+                        if(data[i].states=='Rajasthan'.toLowerCase()||data[i].states=='Rajasthan'){
                             processed_json2.push(['in-rj', data[i].centers]);
                         }
-                        if(data[i].states=='Uttar Pradesh'){
+                        if(data[i].states=='Uttar Pradesh'.toLowerCase()||data[i].states=='Uttar Pradesh'){
+                        	
                             processed_json2.push(['in-up', data[i].centers]);
                         }
-                        if(data[i].states=='Uttaranchal'){
+                        if(data[i].states=='Uttarakhand'.toLowerCase()||data[i].states=='Uttarakhand'){
                             processed_json2.push(['in-ut', data[i].centers]);
                         }
-                        if(data[i].states=='Jharkhand'){
-                            processed_json2.push(['in-jk', data[i].centers]);
+                        if(data[i].states=='Jharkhand'.toLowerCase()||data[i].states=='Jharkhand'){
+                            processed_json2.push(['in-jh', data[i].centers]);
                         }
-                        if(data[i].states=='Chandigarh'){
+                        if(data[i].states=='Chandigarh'.toLowerCase()||data[i].states=='Chandigarh'){
                             processed_json2.push(['in-ch', data[i].centers]);
                         }
-                        if(data[i].states=='Dadra and Nagar Haveli'){
+                        if(data[i].states=='Dadra and Nagar Haveli'.toLowerCase()||data[i].states=='Dadra and Nagar Haveli'){
                             processed_json2.push(['in-dn', data[i].centers]);
+                        }
+                        if(data[i].states=='Andaman and Nicobar Islands'.toLowerCase()||data[i].states=='Andaman and Nicobar Islands'){
+                            processed_json2.push(['in-an', data[i].centers]);
+                        }
+                        if(data[i].states=='Telangana'.toLowerCase()||data[i].states=='Telangana'){
+                            processed_json2.push(['in-tg', data[i].centers]);
                         }
                         
                         
