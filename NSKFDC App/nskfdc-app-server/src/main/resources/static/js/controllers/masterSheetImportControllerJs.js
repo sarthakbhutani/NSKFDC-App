@@ -31,7 +31,12 @@ function checkforstate() {
 
 
 var app = angular.module('app');
-app.controller('importController', function($scope, $http) {	
+app.controller('importController', function($scope, $http) {
+	
+	
+
+	
+	
 	$http.get('/getFinancialYear')
     .then(function (response) {
     	console.log("the data for financial year is " + response.data);
@@ -95,7 +100,7 @@ app.controller('importController', function($scope, $http) {
     $scope.myVar = 'none';
     //	 $scope.value = 'select';
     $scope.enable = function() {
-        console.log("inside function " + $scope.value);
+        console.log("inside function " + $scope.batchDetails.value);
         $scope.isDisabled = false;
         $scope.isDisabled1 = false;
         $scope.isDisabled2 = false;
@@ -110,7 +115,30 @@ app.controller('importController', function($scope, $http) {
         $scope.isDisabled11 = false;
         $scope.isDisabled12 = false;
         $scope.isDisabled13 = false;
+       
+        /*----------------- To get the existing details of Batch Id--------------*/
+        $http.get("/BatchDetails?batchId="+$scope.batchDetails.value)
+        .then(function(response){
+        	console.log(response);
+        	$scope.batch= response;
+        	$scope.batch.centreId= response.data.centreId;
+        	$scope.batch.state= response.data.state;
+        	$scope.batch.centreCity=response.data.centreCity;
+        	$scope.batch.municipality=response.data.municipality;
+        	$scope.batch.selectionCommitteeDate=response.data.selectionCommitteeDate;
+        	$scope.batch.principalTrainerName=response.data.principalTrainerName;
+        	$scope.batch.batchStartDate=response.data.batchStartDate;
+        	$scope.batch.batchEndDate=response.data.batchEndDate;
+        	$scope.batch.assessmentDate=response.data.assessmentDate;
+        	$scope.batch.medicalExamDate=response.data.medicalExamDate;
+        	$scope.batch.employerName=response.data.employerName;
+        	$scope.batch.employerContactNumber=response.data.employerContactNumber;
+        });
     };
+    
+    
+    
+    
     $scope.generateBatchId = function() {
         $http.get("/generateBatch")
             .then(function(response) {
@@ -161,4 +189,9 @@ app.controller('importController', function($scope, $http) {
         });
     };
 
+    
+    
+    
+ 
+    
 });

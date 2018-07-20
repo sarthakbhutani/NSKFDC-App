@@ -16,6 +16,9 @@
          </div>
       </div>
    </div>
+   
+   
+   
    <div class="row"  "cointainer-fluid" id="panel" >
       <div class="col-sm-3">
          <div class="panel-s panel-default" id="panel-1">
@@ -57,13 +60,15 @@
             <font size="4">Update Existing Batch</font>
          </div>
          <div class="col-sm-3">
-            <select  ng-change="enable()" ng-model="value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
+            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
             <option selected disabled value="">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>
+            
+            
          </div>
          <div class="col-sm-3">
-                        <select name="Loca" id="Loca" onchange="checkforward()" ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
+                        <select name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
               <option value="none" selected  >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
@@ -81,16 +86,17 @@
       </div>
       <div class="row" id= "wrapper">
          <div class="col-sm-3" id="div">
-            <li><input  ng-disabled="value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="CenterId" ng-model="txtId" ng-pattern="/^[0-9]{1,15}$/" required />
+            <li><input  ng-disabled="batchDetails.value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="CenterId" ng-model="batch.centreId" ng-pattern="/^[0-9]{1,15}$/" required />
          <span id="warning"  ng-show="pattern.CenterId.$error.pattern">enter only number</span> </li>
-            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committee"  ng-model="batch.selectionCommitteeDate
+            "></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date" ng-model="batch.assessmentDate" ></li>
          </div>
          <div class="col-sm-3 margin" id="div" >
             <li>
-               <select  required name="State" id="State" onchange="checkforstate()" ng-disabled="value == undefined"  required class="state form-control" name="Type">
+               <select  required name="State" id="State" onchange="checkforstate()" ng-model="batch.state" ng-disabled="batchDetails.value == undefined"  required class="state form-control" name="Type">
                   <option value="State">State</option>
-                  <option value="AP">Andra Pradesh</option>
+                  <option value="AP">Andhra Pradesh</option>
                   <option value="AP">Arunachal Pradesh</option>
                   <option value="AS">Assam</option>
                   <option value="Bihar">Bihar</option>
@@ -120,18 +126,18 @@
                   <option value="Telangana">Telangana</option>
                </select>
             </li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Trainer Name" id="Id6" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" ng-model="batch.principalTrainerName" type="text" placeholder="Trainer Name" id="Id6" ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ng-model="batch.medicalExamDate"></li>
          </div>
          <div class="col-sm-3" id="div">
-            <li><input  ng-disabled="value == undefined" required type="text" placeholder="City" id="Id8" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch Start Date"  ></li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Name" id="Id10" ></li>
+            <li><input  ng-disabled="batchDetails.value == undefined" required type="text" placeholder="City" id="Id8" ng-model="batch.centreCity"></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" ng-model="batch.batchStartDate" placeholder="Batch Start Date"  ></li>
+            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Employer Name" id="Id10" ng-model="batch.employerName"></li>
          </div>
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Number" name="Employer" ng-model="txteId" ng-pattern="/^[0-9]{1,15}$/" id="Id13" >
+            <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id11" ng-model="batch.municipality"></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date" ng-model="batch.batchEndDate" ></li>
+            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Employer Number" name="Employer" ng-model="batch.employerContactNumber" ng-pattern="/^[0-9]{1,15}$/" id="Id13" >
             <span id="warning"  ng-show="pattern.Employer.$error.pattern">enter only number</span></li>
          </div>
       </div>
@@ -143,7 +149,7 @@
                <input type="file" name="img[]" class="file">
                <div class="input-group col-xs-12" id="upload">
                   <input type="text" id="uploadFile" required  placeholder="Upload .xls File" {{theFile.name}} disabled="disabled" />
-                  <button class="btn btn-default btn-file btn-primary" ng-disabled="value == undefined" type="button" ng-click="browse()">
+                  <button class="btn btn-default btn-file btn-primary" ng-disabled="batchDetails.value == undefined" type="button" ng-click="browse()">
                   Browse <input type="file"
                      onchange="angular.element(this).scope().setFile(this)">
                   </button>
@@ -154,10 +160,10 @@
             <div class="row">
                <div class="col-sm-4"></div>
                <div class="col-sm-4">
-                  <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
+                  <div id="color" ng-disabled="batchDetails.value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
-                     <input id="uploadBtn" ng-disabled="value == undefined" type="submit"  class="upload" />
+                     <input id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload" />
                   </div>
                </div>
             </div>
