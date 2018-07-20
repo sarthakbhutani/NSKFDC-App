@@ -28,6 +28,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 			    $http.get('/searchDocument?batchId='+$scope.batchID)
 			    .then(function (response) {
 			    	 $scope.details.data= response.data;
+			    	 
 	    });
 	    
 	  }
@@ -116,41 +117,45 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 						console.log("working5");
 						$scope.status= response.data;
 						if($scope.status==1){
-							//document.getElementById("error_msg1").innerHTML="";	
-							//document.getElementById("error_msg2").innerHTML="";	
-							alert("upload successfull!!");
+							document.getElementById("successful").innerHTML="Done";	
+							document.getElementById("error_msg1").innerHTML="";	
+							
 							
 						}
+					
+					
 						else{
 							console.log("working10");
-							 document.getElementById("error_msg1").innerHTML="Batch Id and SCGJ Id does not match";
+							 document.getElementById("error_msg1").innerHTML="Please Enter the Valid Details";
 							 //document.getElementById("error_msg2").innerHTML="Invalid ScgjID";
-							 
+							 document.getElementById("successful").innerHTML="";
 							
-				               
-						}
+						}          
+						
 					
 					});
 				}
 				else{
+					if($scope.myVar!=null){
 					$http.get("/getBatchDetails?batchId="+$scope.myVar2)
 					.then(function (response){
 						//console.log("working5");
 						$scope.status= response.data;
 						if($scope.status==1){
 							document.getElementById("error_msg1").innerHTML="";	
-							alert("upload successfull!!");
+							document.getElementById("successful").innerHTML="Done";
 							
 						}
 						else{
 							//console.log("working10");
-							 document.getElementById("error_msg1").innerHTML="Invalid BatchId";
-							 
+							 document.getElementById("error_msg1").innerHTML="Select Valid BatchId";
+							 document.getElementById("successful").innerHTML="";
 							
 				               
 						}
 					
 					});
+				}
 				}
 			};
 			/* $scope.enable = function() {
