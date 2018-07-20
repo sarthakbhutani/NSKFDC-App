@@ -182,16 +182,16 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             						  
             						  LOGGER.debug("batch id ="+ batchId);
             						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE. scgj bacth no:"+ trainingPartnerName);
-<<<<<<< .mine
+
             						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-=======
+
             						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
             						  
             						  
             						  
             						  
             						  //check above
->>>>>>> .r297
+
             						  FileOutputStream fileOutputStream = null;
             					        ZipOutputStream zipOut = null;
             					        FileInputStream fileInputStream = null;
@@ -234,13 +234,10 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             					  }
             					  
             					  
-            				  }else{
-<<<<<<< .mine
+			  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+  					  LOGGER.debug("batch id ="+ batchId);
             					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-=======
-            					  LOGGER.debug("batch id ="+ batchId);
-            					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
->>>>>>> .r297
+
             					  FileOutputStream fileOutputStream = null;
             				        ZipOutputStream zipOut = null;
             				        FileInputStream fileInputStream = null;
