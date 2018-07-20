@@ -131,7 +131,7 @@ public class DataImportController {
                   }
               }
                      
-                     @RequestMapping("/generateMasterSheet")
+                     @RequestMapping("/downloadFinalMasterSheet")
                  	public void downloadMasterSheetController(HttpServletResponse response){
                  		
                  		LOGGER.debug("Request received from frontend");

@@ -142,25 +142,18 @@ app.controller('importController', function($scope, $http) {
     $scope.generateBatchId = function() {
         $http.get("/generateBatch")
             .then(function(response) {
-                console.log("Inside controller");
                 $scope.data = response.data;
-            });
-        if ($scope.data == -1) {
-            console.log("Inside if");
-            console.log("Batch not generated");
-        } else {
-            console.log("Batch successfully generated");
-        }
+         });
     };
     
     
-    $scope.downloadMasterSheet=function(){
-    	var url='/generateMasterSheet';  	  
+    $scope.downloadMasterSheet = function(){
+    	var url='/downloadFinalMasterSheet';  	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{
     		
-    			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
-    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    			var downloadURL = URL.createObjectURL(excelFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
     			link.download = "Final Master Sheet.xls"
