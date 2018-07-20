@@ -34,7 +34,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
         {
        	 name: 'tpDocUrl', 
        	 displayName: 'Download Zip File', 
-       	 cellTemplate: '<img src="images/zipImage.png" alt="abc" ng-click="grid.appScope.DownloadZipFileForBatchId()" ng-click="grid.appScope.DownloadZipFileForSearchscgjBtNumber()"class="pointer"></a>'
+       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="abc" ng-click="grid.appScope.DownloadZipFileForBatchId()" ng-click="grid.appScope.DownloadZipFileForSearchscgjBtNumber()"class="pointer"></a>'
         }
         
         
@@ -53,7 +53,8 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 			  var link = document.createElement('a');
 			  //from here:: move the rest from up
 			  link.href = downloadURL;
-			  link.download =$scope.tpName +$scope.batchID + '.zip';
+			  
+			  link.download =$scope.tpName +$scope.batchId + '.zip';
 			  document.body.appendChild(link);
 			  link.click();
 		  });

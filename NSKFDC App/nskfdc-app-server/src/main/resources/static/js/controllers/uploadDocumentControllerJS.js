@@ -45,7 +45,6 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 		        enableFiltering: false,
 		        enableCellEdit: false,
 		        enableColumnMenus: false,
-		        enableHorizontalScrollbar: 0,
 		        enableVerticalScrollbar: 0,
 		        paginationPageSizes: [5, 10, 20, 30],
 		        paginationPageSize: 10,
@@ -54,19 +53,19 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 //		        enableColumnResizing: true,
 		        columnDefs: [
 		            {
-		            	name: 'batchId', 
+		            	name: 'batchId',  width: '17%', 
 		                displayName: 'Batch ID'
 		            },
 		            {
-		            	name: 'dateUploaded',
+		            	name: 'dateUploaded', width: '17%', 
 		            	displayName: 'Uploaded On'
 		            },
 		            {
-		                name: 'documentsUploaded',
+		                name: 'documentsUploaded', width: '117%', 
 		                displayName: 'Documents Uploaded'
 		            },
 		             {
-		            	 name: 'zipFileLink', 
+		            	 name: 'zipFileLink',  width: '19%', 
 		            	 displayName: 'Download Zip File', 
 //		            	 cellTemplate: '<a ng-href="file:///D:/sarthak/testZIp/test1.zip" target="_blank" download="test1.zip"><img src="images/rar_icon.png" alt="abc" class="pointer"></a>'
 		            	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.downloadZip()" class="pointer">'

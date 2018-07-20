@@ -217,6 +217,13 @@ catch(Exception e) {
 			  String attendanceSheetPath = rs.getString("attendanceSheetPath");
 			  LOGGER.debug("IN DAO, checking for values"+batchId);
 	
+			  
+			  if(s2!=null){
+				  LOGGER.debug("STRING NOT NULL");
+				  s2.setLength(0);
+			  }else{
+				  LOGGER.debug("STRING NULL");
+			  }
 			//MANIPULATION FOR FILE 
 			  LOGGER.debug("In rowmapper VARIABLE DECLARATION");
 			  
@@ -278,6 +285,9 @@ catch(Exception e) {
 			  }
 			  //String zipLocationRead = readApplicationConstantsObj.getCreateZipFileAtLocation();  //should be actual thing
 			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
+  // THE ABOVE LINE NEEDS TO CHANGED AS IT NEEDS TO PICK THE DYNAMIC PATH FOR STORING ZIP FILE.
+  //PRAVEK SIR WILL BE IMPLEMENTING THOSE CHANGES
+
 			  LOGGER.debug("the current working directory is " + zipLocationRead);
 			  if(s2!=null){
 				   File folder = new File(zipLocationRead);
@@ -309,18 +319,20 @@ catch(Exception e) {
 					                fileInputStream.close();
 					            }
 					            zipOut.close();
-					            LOGGER.debug("Done... Zipped the files...");
+					            LOGGER.debug("Done... Zipped the files...");   					            
 					        } catch (FileNotFoundException e) {
 					            // TODO Auto-generated catch block
-					            e.printStackTrace();
+//					            e.printStackTrace();
+					            LOGGER.debug("File not found exception :" +e);
 					        } catch (IOException e) {
 					            // TODO Auto-generated catch block
-					            e.printStackTrace();
+//					            e.printStackTrace();
+					        	LOGGER.debug("Input output exception :" +e);
 					        } finally{
 					            try{
 					                if(fileOutputStream != null) fileOutputStream.close();
 					            } catch(Exception ex){
-					                 
+					            	LOGGER.debug("Error"+ex);
 					            }
 					        }
 					  }
@@ -328,7 +340,6 @@ catch(Exception e) {
 						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
 					  }
 					  
-//					  C:\Users\Sarthak Bhutani\Desktop
 				  }else{
 					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
 					  FileOutputStream fileOutputStream = null;

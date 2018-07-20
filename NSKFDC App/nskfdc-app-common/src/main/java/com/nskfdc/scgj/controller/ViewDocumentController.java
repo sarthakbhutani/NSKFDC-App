@@ -90,6 +90,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 					LOGGER.debug("After try" + zipFileLink +tpName + batchId);
 					}
 					
+					LOGGER.debug(zipFileLink+"batchID"+batchId);
 					System.out.print(zipFileLink);
 					LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:" + tpName + batchId);
 					File file = new File(zipFileLink);
@@ -119,6 +120,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 	
 
 		//adding my own code for downloadZipFileForBatchId :
+		//adding my own code for downloadZipFileForSCGJBatchNumber :
 		@RequestMapping("/downloadZipFileForSearchscgjBtNumber")
 		public void DownloadZipFileForSearchscgjBtNumber(@RequestParam("tpName") String tpName, @RequestParam("scgjBtNumber") String scgjBtNumber, HttpServletResponse response){
 			LOGGER.debug("In block DOWNLOAD");
