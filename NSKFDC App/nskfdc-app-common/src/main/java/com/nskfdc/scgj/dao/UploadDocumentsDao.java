@@ -258,7 +258,7 @@ catch(Exception e) {
 			  if(minuteOfSelectionCommitteePath!=null){
 				  files.add(minuteOfSelectionCommitteePath);
 			  }
-			  if(dataSheetForSDMSPath!=null){ //change to not equal to::CONDITION
+			  if(dataSheetForSDMSPath!=null){
 //				  files.add("D:/sarthak/testZIp/test1.txt");  //prototype
 				  files.add(dataSheetForSDMSPath);
 			  }
@@ -331,7 +331,7 @@ catch(Exception e) {
 					  
 					  
 				  }else{
-					  zipFileLink = zipLocationRead+batchId + ".zip";
+					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
 					  FileOutputStream fileOutputStream = null;
 				        ZipOutputStream zipOut = null;
 				        FileInputStream fileInputStream = null;
@@ -354,7 +354,7 @@ catch(Exception e) {
 				                fileInputStream.close();
 				            }
 				            zipOut.close();
-				            LOGGER.debug("Done... Zipped the files...");
+				            LOGGER.debug("Done... Zipped the files... at location:" + zipFileLink);
 				        } catch (FileNotFoundException e) {
 				            // TODO Auto-generated catch block
 				            e.printStackTrace();

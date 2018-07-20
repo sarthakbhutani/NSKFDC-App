@@ -68,7 +68,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 		            	 name: 'zipFileLink', 
 		            	 displayName: 'Download Zip File', 
 //		            	 cellTemplate: '<a ng-href="file:///D:/sarthak/testZIp/test1.zip" target="_blank" download="test1.zip"><img src="images/rar_icon.png" alt="abc" class="pointer"></a>'
-		            	 cellTemplate: '<img src="images/rar_icon.png" alt="abc" ng-click="grid.appScope.downloadZip()" class="pointer">'
+		            	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.downloadZip()" class="pointer">'
 				             
 		            }
 		        ]
