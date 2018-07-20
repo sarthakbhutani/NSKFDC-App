@@ -10,6 +10,11 @@ body {
         width: 1488px;
     }
 }
+
+.userName{
+	    font-size: 10pt !important;
+    	margin-bottom: 0pt !important;
+}
 p {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.1em;

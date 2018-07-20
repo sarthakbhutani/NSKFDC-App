@@ -1,5 +1,9 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans";
 
+.userName{
+	    font-size: 10pt !important;
+    	margin-bottom: 0pt !important;
+}
 
 body {
     font-family: 'Open Sans', sans-serif;

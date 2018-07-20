@@ -91,4 +91,9 @@
     margin-left: 35%;
     margin-top: 1%;
 }
+
+#errorMessage{
+	color:red;
+	font-size: 9pt;
+}
  

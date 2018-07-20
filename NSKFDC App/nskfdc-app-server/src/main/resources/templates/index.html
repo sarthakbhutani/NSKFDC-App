@@ -58,7 +58,7 @@
             <br>
             <!-- Main Form -->
           <div class="login">
-              <form id="login-form" name="LoginForm" >
+              <form id="login-form" name="LoginForm" ng-submit="login()">
                 <div class="main-login-form">
                   <div class="login-group">
                     <div class="username-text">
@@ -72,9 +72,9 @@
                       <span  ng-class="{'glyphicon glyphicon-eye-open pull-right pan_arrow1': !collapsed, 'glyphicon glyphicon-eye-close pull-right pan_arrow1': collapsed}"></span>
                       </div>
                     </div>
-                  
+                    <span id="errorMessage">{{invalidErrorMessage}}</span>
                     <br>
-                    <button type="submit" class="btn btn-primary" class="login-button" ng-disabled="LoginForm.$invalid" ng-click="login()">Login</button>
+                    <button type="submit" class="btn btn-primary" class="login-button"  >Login</button>
                   </div>
                   
                 </div>

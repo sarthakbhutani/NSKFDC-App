@@ -12,6 +12,7 @@ var app = angular.module('app', ['ngRoute',
 // Application Configuration
 app.config(function($routeProvider, $httpProvider){
 	
+
 	$routeProvider.when('/scgj', {
 	    templateUrl : 'SCGJ_admin.html',
 	    controller : 'SCGJUserController'
@@ -29,11 +30,13 @@ app.config(function($routeProvider, $httpProvider){
 });
 
 
+
+
 // main controller of the App
 app.controller('mainController', function($rootScope, $scope, $http, $location, $route)  {
 		
 	$rootScope.mainTemplate=true;
-	
+	$scope.invalidErrorMessage="";
 	$scope.credential={userEmail: '',password:''}
 	
 var authenticate = function(credentials){
@@ -41,12 +44,14 @@ var authenticate = function(credentials){
 		var headers = credentials? { authorization : "Basic " + btoa(credentials.userEmail + ":" + credentials.password)}:{};
 	
 		$http.get('/user', {headers : headers}).then(function(response){
-			
-			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);			
+		
+			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);	
+			$rootScope.username = response.data.principal.username;	
 			$rootScope.mainTemplate=false;
-
 			
-			// Routing between templates based on user-role
+			
+
+	// Routing between templates based on user-role
 			
 			if($rootScope.userRole == '"scgj"'){
 				$rootScope.mainTemplate=false;
@@ -63,6 +68,12 @@ var authenticate = function(credentials){
 		}, function(data){
 			// function which executes when the user is not authenticated
 			$rootScope.mainTemplate= true;
+			if(credentials){
+				$scope.invalidErrorMessage="Invalid Username/ Password";
+			}
+			else{
+				$scope.invalidErrorMessage="";
+			}
 		});
 	}
 	
@@ -72,9 +83,6 @@ var authenticate = function(credentials){
 	$scope.login= function(){
 		authenticate($scope.credential);		
 	}
-	
-
-	
 	
 	
 	
@@ -87,6 +95,9 @@ var authenticate = function(credentials){
         	
         });
 	}
+	
+	
+	
 	
 });
 
