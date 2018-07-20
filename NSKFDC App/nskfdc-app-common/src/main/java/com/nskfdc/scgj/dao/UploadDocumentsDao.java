@@ -28,7 +28,6 @@ import com.nskfdc.scgj.config.UploadDocumentConfig;
 
 import com.nskfdc.scgj.dto.BatchDto;
 
-//import com.nskfdc.scgj.common.POCZipMultipleFile;
 //import com.nskfdc.scgj.config.UploadDocumentsConfig;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
 
@@ -66,7 +65,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail) {
 		//write Logger here
 		LOGGER.debug("Request received from Service");
-		LOGGER.debug("In POCuploadDao, to populate the grid-ui" + batchId);
+		LOGGER.debug("In UploadDocumentsuploadDao, to populate the grid-ui" + batchId);
 		
 				try {
 					
@@ -83,8 +82,8 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					
 				}
 				catch(Exception e) {
-					LOGGER.error("In catch block of POCuploadDao");
-					LOGGER.error("Error occured in POCuploadDao with exception" + e);
+					LOGGER.error("In catch block of UploadDocumentsuploadDao");
+					LOGGER.error("Error occured in UploadDocumentsuploadDao with exception" + e);
 					return null;
 				}
 				
@@ -287,7 +286,7 @@ catch(Exception e) {
 					  if(folder.mkdirs() || folder.canWrite())
 					  {
 						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
-						   zipFileLink = zipLocationRead+batchId + ".zip";
+						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
 						  FileOutputStream fileOutputStream = null;
 					        ZipOutputStream zipOut = null;
 					        FileInputStream fileInputStream = null;
@@ -329,7 +328,7 @@ catch(Exception e) {
 						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
 					  }
 					  
-					  
+//					  C:\Users\Sarthak Bhutani\Desktop
 				  }else{
 					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
 					  FileOutputStream fileOutputStream = null;

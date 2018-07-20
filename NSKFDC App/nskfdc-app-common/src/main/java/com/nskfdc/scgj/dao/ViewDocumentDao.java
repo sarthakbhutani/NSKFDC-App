@@ -28,7 +28,7 @@ import com.nskfdc.scgj.dto.ViewDocumentDto;
 @Repository
 public class ViewDocumentDao extends AbstractTransactionalDao {
 
-private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentConfig.class);
+private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.class);
 	
 	private static final ViewDocumentRowmapper viewDocument_RowMapper = new ViewDocumentRowmapper();
 	
@@ -167,8 +167,21 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentConfig.c
             				  if(!folder.exists()){
             					  if(folder.mkdirs() || folder.canWrite())
             					  {
+            						  
+            						  
+            						  
+            						  
+            						  
+            						  
+            						  
+            						  LOGGER.debug("batch id ="+ batchId);
             						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE. scgj bacth no:"+ trainingPartnerName);
-            						  zipFileLink = zipLocationRead+batchId + ".zip";
+            						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+            						  
+            						  
+            						  
+            						  
+            						  //check above
             						  FileOutputStream fileOutputStream = null;
             					        ZipOutputStream zipOut = null;
             					        FileInputStream fileInputStream = null;
@@ -212,7 +225,8 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentConfig.c
             					  
             					  
             				  }else{
-            					  zipFileLink = zipLocationRead+batchId + ".zip";
+            					  LOGGER.debug("batch id ="+ batchId);
+            					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
             					  FileOutputStream fileOutputStream = null;
             				        ZipOutputStream zipOut = null;
             				        FileInputStream fileInputStream = null;
