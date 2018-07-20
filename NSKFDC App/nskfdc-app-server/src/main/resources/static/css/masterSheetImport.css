@@ -12,7 +12,7 @@
 
 .panel-s
 {
-        width: 13rem;
+        
    
         color: white;
     
@@ -21,7 +21,7 @@
 {
        text-align: center;
     padding: 1.625rem;
-        height: 4rem;
+       
 }
 .panel_footer
 {
@@ -131,6 +131,7 @@
 #style
 {
         padding: 2rem;
+        margin-top: 2rem;
 }
 .wrapper
 {
