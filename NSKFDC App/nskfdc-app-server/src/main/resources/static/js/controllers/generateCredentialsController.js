@@ -25,6 +25,8 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 		        enableFiltering: false,
 		        enableCellEdit: false,
 		        enableColumnMenus: false,
+		        enableHorizontalScrollbar: 0,
+		        enableVerticalScrollbar: 0,
 		   
 		        paginationPageSizes: [5, 10, 20, 30],
 		        paginationPageSize: 10,
@@ -46,11 +48,14 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 		            },
 		            {
 		                name: 'password',
-		                displayName: 'Password'
+		                displayName: 'Password',
+		                	width:"13%",
+		                	cellclass:"passwordfont"
 		            },
 		            {
 		                name: 'generatedOn',
-		                displayName: 'Generated On'
+		                displayName: 'Generated On',
+		                	width:"13%"
 		             },
 		             
 		        ]
@@ -115,15 +120,11 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 	 $scope.getTableHeight=function(){
 		 var rowHeight=30;
 		 var headerHeight=30;
-		 if($scope.detailsData.data.length==0){
-			 $scope.credentialTable= false;
-		 }
-		 else{
-			 $scope.credentialTable= true;
+		
 		 return{
 			 height:($scope.detailsData.data.length * rowHeight + headerHeight)+"px"
 		 };
-	 }
+	
 	 };
 
 });
