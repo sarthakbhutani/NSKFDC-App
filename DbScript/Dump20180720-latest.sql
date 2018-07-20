@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: nskfdc
+-- Host: 127.0.0.1    Database: nskfdc
 -- ------------------------------------------------------
--- Server version	5.7.18-log
+-- Server version	5.6.24-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,13 +14,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
-
-Drop database if exists nskfdc;
-
-create database nskfdc;
-
-use nskfdc;
 
 --
 -- Table structure for table `bankdetails`
@@ -76,7 +69,7 @@ CREATE TABLE `batchdetails` (
   KEY `centreId_idx` (`centreId`),
   CONSTRAINT `centreId` FOREIGN KEY (`centreId`) REFERENCES `centredetails` (`centreId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tpEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +78,7 @@ CREATE TABLE `batchdetails` (
 
 LOCK TABLES `batchdetails` WRITE;
 /*!40000 ALTER TABLE `batchdetails` DISABLE KEYS */;
-INSERT INTO `batchdetails` VALUES (1,'2018-07-09','2018-08-09','2018-10-10','2018-07-07','2018-09-09','Ghaziabad','Small','1','1','Ajay','shivanshu@gmail.com',1),(2,'2018-07-06','2018-06-07','2018-06-12','2019-01-01','2019-04-01','Meerut','Large','2','2','Atul','ceo@scgj.in',2),(3,'2017-04-07','2018-05-11','2018-12-12','2018-12-12','2018-12-12','Delhi','Large','3','3','Amit','kamal@scgj.in',3),(4,'2017-02-02','2018-02-02','2018-12-12','2018-12-12','2018-12-12','Delhi','Large','4','4','Amit','ceo@scgj.in',4),(5,'2017-02-02','2018-01-02','2017-02-02','2017-02-02','2017-02-02','Delhi','Large','5','5','Amit','ceo@scgj.in',5),(6,'2017-02-02','2018-04-05','2018-08-08','2018-08-08','2018-08-08','Delhi','Large','6','6','Amit','prateek@gmail.com',6),(7,'2017-02-02','2018-03-05','2018-08-08','2018-08-08',NULL,'Delhi','Large','7','7','Amit','ram@gmail.com',7),(9,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@scgj.in',3),(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@scgj.in',NULL),(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@scgj.in',NULL),(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@scgj.in',NULL),(13,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kama@gmail.com',NULL),(14,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@scgj.in',NULL);
+INSERT INTO `batchdetails` VALUES (1,'2018-07-09','2018-08-09','2018-10-10','2018-07-07','2018-09-09','Ghaziabad','Single','1','1','Ajay','shivanshu@gmail.com',1),(2,'2018-07-06','2018-06-07','2018-06-12','2019-01-01','2019-04-01','Meerut','Multiple','2','2','Resham Pal','ceo@sscgj.in',2),(3,'2017-04-07','2018-05-11','2018-12-12','2018-12-12','2018-12-12','Delhi','Single','3','3','Ratan Pal','kamal@sscgj.in',3),(4,'2017-02-02','2018-02-02','2018-12-12','2018-12-12','2018-12-12','Amritsar','Single','4','4','Lakeer chand','ceo@sscgj.in',4),(5,'2017-02-02','2018-01-02','2017-02-02','2017-02-02','2017-02-02','Chandigarh','Multiple','5','5','Bhanu Pratap','ceo@sscgj.in',5),(6,'2017-02-02','2018-04-05','2018-08-08','2018-08-08','2018-08-08','Guwahati','Multiple','6','6','Ram Kumar','prateek@gmail.com',6),(7,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Ranchi','Single','7','7','Shyam Lal','ram@gmail.com',7),(9,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Indore','Single','8','8','Gopal Rawat','kamal@sscgj.in',3),(10,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Chennai','Multiple','9','9','Dheeraj Kumar','ram@gmail.com',7),(11,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Ooty','Single','10','10','Tarun Sharma','kamal@sscgj.in',3),(12,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Shimla','Single','11','12','Arun Agarwal','prateek@gmail.com',6),(13,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Nainital','Multiple','12','12','Sumit Singh','kama@gmail.com',3),(14,'2017-02-02','2018-03-05','2018-08-08','2018-08-08','2018-12-12','Nainital','Single','13','13','Sumit Singh','ceo@sscgj.in',4),(15,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kamal@sscgj.in',NULL),(16,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'prateek@gmail.com',NULL),(17,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'prateek@gmail.com',NULL),(18,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'prateek@gmail.com',NULL),(19,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'kuch@gmail.com',NULL);
 /*!40000 ALTER TABLE `batchdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -125,7 +118,6 @@ CREATE TABLE `candidate` (
   `medicalExamConducted` tinyint(1) DEFAULT NULL,
   `batchId` int(11) NOT NULL AUTO_INCREMENT,
   `relationWithSKMS` varchar(45) DEFAULT NULL,
-  `candidatecol` int(11) DEFAULT NULL,
   PRIMARY KEY (`enrollmentNumber`),
   KEY `batchId_idx` (`batchId`),
   CONSTRAINT `batchId` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -138,7 +130,7 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-INSERT INTO `candidate` VALUES ('1','Mr','Prateek','Kapoor','Male',9650221366,'Graduate','Uttar Pradesh','Ghaziabad',21384875649846,'Aadhar Card','1265478','Nil',23,'1993-04-04','Father','Ram','Kapoor','Bhawana','Kavi nagar','1','Job','Job','Ghaziabad','Pass',1,1,'brother',NULL),('2','Miss','Meghna','Sharma','Female',7417795851,'Graduate','Karnataka','Bengaluru',54894187948658,'Licence','5198184','Nil',21,'1997-04-03','Father','Akshay','Sharma','Twinkle','Shastri nagar','2','Job','Job','Delhi','Pass',1,2,'brother',NULL),('3','Mr','Ruchi','Pareek','Female',9650221366,'Post Graduate','Uttar Pradesh','Ghaziabad',56498448456451,'Licence','6515747','Nil',28,'1990-04-04','Father','Ram','Sharma','Twinkle','Kavi nagar','3','Job','Job','Delhi','Pass',1,3,'brother',NULL),('4','Mr','Aman','Singh','Male',9650221366,'Graduate','Andhra Pradesh','Ghaziabad',56498448456452,'Licence','6515745','Nil',28,'1997-04-03','Father','Ram','Sharma','Twinkle','Shastri nagar','4','Job','Job','Delhi','Pass',1,4,'brother',NULL),('5','Mr','Sarthak','Sharma','Male',9650221366,'Graduate','Bihar','Patna',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Ram','Sharma','Twinkle','Shastri nagar','5','Job','Job','Delhi','Pass',1,5,'brother',NULL),('6','Mr','Abhishek','Sharma','Male',9650221366,'Graduate','Tamil Nadu','Chennai',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Ram','Sharma','Twinkle','Shastri nagar','6','Job','Job','Delhi','Pass',1,6,'brother',NULL),('7','Mr','Abhishek','Sharma','Male',9650221366,'Graduate','Tamil Nadu','Chennai',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Ram','Sharma','Twinkle','Shastri nagar','7','Job','Job','Delhi','Pass',1,7,'brother',NULL);
+INSERT INTO `candidate` VALUES ('1','Mr','Prateek','Kapoor','Male',9650221366,'Graduate','Uttar Pradesh','Ghaziabad',21384875649846,'Aadhar Card','1265478','Nil',23,'1993-04-04','Father','Ram','Kapoor','Bhawana','Kavi nagar','1','Job','Job','Ghaziabad','Pass',1,1,'brother'),('2','Miss','Meghna','Sharma','Female',7417795851,'Graduate','Karnataka','Bengaluru',54894187948658,'Licence','5198184','Nil',21,'1997-04-03','Father','Akshay','Sharma','Reshma','Shastri nagar','2','Job','Job','Chandigarh','Pass',1,2,'brother'),('3','Mr','Ruchi','Pareek','Female',9650221366,'Post Graduate','Uttar Pradesh','Ghaziabad',56498448456451,'Licence','6515747','Nil',28,'1990-04-04','Father','Kapil','Singh','Seeta','Kavi nagar','3','Business','Business','Delhi','Pass',1,3,'brother'),('4','Mr','Aman','Singh','Male',9650221366,'Graduate','Andhra Pradesh','Ghaziabad',56498448456452,'Licence','6515745','Nil',28,'1997-04-03','Father','Vidit','Sharma','Rani','Shastri nagar','4','Job','Job','Gurugram','Pass',1,4,'brother'),('5','Mr','Sarthak','Sharma','Male',9650221366,'Graduate','Bihar','Patna',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Ram','Kumar','Laxmi','Lohia Nagar','5','Business','Business','Delhi','Pass',1,5,'brother'),('6','Mr','Abhishek','Sharma','Male',9650221366,'Graduate','Tamil Nadu','Chennai',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Shyam Lal','Sharma','Twinkle','Shastri nagar','6','Job','Job','Noida','Pass',1,6,'brother'),('7','Mr','Abhishek','Sharma','Male',9650221366,'Graduate','Tamil Nadu','Chennai',56498448456454,'Licence','6515746','Nil',28,'1997-04-03','Father','Mohan','Sharma','Savitri','Jain Nagar','7','Business','Business','Delhi','Pass',1,7,'brother');
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -159,7 +151,7 @@ CREATE TABLE `centredetails` (
   UNIQUE KEY `centreId_UNIQUE` (`centreId`),
   KEY `traningPartnerEmail_idx` (`userEmail`),
   CONSTRAINT `traningPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -168,7 +160,7 @@ CREATE TABLE `centredetails` (
 
 LOCK TABLES `centredetails` WRITE;
 /*!40000 ALTER TABLE `centredetails` DISABLE KEYS */;
-INSERT INTO `centredetails` VALUES (1,1,'Uttar Pradesh','Ghaziabad','shivanshu@gmail.com'),(2,2,'Karnataka','Bengaluru','ceo@scgj.in'),(3,3,'TamilNadu','Chennai','kamal@scgj.in'),(4,4,'Bihar','Patna','pravek@gmail.com'),(5,5,'Andhra Pradesh','Tirupati','prashant@scgj.in'),(6,6,'Andhra Pradesh','Tirupati','prateek@gmail.com'),(7,7,'Andhra Pradesh','Tirupati','ram@gmail.com');
+INSERT INTO `centredetails` VALUES (1,1,'Uttar Pradesh','Ghaziabad','shivanshu@gmail.com'),(2,2,'Karnataka','Bengaluru','ceo@sscgj.in'),(3,3,'Tamil Nadu','Chennai','kamal@sscgj.in'),(4,4,'Bihar','Patna','pravek@gmail.com'),(5,5,'Andhra Pradesh','Tirupati','prashant@sscgj.in'),(6,6,'Andhra Pradesh','Tirupati','prateek@gmail.com'),(7,7,'Andhra Pradesh','Tirupati','ram@gmail.com'),(8,8,'Assam','Guwahati','pk@gmail.com'),(9,9,'Jharkhand','Ranchi','km@gmail.com'),(10,10,'Maharashtra','Mumbai','kama@gmail.com');
 /*!40000 ALTER TABLE `centredetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +188,7 @@ CREATE TABLE `employerdetails` (
 
 LOCK TABLES `employerdetails` WRITE;
 /*!40000 ALTER TABLE `employerdetails` DISABLE KEYS */;
-INSERT INTO `employerdetails` VALUES (1,'Prateek',7417795851,'1'),(2,'Ruchi',9650221366,'2'),(3,'Ruchi',9652121552,'3'),(4,'Ruchi',9652121552,'4'),(5,'Ruchi',9652121552,'5'),(6,'Ruchi',9652121552,'6'),(7,'Ruchi',9652121552,'7');
+INSERT INTO `employerdetails` VALUES (1,'Prateek',7417795851,'1'),(2,'Ruchi',9650221366,'2'),(3,'Shyam Kumar',9652121552,'3'),(4,'Radhe Lal',9652121552,'4'),(5,'Kailash Nath',9652121552,'5'),(6,'Alok Nath',9652121552,'6'),(7,'Ratan Singh',9652121552,'7');
 /*!40000 ALTER TABLE `employerdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +218,7 @@ CREATE TABLE `generatereports` (
 
 LOCK TABLES `generatereports` WRITE;
 /*!40000 ALTER TABLE `generatereports` DISABLE KEYS */;
-INSERT INTO `generatereports` VALUES ('1','Master','2018-12-07 00:00:00','shivanshu@gmail.com',NULL),('2','Master','2018-11-05 00:00:00','ceo@scgj.in',NULL),('3','Master','2018-11-05 00:00:00','kamal@scgj.in',NULL),('4','Master','2018-11-05 00:00:00','pravek@gmail.com',NULL),('5','Master','2018-11-05 00:00:00','prashant@scgj.in',NULL),('6','Master','2018-11-05 00:00:00','prateek@gmail.com',NULL),('7','Master','2018-11-05 00:00:00','ram@gmail.com',NULL),('AS3kamal@scgj.in','Attendance Sheet','2018-07-19 22:49:41','kamal@scgj.in',3),('AS4kamal@scgj.in','Attendance Sheet','2018-07-19 22:49:41','kamal@scgj.in',4),('AS9kamal@scgj.in','Attendance Sheet','2018-07-19 22:49:41','kamal@scgj.in',9),('NS3kamal@scgj.in','NSKFDC Excel Sheet','2018-07-19 23:28:41','kamal@scgj.in',3),('NS4kamal@scgj.in','NSKFDC Excel Sheet','2018-07-19 22:49:41','kamal@scgj.in',4),('NS9kamal@scgj.in','NSKFDC Excel Sheet','2018-07-19 22:49:41','kamal@scgj.in',9),('OC3kamal@scgj.in','Occupation Certificate','2018-07-20 08:01:47','kamal@scgj.in',3),('OC4kamal@scgj.in','Occupation Certificate','2018-07-19 22:49:41','kamal@scgj.in',4),('OC9kamal@scgj.in','Occupation Certificate','2018-07-20 08:01:47','kamal@scgj.in',9),('SD3kamal@scgj.in','SDMS Excel Sheet','2018-07-19 22:49:41','kamal@scgj.in',3),('SD4kamal@scgj.in','SDMS Excel Sheet','2018-07-19 22:49:41','kamal@scgj.in',4),('SD9kamal@scgj.in','SDMS Excel Sheet','2018-07-19 22:49:41','kamal@scgj.in',9);
+INSERT INTO `generatereports` VALUES ('NS3kamal@sscgj.in','NSKFDC Excel Sheet','2018-07-20 22:16:52','kamal@sscgj.in',3),('OC3kamal@sscgj.in','Occupation Certificate','2018-07-20 22:13:42','kamal@sscgj.in',3),('SD6prateek@gmail.com','SDMS Excel Sheet','2018-07-20 22:38:45','prateek@gmail.com',6);
 /*!40000 ALTER TABLE `generatereports` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,7 +248,7 @@ CREATE TABLE `trainingpartnerdetails` (
 
 LOCK TABLES `trainingpartnerdetails` WRITE;
 /*!40000 ALTER TABLE `trainingpartnerdetails` DISABLE KEYS */;
-INSERT INTO `trainingpartnerdetails` VALUES ('1','ABESIT','Ghaziabad',10,'Job','shivanshu@gmail.com'),('2','KEC','Delhi',20,'Job','ceo@scgj.in'),('3','ABESEC','Ghaziabad',30,'Job','kamal@scgj.in'),('4','ABESEC','Ghaziabad',22,'Job','pravek@gmail.com'),('5','ABESEC','Ghaziabad',22,'Job','prashant@scgj.in'),('6','ABESEC','Ghaziabad',22,'Job','prateek@gmail.com'),('7','ABESEC','Ghaziabad',22,'Job','ram@gmail.com'),('NSD-121','Kam Avida','hjhjhjhjh',212121,'ajshjsdhj','kama@gmail.com');
+INSERT INTO `trainingpartnerdetails` VALUES ('NSD-120','Kam Avida','Delhi',20,'Teacher','ceo@sscgj.in'),('NSD-121','Kam Avida','Delhi',65,'Business','kama@gmail.com'),('NSD-124','Kam Avida','Skill Council for Green Jobs',10,'Safai Karamchari','shivanshu@gmail.com'),('NSD-155','Kaercher Cleaning Systems Pvt. Ltd','Skill Council for Green Jobs',22,'Safai Karamchari','pravek@gmail.com'),('NSD-187','Kaercher Cleaning Systems Pvt. Ltd','Skill Council for Green Jobs',30,'Safai Karamchari','kamal@sscgj.in'),('NSD-189','MK Gandhi Institute','Skill Council for Green Jobs',22,'Safai Karamchari ','prateek@gmail.com'),('NSD-2582','Kuch Bhi','Skill Council for Green Jobs',500,'Safai Karamchari','kuch@gmail.com');
 /*!40000 ALTER TABLE `trainingpartnerdetails` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,7 +290,7 @@ CREATE TABLE `uploadeddocuments` (
 
 LOCK TABLES `uploadeddocuments` WRITE;
 /*!40000 ALTER TABLE `uploadeddocuments` DISABLE KEYS */;
-INSERT INTO `uploadeddocuments` VALUES (1,1,1,1,1,1,1,'C:Storage','C:Storage','C:Storage','C:Storage','C:Storage','C:Storage','2018-07-07','kamal@scgj.in',9);
+INSERT INTO `uploadeddocuments` VALUES (1,1,1,1,1,1,1,'C:/trainingPartner/finalBatchReport.pdf','C:/trainingPartner/occupationCertificate.pdf','C:/trainingPartner/minuteOfSelectionCommittee.pdf','C:/trainingPartner/dataSheetForSDMS.pdf','C:/trainingPartner/dataSheetForNSKFC.pdf','C:/trainingPartner/attendanceSheet.pdf','2018-07-07','kamal@sscgj.in',9),(2,1,1,1,1,1,1,'C:/trainingPartner/finalBatchReport.pdf','C:/trainingPartner/occupationCertificate.pdf','C:/trainingPartner/minuteOfSelectionCommittee.pdf','C:/trainingPartner/dataSheetForSDMS.pdf','C:/trainingPartner/dataSheetForNSKFC.pdf','C:/trainingPartner/attendanceSheet.pdf','2018-07-07','kamal@sscgj.in',9),(3,1,1,1,1,1,1,'C:/trainingPartner/finalBatchReport.pdf','C:/trainingPartner/occupationCertificate.pdf','C:/trainingPartner/minuteOfSelectionCommittee.pdf','C:/trainingPartner/dataSheetForSDMS.pdf','C:/trainingPartner/dataSheetForNSKFC.pdf','C:/trainingPartner/attendanceSheet.pdf','2018-07-07','shivanshu@gmail.com',1),(4,1,1,1,1,1,1,'C:/trainingPartner/finalBatchReport.pdf','C:/trainingPartner/occupationCertificate.pdf','C:/trainingPartner/minuteOfSelectionCommittee.pdf','C:/trainingPartner/dataSheetForSDMS.pdf','C:/trainingPartner/dataSheetForNSKFC.pdf','C:/trainingPartner/attendanceSheet.pdf','2018-07-07','prateek@gmail.com',3);
 /*!40000 ALTER TABLE `uploadeddocuments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,7 +309,7 @@ CREATE TABLE `user` (
   `generatedOn` date DEFAULT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `trainingPartnerEmail_UNIQUE` (`userEmail`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,7 +318,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'shivanshu@gmail.com','shivanshu123','scgj','2018-07-18'),(2,'ceo@scgj.in','ceo123','TP','2018-07-18'),(3,'kamal@scgj.in','kamal123','TP','2018-07-18'),(4,'pravek@gmail.com','pravek123','scgj','2018-07-18'),(5,'prashant@scgj.in','prashant123','scgj','2018-07-18'),(6,'prateek@gmail.com','prateek123','TP','2018-07-18'),(7,'ram@gmail.com','ram123','TP','2018-07-18'),(8,'pk@gmail.com','pk123','TP','2018-07-19'),(9,'km@gmail.com','kamavida123','TP','2018-07-19'),(10,'kama@gmail.com','kamakamakama','TP','2018-07-19'),(11,NULL,'shivanshu123','TP','2018-07-19');
+INSERT INTO `user` VALUES (1,'shivanshu@gmail.com','shivanshu123','scgj','2018-07-18'),(2,'ceo@sscgj.in','ceo123','TP','2018-07-18'),(3,'kamal@sscgj.in','kamal123','TP','2018-07-18'),(4,'pravek@gmail.com','pravek123','scgj','2018-07-18'),(5,'prashant@sscgj.in','prashant123','scgj','2018-07-18'),(6,'prateek@gmail.com','prateek123','TP','2018-07-18'),(7,'ram@gmail.com','ram123','TP','2018-07-18'),(8,'pk@gmail.com','pk123','TP','2018-07-19'),(9,'km@gmail.com','kamavida123','TP','2018-07-19'),(10,'kama@gmail.com','kamakamakama','TP','2018-07-19'),(11,'sarthak@gmail.com','shivanshu123','TP','2018-07-19'),(12,'kuch@gmail.com','12345678','TP','2018-07-20');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -339,4 +331,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-20  8:38:00
+-- Dump completed on 2018-07-20 22:56:31
