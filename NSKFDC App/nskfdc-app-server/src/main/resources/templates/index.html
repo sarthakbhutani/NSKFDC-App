@@ -3,6 +3,7 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NSKFDC</title>
+    <link rel="icon" href="images/SCGJfavicon.png" type="image/jpg" />
     <!-- Add stylesheets here -->
     <link type="text/css" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.6/ui-grid.css">
@@ -67,11 +68,15 @@
                     <div class="password-text">
                       <br>
                       <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="credential.password" required>
-                      <div id="eye" class="password-icon" ng-model="collapsed" ng-click="collapsed=!collapsed"><span  ng-class="{'glyphicon glyphicon-eye-open pull-right pan_arrow1': !collapsed, 'glyphicon glyphicon-eye-close pull-right pan_arrow1': collapsed}"></span></div>
+                      <div id="eye" class="password-icon" ng-model="collapsed" ng-click="collapsed=!collapsed">
+                      <span  ng-class="{'glyphicon glyphicon-eye-open pull-right pan_arrow1': !collapsed, 'glyphicon glyphicon-eye-close pull-right pan_arrow1': collapsed}"></span>
+                      </div>
                     </div>
+                  
                     <br>
                     <button type="submit" class="btn btn-primary" class="login-button" ng-disabled="LoginForm.$invalid" ng-click="login()">Login</button>
                   </div>
+                  
                 </div>
               </form>
             </div>
