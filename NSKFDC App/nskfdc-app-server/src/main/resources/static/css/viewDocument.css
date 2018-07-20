@@ -69,12 +69,11 @@
 }
 .table{
 	border-color:#ffffff;
+	width : 68rem;
 	
-	padding:2%;
 }
 div.ui-grid-header-cell-primary-focus{
 	background-color: #0090af;
-	text-align: center;
 	color: #ffffff;
 	font-family: calibri;
 
@@ -87,10 +86,6 @@ div.ui-grid-canvas{
 #content{
 	    background-color: #FbFbFb;
 }
-.container-fluid{
-	height: auto;
-}
-
 #errorMessage{
 	color:red;
 	font-size:1.5rem;
