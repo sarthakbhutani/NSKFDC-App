@@ -50,6 +50,12 @@ a span{
     box-shadow: 1pt 1pt 3pt rgba(0, 0, 0, 0.1);
 }
 
+.nameOfUser{
+	color: #19b2cc;
+    margin-left: 43rem;
+    font-size: 19pt;
+}
+
 .navbar-btn {
     box-shadow: none;
     outline: none !important;

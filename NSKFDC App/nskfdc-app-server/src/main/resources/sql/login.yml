@@ -4,3 +4,6 @@ login:
 
  getValidUserDetails: >
    select userEmail, password, role FROM user where userEmail= :userEmail;
+
+ getNameOfUser: >
+  select trainingPartnerName from trainingpartnerdetails where userEmail= :userEmail;

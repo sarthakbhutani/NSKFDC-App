@@ -33,23 +33,46 @@ app.config(function($routeProvider, $httpProvider){
 
 
 // main controller of the App
-app.controller('mainController', function($rootScope, $scope, $http, $location, $route)  {
+app.controller('mainController', function($rootScope, $scope, $http, $location, $route,$window)  {
 		
 	$rootScope.mainTemplate=true;
 	$scope.invalidErrorMessage="";
 	$scope.credential={userEmail: '',password:''}
 	
-var authenticate = function(credentials){
+	var nameOfUser = function()
+	{
+		$http.get('/getNameOfUser')
+		.then(function(response){
+			
+		});
+	}
+	
+	$rootScope.nameOfuser=$window.localStorage.getItem('nameOfUser');
+	
+	var authenticate = function(credentials){
 		
 		var headers = credentials? { authorization : "Basic " + btoa(credentials.userEmail + ":" + credentials.password)}:{};
 	
 		$http.get('/user', {headers : headers}).then(function(response){
 		
+			
+			
+			console.log(response);
 			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);	
 			$rootScope.username = response.data.principal.username;	
 			$rootScope.mainTemplate=false;
 			
-			
+			if(credentials){
+				console.log("IN IF");
+				$http.get('/getNameOfUser').then(function(nameOfUser){
+					$rootScope.nameofUser=nameOfUser.data.trainingPartnerName;
+					$window.localStorage.setItem('nameOfUser',$rootScope.nameofUser);
+					
+				},function(error){
+					console.log("errrorr"+error);
+				});
+				
+			}
 
 	// Routing between templates based on user-role
 			
@@ -64,6 +87,7 @@ var authenticate = function(credentials){
 			else
 				$location.path("/");
 
+		
 			
 		}, function(data){
 			// function which executes when the user is not authenticated
@@ -81,7 +105,8 @@ var authenticate = function(credentials){
 	authenticate();
 	
 	$scope.login= function(){
-		authenticate($scope.credential);		
+		authenticate($scope.credential);
+		
 	}
 	
 	
