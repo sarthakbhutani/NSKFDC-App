@@ -20,7 +20,9 @@
   		</div>
   		<div class="col-md-3" ng-show="selectReport=='occupationCertificate' || selectReport=='attendanceSheet' || selectReport=='NSKFDCSheet' || selectReport=='SDMSSheet' || selectReport=='minutesOfSelectionCommittee'">	
   			<select ng-model="batchId" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
+  			<option selected disabled value="">Batch ID</option>
   			</select>
+  			
   			<span id="error_msg"></span>
  		</div>
  		
