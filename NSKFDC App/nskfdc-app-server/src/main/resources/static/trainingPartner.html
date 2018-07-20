@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="navbar-header navbar-brand">
             <a class="logo">
-                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="13%" >
+                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="11%" >
             </a>
 
 			<a class="navbar-right">
@@ -22,25 +22,25 @@
     <nav id="sidebar">
         <ul class="list-unstyled components">
             <li class="active">
-                <a ng-click="page='masterSheetImport'">
+                <a ng-click="page='masterSheetImport'; alpha=true; beta=false; gamma=false; delta=false;" ng-class="{alpha : alpha}">
                     <img src="images/import.png" alt="import" width="10%">&nbsp;
                     Master Sheet Import
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateReports'">
+                <a ng-click="page='generateReports'; alpha=false; beta=true; gamma=false; delta=false;" ng-class="{beta: beta}">
                     <img src="images/generate.png" alt="import" width="10%">&nbsp;
                     Generate Reports
                 </a>
             </li>
             <li>
-                <a ng-click="page='uploadDocuments'">
+                <a ng-click="page='uploadDocuments';alpha=false; beta=false; gamma=true; delta=false;" ng-class="{gamma: gamma}">
                     <img src="images/upload.png" alt="import" width="10%">&nbsp;
                     Upload Documents
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateBatchReport'">
+                <a ng-click="page='generateBatchReport';alpha=false; beta=false; gamma=false; delta=true;" ng-class="{delta: delta}">
                     <img src="images/batch.png" alt="import" width="10%">&nbsp;
                     Generate Batch Report
                 </a>
