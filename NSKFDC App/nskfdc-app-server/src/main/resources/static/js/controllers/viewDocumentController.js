@@ -34,7 +34,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
         {
        	 name: 'tpDocUrl', 
        	 displayName: 'Download Zip File', 
-       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="abc" ng-click="grid.appScope.DownloadZipFileForBatchId()" ng-click="grid.appScope.DownloadZipFileForSearchscgjBtNumber()"class="pointer"></a>'
+       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.DownloadZipFileForBatchId()" ng-click="grid.appScope.DownloadZipFileForSearchscgjBtNumber()"class="pointer">'
         }
         
         
