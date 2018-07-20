@@ -10,6 +10,7 @@ public class LoginConfigSql {
 		
 		private String checkUserSql;
 		private String getValidUserDetails;
+		private String getNameOfUser;
 		
 		public String getCheckUserSql() {
 			return checkUserSql;
@@ -22,6 +23,12 @@ public class LoginConfigSql {
 		}
 		public void setGetValidUserDetails(String getValidUserDetails) {
 			this.getValidUserDetails = getValidUserDetails;
+		}
+		public String getGetNameOfUser() {
+			return getNameOfUser;
+		}
+		public void setGetNameOfUser(String getNameOfUser) {
+			this.getNameOfUser = getNameOfUser;
 		}
 
 

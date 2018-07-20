@@ -11,6 +11,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 import org.springframework.jdbc.core.RowMapper;
 
@@ -66,6 +67,23 @@ public class LoginDao extends AbstractTransactionalDao{
 
 
 
+	public String getNameOfUser(String userEmail) {
+		LOGGER.debug("Request Received from Service to get name of the logged in user");
+		LOGGER.debug("In LoginDao - getNameOfUser");
+		
+		LOGGER.debug("Creating HashMap object");
+		Map<String, Object> parameters = new HashMap<>();
+		LOGGER.debug("object created successfully");
+		
+		LOGGER.debug("Inserting parameters to HashMap object");
+		parameters.put("userEmail", userEmail);
+		try {
+			return getJdbcTemplate().queryForObject(loginConfigSql.getGetNameOfUser(), parameters, String.class);
+		} catch (Exception e) {
+			LOGGER.debug("In catch block to get name of user, exception handled"+e);
+			return null;
+		}
+	}
 
 	
    public SessionManagementDto getValidUserDetails(String userEmail) {
