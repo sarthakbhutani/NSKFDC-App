@@ -40,7 +40,7 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	private static final CandiateDetailsRowmapper candiateDetailsRowmapper=new CandiateDetailsRowmapper();
 	
 	/* Creating object of Generate  Report Rowmapper */
-	private static final SearchReportRowmapper SearchReport_RowMapper = new SearchReportRowmapper();
+	/*private static final SearchReportRowmapper SearchReport_RowMapper = new SearchReportRowmapper();*/
 	/**
 	 
 	 *@author Samridhi Srivastava
@@ -122,7 +122,7 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	 **/
 	
 	
-	public Collection<SearchReportDto> getReport(String batchId, String userEmail) {
+	/*public Collection<SearchReportDto> getReport(String batchId, String userEmail) {
 		Map<String, Object> parameters = new HashMap<>();
 		
 		parameters.put("batchId",batchId);
@@ -141,7 +141,7 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			LOGGER.error("An error occured while getting the REPORT" + e);
 			return null;
 			}
-	}
+	}*/
 
 	
 	private static class BatchIdRowmapper implements RowMapper<GetBatchIdDto>{
@@ -232,15 +232,15 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	
 	
 	/* Declaring inner class search report Rowmapper */
-    private static class SearchReportRowmapper implements RowMapper<SearchReportDto>{
+    /*private static class SearchReportRowmapper implements RowMapper<SearchReportDto>{
     	
-    	/**
+    	*//**
 		 
 		 *@author Shivangi singh
 		 *@description This method is a RowMapper Method that gets the reports of the particular batchid entered. 
 		 *@return  reports  corresponding to the particular BatchId to the searchreportDto Parameterized Constructor.
 		 
-		 **/
+		 **//*
 		
 		@Override
 		public SearchReportDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -252,7 +252,7 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			
 		}
 
-	}
+	}*/
 	public void updateTableGenerateReports(String generateReportsId, Date date,
 			String reportType, String batchId, String userEmail) {
 		Map<String, Object> parameters = new HashMap<>();

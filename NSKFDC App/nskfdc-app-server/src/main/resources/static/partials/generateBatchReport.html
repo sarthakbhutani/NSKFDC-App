@@ -10,13 +10,13 @@
                 	<label><h4>Generate Batch Report</h4></label>
                 </div>
                 <div class="col-md-3">
-                	<select ng-model="batchId" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
+                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" >
                 	<span id="error_msg"></span>
                 	</select>
                 </div>
                 <div class="col-md-4">
                 	<input class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" >
-                 	<p id="Error"></p>
+                 	
                  </div>
             </div>
         </div>
@@ -130,8 +130,9 @@
              </div>
         </div>
         <br><button class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
+        <span id="Error"></span>
         </div>
-     <div class="container">
+     <!-- <div class="container">
         <div class="col-md-10">
         	<div class="row">
         		<h4>&nbsp;Search Report</h4>
@@ -153,7 +154,7 @@
 		    
 		    <div ui-grid="details"  class="grid grid-align properties " ui-grid-auto-resize></div> 
 		</div>
-       </div>
+       </div> -->
     </div>
 
 </div>

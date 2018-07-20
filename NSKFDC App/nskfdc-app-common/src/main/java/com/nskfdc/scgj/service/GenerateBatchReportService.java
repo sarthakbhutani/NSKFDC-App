@@ -111,7 +111,8 @@ public class GenerateBatchReportService {
 			LOGGER.debug(""+insert);
 			if(insert!=-1)
 			{
-			String userHomeDirectory = System.getProperty("user.home");
+			String userHomeDirectory =System.getProperty("user.dir");
+			String userHomeDirectory2 = System.getProperty("user.home");
 			Collection<LocationDetailsDto> locationDetails= generateBatchReportDao.getLocationDetails(batchId);
 			Collection<TrainingDetailsDto> trainingDetails=generateBatchReportDao.getTrainingDetails(batchId);
 			Collection<CandidateDetailsDto> candidateDetails=generateBatchReportDao.getCandidateDetails(batchId);
@@ -121,16 +122,17 @@ public class GenerateBatchReportService {
 			JRBeanCollectionDataSource trainingDetailsBeans = new JRBeanCollectionDataSource(trainingDetails);
 			JRBeanCollectionDataSource candidateDetailsBeans = new JRBeanCollectionDataSource(candidateDetails);
 			
-			String a=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";/*"Documents/123/New folder/trunk/NSKFDC App/nskfdc-app-server/src/main/resources/static/images/SCGJ logo.png";*/
-			String b=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
-			String d1p1=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d2p1=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d3p1=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d4p1=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d5p1=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String med=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String assess=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String viva=userHomeDirectory+File.separatorChar+"Desktop"+File.separatorChar+"New folder (2)"+File.separatorChar+"trunk"+File.separatorChar+"NSKFDC App"+File.separatorChar+"nskfdc-app-server"+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			System.out.println(userHomeDirectory);
+			String a=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String b=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
+			String d1p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String d2p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String d3p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String d4p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String d5p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String med=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String assess=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			String viva=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
 			Object i1=a;
 			Object i2=b;
 			Object i3=d1p1;
@@ -164,8 +166,8 @@ public class GenerateBatchReportService {
 		    ClassPathResource resource=new ClassPathResource("/static/FinalBatchReport.jasper");
 		    
 		    
-		    outputFile = userHomeDirectory + File.separatorChar + "Documents" + File.separatorChar + "FinalBatchReport "+df.format(date)+" "+hour+"-"+minute+"-"+second+".pdf";
-		    LOGGER.debug("THE OUTPUT FILE IS IN" +userHomeDirectory+"in ---------"+ outputFile);
+		    outputFile = userHomeDirectory2 + File.separatorChar + "Downloads" + File.separatorChar + "FinalBatchReport "+df.format(date)+" "+hour+"-"+minute+"-"+second+".pdf";
+		    LOGGER.debug("THE OUTPUT FILE IS IN" +userHomeDirectory2+"in ---------"+ outputFile);
 	        
 	        LOGGER.debug("Getting input stream");
 		    InputStream inputStream = resource.getInputStream();

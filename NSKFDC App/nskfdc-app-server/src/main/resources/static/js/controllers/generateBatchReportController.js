@@ -2,7 +2,7 @@ var tp = angular.module("app");
 
 tp.controller("generateBatchReportController" , function($scope, $http){
 	
-	$scope.details = {
+	/*$scope.details = {
  	        enableGridMenus: false,
  	        enableSorting: false,
  	        enableFiltering: false,
@@ -37,7 +37,7 @@ tp.controller("generateBatchReportController" , function($scope, $http){
  	        ]
  	    
      };
- 	    
+*/ 	    
 	    
  		   var url='/getBatchIdDetails';
       	 
@@ -76,7 +76,7 @@ tp.controller("generateBatchReportController" , function($scope, $http){
 	   			link.click();
    			}
    		else{
-   			$window.alert("Invalid");
+   			document.getElementById("Error").innerHTML="Invalid";
    			}
            });
           
