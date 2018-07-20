@@ -44,8 +44,9 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
 		try {
 			
 			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get training partner details for Search"+tpName);
+			LOGGER.debug("Execute query to get training partner details for Search"+viewDocumentConfig.getShowTrainingPartnerDetailsForDownload());
 			Map<String, Object> parameters = new HashMap<>();
+			
 			parameters.put("trainingPartnerName",tpName); //to be changed
 			parameters.put("batchId",batchId);
 			parameters.put("scgjBatchNumber",null);
@@ -115,10 +116,12 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             				  s2.append("Final Batch Report, ");
             			  }
             			  LOGGER.debug("In rowmapper BEFORE occupationCertificate VARIABLE DECLARATION");
+            			  LOGGER.debug("In rowmapper BEFORE IF");
             			  if(occupationCertificate==1){
             			  
             				  s2.append("Occupation Certificate, ");
             			  }
+            			  LOGGER.debug("In rowmapper IN IF");
             			  if(minuteOfSelectionCommittee==1){
             				  s2.append("Signed Minute Of Selection Committee, ");
             			  }
@@ -131,11 +134,13 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             			  if(attendanceSheet==1){
             				  s2.append("Attendance Sheet, ");
             			  }
+            			  LOGGER.debug("In rowmapperAFTER IF");
             			  s2.setLength(s2.length() - 2);
-            			  
+            			  LOGGER.debug("In rowmapper AFTER IF");
             			  ArrayList<String> files = new ArrayList<String>();
             			//  CreateZipFile createZipFile = new  CreateZipFile();
           				
+            			  LOGGER.debug("In rowmapper AFTER ARRAYLIST");
           				
             			  //condition to handle file paths::
             			  if(finalBatchReportPath!=null){
@@ -157,8 +162,9 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             			  if(attendanceSheetPath!=null){
             				  files.add(attendanceSheetPath);
             			  }
+            			  LOGGER.debug("In rowmapper AFTER IF 2");
             			  LOGGER.debug("In try block  BEFORE ZIP data for Search Document Functionality");
-            			  String zipFileLink = " ";
+            			  String zipFileLink = "";
             			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
             			  LOGGER.debug("the current working directory is " + zipLocationRead);
             			  if(s2!=null){
@@ -176,12 +182,16 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             						  
             						  LOGGER.debug("batch id ="+ batchId);
             						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE. scgj bacth no:"+ trainingPartnerName);
+<<<<<<< .mine
+            						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+=======
             						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
             						  
             						  
             						  
             						  
             						  //check above
+>>>>>>> .r297
             						  FileOutputStream fileOutputStream = null;
             					        ZipOutputStream zipOut = null;
             					        FileInputStream fileInputStream = null;
@@ -225,8 +235,12 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             					  
             					  
             				  }else{
+<<<<<<< .mine
+            					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+=======
             					  LOGGER.debug("batch id ="+ batchId);
             					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+>>>>>>> .r297
             					  FileOutputStream fileOutputStream = null;
             				        ZipOutputStream zipOut = null;
             				        FileInputStream fileInputStream = null;
@@ -252,25 +266,28 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             				            LOGGER.debug("Done... Zipped the files...");
             				        } catch (FileNotFoundException e) {
             				            // TODO Auto-generated catch block
-            				            e.printStackTrace();
+//            				            e.printStackTrace();
+            				        	LOGGER.debug("File not found exception :" +e);
             				        } catch (IOException e) {
             				            // TODO Auto-generated catch block
-            				            e.printStackTrace();
+//            				            e.printStackTrace();
+            				        	LOGGER.debug("Input output exception :" +e);
             				        } finally{
             				            try{
             				                if(fileOutputStream != null) fileOutputStream.close();
-            				            } catch(Exception ex){
-            				                 
+            				            } catch(Exception e){
+            				                 LOGGER.debug("Error"+e);
             				            }
             				        }
             				  }
             			
-            			return new ViewDocumentDto(batchId, trainingPartnerName,uplodedOn,zipFileLink) ;
+            			return new ViewDocumentDto(batchId, trainingPartnerName,uplodedOn,null) ;
             				}
             			  else{
             				  return null;
             		}
-            	}
+            		}
+            	
             	
          	}
 }

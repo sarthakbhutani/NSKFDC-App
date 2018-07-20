@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.ViewDocumentDto;
 import com.nskfdc.scgj.service.ViewDocumentService;
 
@@ -23,6 +24,10 @@ import com.nskfdc.scgj.service.ViewDocumentService;
 public class ViewDocumentController {
 	
 private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentController.class);
+	
+	@Autowired
+	private SessionUserUtility sessionUserUtility;
+	private String userEmail;
 	
 	@Autowired
 	private ViewDocumentService viewDocumentService;
@@ -34,6 +39,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 		LOGGER.debug("In  ViewDocument Controller");
 		
 		try {
+			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("In try block to get training partner details for Search");
 			LOGGER.debug("Sending request to service");
 			 return viewDocumentService.getViewTrainingPartnerDetailForBatchId(tpName,batchId);
