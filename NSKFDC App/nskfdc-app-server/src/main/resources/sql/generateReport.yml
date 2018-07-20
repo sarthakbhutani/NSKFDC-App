@@ -1,4 +1,8 @@
 generateReport:
+
+ showBatchId: >
+   select batchId from batchdetails where userEmail=:userEmail;
+
  showOccupationCertificateReportDetails: >
   select firstName,lastName,gender,age,firstNameFather,lastNameFather,aadharCardNumber,residentialAddress,workplaceAddress 
    from candidate JOIN batchdetails ON candidate.batchId=batchdetails.batchId where batchdetails.batchId= :batchId and userEmail= :userEmail;
@@ -19,6 +23,10 @@ generateReport:
     employerContactNumber,employmentType,aadharCardNumber,disabilityType  from candidate,batchdetails,trainingpartnerdetails,centredetails,employerdetails where 
      centredetails.userEmail=trainingpartnerdetails.userEmail and employerdetails.enrollmentNumber = candidate.enrollmentNumber and 
       batchdetails.centreId=centredetails.centreId and candidate.batchId=batchdetails.batchId and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
+
+ showMinutesOfSelectionMeetingDetails: >  
+  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails,centredetails,batchdetails where 
+   trainingpartnerdetails.userEmail = centredetails.userEmail and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
  
  updateGenerateReportsTable: >
   replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);

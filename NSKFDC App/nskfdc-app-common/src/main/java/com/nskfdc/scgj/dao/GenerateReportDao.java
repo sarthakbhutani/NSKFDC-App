@@ -3,16 +3,15 @@ package com.nskfdc.scgj.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.GenerateReportConfig;
 import com.nskfdc.scgj.dto.*;
+
 @Repository
 public class GenerateReportDao extends AbstractTransactionalDao {
 	
@@ -31,10 +30,37 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	/* Creating object of GetRecordsForAuditTableRowMapper */
 	private static final GetRecordsForAuditTableRowMapper getRecordsForAuditTableRowMapper = new GetRecordsForAuditTableRowMapper();
 	
+	/* Creating object of GenerateMinutesOfSelectionRowmapper */
+	private static final GenerateMinutesOfSelectionRowmapper generateMinutesOfSelectionRowMapper = new GenerateMinutesOfSelectionRowmapper();
+	
+	/* Creating object of BatchIdRowmapper */
+	private static final BatchIdRowmapper batchIdRowmapper= new BatchIdRowmapper();
+	
 	@Autowired
 	private GenerateReportConfig generateReportConfig;
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateReportDao.class);
+	
+	public Collection<GetBatchIdDto> getBatchId(String userEmail){
+	     
+		 Map<String, Object> parameters = new HashMap<>();
+		 parameters.put("userEmail",userEmail);
+		 
+		 LOGGER.debug("Request received from Service");
+		 LOGGER.debug("In GetBatchIdDao, to get Batch Ids' for Training Partner");
+		
+		try{
+			
+			LOGGER.debug("In try block");
+			LOGGER.debug("Execute query to get batch ids for Training Partner");
+			return  getJdbcTemplate().query(generateReportConfig.getShowBatchId(),parameters, batchIdRowmapper);
+		}
+		catch(Exception e){
+			
+			LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+			return null;
+		}
+		}
 	
 	public Collection<GenerateOccupationCertificateReportDto> generateOccupationCertificateReport(String batchId,String userEmail) {
 		
@@ -119,6 +145,26 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
 	}
 	
+	public Collection<GenerateMinutesOfSelectionDto> generateMinutesOfSelection(String batchId,String userEmail/*String jobRole,String trainingPartnerName,String sectorSkillCouncil,String centreCity*/) {
+
+		LOGGER.debug("Request received from service");
+		LOGGER.debug("Generate minutes Of Selection details ");
+		
+		try {
+			
+			LOGGER.debug("In try block of Generate Minutes Of Selection  Dao");
+			Map<String, Object> parameters = new HashMap<>();
+			parameters.put("batchId",batchId);
+			parameters.put("userEmail",userEmail);		
+			
+			return getJdbcTemplate().query(generateReportConfig.getShowMinutesOfSelectionMeetingDetails() ,parameters , generateMinutesOfSelectionRowMapper);
+			
+		}catch(Exception e) {
+			
+			LOGGER.debug("In catch block of Generate  Minutes Of Selection  Dao"+e);
+			return null;
+		}
+	}
 	
 	public void updateTableGenerateReports(String generateReportsId,Date generatedOn, String reportType, String batchId ,String userEmail) {
 		
@@ -165,6 +211,16 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			LOGGER.debug("In catch block of Get Records For Audit Table Dao"+e);
 			return null;
 		}
+	}
+	
+	private static class BatchIdRowmapper implements RowMapper<GetBatchIdDto>{
+		
+		@Override
+		public GetBatchIdDto mapRow(ResultSet rs, int rowNum)throws SQLException {
+			String batchId= rs.getString("batchId");
+			return new GetBatchIdDto(batchId);
+		}
+		
 	}
 	
 	/* Declaring inner class GenerateOccupationCertificateReportRowmapper */
@@ -277,6 +333,23 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     				 batchStartDate,batchEndDate, assessmentDate,employerName,employerContactNumber,employmentType,aadharCardNumber,disabilityType);
     	}	
     }	
+    
+    /* Declaring inner class minutes Of Selection Committee Meeting Rowmapper */
+    private static class GenerateMinutesOfSelectionRowmapper implements RowMapper<GenerateMinutesOfSelectionDto>{
+    	
+    	@Override
+    	public GenerateMinutesOfSelectionDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+    		
+    		String selectionCommitteeDate=rs.getString("selectionCommitteeDate");
+    		String jobRole = rs.getString("jobRole");
+    		String trainingPartnerName = rs.getString("trainingPartnerName");
+    		String sectorSkillCouncil=rs.getString("sectorSkillCouncil");
+    		String centreCity=rs.getString("centreCity");
+    		
+    		return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);
+	
+    	}
+    }
     				/* Declaring inner class GetRecordsForAuditTableRowMapper */
     private static class GetRecordsForAuditTableRowMapper implements RowMapper<DisplayAuditTableRecordDto>{
     	

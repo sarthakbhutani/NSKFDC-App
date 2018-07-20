@@ -1,7 +1,6 @@
 package com.nskfdc.scgj.service;
 
 import java.io.File;
-import java.text.*;
 import java.io.*;
 import java.util.*;
 
@@ -34,6 +33,23 @@ public class GenerateReportService {
 	String generateReportsId;
 	String outputFile;
 	
+	public Collection<GetBatchIdDto> getBatchDetails(String userEmail){
+		LOGGER.debug("Request received from Controller");
+		LOGGER.debug("In Get Batch Id Service, to get Batch Ids' for Training Partner");
+		
+	try{
+		
+		LOGGER.debug("In try block to get training partner details for Training Partner");
+		LOGGER.debug("Sending request to Dao");
+		return generateReportDao.getBatchId(userEmail);
+	}
+	catch(Exception e){
+		
+		LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+		return null;
+	}
+  }
+	
 	public String generateOccupationCertificateReport(String batchId, String trainingPartnerEmail) {
 		
 		LOGGER.debug("Request received from controller");
@@ -56,7 +72,7 @@ public class GenerateReportService {
 					Map<String,Object> parameters=new HashMap<String,Object>();
 					parameters.put("DataSource",occupationCertificateReportBeans);
 				
-				 /*------------------------------------ In PDF---------------------------------------------*/       
+				    /*------------------------------------ In PDF---------------------------------------------*/       
 		         
 					LOGGER.debug("Create object of Class Path Resource ");
 					ClassPathResource resource=new ClassPathResource("/static/OccupationReport.jasper");
@@ -79,6 +95,12 @@ public class GenerateReportService {
 							LOGGER.debug("Successfully created the jrprint file >> " + printFileName);
 							success = 1;       
 							LOGGER.debug("PDF generated successfully..!!");
+							
+							reportType="Occupation Certificate";
+							generateReportsId="OC"+batchId+trainingPartnerEmail;				           
+				            LOGGER.debug("Updating Database....");
+				            generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,trainingPartnerEmail);		            		            	
+				            
 		                
 						} else {
 							success = -1;
@@ -95,13 +117,7 @@ public class GenerateReportService {
 			} catch (Exception e) {
 	        	LOGGER.error("In catch block of Generate Occupation Certificate Service"+e);
 			}
-			reportType="Occupation Certificate";
-			generateReportsId="OC"+batchId+trainingPartnerEmail;
-            if(success==1) {
-            	
-            	LOGGER.debug("Updating Database....");
-            	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,trainingPartnerEmail);		            		            	
-            }
+			
 			return outputFile;
 		}
 
@@ -148,6 +164,11 @@ public class GenerateReportService {
 							LOGGER.debug("Successfully created the jrprint file >> " + printFileName);
 							success = 1;              
 							LOGGER.debug("PDF generated successfully..!!");
+							
+							reportType="Attendance Sheet";
+							generateReportsId="AS"+batchId+userEmail;	
+				           	LOGGER.debug("Updating Database....");
+				           	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
 		                
 						} else {
 							success = -1;
@@ -163,15 +184,7 @@ public class GenerateReportService {
 				}
 			} catch (Exception e) {
 				LOGGER.error("In catch block of Generate Attendance Sheet Service"+e);
-			}
-			
-			reportType="Attendance Sheet";
-			generateReportsId="AS"+batchId+userEmail;
-			if(success==1) {
-            	
-            	LOGGER.debug("Updating Database....");
-            	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
-            }
+			}            
 			
 			return outputFile;
 		}	
@@ -211,7 +224,7 @@ public class GenerateReportService {
 							LOGGER.debug("Exporting the file to Excel..");
 							JRXlsxExporter exporter = new JRXlsxExporter();
 							exporter.setExporterInput(new SimpleExporterInput(printFileName));
-							outputFile=userHomeDirectory + File.separatorChar  + "Downloads" + File.separatorChar + "NSKFDCSheet.xlsx";
+							outputFile=userHomeDirectory + File.separatorChar + "AppData"+ File.separatorChar+"Local"+File.separatorChar+"Temp"+File.separatorChar + "NSKFDCSheet.xlsx";
 							exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
 							SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration(); 
 							configuration.setDetectCellType(true);
@@ -221,7 +234,12 @@ public class GenerateReportService {
 						
 							success = 1;              
 							LOGGER.debug("Excel Sheet generated successfully..!!");
-		                
+							
+							reportType="NSKFDC Excel Sheet";
+							generateReportsId="NS"+batchId+userEmail;
+					       	LOGGER.debug("Updating Database....");
+					       	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
+					 		                
 						}else {
 							success = -1;
 							LOGGER.debug("jrprint file is empty..");
@@ -239,18 +257,11 @@ public class GenerateReportService {
 		} catch(Exception e) {
 			LOGGER.debug("In catch block of Generate NSKFDC Excel Sheet Service"+e);
 		}
-    	
-		reportType="NSKFDC Excel Sheet";
-		generateReportsId="NS"+batchId+userEmail;
-		if(success==1) {
-        	
-        	LOGGER.debug("Updating Database....");
-        	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
-        }
+    	   
     	return outputFile;
     }
     
-    public  String generateSDMSExcelSheet(String batchId,String userEmail) {
+    public String generateSDMSExcelSheet(String batchId,String userEmail) {
 		
     	LOGGER.debug("Request received from controller");
 		LOGGER.debug("In Generate SDMS Excel Sheet Service");
@@ -286,7 +297,7 @@ public class GenerateReportService {
 							LOGGER.debug("Exporting the file to Excel..");
 							JRXlsxExporter exporter = new JRXlsxExporter();
 							exporter.setExporterInput(new SimpleExporterInput(printFileName));
-							outputFile=userHomeDirectory + File.separatorChar  + "Downloads" + File.separatorChar + "SDMSSheet.xlsx";
+							outputFile=userHomeDirectory + File.separatorChar + "AppData"+ File.separatorChar+"Local"+File.separatorChar+"Temp"+File.separatorChar + "SDMSSheet.xlsx";
 							exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
 							SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration(); 
 							configuration.setDetectCellType(true);
@@ -296,6 +307,11 @@ public class GenerateReportService {
 						
 							success = 1;              
 							LOGGER.debug("Excel Sheet generated successfully..!!");
+							
+							reportType="SDMS Excel Sheet";
+							generateReportsId="SD"+batchId+userEmail;
+							LOGGER.debug("Updating Database....");
+					        generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);
 		                
 						}else {
 		                success = -1;
@@ -312,16 +328,81 @@ public class GenerateReportService {
 		} catch(Exception e) {
 			LOGGER.debug("In catch block of Generate SDMS Excel Sheet Service"+e);
 		}
-    	
-		reportType="SDMS Excel Sheet";
-		generateReportsId="SD"+batchId+userEmail;
-		if(success==1) {
-        	
-        	LOGGER.debug("Updating Database....");
-        	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
-        }
+    			            		            	
     	return outputFile;
     }
+    
+   public String generateMinutesOfSelection(String batchId, String userEmail) {
+		
+		LOGGER.debug("Request received from controller");
+		LOGGER.debug("In Generate Minutes Of Selection Service");
+		
+			try {	
+				
+				LOGGER.debug("In try block of Generate Minutes Of Selection Committee Service");
+				
+			    Collection<GenerateMinutesOfSelectionDto> generateMinuteofSelection=generateReportDao.generateMinutesOfSelection(batchId,userEmail);
+				
+			    if (CollectionUtils.isNotEmpty(generateMinuteofSelection))
+				{
+			    	
+			    	LOGGER.debug("Create object of JRBean Collection Data Source ");
+			    	JRBeanCollectionDataSource minutesOfSelectionReportBeans = new JRBeanCollectionDataSource(generateMinuteofSelection);
+				
+			    	/* Map to hold Jasper Report Parameters */
+			    	LOGGER.debug("Create Map to hold Jasper Report Parameters ");
+			    	Map<String,Object> parameters=new HashMap<String,Object>();
+			    	parameters.put("MinutesDataSource",minutesOfSelectionReportBeans);
+				 
+			    	/*------------------------- In PDF---------------------------------------------*/       
+		         
+			    	LOGGER.debug("Create object of Class Path Resource ");
+			    	ClassPathResource resource=new ClassPathResource("/static/minutesOfSelectioncommittee.jasper");
+			    	String userHomeDirectory = System.getProperty("user.home");
+			    
+			    	outputFile = userHomeDirectory + File.separatorChar + "AppData"+ File.separatorChar+"Local"+File.separatorChar+"Temp"+File.separatorChar + "MinutesOfSelectionCommittee.pdf";
+			    	
+			    	LOGGER.debug("THE OUTPUT FILE IS IN" +userHomeDirectory+" in ---------"+ outputFile);
+		        
+			    	LOGGER.debug("Getting input stream");
+			    	InputStream inputStream = resource.getInputStream();
+		        
+			    	try {
+			    		JasperPrint printFileName = JasperFillManager.fillReport(inputStream, parameters, new JREmptyDataSource());
+			    		OutputStream outputStream = new FileOutputStream(new File(outputFile));
+
+			    		if (printFileName != null) {
+		            	
+			    			LOGGER.debug("Creating the jrprint file for minutes of selection..");
+			    			JasperExportManager.exportReportToPdfStream(printFileName, outputStream);
+		                	LOGGER.debug("Successfully created the jrprint file >> " + printFileName);
+		                	success = 1;       
+		                	LOGGER.debug("PDF generated successfully..!!");
+		                
+		                	reportType="Minutes Of Selection Committee";
+		                	generateReportsId="MSC"+batchId+userEmail;
+							LOGGER.debug("Updating Database....");
+				        	generateReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);
+		                
+			    		} else {
+			    			success = -1;
+		                	LOGGER.debug("jrprint file is empty..");
+			    		}
+		            
+			    		outputStream.close();
+			    	} catch (JRException e) { 
+			    		LOGGER.error("Exception caught, unable to create pdf"+e);
+			    	}	
+			    
+					} else {
+						LOGGER.debug("Collection is null");
+					}
+				} catch (Exception e) {
+	        		LOGGER.error("In catch block of Generate Minutes Of Selection Committee Service"+e);
+				}
+				LOGGER.debug("the output file of minutes selections is "+ outputFile);
+				return outputFile;
+		}
     
     public Collection<DisplayAuditTableRecordDto> getRecordsForAuditTable(String userEmail) {
     	

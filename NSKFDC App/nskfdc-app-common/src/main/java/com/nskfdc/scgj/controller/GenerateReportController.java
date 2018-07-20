@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.DisplayAuditTableRecordDto;
+import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.service.GenerateReportService;
 
 @RestController
@@ -27,6 +28,24 @@ public class GenerateReportController {
 	private SessionUserUtility sessionUserUtility;
 	
 	String userEmail,report;
+	
+	@RequestMapping("/getBatchIdDetailsForGenerateReport")
+	public Collection<GetBatchIdDto> getBatchIdDetails(){
+		
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("In GetBatchId Controller");
+				
+		try {
+			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
+			LOGGER.debug("In try block to get training partner details for Training Partner");
+			LOGGER.debug("Sending request to Service");
+			return generateReportService.getBatchDetails(userEmail);
+			
+		} catch (Exception e) {
+			LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+			return null;
+		}
+	}
 	
 	@RequestMapping(value="generateOccupationCertificateReport",  method = RequestMethod.GET)
 	public void generateOccupationCertificateReport(@RequestParam("batchId") String batchId,HttpServletResponse response) {
@@ -64,7 +83,7 @@ public class GenerateReportController {
 		    	outStream.flush();
 		    	inStrem.close();
 			} else {
-				LOGGER.debug("Path not found");
+				LOGGER.error("Report not generated");
 			}
 		}catch(Exception e) {
 			LOGGER.error("In catch block of Generate Occupation Certificate Controller"+e);
@@ -99,7 +118,7 @@ public class GenerateReportController {
 				outStream.flush();
 		    	inStrem.close();
 			} else {
-				LOGGER.debug("Path not found");
+				LOGGER.error("Report not generated");
 			}
 		}catch(Exception e) {
 			LOGGER.error("In catch block of Generate Attendance Sheet Controller"+e);
@@ -135,7 +154,7 @@ public class GenerateReportController {
 				outStream.flush();
 				inStrem.close();
 			} else {
-				LOGGER.debug("Path not found");
+				LOGGER.error("Report not generated");
 			}
 		} catch (Exception e) {
 			LOGGER.error("In catch block of Generate NSKFDC Excel Sheet Controller"+e);
@@ -172,11 +191,50 @@ public class GenerateReportController {
 				inStrem.close();
 				
 			} else {
-			LOGGER.debug("Path not found");
+				LOGGER.error("Report not generated");
 			}
 		    
 		} catch (Exception e) {
 			LOGGER.error("In catch block of Generate SDMS Excel Sheet Controller"+e);
+		}
+	
+	}
+
+
+    @RequestMapping(value = "/generateMinutesOfSelectionCommitteeDetails", method = RequestMethod.GET)
+	public void generateMinutesOfSelection(@RequestParam("batchId") String batchId, HttpServletResponse response) {
+		
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("In minutes of selection controller");
+		
+		try {
+				
+			LOGGER.debug("In try block of minutes of selection Controller");
+			
+			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
+			report=generateReportService.generateMinutesOfSelection(batchId,userEmail);	
+
+			if(report!=null) {
+				
+				File file = new File(report);
+				response.setContentType("application/pdf");
+				response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+				BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
+				BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
+				byte[] buffer = new byte[1024];
+				int bytesRead = 0;
+				while ((bytesRead = inStrem.read(buffer)) != -1) {
+					outStream.write(buffer, 0, bytesRead);
+				}
+				outStream.flush();
+				inStrem.close();
+				
+			} else {
+			LOGGER.error("Report not generated for minutes of selection bcz report is null");
+			}
+		    
+		} catch (Exception e) {
+			LOGGER.error("In catch block of minutes of selection Controller"+e);
 		}
 	
 	}

@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="generateReport",locations="classpath:sql/generateReport.yml")
 public class GenerateReportConfig {
 
+	/* For Showing BatchId */
+	private String showBatchId;
+	
 	/* For Occupation Certificate */
 	private String showOccupationCertificateReportDetails;
 	
@@ -22,9 +25,18 @@ public class GenerateReportConfig {
 	/* For SDMS Excel Sheet*/
 	private String showSDMSExcelSheet;
 	
+	/* For MinutesOfSelectionMeeting Sheet*/
+	private String showMinutesOfSelectionMeetingDetails;
+	
 	/* For Displaying Audit Table Records*/
 	private String showAuditTableRecords;
 	
+	public String getShowBatchId() {
+		return showBatchId;
+	}
+	public void setShowBatchId(String showBatchId) {
+		this.showBatchId = showBatchId;
+	}
 	public String getShowOccupationCertificateReportDetails() {
 		return showOccupationCertificateReportDetails;
 	}
@@ -64,5 +76,11 @@ public class GenerateReportConfig {
 	}
 	public void setShowSDMSExcelSheet(String showSDMSExcelSheet) {
 		this.showSDMSExcelSheet = showSDMSExcelSheet;
+	}
+	public String getShowMinutesOfSelectionMeetingDetails() {
+		return showMinutesOfSelectionMeetingDetails;
+	}
+	public void setShowMinutesOfSelectionMeetingDetails(String showMinutesOfSelectionMeetingDetails) {
+		this.showMinutesOfSelectionMeetingDetails = showMinutesOfSelectionMeetingDetails;
 	}	
 }

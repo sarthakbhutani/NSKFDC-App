@@ -18,9 +18,10 @@
 	  			<option value="minutesOfSelectionCommittee">Minutes of Selection Committee</option>
   			</select>
   		</div>
-  		<div class="col-md-3">	
-  			<input type="text" name="batchId" class="form-control form-rounded selectReport" ng-model="batchId" placeholder="Enter Batch Id" ng-show="selectReport=='occupationCertificate' || selectReport=='attendanceSheet' || selectReport=='NSKFDCSheet' || selectReport=='SDMSSheet' || selectReport=='minutesOfSelectionCommittee'" required>
- 			<span id="error_msg"></span>
+  		<div class="col-md-3" ng-show="selectReport=='occupationCertificate' || selectReport=='attendanceSheet' || selectReport=='NSKFDCSheet' || selectReport=='SDMSSheet' || selectReport=='minutesOfSelectionCommittee'">	
+  			<select ng-model="batchId" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
+  			</select>
+  			<span id="error_msg"></span>
  		</div>
  		
 		<div ng-switch="selectReport">
@@ -37,7 +38,7 @@
     	  <button type="submit" class="btn btn-info" ng-click="Submit4(batchId)">Generate Button</button>
    		</div>
    		<div ng-switch-when="minutesOfSelectionCommittee" class="col-md-3">
-    	  <button type="submit" class="btn btn-info" ng-click="Submit5(batchId)">Generate Button</button>
+    	  <button type="submit" class="btn btn-info" ng-click="submitMinutes(batchId)">Generate Button</button>
    		</div>
    		<div ng-switch-default class="col-md-3">
 			<button type="submit" class="btn btn-info">Generate Button</button>

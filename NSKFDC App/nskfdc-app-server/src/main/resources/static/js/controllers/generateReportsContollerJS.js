@@ -19,7 +19,7 @@ report.controller('reportController',function($scope, $http) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="Invalid BatchId";
+    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}
     	}); 
     	
@@ -42,7 +42,7 @@ report.controller('reportController',function($scope, $http) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="Invalid BatchId";
+    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}	
     	}); 
     	
@@ -65,7 +65,7 @@ report.controller('reportController',function($scope, $http) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="Invalid BatchId";
+    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}	
     	}); 
     	
@@ -88,13 +88,39 @@ report.controller('reportController',function($scope, $http) {
     			link.click();
     		}
     	else{
-				document.getElementById("error_msg").innerHTML="Invalid BatchId";
+				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+			}
+    	}); 
+    	
+    	$scope.onLoad();
+    };
+    
+    $scope.submitMinutes = function(batchId){
+    	var urlReq='/generateMinutesOfSelectionCommitteeDetails?batchId='+$scope.batchId; 	  
+    	$http.get(urlReq, { responseType : 'arraybuffer' }).then(function(response)
+    	{	
+    		if(response.data.byteLength!=0)
+    		{
+    			console.log("the length of response is " + response.data.byteLength)
+    			document.getElementById("error_msg").innerHTML="";	
+    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Minutes of Selection Committee.pdf"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    	else{
+    			console.log("the length of response is " + response.data.byteLength)
+				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
 			}
     	}); 
     	
     	$scope.onLoad();
     };
 
+    
     $scope.auditTable = {
     		enableGridMenus: false,
     		enableSorting: false,
@@ -127,14 +153,25 @@ report.controller('reportController',function($scope, $http) {
     			]
     	};
     
-		$scope.onLoad = function () {
-			console.log("In onload ()");	
+		$scope.onLoad = function () {	
 			$http.get('/getAuditTableRecords')
 			.then(function (response) {	
 				$scope.auditTable.data= response.data;
 	  		});
 	  	}
-		
+
 	  	$scope.onLoad();
     
+	    var url1='/getBatchIdDetailsForGenerateReport';       	
+       	$scope.ids = [];
+               $http.get(url1)
+               .then(function (response) {
+             	  
+               	let dt = response.data;	
+               	for(i in dt){
+               		$scope.ids.push(response.data[i].batchId); 
+               	}
+               	let length=$scope.ids.length;
+               	console.log(length);
+           	});
 });
