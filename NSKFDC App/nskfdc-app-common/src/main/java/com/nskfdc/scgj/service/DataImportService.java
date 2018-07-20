@@ -32,7 +32,7 @@ public class DataImportService {
 	@Autowired
 	private DataImportDao dataImportDao;
 	
-	public Collection<GetBatchDetailsDto> BatchDetails(String userEmail,String batchId){
+	public GetBatchDetailsDto BatchDetails(String userEmail,String batchId){
 		
 		LOGGER.debug("Request received from Controller");
 		LOGGER.debug("In BatchDetailsService");

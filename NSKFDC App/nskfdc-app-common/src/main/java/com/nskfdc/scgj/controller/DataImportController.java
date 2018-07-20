@@ -26,7 +26,7 @@ public class DataImportController {
 	private DataImportService dataImportService;
 	
 	@RequestMapping("/BatchDetails")
-	public Collection<GetBatchDetailsDto> BatchDetails(@RequestParam("batchId") String batchId){
+	public GetBatchDetailsDto BatchDetails(@RequestParam("batchId") String batchId){
 	
 		try {
 	
@@ -34,7 +34,8 @@ public class DataImportController {
 			LOGGER.debug("Email is "+ userEmail);
 			LOGGER.debug("In try block ");
 			LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
-			return dataImportService.BatchDetails(userEmail,batchId);
+			return  dataImportService.BatchDetails(userEmail,batchId);
+			
 		}
 		catch(Exception e) {	
 			LOGGER.debug("An error occurred while searching for batch details" + e);

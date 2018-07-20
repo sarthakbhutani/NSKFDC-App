@@ -219,7 +219,7 @@ private static class FinancialRowmapper implements RowMapper<FinancialDto>{
 }
 private static final BatchDetailsRowmapper BatchDetailsRM = new BatchDetailsRowmapper();
 
-public Collection<GetBatchDetailsDto> BatchDetails(String userEmail,String batchId) {
+public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In BatchDetailsDao to get details of batch with userEmail" + userEmail);
@@ -235,7 +235,7 @@ public Collection<GetBatchDetailsDto> BatchDetails(String userEmail,String batch
 				
 				LOGGER.debug("The parameter inserted in hashmap are : " + parameters.get("userEmail"));
 				
-				return  getJdbcTemplate().query(dataImportConfig.getBatchDetails(),parameters,BatchDetailsRM);
+				return  getJdbcTemplate().queryForObject(dataImportConfig.getBatchDetails(),parameters,BatchDetailsRM);
 
 				
 			}
