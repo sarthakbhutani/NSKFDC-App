@@ -47,6 +47,9 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 		  console.log("This is downloading")
 		  $http.get(url, { responseType : 'arraybuffer' })
 		  .then(function(response){
+			  
+			
+			  
 			  console.log("done"+$scope.batchID + response.data);
 			  var zipFile = new Blob([response.data], { type : 'application/zip' })
 			  var downloadURL = URL.createObjectURL(zipFile);
@@ -57,17 +60,35 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 			  link.download =$scope.tpName +$scope.batchId + '.zip';
 			  document.body.appendChild(link);
 			  link.click();
+			  
+			  if(response.data.length==0){
+					 $scope.zipError='No Data Found';
+				 }
+				 else{
+				 $scope.uploadedDocument.data=response.data;
+				 $scope.zipError='';
+				 }
 		  });
 	  };
 	  //zip download end
 
 	  //zip download start ForSearchscgjBtNumber
 	  $scope.DownloadZipFileForSearchscgjBtNumber = function(){
+		  
 		  console.log("working working in SCGJbatch number");
 		  var url='/downloadZipFileForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber;
 		  console.log("This is downloading")
 		  $http.get(url, { responseType : 'arraybuffer' })
 		  .then(function(response){
+			  
+			  if(response.data.length==0){
+					 $scope.zipError='No Data Found';
+				 }
+				 else{
+				 $scope.uploadedDocument.data=response.data;
+				 $scope.zipError='';
+				 }
+			  
 			  console.log("done"+$scope.batchID + response.data);
 			  var zipFile = new Blob([response.data], { type : 'application/zip' })
 			  var downloadURL = URL.createObjectURL(zipFile);
@@ -89,6 +110,14 @@ $scope.searchDocuments=function(){
 	
 	$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
 		.then(function (response) {	
+			if(response.data.length==0){
+				 $scope.searchError='No Data Found';
+			 }
+			 else{
+			 $scope.uploadedDocument.data=response.data;
+			 $scope.searchError='';
+			 }
+
 		
 
 		 $scope.uploadedDocument.data= response.data;
@@ -99,10 +128,20 @@ $scope.searchDocuments=function(){
     else{
 	$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
 	.then(function (response) {	
+		if(response.data.length==0){
+			 $scope.searchError='No Data Found';
+		 }
+		 else{
+		 $scope.uploadedDocument.data=response.data;
+		 $scope.searchError='';
+		 }
+
+		
 		
 
 		 $scope.uploadedDocument.data= response.data;
 		 console.log("scgj");
+		 
 
 	});
     }
@@ -118,8 +157,7 @@ $scope.searchDocuments=function(){
     		}
 
 	}
-	
-	
+		
 }
 
 });

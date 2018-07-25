@@ -31,6 +31,7 @@
 											
 						<div class="col-sm-2">
 						<button type="submit" class="btn btn-info" id="button" ng-click="searchDocuments()">Search</button>
+						<span ng-bind="searchError" id="error"></span>
 						</div>
 						
 						<span id="errorMessageBatch"></span>
@@ -47,7 +48,9 @@
 							<h4 id="upload">Uploaded Documents</h4>
 							</div>	
 							<div class=table>
+							 
 							<div ui-grid="uploadedDocument"  class="grid grid-align " ui-grid-auto-resize ></div> 
+							<span ng-bind="zipError" id="error"></span>
    							</div>
 
 					

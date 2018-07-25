@@ -98,3 +98,6 @@ div.ui-grid-canvas{
 .pointer{
 	width:10%;
 }
+#error{
+	color:red;
+}
