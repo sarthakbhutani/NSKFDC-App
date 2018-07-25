@@ -84,5 +84,37 @@ public class DataImportConfig {
 		this.showbatchId = showbatchId;
 	}
 	
+	
+	private String checkCentreExistence;
+	private String insertCentreDetails;
+	private String updateCentreDetails;
+	private String updateBatchDetails;
+
+	public String getCheckCentreExistence() {
+		return checkCentreExistence;
+	}
+	public void setCheckCentreExistence(String checkCentreExistence) {
+		this.checkCentreExistence = checkCentreExistence;
+	}
+	public String getInsertCentreDetails() {
+		return insertCentreDetails;
+	}
+	public void setInsertCentreDetails(String insertCentreDetails) {
+		this.insertCentreDetails = insertCentreDetails;
+	}
+	public String getUpdateCentreDetails() {
+		return updateCentreDetails;
+	}
+	public void setUpdateCentreDetails(String updateCentreDetails) {
+		this.updateCentreDetails = updateCentreDetails;
+	}
+	public String getUpdateBatchDetails() {
+		return updateBatchDetails;
+	}
+	public void setUpdateBatchDetails(String updateBatchDetails) {
+		this.updateBatchDetails = updateBatchDetails;
+	}
+	
+	
 
 }

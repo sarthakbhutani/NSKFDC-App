@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 import com.nskfdc.scgj.dto.FinancialDto;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
@@ -346,6 +347,88 @@ private static class BATCHRowmapper implements RowMapper<BatchDto>{
 		return new BatchDto(batchId);
 		
 	}
+}
+
+
+
+
+
+
+/*-----------------------Submit the data in database for respective batch---------------*/
+
+public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
+	
+	try {
+		
+		LOGGER.debug("In Data Import Dao to check Existence of centre with respective centre Id");
+		Map<String, Object> batchDetailsParameters = new HashMap<>();
+		batchDetailsParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+		
+		return getJdbcTemplate().queryForObject(dataImportConfig.getCheckCentreExistence(), batchDetailsParameters, Integer.class);
+	} catch (Exception e) {
+		LOGGER.debug("Exception handled in checking the existence of centre"+e);
+		return -1;
+	}
+}
+
+public int insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+	try {
+		
+		LOGGER.debug("In Data Import Dao to insert the centre details");
+		Map<String, Object> centreParameters = new HashMap<>();
+		centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+		LOGGER.debug("Centre Id is-----------------------"+masterSheetSubmitDto.getCentreId());
+		centreParameters.put("state", masterSheetSubmitDto.getState());
+		centreParameters.put("city", masterSheetSubmitDto.getCity());
+		centreParameters.put("userEmail", userEmail);
+		
+		return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
+	} catch (DataAccessException e) {
+		LOGGER.debug("Exception handled while inserting centre detail"+e);
+		return -1;
+	}
+	
+}
+
+public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+	try {
+		LOGGER.debug("In Data Import Dao");
+		LOGGER.debug("To update the centre records");
+		Map<String, Object> centreParameters = new HashMap<>();
+		centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+		centreParameters.put("state", masterSheetSubmitDto.getState());
+		centreParameters.put("city", masterSheetSubmitDto.getCity());
+		return getJdbcTemplate().update(dataImportConfig.getUpdateCentreDetails(), centreParameters);
+	} catch (DataAccessException e) {
+		LOGGER.debug("Exception Handled while updating the centre records"+e);
+		return -1;
+	}
+}
+
+public int updateBatchDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+	try {
+		LOGGER.debug("In Data Import Dao");
+		LOGGER.debug("To update the batch details");
+		Map<String, Object> batchParameters = new HashMap<>();
+		batchParameters.put("batchStartDate", masterSheetSubmitDto.getBatchStartDate());
+		batchParameters.put("batchEndDate", masterSheetSubmitDto.getBatchEndDate());
+		batchParameters.put("assessmentDate", masterSheetSubmitDto.getAssessmentDate());
+		batchParameters.put("medicalExamDate", masterSheetSubmitDto.getMedicalExamDate());
+		batchParameters.put("selectionCommitteeDate", masterSheetSubmitDto.getSelectionCommitteeDate());
+		batchParameters.put("municipality", masterSheetSubmitDto.getMunicipality());
+		batchParameters.put("wardType", masterSheetSubmitDto.getWardType());
+		batchParameters.put("wardNumber", masterSheetSubmitDto.getWardNumber());
+		batchParameters.put("trainerName", masterSheetSubmitDto.getTrainerName());
+		batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
+		
+		return getJdbcTemplate().update(dataImportConfig.getUpdateBatchDetails(), batchParameters);
+	} catch (DataAccessException e) {
+		LOGGER.debug("Exception handled while updating the batch details in DataImportDao"+e);
+		return -1;
+	}
+	
+	
+	
 }
 
 

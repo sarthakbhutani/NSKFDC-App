@@ -7,13 +7,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 import com.nskfdc.scgj.service.DataImportService;
+
+
 
 @RestController
 public class DataImportController {
@@ -222,5 +228,15 @@ public class DataImportController {
             			}
             		}
                  	
+            		
+            		
+            		
+            /*---------------Method to save batch Details in the database-------------*/
+            		@RequestMapping(value="/submitBatchDetails", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
+            		public int submitBatchDetails(@RequestBody MasterSheetSubmitDto masterSheetSubmitDto) {
+            			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+            			return dataImportService.submitBatchDetails(userEmail, masterSheetSubmitDto);
+            		}
+            		
 	
 }

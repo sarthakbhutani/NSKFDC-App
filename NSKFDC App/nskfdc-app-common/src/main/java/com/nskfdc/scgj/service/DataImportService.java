@@ -22,6 +22,7 @@ import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
 
 @Service
@@ -230,6 +231,29 @@ public Collection<BatchDto> getBatchDetail(String userEmail){
 			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
 			return null;
 		}
+	}
+
+
+
+/*-------------------- Submit data from MasterSheet Import into the database---------------*/
+
+	public int submitBatchDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+		LOGGER.debug("In Data Import Service");
+		LOGGER.debug("1. Check if the centre Id exists in the database");
+		int centreExistence= dataImportDao.checkCentreExistence(masterSheetSubmitDto);
+		LOGGER.debug("The response of existence"+centreExistence);
+		if(centreExistence==1) {
+			LOGGER.debug("Centre Id already exist, hence update the records in database");
+			int updatedCentre=dataImportDao.updateCentreDetails(masterSheetSubmitDto);
+		}
+		else {
+			LOGGER.debug("Centre Id does not exist, hence inserting the centre id in database");
+			int updatedCentre=dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
+		}
+		
+		LOGGER.debug("Updated the centre Details, updating batch details corresponding to the selected centre id & batch id");
+		 return dataImportDao.updateBatchDetails(masterSheetSubmitDto);
+		
 	}
 
 }
