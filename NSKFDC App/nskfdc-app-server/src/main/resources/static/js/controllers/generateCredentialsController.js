@@ -48,14 +48,11 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 		            },
 		            {
 		                name: 'password',
-		                displayName: 'Password',
-		                	width:"13%",
-		                	cellclass:"passwordfont"
+		                displayName: 'Password'
 		            },
 		            {
 		                name: 'generatedOn',
-		                displayName: 'Generated On',
-		                	width:"13%"
+		                displayName: 'Generated On'
 		             },
 		             
 		        ]
@@ -90,15 +87,6 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 
 	 }
 	 
-	 
-	 $http.get('')
-	 .then(function (response) {
-	 	 $scope.detailsData.data= response.data;
-
-	 });
-		   
-		    
-
 	 $scope.search=function(nsdcRegNumber) {
 		 console.log($scope.nsdcRegNumber);
 		 $http.get("/SearchService?nsdcRegNumber="+$scope.nsdcRegNumber)

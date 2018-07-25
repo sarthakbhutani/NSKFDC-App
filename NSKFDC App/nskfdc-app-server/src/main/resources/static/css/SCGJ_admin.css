@@ -124,7 +124,7 @@ a:focus {
 ----------------------------------------------------- */
 #content {
     width:100%;
-    padding: 20px;
+    padding: 1%;
     min-height: 80vh;
     transition: all 0.3s;
 }
