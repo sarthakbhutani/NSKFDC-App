@@ -32,6 +32,16 @@ dataImport:
  showbatchId: > 
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
   
-      
+ checkCentreExistence: >
+  SELECT EXISTS(SELECT 1 FROM centredetails WHERE centreId = :centreId);
+  
+ insertCentreDetails: >
+  insert into centredetails(centreId,centreState,centreCity,userEmail) values(:centreId,:state,:city,:userEmail);
+  
+ updateCentreDetails: >
+  UPDATE centredetails set centreState=:state, centreCity=:city where centreId=:centreId;
+  
+ updateBatchDetails: >
+  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName where batchId=:batchId;
  
     
