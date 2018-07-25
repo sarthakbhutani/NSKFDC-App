@@ -119,7 +119,7 @@ app.controller('importController', function($scope, $http) {
         /*----------------- To get the existing details of Batch Id--------------*/
         $http.get("/BatchDetails?batchId="+$scope.batchDetails.value)
         .then(function(response){
-        	console.log(response);
+        
         	$scope.batch= response;
         	$scope.batch.centreId= response.data.centreId;
         	$scope.batch.state= response.data.state;
@@ -181,8 +181,48 @@ app.controller('importController', function($scope, $http) {
             }
         });
     };
-
     
+    
+    
+    
+
+    /*------------Submit the Data in Database------------*/
+    
+    $scope.submitMasterSheet=function(){
+    	
+    	$scope.sumbitBatchDetails={
+    			batchId : $scope.batchDetails.value,
+    			wardType : $scope.myVar,
+    			wardNumber : $scope.wardNumber,
+    			centreId : $scope.batch.centreId,
+    			state : $scope.batch.state,
+    			city : $scope.batch.centreCity,
+    			municipality : $scope.batch.municipality,
+    			selectionCommitteeDate : $scope.batch.selectionCommitteeDate,
+    			trainerName : $scope.batch.principalTrainerName,
+    			batchStartDate : $scope.batch.batchStartDate,
+    			batchEndDate : $scope.batch.batchEndDate,
+    			assessmentDate : $scope.batch.assessmentDate,
+    			medicalExamDate : $scope.batch.medicalExamDate,
+    			employerName : $scope.batch.employerName,
+    			employerNumber : $scope.batch.employerContactNumber
+    			
+    			
+    	};
+    	
+    	
+    	
+    	$http({
+    		url : '/submitBatchDetails',
+    		method :"POST",
+    		data : angular.toJson($scope.sumbitBatchDetails),
+    		headers : {
+    			'Content-type' : 'application/json'
+    		}
+    	}).then(function(response){
+    		
+    	});
+    }
     
     
  

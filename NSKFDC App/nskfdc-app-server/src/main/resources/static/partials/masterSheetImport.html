@@ -54,14 +54,14 @@
       </div>
    </div>
    <!--       text feild section-->
-   <form name="pattern" method="post" onsubmit="return checkforward() || checkforstate()"  >
+   <form name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()"  >
       <div class="row" "cointainer-fluid" id="style">
          <div class="col-sm-3" >
             <font size="4">Update Existing Batch</font>
          </div>
          <div class="col-sm-3">
             <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
-            <option selected disabled value="">Enter Batch ID</option>
+            <option selected disabled value=">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>
             
@@ -79,7 +79,7 @@
          <div class="col-sm-3">
             <div ng-if="myVar === 'Single Ward'"  id="general-1" >
                <div >
-                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" >
+                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" ng-model="wardNumber">
                </div>
             </div>
          </div>
@@ -165,6 +165,7 @@
                   <div id="color" ng-disabled="batchDetails.value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
+                     
                      <input id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload" />
                   </div>
                </div>
