@@ -21,8 +21,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(GenerateCredentialSe
 
 	
 	
-	
-	
+
 	public Integer checkUserExistence(GenerateCredentialDto generateCredentialDto)
 	{
 		LOGGER.debug("Request received from controller to generate credentials");
@@ -30,13 +29,19 @@ private static final Logger LOGGER= LoggerFactory.getLogger(GenerateCredentialSe
 		LOGGER.debug("Checking user credentials for training partner with email : " + generateCredentialDto.getUserEmail());
 	
 	  Integer  userExistence = generatecredentialDao.checkUserExistence(generateCredentialDto.getUserEmail());
+	  Integer  nsdcRegNumberExistence = generatecredentialDao.checkNsdcNumberExistence(generateCredentialDto.getNsdcRegNumber());
 		
-	    if(userExistence == 0)
+	    if(userExistence == 0 && nsdcRegNumberExistence == 0)
 	    {
+	    	
 	    	String role = "TP";
 	    	LOGGER.debug("User existence status for training partner with email : " + generateCredentialDto.getUserEmail() + "is : "  + userExistence);
 	    	return getGenerateCredentialService(generateCredentialDto,role);
-	    }
+	    
+	    
+	    	
+	    
+	    	}
 	    
 	    else
 	    {

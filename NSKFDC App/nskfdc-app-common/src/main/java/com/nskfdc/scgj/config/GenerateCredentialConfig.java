@@ -10,6 +10,7 @@ public class GenerateCredentialConfig {
 	private String usertableCredential;
 	private String trainingPartnerCredentials;
 	private String checkUserExistence;
+	private String checkNsdcNumberExistence;
 	
 	
 	
@@ -41,6 +42,12 @@ public class GenerateCredentialConfig {
 
 	public void setShowTrainingPartnerDetails(String showTrainingPartnerDetails) {
 		this.showTrainingPartnerDetails = showTrainingPartnerDetails;
+	}
+	public String getCheckNsdcNumberExistence() {
+		return checkNsdcNumberExistence;
+	}
+	public void setCheckNsdcNumberExistence(String checkNsdcNumberExistence) {
+		this.checkNsdcNumberExistence = checkNsdcNumberExistence;
 	}
    
 

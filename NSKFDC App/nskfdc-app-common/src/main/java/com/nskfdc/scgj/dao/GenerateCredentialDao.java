@@ -165,4 +165,25 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 				return null;
 			}
 		}
+		
+		public Integer checkNsdcNumberExistence(String nsdcRegNumber) {
+			
+			try
+			{
+				LOGGER.debug("Received request in DAO to check user existence for nsdcRegNumber : " + nsdcRegNumber);
+				Map<String, Object> parameters = new HashMap<>();
+				parameters.put("nsdcRegNumber", nsdcRegNumber);
+				LOGGER.debug("Parameters inserted into database");
+				
+				Integer userCredentialGenerationStatus =  getJdbcTemplate().queryForObject(generateCredentialConfig.getCheckNsdcNumberExistence(), parameters, Integer.class);
+				LOGGER.debug("The value of check user existence status is : " + userCredentialGenerationStatus);
+				return userCredentialGenerationStatus;
+			}
+			catch(Exception e)
+			{
+				LOGGER.error("An error occured while checking for user existence : " + e);
+				
+				return null;
+			}
+		}
 }

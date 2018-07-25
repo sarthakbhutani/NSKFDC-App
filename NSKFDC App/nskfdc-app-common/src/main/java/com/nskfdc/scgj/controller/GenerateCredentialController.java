@@ -33,7 +33,8 @@ public class GenerateCredentialController {
 
 	 try{
 		
-		 return generatecredentialService.checkUserExistence(generateCredentialDto);				
+		 return generatecredentialService.checkUserExistence(generateCredentialDto);
+		 
 	 }
 		
 		 catch(Exception e) {
