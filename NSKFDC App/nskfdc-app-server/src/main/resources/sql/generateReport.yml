@@ -25,8 +25,7 @@ generateReport:
       batchdetails.centreId=centredetails.centreId and candidate.batchId=batchdetails.batchId and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
 
  showMinutesOfSelectionMeetingDetails: >  
-  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails,centredetails,batchdetails where 
-   trainingpartnerdetails.userEmail = centredetails.userEmail and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
+  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails join centredetails on trainingpartnerdetails.userEmail=centredetails.userEmail join batchdetails on batchdetails.centreId=centredetails.centreId where batchdetails.userEmail=:userEmail AND batchdetails.batchId=:batchId;
  
  updateGenerateReportsTable: >
   replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);
