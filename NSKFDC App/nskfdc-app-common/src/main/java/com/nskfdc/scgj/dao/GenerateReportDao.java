@@ -145,7 +145,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
 	}
 	
-	public Collection<GenerateMinutesOfSelectionDto> generateMinutesOfSelection(String batchId,String userEmail/*String jobRole,String trainingPartnerName,String sectorSkillCouncil,String centreCity*/) {
+	public Collection<GenerateMinutesOfSelectionDto> generateMinutesOfSelection(String batchId,String userEmail) {
 
 		LOGGER.debug("Request received from service");
 		LOGGER.debug("Generate minutes Of Selection details ");
@@ -155,7 +155,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			LOGGER.debug("In try block of Generate Minutes Of Selection  Dao");
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("batchId",batchId);
-			parameters.put("userEmail",userEmail);		
+			parameters.put("userEmail",userEmail);
 			
 			return getJdbcTemplate().query(generateReportConfig.getShowMinutesOfSelectionMeetingDetails() ,parameters , generateMinutesOfSelectionRowMapper);
 			
@@ -257,6 +257,8 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			String batchId = rs.getString("batchId");	
 			Date batchStartDate = rs.getDate("batchStartDate");	
 			
+		
+			
 			return new GenerateAttendanceSheetDto(firstName,lastName,firstNameFather,lastNameFather,mobileNumber,batchId,batchStartDate);	
 		}	
     }
@@ -346,7 +348,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     		String sectorSkillCouncil=rs.getString("sectorSkillCouncil");
     		String centreCity=rs.getString("centreCity");
     		
-    		return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);
+
+    		if (selectionCommitteeDate != null && !selectionCommitteeDate.equals("")) {
+    			return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);	
+    		}
+    		else
+    		return new GenerateMinutesOfSelectionDto("  ",jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);
 	
     	}
     }
