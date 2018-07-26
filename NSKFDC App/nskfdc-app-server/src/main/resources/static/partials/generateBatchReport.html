@@ -3,19 +3,20 @@
 </head>
 
 <div ng-controller="generateBatchReportController">
+<form name="generateBatchReportForm">
  <div class="container outline" >
  <label><h3>Generate Batch Report</h3></label>
     	<div class="row"  >
         	<div class="col-md-12">
             	
                 <div class="col-md-4">
-                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" >
+                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" required>
                 	<option value=""disabled selected>Batch Id</option>
                 	<span id="error_msg"></span>
                 	</select>
                 </div>
                 <div class="col-md-4">
-                	<input class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" >
+                	<input class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" required>
                  	
                  </div>
                  <div class="col-md-4">
@@ -29,7 +30,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  id="elephant" placeholder="Enter Images of Day 1" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="elephant" placeholder="Enter Images of Day 1" >
                     </div>
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
@@ -57,7 +58,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Day 2" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Day 2" >
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -71,7 +72,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 3" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 3" >
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -85,7 +86,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 4" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 4" >
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -99,7 +100,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 5" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 5">
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -113,7 +114,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Assessment" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Assessment">
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -127,7 +128,7 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Medical Examinaion" required>
+                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Medical Examinaion" >
                     </div>
                     <div class="col-md-4">
 	                      <span class="btncolor btn btn-default btn-file">
@@ -137,7 +138,7 @@
                     
              </div>
         </div>
-        <br><button class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
+        <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
         <span id="Error"></span>
         </div>
      <!-- <div class="container">
@@ -166,5 +167,5 @@
     </div>
 
 
-
+</form>
 </div>
