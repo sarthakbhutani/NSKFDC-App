@@ -163,21 +163,7 @@
     position: relative;
     overflow: hidden;
 }
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 6.325rem;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
-}
+
 #upload{
     margin-top: 1.562rem;
 }
@@ -191,4 +177,25 @@
 #warning
 {
 	color:Red; font-size:1.2rem
+}
+
+
+
+.btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+
+.btn-wrapper input[type=file] {
+    font-size: 100px;
+    margin-left: 30%;
+    margin-right: 30%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
 }
