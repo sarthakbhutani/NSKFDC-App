@@ -16,7 +16,7 @@ DashboardStatistics:
  showTotalNumberOfCandidatesTrainedInLast6Months: >
   SELECT monthname(batchEndDate) as month,count(enrollmentNumber) as count from batchDetails 
    inner join candidate on batchDetails.batchId = candidate.batchID
-    where assessmentResult="pass" and year(batchEndDate)=year(curdate())
+    where assessmentResult = "Pass" OR assessmentResult = "Fail" and year(batchEndDate)=year(curdate())
      and month(batchEndDate) < month(curdate()) group by month order by month(batchEndDate)  limit 6;
   
  showStateDetails: >
