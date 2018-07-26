@@ -27,7 +27,16 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 				  
 			    $http.get('/searchDocument?batchId='+$scope.batchID)
 			    .then(function (response) {
-			    	 $scope.details.data= response.data;
+			    	 if(response.data.length==0){
+						 $scope.searchdetailError='No Data Found';
+					 }
+					 else{
+						 $scope.details.data= response.data;
+					 $scope.searchdetailError='';
+					 }
+			    	
+			    	 
+			    	 
 			    	 
 	    });
 	    
