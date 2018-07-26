@@ -1,4 +1,4 @@
-<head>
+<head xmlns="http://www.w3.org/1999/html">
    <link href="css/masterSheetImport.css" type="text/css" rel="stylesheet">
 </head>
 <div  ng-controller="importController">
@@ -16,9 +16,7 @@
          </div>
       </div>
    </div>
-   
-   
-   
+
    <div class="row"  "cointainer-fluid" id="panel" >
       <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-1">
@@ -145,19 +143,17 @@
       </div>
       <div id="padding">
          <div class="row" >
-            <div class="col-sm-4" > 
-            </div>
-            <div class="col-sm-6">
-               <input type="file" name="img[]" class="file">
-               <div class="input-group col-xs-12" id="upload">
-                  <input type="text" id="uploadFile" required  placeholder="Upload .xls File" {{theFile.name}} disabled="disabled" />
-                  <button class="btn btn-default btn-file btn-primary" ng-disabled="batchDetails.value == undefined" type="button" ng-click="browse()">
-                  Browse <input type="file"
-                     onchange="angular.element(this).scope().setFile(this)">
-                  </button>
-                  <br>
-                  {{FileMessage}}
-               </div>
+             <div class="btn-wrapper">
+             <span>
+                  <input type="text" name="file_name" id="file_name" class="form-control"></span>
+                 <span>
+                 <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button></span>
+                 <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" />
+
+
+             </div>
+             </div>
+
             </div>
             <div class="row">
                <div class="col-sm-4"></div>
