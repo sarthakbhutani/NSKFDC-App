@@ -30,40 +30,35 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  id="elephant" placeholder="Enter Images of Day 1" >
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day1image" placeholder="Enter Images of Day 1" >
                     </div>
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
-	        					   Browse <input type="file"  file-model="myFile1" accept="image/*" multiple>
+	                        
+	        					   Browse <input type="file"  file-model="myFile1" accept="image/*" multiple onchange="document.getElementById('day1image').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
 	       				  
-	       				  
-							
-							
-	       				  
-					<!-- <form>
-                		<div class="form-group">
-                    		<label for="myFileField">Select a file: </label>
-                    		<input type="file" demo-file-model="myFile"  class="form-control" id ="myFileField"/>
-                		</div>
-               			 <button ng-click="uploadFile()" class = "btn btn-primary">Upload File</button>
-            		</form> -->
             			       				  
                     </div>
                     
              </div>
         </div>
         
+        
+      
         <div class="row boxes">
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Day 2" >
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day2image" placeholder="Enter Images of Day 2" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file">
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile2" accept="image/*" multiple onchange="document.getElementById('day2image').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                     
              </div>
@@ -72,12 +67,15 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 3" >
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day3image" placeholder="Enter Images of Day 3" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file" accept="image/*" multiple>
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile3" accept="image/*" multiple onchange="document.getElementById('day3image').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                    
              </div>
@@ -86,12 +84,15 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 4" >
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day4image" placeholder="Enter Images of Day 4" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file" accept="image/*" multiple>
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile4" accept="image/*" multiple onchange="document.getElementById('day4image').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                     
              </div>
@@ -100,12 +101,15 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont"  placeholder="Enter Images of Day 5">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day5image" placeholder="Enter Images of Day 5" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file" accept="image/*" multiple>
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile5" accept="image/*" multiple onchange="document.getElementById('day5image').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                     
              </div>
@@ -114,12 +118,15 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Assessment">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="assessmentimage" placeholder="Enter Images of Assessment" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file" accept="image/*" multiple>
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile6" accept="image/*" multiple onchange="document.getElementById('assessmentimage').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                     
              </div>
@@ -128,12 +135,15 @@
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
-                    	<input type="text" class="form-control form-rounded placeholderfont" placeholder="Enter Images of Medical Examinaion" >
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="medicalExam" placeholder="Enter Images of Medical Examination" >
                     </div>
-                    <div class="col-md-4">
-	                      <span class="btncolor btn btn-default btn-file">
-	        					   Browse <input type="file" accept="image/*" multiple>
+                  <div class="col-md-4">
+	                        <span class="btncolor btn btn-default btn-file" >
+	                        
+	        					   Browse <input type="file"  file-model="myFile7" accept="image/*" multiple onchange="document.getElementById('medicalExam').value = this.value.split('\\').pop().split('/').pop()">
 	       				  </span>
+	       				  
+            			       				  
                     </div>
                     
              </div>
@@ -141,29 +151,7 @@
         <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
         <span id="Error"></span>
         </div>
-     <!-- <div class="container">
-        <div class="col-md-10">
-        	<div class="row">
-        		<h4>&nbsp;Search Report</h4>
-        	</div>
-        </div>
-        <div class="row">
-        	<div class="col-md-12">
-            		
-                	<div class="col-md-5">
-                    	<br><input type="text" class="form-control" placeholder="Enter Batch Id" />
-                    </div>
-                    <div class="col-md-2">
-                      <button class="btn btn-primary btncolor1">Search</button>
-                    </div>
-                    <div class="col-md-3"></div>
-             </div>
-        </div>
-        <div class="table">
-		    
-		    <div ui-grid="details"  class="grid grid-align properties " ui-grid-auto-resize></div> 
-		</div>
-       </div> -->
+
     </div>
 
 
