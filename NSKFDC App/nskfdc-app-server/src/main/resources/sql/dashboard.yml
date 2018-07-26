@@ -1,6 +1,6 @@
 DashboardStatistics:
  showNumberOfCandidatesTrained: >
-  select Count(*) from candidate where assessmentResult = "Pass";
+  select Count(*) from candidate where assessmentResult = "Pass" OR assessmentResult = "Fail";
   
  showNumberOfOngoingTrainings: >
   Select Count(*) from batchdetails where 
