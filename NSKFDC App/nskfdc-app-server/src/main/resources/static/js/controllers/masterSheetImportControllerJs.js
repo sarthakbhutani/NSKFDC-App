@@ -87,7 +87,7 @@ app.controller('importController', function($scope, $http) {
     });
 	
 	
-/*	 var url = '/getBatchIdfortrainer';
+var url = '/getBatchIdfortrainer';
     $scope.ids = [];
     $http.get(url)
 	    .then(function(response) {
@@ -95,7 +95,7 @@ app.controller('importController', function($scope, $http) {
 	        for (i in dt) {
 	            $scope.ids.push(response.data[i].batchId);
 	        }
-	    });*/
+	    });
 
     $scope.myVar = 'none';
     //	 $scope.value = 'select';
@@ -143,17 +143,16 @@ app.controller('importController', function($scope, $http) {
         $http.get("/generateBatch")
             .then(function(response) {
                 $scope.data = response.data;
+                $scope.ids = [];
+                $http.get('/getBatchIdfortrainer')
+            	    .then(function(response) {
+            	        let dt = response.data;
+            	        for (i in dt) {
+            	            $scope.ids.push(response.data[i].batchId);
+            	        }
+            	    });
          });
-        
-   	 var url = '/getBatchIdfortrainer';
-     $scope.ids = [];
-     $http.get(url)
- 	    .then(function(response) {
- 	        let dt = response.data;
- 	        for (i in dt) {
- 	            $scope.ids.push(response.data[i].batchId);
- 	        }
- 	    });
+    
     };
     
     
