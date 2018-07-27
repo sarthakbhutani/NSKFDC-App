@@ -78,8 +78,9 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
             String nsdcRegNumber = rs.getString("nsdcRegNumber");
             String trainingPartnerName = rs.getString("trainingPartnerName");
             int targets = rs.getInt("targets");
+            Date targetApprovalDate = rs.getDate("targetApprovalDate");
 
-            return new UpdateTargetsDto(nsdcRegNumber,trainingPartnerName,targets);
+            return new UpdateTargetsDto(nsdcRegNumber,trainingPartnerName,targets,targetApprovalDate);
         }
     }
 }
