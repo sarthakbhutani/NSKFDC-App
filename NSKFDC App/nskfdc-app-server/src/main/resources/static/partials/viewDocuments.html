@@ -7,7 +7,7 @@
   
 	<div  class= "container-fluid  background">
 				<div>
-				<h4 id="searchdocuments">Search Documents</h4>
+				<h3 id="searchdocuments">Search Documents</h3>
 				</div>
 			<!-- form div -->
 						
@@ -45,12 +45,13 @@
 					
 			    			<!-- ui-grid start here --> 
 			    			<div class="row background" id="upload">
-							<h4 id="upload">Uploaded Documents</h4>
+							<h3 id="upload">Uploaded Documents</h3>
 							</div>	
+							<span ng-bind="zipError" id="error"></span><span ng-bind="zipSuccess" id="success"></span>
 							<div class=table>
 							 
-							<div ui-grid="uploadedDocument"  class="grid grid-align " ui-grid-auto-resize ></div> 
-							<span ng-bind="zipError" id="error"></span>
+							<div ui-grid="uploadedDocument"  ui-if="uploadedDocument.data.length>0" class="grid grid-align" ui-grid-auto-resize ng-style="getTableHeight()"></div>
+							
    							</div>
 
 					

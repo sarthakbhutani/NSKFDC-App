@@ -19,7 +19,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
     columnDefs: [
         {
         	name: 'batchId', 
-            displayName: 'batchId'
+            displayName: 'Batch Id'
             	
         },
         {
@@ -62,11 +62,11 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 			  link.click();
 			  
 			  if(response.data.length==0){
-					 $scope.zipError='No Data Found';
+					 $scope.zipError='File not found';
 				 }
 				 else{
 				 $scope.uploadedDocument.data=response.data;
-				 $scope.zipError='';
+				 $scope.zipSuccess='File downloaded successfully';
 				 }
 		  });
 	  };
@@ -82,11 +82,11 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 		  .then(function(response){
 			  
 			  if(response.data.length==0){
-					 $scope.zipError='No Data Found';
+					 $scope.zipError='File not found';
 				 }
 				 else{
 				 $scope.uploadedDocument.data=response.data;
-				 $scope.zipError='';
+				 $scope.zipSuccess='File downloaded successfully';
 				 }
 			  
 			  console.log("done"+$scope.batchID + response.data);
@@ -127,7 +127,7 @@ $scope.searchDocuments=function(){
     }
     else{
 	$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
-	.then(function (response) {	
+	.then(function (response) {
 		if(response.data.length==0){
 			 $scope.searchError='No Data Found';
 		 }
@@ -160,4 +160,14 @@ $scope.searchDocuments=function(){
 		
 }
 
+/*----------- Grid Height -------------*/
+$scope.getTableHeight=function(){
+	 var rowHeight=30;
+	 var headerHeight=30;
+	
+	 return{
+		 height:($scope.uploadedDocument.data.length * rowHeight + headerHeight)+"px"
+	 };
+
+};
 });
