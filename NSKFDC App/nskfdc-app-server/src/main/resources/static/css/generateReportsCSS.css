@@ -52,3 +52,6 @@ input.ng-invalid {
 	color: red;
     padding-left: 16%;
 }
+.ui-grid-cell-contents{
+    text-align: center;
+}
