@@ -2,4 +2,4 @@ updateTargets:
  updateTargets: >
   UPDATE trainingpartnerdetails SET targets = targets + :updatedTargets , targetApprovalDate = curDate() WHERE nsdcRegNumber= :nsdcRegNumber;
  updatedTargetDetails: >
-  select Distinct nsdcRegNumber,trainingPartnerName,targets from nskfdc.trainingpartnerdetails where nsdcRegNumber= :nsdcRegNumber;
+  select Distinct nsdcRegNumber,trainingPartnerName,targets,targetApprovalDate from nskfdc.trainingpartnerdetails where nsdcRegNumber= :nsdcRegNumber;
