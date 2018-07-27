@@ -2,11 +2,15 @@ package com.nskfdc.scgj.dto;
 
 import com.nskfdc.scgj.common.BaseDto;
 
+import java.util.Date;
+
 public class UpdateTargetsDto extends BaseDto {
 
     private String nsdcRegNumber;
     private String trainingPartnerName;
     private int targets;
+    private Date targetApprovalDate;
+
 
     public String getNsdcRegNumber() {
         return nsdcRegNumber;
@@ -28,19 +32,23 @@ public class UpdateTargetsDto extends BaseDto {
         return targets;
     }
 
-    public UpdateTargetsDto(String trainingPartnerName, int targets) {
-        this.trainingPartnerName = trainingPartnerName;
-        this.targets = targets;
-    }
-
     public void setTargets(int targets) {
         this.targets = targets;
     }
 
-    public UpdateTargetsDto(String nsdcRegNumber, String trainingPartnerName, int targets) {
+    public Date getTargetApprovalDate() {
+        return targetApprovalDate;
+    }
+
+    public void setTargetApprovalDate(Date targetApprovalDate) {
+        this.targetApprovalDate = targetApprovalDate;
+    }
+
+    public UpdateTargetsDto(String nsdcRegNumber, String trainingPartnerName, int targets, Date targetApprovalDate) {
         this.nsdcRegNumber = nsdcRegNumber;
         this.trainingPartnerName = trainingPartnerName;
         this.targets = targets;
+        this.targetApprovalDate = targetApprovalDate;
     }
 
     public UpdateTargetsDto() {
