@@ -6,7 +6,7 @@ report.controller('reportController',function($scope, $http) {
     $scope.Submit1=function(batchId){
     	var url='/generateOccupationCertificateReport?batchId='+$scope.batchId;	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
-    	{	
+    	{
     		if(response.data.byteLength!=0)
     		{
     			document.getElementById("error_msg").innerHTML="";
@@ -21,9 +21,10 @@ report.controller('reportController',function($scope, $http) {
     		else{
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}
+    		$scope.onLoad();
     	}); 
     	
-    	$scope.onLoad();
+    	
     };
     
     $scope.Submit2=function(batchId){
@@ -43,10 +44,10 @@ report.controller('reportController',function($scope, $http) {
     		}
     		else{
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
-    		}	
+    		}
+    		$scope.onLoad();
     	}); 
     	
-    	$scope.onLoad();
     };
     
     $scope.Submit3=function(batchId){
@@ -66,10 +67,9 @@ report.controller('reportController',function($scope, $http) {
     		}
     		else{
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
-    		}	
-    	}); 
-    	
-    	$scope.onLoad();
+    		}
+    		$scope.onLoad();
+    	});
     };
     
     $scope.Submit4=function(batchId){
@@ -90,9 +90,8 @@ report.controller('reportController',function($scope, $http) {
     	else{
 				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
 			}
-    	}); 
-    	
-    	$scope.onLoad();
+    		$scope.onLoad();
+    	});
     };
     
     $scope.submitMinutes = function(batchId){
@@ -115,9 +114,8 @@ report.controller('reportController',function($scope, $http) {
     			console.log("the length of response is " + response.data.byteLength)
 				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
 			}
-    	}); 
-    	
-    	$scope.onLoad();
+    		$scope.onLoad();
+    	});
     };
 
     
