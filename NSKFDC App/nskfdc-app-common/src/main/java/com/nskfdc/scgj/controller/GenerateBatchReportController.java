@@ -12,6 +12,7 @@ import java.util.Collection;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,7 +71,7 @@ public class GenerateBatchReportController {
 	}
 	@RequestMapping("/getLocationDetails")
 	public Collection<LocationDetailsDto> locationDetails(@RequestParam ("batchId") String batchId){
-		try{
+		try{ 
 			return generateBatchReportService.locationDetails(batchId);
 		}
 		catch (Exception e) {
@@ -108,6 +109,7 @@ public class GenerateBatchReportController {
 	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST)
 	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
 		String report;
+		File dir = null;
 		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 		try{
 			
@@ -130,10 +132,11 @@ public class GenerateBatchReportController {
 							
 							// Creating the directory to store file
 							String rootPath = System.getProperty("user.home");
-							File dir = new File(rootPath +File.separator +"Documents"+File.separator + "tmpFiles");
+							dir = new File(rootPath +File.separator +"Documents"+File.separator + "tmpFiles"+batchId);
 							if (!dir.exists())
 								dir.mkdirs();
-
+							
+							
 							// Create the file on server
 							File serverFile = new File(dir.getAbsolutePath()
 									+ File.separator + "p"+i+".jpg");
@@ -182,6 +185,8 @@ public class GenerateBatchReportController {
 		    
 		    	outStream.flush();
 		    	inStrem.close();
+		    	FileUtils.deleteDirectory(dir);
+		    	
 			} else {
 				LOGGER.debug("Path not found");
 			}
