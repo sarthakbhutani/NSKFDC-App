@@ -9,7 +9,8 @@ batchIdQuery:
   SELECT centreState,centreCity,municipality,wardType,scgjBatchNumber,dataSheetForSDDMS FROM centredetails inner join batchdetails ON centredetails.centreId = batchdetails.centreId  inner join uploadeddocuments ON (batchdetails.batchId = uploadeddocuments.batchId AND batchdetails.batchId=:batchId);
   
  showTrainingDetails: >
-  select selectionCommitteeDate,batchStartDate,batchEndDate,trainingPartnerName,principalTrainerName,count(*),count(assessmentResult),medicalExamDate,count(medicalExamConducted),count(enrollmentNumber) from nskfdc.batchdetails inner join nskfdc.candidate on (batchdetails.batchId=candidate.batchId and batchdetails.batchId=1 and assessmentResult='Passed' and medicalExamConducted=1) inner join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail;
+  select selectionCommitteeDate,batchStartDate,batchEndDate,trainingPartnerName,principalTrainerName,count(*),count(assessmentResult),medicalExamDate,count(medicalExamConducted),count(enrollmentNumber) from nskfdc.batchdetails join nskfdc.candidate on batchdetails.batchId=candidate.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where batchdetails.batchId=:batchId;
+  
   
  showCandidateDetails: >
   select firstName,lastName,aadharCardNumber,mobileNumber,enrollmentNumber from nskfdc.candidate where batchId=:batchId;
