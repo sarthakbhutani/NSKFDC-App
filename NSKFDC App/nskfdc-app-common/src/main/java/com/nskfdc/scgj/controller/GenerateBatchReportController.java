@@ -1,17 +1,22 @@
 package com.nskfdc.scgj.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+//import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Collection;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +25,7 @@ import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
-import com.nskfdc.scgj.dto.SearchReportDto;
+//import com.nskfdc.scgj.dto.SearchReportDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 import com.nskfdc.scgj.service.GenerateBatchReportService;
 
@@ -34,6 +39,7 @@ public class GenerateBatchReportController {
 	private SessionUserUtility sessionUserUtility;
 	
 	private String userEmail;
+	private String Paths[] = new String[20];
 	private Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportController.class);
 	
 	/**
@@ -99,13 +105,62 @@ public class GenerateBatchReportController {
 		}
 	}
 	
-	@RequestMapping("/generateBatchReport")
-	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,HttpServletResponse response){
+	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST)
+	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
 		String report;
 		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 		try{
-			report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail);
-				if(report!=null) {
+			
+					
+					//To store Images
+					if (files.length ==0)
+						return ;
+
+					String message = "";
+					for (int i = 0; i <files.length; i++) {
+						MultipartFile file =  files[i];
+						try {
+							File convFile = new File(file.getOriginalFilename());
+						    convFile.createNewFile();
+						    FileOutputStream fos = new FileOutputStream(convFile);
+						    fos.write(file.getBytes());
+						    fos.close();
+						    
+							//byte[] bytes = file.getBytes();
+							
+							// Creating the directory to store file
+							String rootPath = System.getProperty("user.home");
+							File dir = new File(rootPath +File.separator +"Documents"+File.separator + "tmpFiles");
+							if (!dir.exists())
+								dir.mkdirs();
+
+							// Create the file on server
+							File serverFile = new File(dir.getAbsolutePath()
+									+ File.separator + "p"+i+".jpg");
+							/*BufferedOutputStream stream = new BufferedOutputStream(
+									new FileOutputStream(serverFile));*/
+							BufferedImage img=ImageIO.read(convFile);
+							//ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length);
+							//byte[] imageInByte = out.toByteArray();
+					        ImageIO.write(img, "jpg", serverFile);
+					        //out.write(bytes);
+
+							//out.close();
+							
+							Paths[i]=serverFile.getAbsolutePath();
+
+							LOGGER.debug("Server File Location="
+									+ serverFile.getAbsolutePath());
+
+							message = message + "You successfully uploaded file=" ;
+						} catch (Exception e) {
+							LOGGER.debug("Error in Saving File");
+						}
+					}
+				
+					report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
+					if(report!=null) {
+					
 				
 				LOGGER.debug("Creating object of File");
 				File file = new File(report);
@@ -137,6 +192,7 @@ public class GenerateBatchReportController {
 		}
 	}
 	
+	 
 	
 	
 	/**

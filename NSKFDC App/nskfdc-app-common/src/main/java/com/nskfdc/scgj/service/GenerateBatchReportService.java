@@ -101,12 +101,12 @@ public class GenerateBatchReportService {
 			return null;
 		}
 	}
-	public String generateBatchReport(String batchId, String batchnumber,String userEmail){
+	public String generateBatchReport(String batchId, String batchnumber,String userEmail, String[] paths){
 		LOGGER.debug("Request received from controller");
 		LOGGER.debug("In Generate Batch Report Service");
 		
 		try{
-			LOGGER.debug("In try block of Generate Occupation Certificate Service");
+			LOGGER.debug("In try block of Generate Batch Report Service");
 			int insert=generateBatchReportDao.insertSCGJBatchNumber(batchId,batchnumber,userEmail);
 			LOGGER.debug(""+insert);
 			if(insert!=-1)
@@ -122,27 +122,22 @@ public class GenerateBatchReportService {
 			JRBeanCollectionDataSource trainingDetailsBeans = new JRBeanCollectionDataSource(trainingDetails);
 			JRBeanCollectionDataSource candidateDetailsBeans = new JRBeanCollectionDataSource(candidateDetails);
 			
-			System.out.println(userHomeDirectory);
-			String a=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String b=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
-			String d1p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d2p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d3p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d4p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String d5p1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String med=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String assess=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			String viva=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
-			Object i1=a;
-			Object i2=b;
-			Object i3=d1p1;
-			Object i4=d2p1;
-			Object i5=d3p1;
-			Object i6=d4p1;
-			Object i7=d5p1;
-			Object i8=med;
-			Object i9=assess;
-			Object i10=viva;
+			Object i1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
+			Object i2=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
+			Object i3=paths[0];
+			Object i4=paths[1];
+			Object i5=paths[2];
+			Object i6=paths[3];
+			Object i7=paths[4];
+			Object i8=paths[5];
+			Object i9=paths[6];
+			Object i10=paths[7];
+			Object i11=paths[8];
+			Object i12=paths[9];
+			Object i13=paths[10];
+			Object i14=paths[11];
+			Object i15=paths[12];
+			Object i16=paths[13];
 			
 			/* Map to hold Jasper Report Parameters */
 			LOGGER.debug("Create Map to hold Jasper Report Parameters ");
@@ -154,20 +149,26 @@ public class GenerateBatchReportService {
 			param.put("ImageSource",i1);
 			param.put("ImageSource2",i2);
 			param.put("Day1Pic1",i3);
-			param.put("Day2Pic1",i4);
-			param.put("Day3Pic1",i5);
-			param.put("Day4Pic1",i6);
-			param.put("Day5Pic1",i7);
-			param.put("MedExamPic1",i8);
-			param.put("Assessment",i9);
-			param.put("Viva",i10);
+			param.put("Day1Pic2",i4);
+			param.put("Day2Pic1",i5);
+			param.put("Day2Pic2",i6);
+			param.put("Day3Pic1",i7);
+			param.put("Day3Pic2",i8);
+			param.put("Day4Pic1",i9);
+			param.put("Day4Pic2",i10);
+			param.put("Day5Pic1",i11);
+			param.put("Day5Pic2",i12);
+			param.put("MedExamPic1",i13);
+			param.put("MedExamPic2",i14);
+			param.put("Assessment",i15);
+			param.put("Viva",i16);
 			
 			LOGGER.debug("Create object of Class Path Resource ");
 		    ClassPathResource resource=new ClassPathResource("/static/FinalBatchReport.jasper");
 		    
 		    
 		    outputFile = userHomeDirectory2 + File.separatorChar + "Downloads" + File.separatorChar + "FinalBatchReport "+df.format(date)+" "+hour+"-"+minute+"-"+second+".pdf";
-		    LOGGER.debug("THE OUTPUT FILE IS IN" +userHomeDirectory2+"in ---------"+ outputFile);
+		    LOGGER.debug("THE OUTPUT FILE IS IN " +userHomeDirectory2+"in ---------"+ outputFile);
 	        
 	        LOGGER.debug("Getting input stream");
 		    InputStream inputStream = resource.getInputStream();
