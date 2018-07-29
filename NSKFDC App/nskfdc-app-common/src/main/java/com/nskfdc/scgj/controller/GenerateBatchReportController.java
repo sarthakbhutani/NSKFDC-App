@@ -7,6 +7,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Collection;
 
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -106,18 +108,20 @@ public class GenerateBatchReportController {
 		}
 	}
 	
-	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST)
+	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
+		
+		LOGGER.debug("In BATCH REPORT GENERATE CONTROLLER"+batchId+batchnumber);
 		String report;
 		File dir = null;
 		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 		try{
 			
-					
 					//To store Images
 					if (files.length ==0)
 						return ;
-
+					
+					LOGGER.debug("----------length is"+files.length);
 					String message = "";
 					for (int i = 0; i <files.length; i++) {
 						MultipartFile file =  files[i];
@@ -128,7 +132,6 @@ public class GenerateBatchReportController {
 						    fos.write(file.getBytes());
 						    fos.close();
 						    
-							//byte[] bytes = file.getBytes();
 							
 							// Creating the directory to store file
 							String rootPath = System.getProperty("user.home");
@@ -140,15 +143,11 @@ public class GenerateBatchReportController {
 							// Create the file on server
 							File serverFile = new File(dir.getAbsolutePath()
 									+ File.separator + "p"+i+".jpg");
-							/*BufferedOutputStream stream = new BufferedOutputStream(
-									new FileOutputStream(serverFile));*/
+							
 							BufferedImage img=ImageIO.read(convFile);
-							//ByteArrayOutputStream out = new ByteArrayOutputStream(bytes.length);
-							//byte[] imageInByte = out.toByteArray();
+							
 					        ImageIO.write(img, "jpg", serverFile);
-					        //out.write(bytes);
-
-							//out.close();
+					        
 							
 							Paths[i]=serverFile.getAbsolutePath();
 
@@ -162,7 +161,7 @@ public class GenerateBatchReportController {
 					}
 				
 					report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
-					if(report!=null) {
+				if(report!=null) {
 					
 				
 				LOGGER.debug("Creating object of File");
@@ -185,45 +184,32 @@ public class GenerateBatchReportController {
 		    
 		    	outStream.flush();
 		    	inStrem.close();
-		    	FileUtils.deleteDirectory(dir);
+		    	
 		    	
 			} else {
 				LOGGER.debug("Path not found");
 			}
+					
 		}
 		
 		catch (Exception e) {
+			
 			LOGGER.debug("Error Occurred"+e);
+			
+		}
+		
+		try {
+			LOGGER.debug("Deleting the Directory");
+			FileUtils.deleteDirectory(dir);
+		} catch (IOException e) {
+			LOGGER.debug("Exception occured while deleting the directory");
 		}
 	}
 	
 	 
 	
 	
-	/**
-	 
-	 *@author shivangi singh
-	 *@description This method is a Controller Method that maps the request for getting reports of particular batchids.. 
-	 **/
 	
-	/*@RequestMapping("/getReports")
-	public Collection<SearchReportDto> getReport(@RequestParam("batchId") String batchId, @RequestParam("userEmail") String userEmail,HttpServletResponse response){
-
-		LOGGER.debug("Request received from frontend");
-		LOGGER.debug("In Generate batchreport Controller");
-		
-		try {
-			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
-			
-			LOGGER.debug("In try block to get BATCH detail");
-			LOGGER.debug("Sending request to service");
-			return generateBatchReportService.getReport(batchId,userEmail);
-			
-		}catch(Exception e) {
-			
-			LOGGER.error("An error occurred while getting the REPORT" + e);
-			return null;
-			
-		}
-	}*/
+	
+	
 }
