@@ -35,7 +35,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile1" accept="image/*" multiple onchange="document.getElementById('day1image').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile1" accept="image/*" multiple onchange="document.getElementById('day1image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -55,7 +55,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile2" accept="image/*" multiple onchange="document.getElementById('day2image').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile2" accept="image/*" multiple onchange="document.getElementById('day2image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -72,7 +72,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile3" accept="image/*" multiple onchange="document.getElementById('day3image').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile3" accept="image/*" multiple onchange="document.getElementById('day3image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -89,7 +89,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile4" accept="image/*" multiple onchange="document.getElementById('day4image').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile4" accept="image/*" multiple onchange="document.getElementById('day4image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -106,7 +106,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile5" accept="image/*" multiple onchange="document.getElementById('day5image').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile5" accept="image/*" multiple onchange="document.getElementById('day5image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -123,7 +123,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile6" accept="image/*" multiple onchange="document.getElementById('assessmentimage').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile6" accept="image/*" multiple onchange="document.getElementById('assessmentimage').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -140,7 +140,7 @@
                   <div class="col-md-4">
 	                        <span class="btncolor btn btn-default btn-file" >
 	                        
-	        					   Browse <input type="file"  file-model="myFile7" accept="image/*" multiple onchange="document.getElementById('medicalExam').value = this.value.split('\\').pop().split('/').pop()">
+	        					   Browse <input type="file"  file-model="myFile7" accept="image/*" multiple onchange="document.getElementById('medicalExam').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
 	       				  </span>
 	       				  
             			       				  
@@ -148,7 +148,7 @@
                     
              </div>
         </div>
-        <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReport(batchId,batchnumber)" >Generate Report</button>
+        <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReportwithFile()" >Generate Report</button>
         <span id="Error"></span>
         </div>
 

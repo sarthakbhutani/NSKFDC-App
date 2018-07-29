@@ -1,47 +1,64 @@
 var tp = angular.module("app");
 
+tp .directive('ngFiles', ['$parse', function ($parse) {
+
+    function fn_link(scope, element, attrs) {
+        var onChange = $parse(attrs.ngFiles);
+        element.on('change', function (event) {
+            onChange(scope, { $files: event.target.files });
+        });
+    };
+
+    return {
+        link: fn_link
+    }
+} ]);
+
 tp.controller("generateBatchReportController" , function($scope, $http){
 	
-	/*$scope.details = {
- 	        enableGridMenus: false,
- 	        enableSorting: false,
- 	        enableFiltering: false,
- 	        enableCellEdit: false,
- 	        enableColumnMenus: false,
- 	        enableHorizontalScrollbar: 0,
- 	        enableVerticalScrollbar: 0,
- 	        paginationPageSizes: [5, 10, 20, 30],
- 	        paginationPageSize: 10,
- 	        useExternalPagination: true,
- 	        
- 	       columnDefs: [
- 	            {
- 	            	name: 'Id', 
- 	                displayName: 'Batch Id'
- 	                	
- 	            },
- 	            {
- 	            	name: 'Date',
- 	            	displayName: 'Uploaded On'
- 	            },
- 	            {
- 	                name: 'Name',
- 	                displayName: 'Uploaded By'
- 	            },
- 	            {
- 	                name: 'Download',
- 	                displayName: 'Download Zip File.'
- 	            }
- 	            
- 	           
- 	        ]
- 	    
+	
+	 var formdata = new FormData();
+     $scope.getTheFiles = function ($files) {
+         angular.forEach($files, function (value, key) {
+             formdata.append("file", value);
+         });
      };
-*/ 	    
-	    
+     
+     $scope.generateBatchReportwithFile = function(){
+    	 formdata.append("batchId",$scope.batchId);
+    	 formdata.append("batchnumber",$scope.batchnumber);
+    	$http({
+    		url: '/generateBatchReport',
+			 method: "POST",
+			 data: formdata,
+			 responseType : 'arraybuffer',
+			 headers: {
+                 'Content-Type': undefined
+             }
+    	}).then(function(response){
+    		if(response.data.byteLength!=0)
+    		{
+    			document.getElementById("Error").innerHTML="";
+    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Final Batch Report.pdf"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    		else{
+    			document.getElementById("Error").innerHTML="<center> Batch Report cannot be generated ! </center>";
+    		}
+    		
+    		
+    	});
+    	 
+     }	    
+	
+	
  		   var url='/getBatchIdDetails';
       	 
-           //$scope.ngBlur = function () {
           	
           	$scope.ids = [];
           	
@@ -56,31 +73,6 @@ tp.controller("generateBatchReportController" , function($scope, $http){
                   	console.log(length);
               	});
               
-           $scope.generateBatchReport = function(batchId,batchnumber){
-           
-           var url2='/generateBatchReport?batchId=';
-           
-           $http.get(url2+$scope.batchId+'&batchnumber='+$scope.batchnumber, { responseType : 'arraybuffer' })
-           .then(function (response){
-           let data1=response.data;
-           console.log(data1);
-           if(response.data.byteLength!=0)
-   			{
-	   			
-	   			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
-	   			var downloadURL = URL.createObjectURL(pdfFile);
-	   			var link = document.createElement('a');
-	   			link.href = downloadURL;
-	   			link.download = "Final Batch Report.pdf"
-	   			document.body.appendChild(link);
-	   			link.click();
-   			}
-   		else{
-   			document.getElementById("Error").innerHTML="Invalid";
-   			}
-           });
           
-           };
-           
           
 });
