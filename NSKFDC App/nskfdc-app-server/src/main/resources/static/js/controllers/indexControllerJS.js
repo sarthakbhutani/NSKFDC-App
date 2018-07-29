@@ -57,19 +57,19 @@ app.controller('mainController', function($rootScope, $scope, $http, $location, 
 		
 			
 			
-			console.log(response);
+			
 			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);	
 			$rootScope.username = response.data.principal.username;	
 			$rootScope.mainTemplate=false;
 			
 			if(credentials){
-				console.log("IN IF");
+				
 				$http.get('/getNameOfUser').then(function(nameOfUser){
 					$rootScope.nameofUser=nameOfUser.data.trainingPartnerName;
 					$window.localStorage.setItem('nameOfUser',$rootScope.nameofUser);
 					
 				},function(error){
-					console.log("errrorr"+error);
+					
 				});
 				
 			}
