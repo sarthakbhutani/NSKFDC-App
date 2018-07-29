@@ -18,7 +18,7 @@ import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 import com.nskfdc.scgj.service.DataImportService;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -30,14 +30,44 @@ public class DataImportController {
 	
 	@Autowired
 	private DataImportService dataImportService;
-	
+
+
+	/*---------- Master Sheet Import --------------*/
+
+	  @RequestMapping(value="/importMasterSheet",method = RequestMethod.POST,consumes = MediaType.ALL_VALUE)
+	  public String masterSheetImport(@RequestParam("file") MultipartFile file, @RequestParam("batchId") int batchId) throws FileNotFoundException
+	  {
+		  LOGGER.debug("In Data import controller to read excel file");
+		  try
+		  {
+			  if(file == null)
+			  {
+				  LOGGER.debug("Null File in controller");
+				  return "File is null";
+			  }
+			  else if(batchId < 1)
+			  {
+				  LOGGER.error("BatchID is null");
+				  return "batchID is null";
+			  }
+			  else
+			  return dataImportService.masterSheetImport(file,batchId);
+		  }
+
+		  catch(Exception e)
+		  {
+			  LOGGER.error("Exception is " + e);
+			  return null;
+		  }
+	  }
+
 	@RequestMapping("/BatchDetails")
 	public GetBatchDetailsDto BatchDetails(@RequestParam("batchId") String batchId){
 	
 		try {
 	
 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();		
-			LOGGER.debug("Email is "+ userEmail);
+			LOGGER.debug("Email is " + userEmail);
 			LOGGER.debug("In try block ");
 			LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
 			return  dataImportService.BatchDetails(userEmail,batchId);
