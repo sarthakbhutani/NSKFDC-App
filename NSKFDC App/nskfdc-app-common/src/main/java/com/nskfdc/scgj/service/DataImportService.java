@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,7 +16,7 @@ import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -67,8 +68,8 @@ public class DataImportService {
     public String masterSheetImport(MultipartFile file, int batchId) throws IOException {
         LOGGER.debug("In Service to read Excel sheet ");
         boolean flag = true; //for iterating
+        Integer insertResult = -25;
         String fileNameReceived = "";
-        //String filePath = "";
         String uploadedFolder = readApplicationConstants.getSaveExcelSheetAtLocation();
 
         LOGGER.debug("The path to uploaded folder is : " + uploadedFolder);
@@ -125,10 +126,11 @@ public class DataImportService {
         Sheet sheet = workbook.getSheetAt(0);
 
         /*--- Apache POI Code ----*/
+        ArrayList<MasterSheetImportDto> candidateDetails = new ArrayList<MasterSheetImportDto>();
 
         Iterator < Row > rowIterator = sheet.rowIterator();
 
-        LOGGER.debug("Physical Number of rows in the sheet are : " + sheet.getPhysicalNumberOfRows());
+    //    LOGGER.debug("Physical Number of rows in the sheet are : " + sheet.getPhysicalNumberOfRows());
 
         while (rowIterator.hasNext()) {
 
@@ -159,15 +161,13 @@ public class DataImportService {
             }
             Iterator < Cell > cellIterator = row.cellIterator();
 
-            //LOGGER.debug("Last row number : " + sheet.getLastRowNum());
-
+ 
             /*--------- Mapping Excel Sheet Columns to DTO Objects ------------*/
 
             
             while (cellIterator.hasNext() && flag) {
                 Cell cell = cellIterator.next();
 
-               
                 if (cell.getColumnIndex() == 0) {
                     if (cell.getStringCellValue().isEmpty()) {
                         LOGGER.error("No enrollment number found");
@@ -213,25 +213,25 @@ public class DataImportService {
                 }
                 else if(cell.getColumnIndex() == 5)
                 {
-                	LOGGER.debug("Capturing value of header : Disability Type " + cell.getStringCellValue());
+                	LOGGER.debug("Capturing value of header : Disability Type is : " + cell.getStringCellValue());
                 	masterSheetImportDto.setDisabilityType(cell.getStringCellValue());
                 	
                 }
                 else if(cell.getColumnIndex() == 6)
                 {
-                	LOGGER.debug("Capturing value of header : DateOfBirth ");
-                	if(cell.getStringCellValue().isEmpty())
-                	{
-                		LOGGER.debug("Date of Birth column empty");
-                		flag = false;
-                		return "Date of Birth cannot be empty";
-                	}
-                	else
-                	{
-                		//LOGGER.debug("The date of birth is : " + cell.getStringCellValue());
-       
-                	     masterSheetImportDto.setDob(cell.getDateCellValue());
-                	}
+	                	LOGGER.debug("Capturing value of header : DateOfBirth ");
+	                	if(cell.getDateCellValue().toString().isEmpty())
+	                	{
+	                		LOGGER.debug("Date of Birth column empty");
+	                		flag = false;
+	                		return "Date of Birth cannot be empty";
+	                	}
+	                	else if(DateUtil.isCellDateFormatted(cell)) {
+	                			LOGGER.debug("Date is in date format");
+	                			LOGGER.debug("The date of birth is " + cell.getDateCellValue());
+	            				masterSheetImportDto.setDob(cell.getDateCellValue());
+	                		}
+	                	
                 }
                 else if(cell.getColumnIndex() == 7)
                 {
@@ -268,7 +268,7 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 12)
                 {
                 	LOGGER.debug("Capturing value of header : Mobile Number ");
-                	LOGGER.debug("Mobile Number is : " + cell.getNumericCellValue());
+                	LOGGER.debug("Mobile Number is : " + (long) cell.getNumericCellValue());
                 	masterSheetImportDto.setMobileNumber((long) cell.getNumericCellValue());
                 }
                 else if(cell.getColumnIndex() == 13)
@@ -304,15 +304,30 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 16)
                 {
                 	LOGGER.debug("Capturing the value of header : Aadhar Card");
-                	if(cell.getStringCellValue().isEmpty())
+                	LOGGER.debug("Calculating the number of digits in aadhar number");
+                	 
+                	long aadharNumber = (long) cell.getNumericCellValue();
+                	  int count = 0;
+                	  for(; aadharNumber != 0; aadharNumber/=10, ++count) {   
+                      }
+                	  
+                	  LOGGER.debug("The number of digits in aadhar number : " + count);
+                	
+                	  if(count<12)
                 	{
-                		LOGGER.error("Aadhar Card Number is null");
+                		LOGGER.error("Aadhar Card Number is not valid");
                 		flag = false;
-                		return "Please enter the aadhar card number";
+                		return "Please enter valid 12 digit adhar card number";
                 	}
+                	  else if(count>12)
+                	  {
+                		  LOGGER.error("The number of digits in aadhar card is : " + count);
+                		  flag = false;
+                		  return "Aadhar card number cannot be more than 12 digits";
+                	  }
                 	else
                 	{
-                		LOGGER.debug("The value of aadhar card number is : " + cell.getStringCellValue());
+                		LOGGER.debug("The value of aadhar card number is : " + cell.getNumericCellValue());
                 		masterSheetImportDto.setAdhaarCardNumber((long) cell.getNumericCellValue());
                 	}
                 }
@@ -356,7 +371,7 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 24)
                 {
                 	LOGGER.debug("Capturing value of header : Bank Account Number");
-                	masterSheetImportDto.setAccountNumber(cell.getStringCellValue());
+                	masterSheetImportDto.setAccountNumber((long)cell.getNumericCellValue());
                 }
 
                 else if(cell.getColumnIndex() == 25)
@@ -388,27 +403,27 @@ public class DataImportService {
                 {
                 	LOGGER.debug("Capturing value of header : Employment Type");
                 	masterSheetImportDto.setEmploymentType(cell.getStringCellValue());
-                }
-
-                //					switch (cell.getCellType())
-                //					{
-                //
-                //						case Cell.CELL_TYPE_STRING:
-                //							System.out.println("the string value is : " + cell.getStringCellValue());
-                //							break;
-                //						case Cell.CELL_TYPE_NUMERIC:
-                //							System.out.println("the numeric value is : " + cell.getNumericCellValue());
-                //							break;
-                //					}
-
-
-
+                }               
 
             }
+            
+            candidateDetails.add(masterSheetImportDto);
+            insertResult = dataImportDao.masterSheetImport(candidateDetails,batchId);
 
         }
 
-        return "Excel Sheet Read Successfully";
+        fileStream.close();
+        
+		if(insertResult < 1)
+		{
+			return "File cannot be uplaoded";
+		}
+		else
+		{
+			return "File Uploaded Successfully";
+		}
+		
+
     }
 
 

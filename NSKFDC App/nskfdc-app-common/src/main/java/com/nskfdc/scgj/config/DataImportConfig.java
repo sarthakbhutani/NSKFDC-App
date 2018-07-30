@@ -8,7 +8,24 @@ import org.springframework.stereotype.Component;
 public class DataImportConfig {
 
 	private String BatchDetails;
+	private String importCandidate;
+	private String importBankDetails;
+	
+	
+	
 
+	public String getImportCandidate() {
+		return importCandidate;
+	}
+	public void setImportCandidate(String importCandidate) {
+		this.importCandidate = importCandidate;
+	}
+	public String getShowbatchId() {
+		return showbatchId;
+	}
+	public void setShowbatchId(String showbatchId) {
+		this.showbatchId = showbatchId;
+	}
 	public String getBatchDetails() {
 		return BatchDetails;
 	}
@@ -113,6 +130,12 @@ public class DataImportConfig {
 	}
 	public void setUpdateBatchDetails(String updateBatchDetails) {
 		this.updateBatchDetails = updateBatchDetails;
+	}
+	public String getImportBankDetails() {
+		return importBankDetails;
+	}
+	public void setImportBankDetails(String importBankDetails) {
+		this.importBankDetails = importBankDetails;
 	}
 	
 	
