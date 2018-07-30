@@ -2,9 +2,11 @@ package com.nskfdc.scgj.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -16,11 +18,12 @@ import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
-import com.nskfdc.scgj.dto.GetBatchDetailsDto;
-import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
-import com.nskfdc.scgj.dto.FinancialDto;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
+import com.nskfdc.scgj.dto.FinancialDto;
+import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.MasterSheetImportDto;
+import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
 
 @Repository
@@ -32,7 +35,82 @@ public class DataImportDao extends AbstractTransactionalDao{
 	@Autowired
 	private DataImportConfig dataImportConfig;
 	
-	private static final Logger LOGGER= LoggerFactory.getLogger(DataImportDao.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataImportDao.class);
+	
+	/*-------- Excel Sheet Import Method --------------*/
+	
+	public Integer masterSheetImport(ArrayList<MasterSheetImportDto> candidateDetails,int batchId)
+	{
+		int i = 0;
+		LOGGER.debug("Received array list of all the columns read from excel sheet for batchId " + batchId);
+		LOGGER.debug("Creating an Iterator to iterate through the array list elements");
+	try
+		{
+			LOGGER.debug("Received array list of all the columns read from excel sheet for batchId " + batchId);
+			LOGGER.debug("Creating an Iterator to iterate through the array list elements");
+			
+			Iterator itr = candidateDetails.iterator();
+			LOGGER.debug("Creating hashmap of objects ");
+			Map<String,Object> parameters = new HashMap<>();
+			
+			Integer candidateInsertStatus = - 25;
+			while(itr.hasNext())
+			{
+				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+				parameters.put("salutation", candidateDetails.get(i).getSalutation());
+				parameters.put("firstName", candidateDetails.get(i).getFirstName());
+				parameters.put("lastName", candidateDetails.get(i).getLastName());
+				parameters.put("gender", candidateDetails.get(i).getGender());
+				parameters.put("mobileNumber", candidateDetails.get(i).getMobileNumber());
+				parameters.put("age", candidateDetails.get(i).getAge());
+				parameters.put("educationLevel",candidateDetails.get(i).getEducationQualification());
+				parameters.put("state", candidateDetails.get(i).getState());
+				parameters.put("district", candidateDetails.get(i).getDistrict());
+				parameters.put("aadharCardNumber", candidateDetails.get(i).getAdhaarCardNumber());
+				parameters.put("idProofType", candidateDetails.get(i).getIdProofType());
+				parameters.put("idProofNumber",candidateDetails.get(i).getIdProofNumber());
+				parameters.put("disabilityType", candidateDetails.get(i).getDisabilityType());
+				parameters.put("dob",candidateDetails.get(i).getDob());
+				parameters.put("guardianType", candidateDetails.get(i).getGuardianType());
+				parameters.put("firstNameFather", candidateDetails.get(i).getFirstNameFather());
+				parameters.put("lastNameFather", candidateDetails.get(i).getLastNameFather());
+				parameters.put("motherName", candidateDetails.get(i).getMotherName());
+				parameters.put("residentialAddress", candidateDetails.get(i).getResidentialAddress());
+				parameters.put("msId", candidateDetails.get(i).getMsId());
+				parameters.put("occupationType", candidateDetails.get(i).getOccupationType());
+				parameters.put("employmentType", candidateDetails.get(i).getEmploymentType());
+				parameters.put("workplaceAddress", candidateDetails.get(i).getWorkplaceAddress());
+				parameters.put("assessmentResult", candidateDetails.get(i).getAssessmentResult());
+				parameters.put("medicalExaminationConducted", candidateDetails.get(i).getMedicalExaminationConducted());
+				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
+				parameters.put("batchId", batchId);
+				
+				candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(), parameters);
+				if(candidateInsertStatus > 0)
+				{
+					Map<String,Object> params = new HashMap<>();
+					params.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+					params.put("ifscCode", candidateDetails.get(i).getIfscCode());
+					params.put("bankName", candidateDetails.get(i).getBankName());
+					params.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+					
+					return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(), params);
+					
+				}
+				i++;
+				
+			}
+			return candidateInsertStatus;
+		}
+		catch(Exception e)
+		{
+			LOGGER.debug("An Exception occured while inserting the sheet details into database : " + e);
+			return -25;
+		}
+			
+	}
+
+	/*--------------- Download Master Sheet Code -------------------- */
 	
 	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(String userEmail){
 		
