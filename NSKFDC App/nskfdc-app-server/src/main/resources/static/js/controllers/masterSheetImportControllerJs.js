@@ -159,13 +159,13 @@ var url = '/getBatchIdfortrainer';
     $scope.downloadMasterSheet = function(){
     	var url='/downloadFinalMasterSheet';  	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
-    	{
+    	{	
     		
     			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
     			var downloadURL = URL.createObjectURL(excelFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "Final Master Sheet.xls"
+    			link.download = "Batch Master Sheet.xlsx"
     			document.body.appendChild(link);
     			link.click();
     			
