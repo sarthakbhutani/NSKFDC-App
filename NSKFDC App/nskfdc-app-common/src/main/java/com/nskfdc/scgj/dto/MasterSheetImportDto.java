@@ -11,11 +11,11 @@ public class MasterSheetImportDto extends BaseDto{
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private long mobileNumber;
+	private long    mobileNumber;
 	private String educationQualification;
 	private String state;
 	private String district;
-	private long adhaarCardNumber;
+	private long  adhaarCardNumber;
 	private String idProofType;
 	private String idProofNumber;
 	private String disabilityType;
@@ -23,7 +23,7 @@ public class MasterSheetImportDto extends BaseDto{
 	private String bankName;
 	private String ifscCode;
 	private String workplaceAddress;
-	private String accountNumber;
+	private long accountNumber;
 	private String relationWithSKMS;
 	private Date dob;
 	private String guardianType;
@@ -143,10 +143,10 @@ public class MasterSheetImportDto extends BaseDto{
 	public void setWorkplaceAddress(String workplaceAddress) {
 		this.workplaceAddress = workplaceAddress;
 	}
-	public String getAccountNumber() {
+	public long getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(String accountNumber) {
+	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 	public String getRelationWithSKMS() {
@@ -227,7 +227,7 @@ public class MasterSheetImportDto extends BaseDto{
 	public MasterSheetImportDto(String enrollmentNumber, String salutation, String firstName, String lastName,
 			String gender, long mobileNumber, String educationQualification, String state, String district,
 			long adhaarCardNumber, String idProofType, String idProofNumber, String disabilityType, int age,
-			String bankName, String ifscCode, String workplaceAddress, String accountNumber, String relationWithSKMS,
+			String bankName, String ifscCode, String workplaceAddress, long accountNumber, String relationWithSKMS,
 			Date dob, String guardianType, String firstNameFather, String lastNameFather, String motherName,
 			String residentialAddress, String msId, String occupationType, String employmentType,
 			String assessmentResult, String medicalExaminationConducted) {
