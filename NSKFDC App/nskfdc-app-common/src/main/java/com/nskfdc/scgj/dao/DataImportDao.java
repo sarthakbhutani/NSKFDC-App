@@ -62,7 +62,6 @@ public class DataImportDao extends AbstractTransactionalDao{
 				parameters.put("lastName", candidateDetails.get(i).getLastName());
 				parameters.put("gender", candidateDetails.get(i).getGender());
 				parameters.put("mobileNumber", candidateDetails.get(i).getMobileNumber());
-				parameters.put("age", candidateDetails.get(i).getAge());
 				parameters.put("educationLevel",candidateDetails.get(i).getEducationQualification());
 				parameters.put("state", candidateDetails.get(i).getState());
 				parameters.put("district", candidateDetails.get(i).getDistrict());
@@ -70,6 +69,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 				parameters.put("idProofType", candidateDetails.get(i).getIdProofType());
 				parameters.put("idProofNumber",candidateDetails.get(i).getIdProofNumber());
 				parameters.put("disabilityType", candidateDetails.get(i).getDisabilityType());
+				parameters.put("age", candidateDetails.get(i).getAge());
 				parameters.put("dob",candidateDetails.get(i).getDob());
 				parameters.put("guardianType", candidateDetails.get(i).getGuardianType());
 				parameters.put("firstNameFather", candidateDetails.get(i).getFirstNameFather());
