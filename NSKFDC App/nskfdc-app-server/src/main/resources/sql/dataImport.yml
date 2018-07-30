@@ -1,47 +1,54 @@
 dataImport:
- 
  downloadMasterSheet: >
   select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on
-   trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails 
+   trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails
     WHERE userEmail= :userEmail);
-    
- ShowTotalTargets: >
-  SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail;
 
- ShowRemainingTargets: >
-  SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - (select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail) as remainingTarget;
-  
- ShowTargetAchieved: >
-  select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail;
-    
+ ShowTotalTargets: >
+  SELECT
+   CASE WHEN MONTH(curdate())>=4 THEN
+    concat(YEAR(curdate()),YEAR(curdate())+1)
+     ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year,targets from trainingpartnerdetails where userEmail = :userEmail and targetApprovalDate <= curdate();
+ 
+ #ShowRemainingTargets: >
+  #SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - (select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail) as remainingTarget;
+
+ #ShowTargetAchieved: >
+  #select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail;
+
  ShowFinancialYear: >
   SELECT
    CASE WHEN MONTH(curdate())>=4 THEN
           concat(YEAR(curdate()),YEAR(curdate())+1)
    ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
-   
+
  BatchDetails: >
   Select distinct centredetails.centreId,batchdetails.batchId,state,centreCity,municipality,selectionCommitteeDate,principalTrainerName,batchStartDate,
    batchEndDate,assessmentDate,medicalExamDate,employerName,employerContactNumber
     from nskfdc.centredetails INNER Join nskfdc.batchdetails On centredetails.userEmail=batchdetails.userEmail
      INNER JOIN nskfdc.candidate on batchdetails.batchId=candidate.batchId INNER JOIN nskfdc.employerdetails on candidate.enrollmentNumber=employerdetails.enrollmentNumber INNER JOIN User on employerdetails.enrollmentNumber=candidate.enrollmentNumber where User.userEmail= :userEmail and batchdetails.batchId= :batchId;
-     
+
  generateBatch: >
   insert into batchdetails(userEmail) values (:userEmail);
-  
- showbatchId: > 
+
+ showbatchId: >
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
-  
+
  checkCentreExistence: >
   SELECT EXISTS(SELECT 1 FROM centredetails WHERE centreId = :centreId);
-  
+
  insertCentreDetails: >
   insert into centredetails(centreId,centreState,centreCity,userEmail) values(:centreId,:state,:city,:userEmail);
-  
+
  updateCentreDetails: >
   UPDATE centredetails set centreState=:state, centreCity=:city where centreId=:centreId;
-  
+
  updateBatchDetails: >
   UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName where batchId=:batchId;
- 
-    
+
+ importCandidate: >
+  INSERT INTO nskfdc.candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,:guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS);
+  
+ importBankDetails: >
+   INSERT INTO nskfdc.bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
+  
