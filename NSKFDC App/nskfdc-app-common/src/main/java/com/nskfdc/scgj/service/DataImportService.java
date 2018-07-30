@@ -207,8 +207,8 @@ public class DataImportService {
                         flag = false;
                         return "Please enter the gender";
                     } else {
-                        LOGGER.debug("The value of salutation is : " + cell.getStringCellValue());
-                        masterSheetImportDto.setSalutation(cell.getStringCellValue());
+                        LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
+                        masterSheetImportDto.setGender(cell.getStringCellValue());
                     }
                 }
                 else if(cell.getColumnIndex() == 5)
@@ -356,7 +356,7 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 21)
                 {
                 	LOGGER.debug("Capturing value of header : Relation with SK/MS");
-                	masterSheetImportDto.setMsId(cell.getStringCellValue());
+                	masterSheetImportDto.setRelationWithSKMS(cell.getStringCellValue());
                 }
                 else if(cell.getColumnIndex() == 22)
                 {
