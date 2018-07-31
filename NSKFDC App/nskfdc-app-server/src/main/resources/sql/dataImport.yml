@@ -50,5 +50,14 @@ dataImport:
   INSERT INTO nskfdc.candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,:guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS);
   
  importBankDetails: >
-   INSERT INTO nskfdc.bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
+  INSERT INTO nskfdc.bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
+   
+ checkCandidateExistance: >
+  SELECT EXISTS(SELECT 1 FROM candidate WHERE candidate.enrollmentNumber = :enrollmentNumber);  
+  
+ updateExistingDetails: >
+  UPDATE nskfdc.candidate set salutation =:salutation,firstName =:firstName,lastName =:lastName,gender =:gender,mobileNumber=:mobileNumber,educationLevel=:educationLevel,state=:state,district=:district,aadharCardNumber=:aadharCardNumber,idProofType=:idProofType,idProofNumber=:idProofNumber,disabilityType=:disabilityType,age=:age,dob=:dob,guardianType=:guardianType,firstNameFather=:firstNameFather,lastNameFather=:lastNameFather,motherName=:motherName,residentialAddress=:residentialAddress,msId=:msId,occupationType=:occupationType,employmentType=:employmentType,workplaceAddress=:workplaceAddress,assessmentResult=:assessmentResult,medicalExamConducted=:medicalExaminationConducted,relationWithSKMS=:relationWithSKMS,batchId=:batchId where enrollmentNumber =:enrollmentNumber;
+  
+ updateExistingBankDetails: >
+  UPDATE nskfdc.bankdetails set accountNumber=:accountNumber,ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where enrollmentNumber =:enrollmentNumber;
   
