@@ -23,6 +23,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.ViewDocumentConfig;
+import com.nskfdc.scgj.dto.UploadDocumentsDto;
 import com.nskfdc.scgj.dto.ViewDocumentDto;
 
 @Repository
@@ -31,11 +32,12 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.class);
 	
 	private static final ViewDocumentRowmapper viewDocument_RowMapper = new ViewDocumentRowmapper();
+	private static final ViewDocumentSCGJNumberRowmapper viewDocumentSCGJNumber_RowMapper = new ViewDocumentSCGJNumberRowmapper();
 	
 	@Autowired
 	private ViewDocumentConfig viewDocumentConfig;
 		
-	public Collection< ViewDocumentDto>getViewTrainingPartnerDetailForBatchId(String tpName,  String batchId){
+	public Collection<ViewDocumentDto>getViewTrainingPartnerDetailForBatchId(String tpName,  String batchId){
 
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In viewDocumentDao, to get Training Partner Detail for Search");
@@ -44,13 +46,13 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
 		try {
 			
 			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get training partner details for Search"+viewDocumentConfig.getShowTrainingPartnerDetailsForDownload());
+			LOGGER.debug("Execute query to get training partner details for Search based on BatchId");
 			Map<String, Object> parameters = new HashMap<>();
 			
 			parameters.put("trainingPartnerName",tpName); //to be changed
 			parameters.put("batchId",batchId);
-			parameters.put("scgjBatchNumber",null);
-			return getJdbcTemplate().query(viewDocumentConfig.getShowTrainingPartnerDetailsForDownload(),parameters,  viewDocument_RowMapper);
+			
+			return getJdbcTemplate().query(viewDocumentConfig.getShowTrainingPartnerDetailsForDownloadusingBatchId(),parameters, viewDocument_RowMapper);
 			
 		} catch (Exception e) {
 			
@@ -72,11 +74,11 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("trainingPartnerName",tpName); //to be changed
 			parameters.put("scgjBatchNumber",scgjBtNumber);
-			parameters.put("batchId",null);
+			
 			LOGGER.debug("In try block");
 			LOGGER.debug("Execute query to get training partner details for Search");
-			LOGGER.debug("sql query"+viewDocumentConfig.getShowTrainingPartnerDetailsForDownload());
-			return getJdbcTemplate().query(viewDocumentConfig.getShowTrainingPartnerDetailsForDownload(),parameters, viewDocument_RowMapper);
+			LOGGER.debug("sql query based on SCGJBAtchNumber");
+			return getJdbcTemplate().query(viewDocumentConfig.getShowTrainingPartnerDetailsForDownloadusingBatchNumber(),parameters, viewDocumentSCGJNumber_RowMapper);
 			
 		} catch (Exception e) {
 			
@@ -87,7 +89,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
 		}
 		
 	}
-	                static StringBuilder s2 = new StringBuilder("");
+	            static StringBuilder s2 = new StringBuilder("");
             	private static class ViewDocumentRowmapper implements RowMapper<ViewDocumentDto> {
             		@Override
             		public ViewDocumentDto mapRow(ResultSet rs, int rownum)throws SQLException {
@@ -109,182 +111,365 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentDao.clas
             			String attendanceSheetPath =rs.getString("attendanceSheetPath");
             			
             			  
-            			//MANIPULATION FOR FILE 
-            			  LOGGER.debug("In rowmapper VARIABLE DECLARATION");
-            			  
-            			  if(finalBatchReport==1){
-            				  s2.append("Final Batch Report, ");
-            			  }
-            			  LOGGER.debug("In rowmapper BEFORE occupationCertificate VARIABLE DECLARATION");
-            			  LOGGER.debug("In rowmapper BEFORE IF");
-            			  if(occupationCertificate==1){
-            			  
-            				  s2.append("Occupation Certificate, ");
-            			  }
-            			  LOGGER.debug("In rowmapper IN IF");
-            			  if(minuteOfSelectionCommittee==1){
-            				  s2.append("Signed Minute Of Selection Committee, ");
-            			  }
-            			  if(dataSheetForSDDMS==1){
-            				  s2.append("Data Sheet For SDDMS, ");
-            			  }
-            			  if(dataSheetForNSKFC==1){
-            				  s2.append("Data Sheet For NSKFC, ");
-            			  }
-            			  if(attendanceSheet==1){
-            				  s2.append("Attendance Sheet, ");
-            			  }
-            			  LOGGER.debug("In rowmapperAFTER IF");
-            			  s2.setLength(s2.length() - 2);
-            			  LOGGER.debug("In rowmapper AFTER IF");
-            			  ArrayList<String> files = new ArrayList<String>();
-            			//  CreateZipFile createZipFile = new  CreateZipFile();
+          			  
+          			  if(s2!=null){
+          				  LOGGER.debug("STRING NOT NULL");
+          				  s2.setLength(0);
+          			  }else{
+          				  LOGGER.debug("STRING NULL");
+          			  }
+          			//MANIPULATION FOR FILE 
+          			  LOGGER.debug("In rowmapper VARIABLE DECLARATION");
+          			  
+          			  if(finalBatchReport==1){
+          				  s2.append("Final Batch Report, ");
+          			  }
+          			  LOGGER.debug("In rowmapper BEFORE occupationCertificate VARIABLE DECLARATION");
+          			  if(occupationCertificate==1){
+          			  
+          				  s2.append("Occupation Certificate, ");
+          			  }
+          			  if(minuteOfSelectionCommittee==1){
+          				  s2.append("Signed Minute Of Selection Committee, ");
+          			  }
+          			  if(dataSheetForSDDMS==1){
+          				  s2.append("Data Sheet For SDDMS, ");
+          			  }
+          			  if(dataSheetForNSKFC==1){
+          				  s2.append("Data Sheet For NSKFC, ");
+          			  }
+          			  if(attendanceSheet==1){
+          				  s2.append("Attendance Sheet, ");
+          			  }
+          			  
+          			  if(s2!=null){
+          			  s2.setLength(s2.length() - 2);
+          			  }
+          			  ArrayList<String> files = new ArrayList<String>();
           				
-            			  LOGGER.debug("In rowmapper AFTER ARRAYLIST");
+
+          				//condition to handle file paths::
+          			  if(finalBatchReportPath!=null){
+          				  files.add(finalBatchReportPath);
+          			  }
+          			  if(occupatioCertificatePath!=null){
+          				  files.add(occupatioCertificatePath);
+          			  }
+          			  if(minuteOfSelectionCommitteePath!=null){
+          				  files.add(minuteOfSelectionCommitteePath);
+          			  }
+          			  if(dataSheetForSDMSPath!=null){
+          				  files.add(dataSheetForSDMSPath);
+          			  }
+          			  if(dataSheetForNSKFCPath!=null){
+          				  files.add(dataSheetForNSKFCPath);
+          			  }
+          			  if(attendanceSheetPath!=null){
+          				  files.add(attendanceSheetPath);
+          			  }
+          			  LOGGER.debug("In try block  BEFORE ZIP data for Search Document Functionality");
           				
-            			  //condition to handle file paths::
-            			  if(finalBatchReportPath!=null){
-            				  files.add(finalBatchReportPath);
-            			  }
-            			  if(occupatioCertificatePath!=null){
-            				  files.add(occupatioCertificatePath);
-            			  }
-            			  if(minuteOfSelectionCommitteePath!=null){
-            				  files.add(minuteOfSelectionCommitteePath);
-            			  }
-            			  if(dataSheetForSDMSPath==null){ //change to not equal to::CONDITION
-            				  //files.add("D:/sarthak/testZIp/test1.txt");  //prototype
-            				  files.add(dataSheetForSDMSPath);
-            			  }
-            			  if(dataSheetForNSKFCPath!=null){
-            				  files.add(dataSheetForNSKFCPath);
-            			  }
-            			  if(attendanceSheetPath!=null){
-            				  files.add(attendanceSheetPath);
-            			  }
-            			  LOGGER.debug("In rowmapper AFTER IF 2");
-            			  LOGGER.debug("In try block  BEFORE ZIP data for Search Document Functionality");
-            			  String zipFileLink = "";
-            			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
-            			  LOGGER.debug("the current working directory is " + zipLocationRead);
-            			  if(s2!=null){
-            				   File folder = new File(zipLocationRead);
-            				  LOGGER.debug(zipLocationRead);
-            				  if(!folder.exists()){
-            					  if(folder.mkdirs() || folder.canWrite())
-            					  {
-            						  
-            						  
-            						  
-            						  
-            						  
-            						  
-            						  
-            						  LOGGER.debug("batch id ="+ batchId);
-            						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE. scgj bacth no:"+ trainingPartnerName);
+          			  String zipFileLink = " ";
 
-            						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+          			  if(s2!=null){
+          				  LOGGER.debug("STRING NOT NULL");
+          			  }else{
+          				  LOGGER.debug("STRING NULL");
+          			  }
+          			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
+       
+          			  LOGGER.debug("the current working directory is " + zipLocationRead);
+          			  if(s2!=null){
+          				   File folder = new File(zipLocationRead);
+          				  LOGGER.debug(zipLocationRead);
+          				  if(!folder.exists()){
+          					  if(folder.mkdirs() || folder.canWrite())
+          					  {
+          						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
+          						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+          						  FileOutputStream fileOutputStream = null;
+          					        ZipOutputStream zipOut = null;
+          					        FileInputStream fileInputStream = null;
+          					        try {
+          					        	LOGGER.debug("In try block of ZipFIleCreation");
+          					            fileOutputStream = new FileOutputStream(zipFileLink);
+          					            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
+          					            for(String filePath:files){
+          					                File input = new File(filePath);
+          					                fileInputStream = new FileInputStream(input);
+          					                ZipEntry zipEntry = new ZipEntry(input.getName());
+          					                LOGGER.debug("Zipping the file: "+input.getName());
+          					                zipOut.putNextEntry(zipEntry);
+          					                byte[] tmp = new byte[4*1024];
+          					                int size = 0;
+          					                while((size = fileInputStream.read(tmp)) != -1){
+          					                    zipOut.write(tmp, 0, size);
+          					                }
+          					                zipOut.flush();
+          					                fileInputStream.close();
+          					            }
+          					            zipOut.close();
+          					            LOGGER.debug("Done... Zipped the files...");   					            
+          					        } catch (FileNotFoundException e) {
+          					            // TODO Auto-generated catch block
+//          					            e.printStackTrace();
+          					            LOGGER.debug("File not found exception :" +e);
+          					        } catch (IOException e) {
+          					            // TODO Auto-generated catch block
+//          					            e.printStackTrace();
+          					        	LOGGER.debug("Input output exception :" +e);
+          					        } finally{
+          					            try{
+          					                if(fileOutputStream != null) fileOutputStream.close();
+          					            } catch(Exception ex){
+          					            	LOGGER.debug("Error"+ex);
+          					            }
+          					        }
+          					  }
+          					  else{
+          						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
+          					  }
+          					  
+          				  }else{
+          					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+          					  FileOutputStream fileOutputStream = null;
+          				        ZipOutputStream zipOut = null;
+          				        FileInputStream fileInputStream = null;
+          				        try {
+          				        	LOGGER.debug("In try block of ZipFIleCreation");
+          				            fileOutputStream = new FileOutputStream(zipFileLink);
+          				            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
+          				            for(String filePath:files){
+          				                File input = new File(filePath);
+          				                fileInputStream = new FileInputStream(input);
+          				                ZipEntry zipEntry = new ZipEntry(input.getName());
+          				                LOGGER.debug("Zipping the file: "+input.getName());
+          				                zipOut.putNextEntry(zipEntry);
+          				                byte[] tmp = new byte[4*1024];
+          				                int size = 0;
+          				                while((size = fileInputStream.read(tmp)) != -1){
+          				                    zipOut.write(tmp, 0, size);
+          				                }
+          				                zipOut.flush();
+          				                fileInputStream.close();
+          				            }
+          				            zipOut.close();
+          				            LOGGER.debug("Done... Zipped the files... at location:" + zipFileLink);
+          				        } catch (FileNotFoundException e) {
+          				            // TODO Auto-generated catch block
+          				            e.printStackTrace();
+          				        } catch (IOException e) {
+          				            // TODO Auto-generated catch block
+          				            e.printStackTrace();
+          				        } finally{
+          				            try{
+          				                if(fileOutputStream != null) fileOutputStream.close();
+          				            } catch(Exception ex){
+          				                 
+          				            }
+          				        }
+          				  }
+          				  
+          			
+          			return new ViewDocumentDto(batchId,trainingPartnerName,uplodedOn,zipFileLink);
 
-            						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-            						  
-            						  
-            						  
-            						  
-            						  //check above
-
-            						  FileOutputStream fileOutputStream = null;
-            					        ZipOutputStream zipOut = null;
-            					        FileInputStream fileInputStream = null;
-            					        try {
-            					        	LOGGER.debug("In try block of ZipFIleCreation");
-            					            fileOutputStream = new FileOutputStream(zipFileLink);
-            					            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
-            					            for(String filePath:files){
-            					                File input = new File(filePath);
-            					                fileInputStream = new FileInputStream(input);
-            					                ZipEntry zipEntry = new ZipEntry(input.getName());
-            					                LOGGER.debug("Zipping the file: "+input.getName());
-            					                zipOut.putNextEntry(zipEntry);
-            					                byte[] tmp = new byte[4*1024];
-            					                int size = 0;
-            					                while((size = fileInputStream.read(tmp)) != -1){
-            					                    zipOut.write(tmp, 0, size);
-            					                }
-            					                zipOut.flush();
-            					                fileInputStream.close();
-            					            }
-            					            zipOut.close();
-            					            LOGGER.debug("Done... Zipped the files...");
-            					        } catch (FileNotFoundException e) {
-            					            // TODO Auto-generated catch block
-            					            e.printStackTrace();
-            					        } catch (IOException e) {
-            					            // TODO Auto-generated catch block
-            					            e.printStackTrace();
-            					        } finally{
-            					            try{
-            					                if(fileOutputStream != null) fileOutputStream.close();
-            					            } catch(Exception ex){
-            					                 
-            					            }
-            					        }
-            					  }
-            					  else{
-            						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
-            					  }
-            					  
-            					  
-			  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-  					  LOGGER.debug("batch id ="+ batchId);
-            					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-
-            					  FileOutputStream fileOutputStream = null;
-            				        ZipOutputStream zipOut = null;
-            				        FileInputStream fileInputStream = null;
-            				        try {
-            				        	LOGGER.debug("In try block of ZipFIleCreation");
-            				            fileOutputStream = new FileOutputStream(zipFileLink);
-            				            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
-            				            for(String filePath:files){
-            				                File input = new File(filePath);
-            				                fileInputStream = new FileInputStream(input);
-            				                ZipEntry zipEntry = new ZipEntry(input.getName());
-            				                LOGGER.debug("Zipping the file: "+input.getName());
-            				                zipOut.putNextEntry(zipEntry);
-            				                byte[] tmp = new byte[4*1024];
-            				                int size = 0;
-            				                while((size = fileInputStream.read(tmp)) != -1){
-            				                    zipOut.write(tmp, 0, size);
-            				                }
-            				                zipOut.flush();
-            				                fileInputStream.close();
-            				            }
-            				            zipOut.close();
-            				            LOGGER.debug("Done... Zipped the files...");
-            				        } catch (FileNotFoundException e) {
-            				            // TODO Auto-generated catch block
-//            				            e.printStackTrace();
-            				        	LOGGER.debug("File not found exception :" +e);
-            				        } catch (IOException e) {
-            				            // TODO Auto-generated catch block
-//            				            e.printStackTrace();
-            				        	LOGGER.debug("Input output exception :" +e);
-            				        } finally{
-            				            try{
-            				                if(fileOutputStream != null) fileOutputStream.close();
-            				            } catch(Exception e){
-            				                 LOGGER.debug("Error"+e);
-            				            }
-            				        }
-            				  }
+          				}
+          			  else{
+          				  return null;
+          			  }
+          		}
+          	}
+            	
+            	
+            	
+            	private static class ViewDocumentSCGJNumberRowmapper implements RowMapper<ViewDocumentDto> {
+            		@Override
+            		public ViewDocumentDto mapRow(ResultSet rs, int rownum)throws SQLException {
             			
-            			return new ViewDocumentDto(batchId, trainingPartnerName,uplodedOn,null) ;
-            				}
-            			  else{
-            				  return null;
-            		}
-            		}
-            	
-            	
-         	}
-}
+            			Integer batchId = rs.getInt("batchId");
+            			String scgjBatchNumber= rs.getString("scgjBatchNumber");
+            			String trainingPartnerName = rs.getString("trainingPartnerName");
+            			String uplodedOn=rs.getString("dateUploaded");
+            			Integer finalBatchReport = rs.getInt("finalBatchReport");
+            			Integer occupationCertificate = rs.getInt("occupationCertificate");
+            			Integer minuteOfSelectionCommittee = rs.getInt("minuteOfSelectionCommittee");
+            			Integer dataSheetForSDDMS = rs.getInt("dataSheetForSDDMS");
+            			Integer dataSheetForNSKFC = rs.getInt("dataSheetForNSKFC");
+            			Integer attendanceSheet = rs.getInt("attendanceSheet");
+            			String finalBatchReportPath =rs.getString("finalBatchReportPath"); 
+            			String occupatioCertificatePath =rs.getString("occupatioCertificatePath"); 
+            			String minuteOfSelectionCommitteePath =rs.getString("minuteOfSelectionCommitteePath");
+            			String dataSheetForSDMSPath =rs.getString("dataSheetForSDMSPath"); 
+            			String dataSheetForNSKFCPath =rs.getString("dataSheetForNSKFCPath");
+            			String attendanceSheetPath =rs.getString("attendanceSheetPath");
+            			
+            			  
+          			  
+          			  if(s2!=null){
+          				  LOGGER.debug("STRING NOT NULL");
+          				  s2.setLength(0);
+          			  }else{
+          				  LOGGER.debug("STRING NULL");
+          			  }
+          			//MANIPULATION FOR FILE 
+          			  LOGGER.debug("In rowmapper VARIABLE DECLARATION");
+          			  
+          			  if(finalBatchReport==1){
+          				  s2.append("Final Batch Report, ");
+          			  }
+          			  LOGGER.debug("In rowmapper BEFORE occupationCertificate VARIABLE DECLARATION");
+          			  if(occupationCertificate==1){
+          			  
+          				  s2.append("Occupation Certificate, ");
+          			  }
+          			  if(minuteOfSelectionCommittee==1){
+          				  s2.append("Signed Minute Of Selection Committee, ");
+          			  }
+          			  if(dataSheetForSDDMS==1){
+          				  s2.append("Data Sheet For SDDMS, ");
+          			  }
+          			  if(dataSheetForNSKFC==1){
+          				  s2.append("Data Sheet For NSKFC, ");
+          			  }
+          			  if(attendanceSheet==1){
+          				  s2.append("Attendance Sheet, ");
+          			  }
+          			  
+          			  if(s2!=null){
+          			  s2.setLength(s2.length() - 2);
+          			  }
+          			  ArrayList<String> files = new ArrayList<String>();
+          				
+
+          				//condition to handle file paths::
+          			  if(finalBatchReportPath!=null){
+          				  files.add(finalBatchReportPath);
+          			  }
+          			  if(occupatioCertificatePath!=null){
+          				  files.add(occupatioCertificatePath);
+          			  }
+          			  if(minuteOfSelectionCommitteePath!=null){
+          				  files.add(minuteOfSelectionCommitteePath);
+          			  }
+          			  if(dataSheetForSDMSPath!=null){
+          				  files.add(dataSheetForSDMSPath);
+          			  }
+          			  if(dataSheetForNSKFCPath!=null){
+          				  files.add(dataSheetForNSKFCPath);
+          			  }
+          			  if(attendanceSheetPath!=null){
+          				  files.add(attendanceSheetPath);
+          			  }
+          			  LOGGER.debug("In try block  BEFORE ZIP data for Search Document Functionality");
+          				
+          			  String zipFileLink = " ";
+
+          			  if(s2!=null){
+          				  LOGGER.debug("STRING NOT NULL");
+          			  }else{
+          				  LOGGER.debug("STRING NULL");
+          			  }
+          			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
+       
+          			  LOGGER.debug("the current working directory is " + zipLocationRead);
+          			  if(s2!=null){
+          				   File folder = new File(zipLocationRead);
+          				  LOGGER.debug(zipLocationRead);
+          				  if(!folder.exists()){
+          					  if(folder.mkdirs() || folder.canWrite())
+          					  {
+          						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
+          						  zipFileLink = zipLocationRead +"/" + scgjBatchNumber + ".zip";
+          						  FileOutputStream fileOutputStream = null;
+          					        ZipOutputStream zipOut = null;
+          					        FileInputStream fileInputStream = null;
+          					        try {
+          					        	LOGGER.debug("In try block of ZipFIleCreation");
+          					            fileOutputStream = new FileOutputStream(zipFileLink);
+          					            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
+          					            for(String filePath:files){
+          					                File input = new File(filePath);
+          					                fileInputStream = new FileInputStream(input);
+          					                ZipEntry zipEntry = new ZipEntry(input.getName());
+          					                LOGGER.debug("Zipping the file: "+input.getName());
+          					                zipOut.putNextEntry(zipEntry);
+          					                byte[] tmp = new byte[4*1024];
+          					                int size = 0;
+          					                while((size = fileInputStream.read(tmp)) != -1){
+          					                    zipOut.write(tmp, 0, size);
+          					                }
+          					                zipOut.flush();
+          					                fileInputStream.close();
+          					            }
+          					            zipOut.close();
+          					            LOGGER.debug("Done... Zipped the files...");   					            
+          					        } catch (FileNotFoundException e) {
+          					            // TODO Auto-generated catch block
+//          					            e.printStackTrace();
+          					            LOGGER.debug("File not found exception :" +e);
+          					        } catch (IOException e) {
+          					            // TODO Auto-generated catch block
+//          					            e.printStackTrace();
+          					        	LOGGER.debug("Input output exception :" +e);
+          					        } finally{
+          					            try{
+          					                if(fileOutputStream != null) fileOutputStream.close();
+          					            } catch(Exception ex){
+          					            	LOGGER.debug("Error"+ex);
+          					            }
+          					        }
+          					  }
+          					  else{
+          						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
+          					  }
+          					  
+          				  }else{
+          					  zipFileLink = zipLocationRead +"/" + scgjBatchNumber + ".zip";
+          					  FileOutputStream fileOutputStream = null;
+          				        ZipOutputStream zipOut = null;
+          				        FileInputStream fileInputStream = null;
+          				        try {
+          				        	LOGGER.debug("In try block of ZipFIleCreation");
+          				            fileOutputStream = new FileOutputStream(zipFileLink);
+          				            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
+          				            for(String filePath:files){
+          				                File input = new File(filePath);
+          				                fileInputStream = new FileInputStream(input);
+          				                ZipEntry zipEntry = new ZipEntry(input.getName());
+          				                LOGGER.debug("Zipping the file: "+input.getName());
+          				                zipOut.putNextEntry(zipEntry);
+          				                byte[] tmp = new byte[4*1024];
+          				                int size = 0;
+          				                while((size = fileInputStream.read(tmp)) != -1){
+          				                    zipOut.write(tmp, 0, size);
+          				                }
+          				                zipOut.flush();
+          				                fileInputStream.close();
+          				            }
+          				            zipOut.close();
+          				            LOGGER.debug("Done... Zipped the files... at location:" + zipFileLink);
+          				        } catch (FileNotFoundException e) {
+          				            // TODO Auto-generated catch block
+          				            e.printStackTrace();
+          				        } catch (IOException e) {
+          				            // TODO Auto-generated catch block
+          				            e.printStackTrace();
+          				        } finally{
+          				            try{
+          				                if(fileOutputStream != null) fileOutputStream.close();
+          				            } catch(Exception ex){
+          				                 
+          				            }
+          				        }
+          				  }
+          				  
+          			
+          			return new ViewDocumentDto(batchId,trainingPartnerName,uplodedOn,zipFileLink);
+
+          				}
+          			  else{
+          				  return null;
+          			  }
+          		}
+          	}
+          }

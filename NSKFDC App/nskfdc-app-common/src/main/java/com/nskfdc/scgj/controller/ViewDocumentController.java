@@ -9,6 +9,7 @@ import java.util.Iterator;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,16 +82,17 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 				//CHANGE HERE!!!!!!
 				Collection<ViewDocumentDto> oldCollection = viewDocumentService.getViewTrainingPartnerDetailForBatchId(tpName,batchId);
 				LOGGER.debug("In try block ");
+
 					Iterator<ViewDocumentDto> iterator = oldCollection.iterator();
 					while (iterator.hasNext()) {
 					count++;
-					if(count==4)
-					zipFileLink = iterator.next().getZipFileLink();
+					if(count==3) {
+					zipFileLink = iterator.next().getZipFileLink();}
 					System.out.print(zipFileLink);
 					LOGGER.debug("After try" + zipFileLink +tpName + batchId);
 					}
 					
-					LOGGER.debug(zipFileLink+"batchID"+batchId);
+					LOGGER.debug("ZIP FILE LINK is"+zipFileLink+"batchID"+batchId);
 					System.out.print(zipFileLink);
 					LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:" + tpName + batchId);
 					File file = new File(zipFileLink);
@@ -108,6 +110,11 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 				    }
 				    outStream.flush();
 				    inStrem.close();
+				    if(file.delete())
+				    	LOGGER.debug("FILE DELETED SUCCESSFULLY");
+				    else
+				    	LOGGER.debug("NOT DELETED FILE");
+				    
 			}catch(Exception e) {
 				
 				LOGGER.debug("An error occurred" + e);
@@ -144,8 +151,7 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 					LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:" + tpName + scgjBtNumber);
 					File file = new File(zipFileLink);
 				    response.setContentType("application/zip");
-				    
-				    
+				   
 				    response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
 
 				    BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
@@ -157,6 +163,10 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 				    }
 				    outStream.flush();
 				    inStrem.close();
+				    if(file.delete())
+				    	LOGGER.debug("FILE DELETED SUCCESSFULLY");
+				    else
+				    	LOGGER.debug("NOT DELETED FILE");
 			}catch(Exception e) {
 				
 				LOGGER.debug("An error occurred" + e);

@@ -7,15 +7,25 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="viewDocumentQueryForSearchAndDownload",locations="classpath:sql/ViewDocument.yml")
 
 public class ViewDocumentConfig {
-	private String  showTrainingPartnerDetailsForDownload;
-
-	public String getShowTrainingPartnerDetailsForDownload(){
-		return showTrainingPartnerDetailsForDownload;
+	
+	private String showTrainingPartnerDetailsForDownloadusingBatchNumber;
+	private String showTrainingPartnerDetailsForDownloadusingBatchId;
+	
+	public String getShowTrainingPartnerDetailsForDownloadusingBatchNumber() {
+		return showTrainingPartnerDetailsForDownloadusingBatchNumber;
 	}
-
-	public void setShowTrainingPartnerDetailsForDownload(
-			String showTrainingPartnerDetailsForDownload) {
-		this.showTrainingPartnerDetailsForDownload = showTrainingPartnerDetailsForDownload;
+	public void setShowTrainingPartnerDetailsForDownloadusingBatchNumber(
+			String showTrainingPartnerDetailsForDownloadusingBatchNumber) {
+		this.showTrainingPartnerDetailsForDownloadusingBatchNumber = showTrainingPartnerDetailsForDownloadusingBatchNumber;
 	}
+	public String getShowTrainingPartnerDetailsForDownloadusingBatchId() {
+		return showTrainingPartnerDetailsForDownloadusingBatchId;
+	}
+	public void setShowTrainingPartnerDetailsForDownloadusingBatchId(
+			String showTrainingPartnerDetailsForDownloadusingBatchId) {
+		this.showTrainingPartnerDetailsForDownloadusingBatchId = showTrainingPartnerDetailsForDownloadusingBatchId;
+	}
+	
+	
 	
 	}
