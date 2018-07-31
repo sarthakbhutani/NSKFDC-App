@@ -27,7 +27,7 @@ public class UpdateTargetsController {
         return updateTargetsService.updateTargets(nsdcRegNumber,targets);
     }
 
-    @RequestMapping("getUpdatedTargets")
+    @RequestMapping("/getUpdatedTargets")
     public Collection<UpdateTargetsDto> updateTargetDetails(@RequestParam("nsdcRegNumber") String nsdcRegNumber)
     {
      LOGGER.debug("Request received from front end to get the updated targets of training partner with nsdc reg number: " + nsdcRegNumber);
