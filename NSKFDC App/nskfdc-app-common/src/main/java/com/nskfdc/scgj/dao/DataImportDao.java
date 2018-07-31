@@ -46,17 +46,25 @@ public class DataImportDao extends AbstractTransactionalDao{
 		LOGGER.debug("Creating an Iterator to iterate through the array list elements");
 	try
 		{
+		  
 			LOGGER.debug("Received array list of all the columns read from excel sheet for batchId " + batchId);
 			LOGGER.debug("Creating an Iterator to iterate through the array list elements");
-			
 			Iterator itr = candidateDetails.iterator();
 			LOGGER.debug("Creating hashmap of objects ");
 			Map<String,Object> parameters = new HashMap<>();
-			
-			Integer candidateInsertStatus = - 25;
-			while(itr.hasNext())
+			Integer checkCandidateExistence = - 50;
+     		Integer candidateInsertStatus   = - 25;
+     
+     		while(itr.hasNext())
 			{
-				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+     			// Checking existence of candidate in database using enrollment number
+     		   
+     			parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+				LOGGER.debug("Inserting batchId into hashmap to check existence of the user");
+				checkCandidateExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckCandidateExistance(), parameters, Integer.class);
+				
+     			// Put inside if and else block
+     			parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 				parameters.put("salutation", candidateDetails.get(i).getSalutation());
 				parameters.put("firstName", candidateDetails.get(i).getFirstName());
 				parameters.put("lastName", candidateDetails.get(i).getLastName());
@@ -85,21 +93,72 @@ public class DataImportDao extends AbstractTransactionalDao{
 				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
 				parameters.put("batchId", batchId);
 				
-				candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(), parameters);
-				if(candidateInsertStatus > 0)
+				if(checkCandidateExistence == 0)
 				{
-					Map<String,Object> params = new HashMap<>();
-					params.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-					params.put("ifscCode", candidateDetails.get(i).getIfscCode());
-					params.put("bankName", candidateDetails.get(i).getBankName());
-					params.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+					 //if the details of the candidate are not present in the database
 					
-					return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(), params);
+					try
+					{
+						candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(), parameters);
+					}
 					
+					catch(Exception e)
+					{
+						LOGGER.debug("An exception occured while inserting new values in the database" + e);
+						return null;
+					}
+					
+					if(candidateInsertStatus > 0)
+					{
+						
+						try
+						{
+							Map<String,Object> params = new HashMap<>();
+							params.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							params.put("ifscCode", candidateDetails.get(i).getIfscCode());
+							params.put("bankName", candidateDetails.get(i).getBankName());
+							params.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+							
+							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(), params);
+
+						}
+						catch(Exception e)
+						{
+							LOGGER.debug("An Exception occured at line 120 while inserting new enteries in database");
+							return null;
+						}
+												
+					}
+					
+				}
+				
+				else if(checkCandidateExistence == 1)
+				{
+					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(), parameters);
+					if(candidateInsertStatus > 0)
+					{
+						try
+						{
+							Map<String,Object> updatedParams = new HashMap<>();
+							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							updatedParams.put("ifscCode", candidateDetails.get(i).getIfscCode());
+							updatedParams.put("bankName", candidateDetails.get(i).getBankName());
+							updatedParams.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+							
+							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(), updatedParams);
+						}
+						catch(Exception e)
+						{
+							LOGGER.debug("An exception occured at line 148 while updating the details of candidates" + e);
+							return null;
+						}
+						
+					}
 				}
 				i++;
 				
 			}
+     		
 			return candidateInsertStatus;
 		}
 		catch(Exception e)

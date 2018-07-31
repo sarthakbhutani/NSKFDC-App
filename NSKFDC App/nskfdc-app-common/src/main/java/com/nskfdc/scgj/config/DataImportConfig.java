@@ -10,10 +10,30 @@ public class DataImportConfig {
 	private String BatchDetails;
 	private String importCandidate;
 	private String importBankDetails;
-	
+	private String checkCandidateExistance;
+	private String updateExistingDetails;
+	private String updateExistingBankDetails;
 	
 	
 
+	public String getUpdateExistingDetails() {
+		return updateExistingDetails;
+	}
+	public void setUpdateExistingDetails(String updateExistingDetails) {
+		this.updateExistingDetails = updateExistingDetails;
+	}
+	public String getUpdateExistingBankDetails() {
+		return updateExistingBankDetails;
+	}
+	public void setUpdateExistingBankDetails(String updateExistingBankDetails) {
+		this.updateExistingBankDetails = updateExistingBankDetails;
+	}
+	public String getCheckCandidateExistance() {
+		return checkCandidateExistance;
+	}
+	public void setCheckCandidateExistance(String checkCandidateExistance) {
+		this.checkCandidateExistance = checkCandidateExistance;
+	}
 	public String getImportCandidate() {
 		return importCandidate;
 	}
