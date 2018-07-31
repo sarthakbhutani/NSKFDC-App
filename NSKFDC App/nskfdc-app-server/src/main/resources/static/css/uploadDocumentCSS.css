@@ -1,11 +1,6 @@
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
-.file {
-  visibility: hidden;
-  position: absolute;
-}
-
 .r2d{
     
      padding: 2rem;
@@ -285,4 +280,8 @@ h3{
 }
 #error{
 	color:red;
+}
+#uploadButton
+{
+    max-width: 100%;
 }

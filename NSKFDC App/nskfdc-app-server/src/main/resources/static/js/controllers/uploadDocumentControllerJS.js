@@ -1,6 +1,6 @@
 var uploadDocument = angular.module('app');
 
-uploadDocument.controller("uploadDocumentController" , function($scope, $http){
+uploadDocument.controller("uploadDocumentController" , function($scope, $http, fileUpload){
 	
 	   $scope.ids = [];
 	    $http.get('/getBatchIdDet')
@@ -46,7 +46,27 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 	    
 	  };
 
-	  
+	     $scope.uploadFile = function(){
+
+	      	var file = $scope.dataImport.upload;
+	      	console.log('File selected is :'+file);
+	      	var myVar = $scope.myVar;
+	      	var myVar2 = $scope.myVar2;
+	      	var myVar3 = $scope.myVar3;
+
+	          var uploadUrl = "/uploadDocuments";
+	        var fileuploaded = fileUpload.uploadFileToUrl(file, uploadUrl, myVar, myVar2, myVar3);
+	        
+	        fileuploaded.then(function(response){
+	     	  console.log("I am here");
+	        },
+	        function(errorResponse){
+	     	   
+	        });
+
+	      };
+	      
+	    
 
 	  $scope.details = {
 		        enableGridMenus: false,
@@ -62,19 +82,19 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http){
 //		        enableColumnResizing: true,
 		        columnDefs: [
 		            {
-		            	name: 'batchId',  width: '17%', 
+		            	name: 'batchId',  width: '12%', 
 		                displayName: 'Batch ID'
 		            },
 		            {
-		            	name: 'dateUploaded', width: '17%', 
+		            	name: 'dateUploaded', width: '12%', 
 		            	displayName: 'Uploaded On'
 		            },
 		            {
-		                name: 'documentsUploaded', width: '117%', 
+		                name: 'documentsUploaded', width: '65%', 
 		                displayName: 'Documents Uploaded'
 		            },
 		             {
-		            	 name: 'zipFileLink',  width: '19%', 
+		            	 name: 'zipFileLink',  width: '12%', 
 		            	 displayName: 'Download Zip File', 
 //		            	 cellTemplate: '<a ng-href="file:///D:/sarthak/testZIp/test1.zip" target="_blank" download="test1.zip"><img src="images/rar_icon.png" alt="abc" class="pointer"></a>'
 		            	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.downloadZip()" class="pointer">'

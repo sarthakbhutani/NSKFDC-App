@@ -26,21 +26,27 @@
     <nav id="sidebar">
         <ul class="list-unstyled components">
             <li>
-                <a ng-click="page='dashboard'; alpha=true; beta=false; gamma=false" ng-class="{alpha : alpha}">
+                <a ng-click="page='dashboard'; alpha=true; beta=false; gamma=false; delta=false;" ng-class="{alpha : alpha}">
                     <img src="images/dashboard.png" alt="faq" width="10%">&nbsp;
                     Dashboard
                 </a>
             </li>
             <li>
-                <a ng-click="page='viewDocuments'; alpha=false; beta=true; gamma=false" ng-class="{beta: beta}">
+                <a ng-click="page='viewDocuments'; alpha=false; beta=true; gamma=false; delta=false;" ng-class="{beta: beta}">
                     <img src="images/view.png" alt="document" width="10%">&nbsp;
                     View Documents
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateCredentials'; alpha=false; beta=false; gamma=true" ng-class="{gamma: gamma}">
+                <a ng-click="page='generateCredentials'; alpha=false; beta=false; gamma=true; delta=false;" ng-class="{gamma: gamma}">
                     <img src="images/credential.png" alt="faq" width="10%">&nbsp;
                     Generate Credentials
+                </a>
+            </li>
+             <li>
+                <a ng-click="page='updateTarget'; alpha=false; beta=false; gamma=false; delta=true;" ng-class="{delta: delta}">
+                    <img src="images/target.png" alt="faq" width="10%">&nbsp;
+                    Update Target
                 </a>
             </li>
         </ul>
@@ -65,6 +71,10 @@
                 <div ng-switch-when="generateCredentials">
 
                     <div ng-include src="'partials/generateCredentials.html'"></div>
+                </div>
+                <div ng-switch-when="updateTarget">
+
+                    <div ng-include src="'partials/updateTarget.html'"></div>
                 </div>
                 
             </div>

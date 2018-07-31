@@ -4,8 +4,9 @@
 </head>
 <div ng-app="app">
 <div ng-controller="uploadDocumentController">
+
   <!--  <div id="content" class="container-fluid background">-->
-  <div id="content-div" class="container-fluid background">
+ <div id="content-div" class="container-fluid background">
     <div id="r1" class="row">
       <div  class="col-md-10">
         <h3 id="marginForUpload">Upload Documents</h3>
@@ -16,56 +17,66 @@
     </div>
     <div id="drop" class="row">
     <form name="uploadform">
-      <div id="r2d" class="col-md-5">
+      <div id="r2d" class="col-md-3">
         
           <select  class="form-control form-rounded placeholderfont" ng-model="myVar" id="d1" required>
             <option value=""disabled selected>Select document to be uploaded</option>
             <option value="oc">Occupation Certificate</option>
             <option value="msc">Signed Minutes of Selection Committee</option> 
-            <option value="dsnsk">Data Sheet forNSKFDC</option>
+            <option value="dsnsk">Data Sheet for NSKFDC</option>
             <option value="dssdms">Data Sheet for SDMS</option>
             <option value="fbr">Final Batch Report</option>
             <option value="as">Attendance Sheet</option>
           </select>
         
       </div>
-      <div id="r2t1" class="col-md-2" >
+      <div id="r2t1" class="col-md-1" >
        <select ng-click="getBatchId()"   ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
        <option value=""disabled selected>BatchID</option>
        </select>
        
        
       </div>
-      <div id="r2t2" class="col-md-2" ng-switch="myVar" >
+       <div id="r2t2" class="col-md-2" ng-switch="myVar" >
         <div ng-show="myVar=='fbr'" ng-model="myVar"> 
         
           <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="myVar3" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID">
        
         </div>
       </div>
-       <div id="r2b1" class="col-md-1 btn btn-default btn-file">
+                  <div class="col-md-4" id="uploadFileDiv">
+                    <div class="form-group">
+                        <input type="file" id="file" accept=".pdf, .xls" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" file-model="dataImport.upload" />
+                        <!-- <div class="input-group col-xs-12">
+                            <input type="text" id="fileName" ng-model="fileName" class="form-control input" data-error="Please enter .xls or .pdf file" placeholder="Upload .pdf or .xls File Here" required/>
+                            <span class="input-group-btn">
+                                        <button class="browse btn btn-primary input" id="browseButton" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+                                    </span>
+                        </div> -->
+                        <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please Select a .pdf or .xls file</span>
+                    </div>
+                </div>
+    
+       <!-- <div id="r2b1" class="col-md-1 btn btn-default btn-file">
         <input type="file" name="file" id="file" class="inputfile " ng-model=" browse" ng-disabled="uploadform.$invalid" />
 		<label for="file">Browse</label> 
-      </div>
-      <div id="r2b2" class="col-md-1">
-      
-        <button type="submit" class="btn btn-primary btn-upload" ng-click="submitForm1()" >Upload</button>
-        <span class="error_msg1" id="error_msg1"></span>
-      <span class="successful" id="successful"></span>
-      </div>
+      </div> -->
+      <div class="col-md-2" id="uploadButtonDiv">
+                    <button type="submit" class="form-control btn btn-info btn data-disable" id="uploadButton" ng-click="uploadFile()">Upload</button>
+                </div>
        </form>
     </div>
    
     <div class="row">
-      <!-- heading -->
+     <!-- heading --> 
       <div class="col-md-12 paddingrem">
         <h3 id="marginForSearch">Search Documents</h3>
       </div>
     </div>
-    <!-- form name -->
+    <!--  form name-->
     <form name="searchForDocByTp">
       <div class="row background ">
-        <!-- button & input/dropdown -->
+        <!--button & input/dropdown  -->
         <div class="col-md-4 col-sm-4">
           <input type="text" class="form-control form-roundedOne placeholderfont " placeholder="Enter Batch ID" name="batchID" ng-model="batchID" >
      <span id="searchBox"></span>
