@@ -83,15 +83,7 @@ public class DataImportConfig {
 		this.ShowTargetAchieved = ShowTargetAchieved;
 	}  
 
-	private String ShowRemainingTargets;
-
-	public String getShowRemainingTargets() {
-		return ShowRemainingTargets;
-	}
-
-	public void setShowRemainingTargets(String showRemainingTargets) {
-		ShowRemainingTargets = showRemainingTargets;
-	}
+	
              
 	private String ShowFinancialYear;
 

@@ -2,6 +2,7 @@ package com.nskfdc.scgj.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -216,11 +217,33 @@ public class DataImportDao extends AbstractTransactionalDao{
         
         
         try {
+        		String date1;
+        		String date2;
+        	    LocalDate date = LocalDate.now(); 
+        	    int year = date.getYear();
+        	    int month= date.getMonthValue();
+        	   
+        	
+        	if(month>=4) {
+        		LOGGER.debug("In if condition, when month is between April & December");
+        		date1= Integer.toString(year)+"-4-1";
+        		date2= Integer.toString(year+1)+"-3-31";
+        		
+        		
+        	}
+        	else {
+        		LOGGER.debug("In else condition, when month is between January & March");
+        		date1= Integer.toString(year-1)+"-4-1";
+        		date2= Integer.toString(year)+"-3-31";
+        		
+        	}
                
                LOGGER.debug("In try block");
                LOGGER.debug("Execute query to get TotalTargets");
                Map<String,Object> parameters = new HashMap<> ();
                parameters.put("userEmail", userEmail);
+               parameters.put("date1", date1);
+               parameters.put("date2", date2);
                return getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
                
         } 
@@ -228,136 +251,189 @@ public class DataImportDao extends AbstractTransactionalDao{
         {
                LOGGER.error("A data access exception has occured: " + de);
                LOGGER.error("Returning zero");
-               return null;
+               return 0;
         }
         
         catch(Exception e)
         {
                LOGGER.error("An Exception occured: " + e);
-               return null;
+               return 0;
         }
         
  }
 
-    	public Integer getTargetAchieved(String userEmail){
+    	
+    
+    
+    
+    public Integer getTargetAchieved(String userEmail){
  
-    			LOGGER.debug("Request received from Service");
-    			LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
+    	LOGGER.debug("Request received from Service");
+    	LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
  
- 
-    			try {
-        
-        LOGGER.debug("In try block");
-        LOGGER.debug("Execute query to get Target Achieved");
-        Map<String,Object> parameters = new HashMap<> ();
-        parameters.put("userEmail", userEmail);
-        return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
-        
- } 
- catch(DataAccessException de)
- {
-        LOGGER.error("A data access exception has occured: " + de);
-        LOGGER.error("Returning zero");
-        return null;
- }
- 
- catch(Exception e)
- {
-        LOGGER.error("An Exception occured: " + e);
-        return null;
- }
- 
-}
-public Integer getRemainingTargets(String userEmail){
- 
- LOGGER.debug("Request received from Service");
- LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
- 
- 
- try {
-        
-        LOGGER.debug("In try block");
-        LOGGER.debug("Execute query to get Target Achieved");
-        Map<String,Object> parameters = new HashMap<> ();
-        parameters.put("userEmail", userEmail);
-        return getJdbcTemplate().queryForObject(dataImportConfig.getShowRemainingTargets(),parameters,Integer.class);
-        
- } 
- catch(DataAccessException de)
- {
-        LOGGER.error("A data access exception has occured: " + de);
-        LOGGER.error("Returning zero");
-        return null;
- }
- 
- catch(Exception e)
- {
-        LOGGER.error("An Exception occured: " + e);
-        return null;
- }
- 
-}
-public Integer ShowFinancialYear(String userEmail){
- 
- LOGGER.debug("Request received from Service");
- LOGGER.debug("In Remaining Target Dao, to get FinancialYear");
- 
- 
- try {
-        
-        LOGGER.debug("In try block");
-        LOGGER.debug("Execute query to get FinancialYear");
-        Map<String,Object> parameters = new HashMap<> ();
-        parameters.put("userEmail", userEmail);
-        return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
-        
- } 
- catch(DataAccessException de)
- {
-        LOGGER.error("A data access exception has occured: " + de);
-        LOGGER.error("Returning zero");
-        return null;
- }
- 
- catch(Exception e)
- {
-        LOGGER.error("An Exception occured: " + e);
-        return null;
- }
- 
-}
-private static final FinancialRowmapper Financial_RowMapper = new FinancialRowmapper();
+    	try {
+    		String date1;
+    		String date2;
+    	    LocalDate date = LocalDate.now(); 
+    	    int year = date.getYear();
+    	    int month= date.getMonthValue();
+    	   
+    	
+    	if(month>=4) {
+    		LOGGER.debug("In if condition, when month is between April & December");
+    		date1= Integer.toString(year)+"-4-1";
+    		date2= Integer.toString(year+1)+"-3-31";
+    		
+    		
+    	}
+    	else {
+    		LOGGER.debug("In else condition, when month is between January & March");
+    		date1= Integer.toString(year-1)+"-4-1";
+    		date2= Integer.toString(year)+"-3-31";
+    		
+    	}
+           
+           LOGGER.debug("In try block");
+           LOGGER.debug("Execute query to get Achieved Targets");
+           Map<String,Object> parameters = new HashMap<> ();
+           parameters.put("userEmail", userEmail);
+           parameters.put("date1", date1);
+           parameters.put("date2", date2);
+           return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
+        } 
+		 catch(DataAccessException de)
+		 {
+		        LOGGER.error("A data access exception has occured: " + de);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+		 
+		 catch(Exception e)
+		 {
+		        LOGGER.error("An Exception occured: " + e);
+		        return 0;
+		 }
+		 
+    }
+		public Integer getRemainingTargets(String userEmail){
+		 
+		 LOGGER.debug("Request received from Service");
+		 LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
+		 
+		 
+		 try {
+     		String date1;
+     		String date2;
+     	    LocalDate date = LocalDate.now(); 
+     	    int year = date.getYear();
+     	    int month= date.getMonthValue();
+     	   
+     	
+     	if(month>=4) {
+     		LOGGER.debug("In if condition, when month is between April & December");
+     		date1= Integer.toString(year)+"-4-1";
+     		date2= Integer.toString(year+1)+"-3-31";
+     		
+     		
+     	}
+     	else {
+     		LOGGER.debug("In else condition, when month is between January & March");
+     		date1= Integer.toString(year-1)+"-4-1";
+     		date2= Integer.toString(year)+"-3-31";
+     		
+     	}
+            
+            LOGGER.debug("In try block");
+            LOGGER.debug("Execute query to get Remaining Targets");
+            Map<String,Object> parameters = new HashMap<> ();
+            parameters.put("userEmail", userEmail);
+            parameters.put("date1", date1);
+            parameters.put("date2", date2);
+		        int totalTargets = getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
+		        int acheivedTargets=getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
+		        return (totalTargets-acheivedTargets);
+		 } 
+		 catch(DataAccessException de)
+		 {
+		        LOGGER.error("A data access exception has occured: " + de);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+		 
+		 catch(Exception e)
+		 {
+		        LOGGER.error("An Exception occured: " + e);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+	
+	}
+		
+	
+	public Integer ShowFinancialYear(String userEmail){
+		 
+		 LOGGER.debug("Request received from Service");
+		 LOGGER.debug("In Remaining Target Dao, to get FinancialYear");
+		 
+		 
+		 try {
+		        
+		        LOGGER.debug("In try block");
+		        LOGGER.debug("Execute query to get FinancialYear");
+		        Map<String,Object> parameters = new HashMap<> ();
+		        parameters.put("userEmail", userEmail);
+		        return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
+		        
+		 } 
+		 catch(DataAccessException de)
+		 {
+		        LOGGER.error("A data access exception has occured: " + de);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+		 
+		 catch(Exception e)
+		 {
+		        LOGGER.error("An Exception occured: " + e);
+		        return 0;
+		 }
+		 
+	}
+
+	
+	private static final FinancialRowmapper Financial_RowMapper = new FinancialRowmapper();
 
 
-public Collection<FinancialDto> FinancialRowmapper(){
- try {
-        
- 
-        return getJdbcTemplate().query(dataImportConfig.getShowFinancialYear(), Financial_RowMapper);
-        
- } catch (Exception e) {
-        
-        
-        return null;
-        
- }
- 
-}
+	public Collection<FinancialDto> FinancialRowmapper(){
+		 try {
+		        
+		        return getJdbcTemplate().query(dataImportConfig.getShowFinancialYear(), Financial_RowMapper);
+		        
+		 } catch (Exception e) {
+		        
+		        
+		        return null;
+		        
+		 }
+	 
+	}
 
-private static class FinancialRowmapper implements RowMapper<FinancialDto>{
- 
- @Override
- public FinancialDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-        
-        String financialYear = rs.getString("FinancialDto");
-        
-        return new FinancialDto(financialYear);
-        
- }
-}
-private static final BatchDetailsRowmapper BatchDetailsRM = new BatchDetailsRowmapper();
+	private static class FinancialRowmapper implements RowMapper<FinancialDto>{
+	 
+		 @Override
+		 public FinancialDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+		        
+		        String financialYear = rs.getString("FinancialDto");
+		        
+		        return new FinancialDto(financialYear);
+		        
+		 }
+	}
 
-public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
+	private static final BatchDetailsRowmapper BatchDetailsRM = new BatchDetailsRowmapper();
+
+
+	public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In BatchDetailsDao to get details of batch with userEmail" + userEmail);
@@ -386,7 +462,8 @@ public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
 			
 		}
 
-private static class BatchDetailsRowmapper implements RowMapper<GetBatchDetailsDto>{
+
+	private static class BatchDetailsRowmapper implements RowMapper<GetBatchDetailsDto>{
 	
 	@Override
 	public GetBatchDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -411,8 +488,10 @@ private static class BatchDetailsRowmapper implements RowMapper<GetBatchDetailsD
 	
 }
 
-/*--------------------------Generate BatchId------------------------------------*/
-public Integer generateBatchDao(String userEmail){
+
+	/*--------------------------Generate BatchId------------------------------------*/
+
+	public Integer generateBatchDao(String userEmail){
 				
 		LOGGER.debug("Request received from Service");
 				
@@ -451,122 +530,121 @@ public Integer generateBatchDao(String userEmail){
 					
 			return -1;
 		}
-}
+	}
 
-private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
-
-
-public Collection<BatchDto> getBatchDetail(String userEmail){
-
-	try {
-		
-		Map<String,Object> parameters = new HashMap<>();
-		parameters.put("userEmail", userEmail);
+	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
 	
-		return getJdbcTemplate().query(dataImportConfig.getshowbatchId(),parameters, BATCH_RowMapper);
+	
+	public Collection<BatchDto> getBatchDetail(String userEmail){
+	
+		try {
+			
+			Map<String,Object> parameters = new HashMap<>();
+			parameters.put("userEmail", userEmail);
 		
-	} catch (Exception e) {
-		
-		LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
-		return null;
+			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(),parameters, BATCH_RowMapper);
+			
+		} catch (Exception e) {
+			
+			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
+			return null;
+			
+		}
 		
 	}
-	
-}
 
 
-private static class BATCHRowmapper implements RowMapper<BatchDto>{
-	
-	@Override
-	public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	private static class BATCHRowmapper implements RowMapper<BatchDto>{
 		
-		int batchId = rs.getInt("batchId");
-		return new BatchDto(batchId);
+		@Override
+		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+			
+			int batchId = rs.getInt("batchId");
+			return new BatchDto(batchId);
+			
+		}
+	}
+
+
+
+
+
+
+	/*-----------------------Submit the data in database for respective batch---------------*/
+	
+	public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
+		
+		try {
+			
+			LOGGER.debug("In Data Import Dao to check Existence of centre with respective centre Id");
+			Map<String, Object> batchDetailsParameters = new HashMap<>();
+			batchDetailsParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+			
+			return getJdbcTemplate().queryForObject(dataImportConfig.getCheckCentreExistence(), batchDetailsParameters, Integer.class);
+		} catch (Exception e) {
+			LOGGER.debug("Exception handled in checking the existence of centre"+e);
+			return -1;
+		}
+	}
+
+	public int insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+		try {
+			
+			LOGGER.debug("In Data Import Dao to insert the centre details");
+			Map<String, Object> centreParameters = new HashMap<>();
+			centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+			centreParameters.put("state", masterSheetSubmitDto.getState());
+			centreParameters.put("city", masterSheetSubmitDto.getCity());
+			centreParameters.put("userEmail", userEmail);
+			
+			return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
+		} catch (DataAccessException e) {
+			LOGGER.debug("Exception handled while inserting centre detail"+e);
+			return -1;
+		}
 		
 	}
-}
 
-
-
-
-
-
-/*-----------------------Submit the data in database for respective batch---------------*/
-
-public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
-	
-	try {
-		
-		LOGGER.debug("In Data Import Dao to check Existence of centre with respective centre Id");
-		Map<String, Object> batchDetailsParameters = new HashMap<>();
-		batchDetailsParameters.put("centreId", masterSheetSubmitDto.getCentreId());
-		
-		return getJdbcTemplate().queryForObject(dataImportConfig.getCheckCentreExistence(), batchDetailsParameters, Integer.class);
-	} catch (Exception e) {
-		LOGGER.debug("Exception handled in checking the existence of centre"+e);
-		return -1;
+	public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+		try {
+			LOGGER.debug("In Data Import Dao");
+			LOGGER.debug("To update the centre records");
+			Map<String, Object> centreParameters = new HashMap<>();
+			centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
+			centreParameters.put("state", masterSheetSubmitDto.getState());
+			centreParameters.put("city", masterSheetSubmitDto.getCity());
+			return getJdbcTemplate().update(dataImportConfig.getUpdateCentreDetails(), centreParameters);
+		} catch (DataAccessException e) {
+			LOGGER.debug("Exception Handled while updating the centre records"+e);
+			return -1;
+		}
 	}
-}
 
-public int insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
-	try {
+	public int updateBatchDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+		try {
+			LOGGER.debug("In Data Import Dao");
+			LOGGER.debug("To update the batch details");
+			Map<String, Object> batchParameters = new HashMap<>();
+			batchParameters.put("batchStartDate", masterSheetSubmitDto.getBatchStartDate());
+			batchParameters.put("batchEndDate", masterSheetSubmitDto.getBatchEndDate());
+			batchParameters.put("assessmentDate", masterSheetSubmitDto.getAssessmentDate());
+			batchParameters.put("medicalExamDate", masterSheetSubmitDto.getMedicalExamDate());
+			batchParameters.put("selectionCommitteeDate", masterSheetSubmitDto.getSelectionCommitteeDate());
+			batchParameters.put("municipality", masterSheetSubmitDto.getMunicipality());
+			batchParameters.put("wardType", masterSheetSubmitDto.getWardType());
+			batchParameters.put("wardNumber", masterSheetSubmitDto.getWardNumber());
+			batchParameters.put("trainerName", masterSheetSubmitDto.getTrainerName());
+			batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
+			
+			return getJdbcTemplate().update(dataImportConfig.getUpdateBatchDetails(), batchParameters);
+		} catch (DataAccessException e) {
+			LOGGER.debug("Exception handled while updating the batch details in DataImportDao"+e);
+			return -1;
+		}
 		
-		LOGGER.debug("In Data Import Dao to insert the centre details");
-		Map<String, Object> centreParameters = new HashMap<>();
-		centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
-		LOGGER.debug("Centre Id is-----------------------"+masterSheetSubmitDto.getCentreId());
-		centreParameters.put("state", masterSheetSubmitDto.getState());
-		centreParameters.put("city", masterSheetSubmitDto.getCity());
-		centreParameters.put("userEmail", userEmail);
 		
-		return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
-	} catch (DataAccessException e) {
-		LOGGER.debug("Exception handled while inserting centre detail"+e);
-		return -1;
-	}
-	
-}
-
-public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
-	try {
-		LOGGER.debug("In Data Import Dao");
-		LOGGER.debug("To update the centre records");
-		Map<String, Object> centreParameters = new HashMap<>();
-		centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
-		centreParameters.put("state", masterSheetSubmitDto.getState());
-		centreParameters.put("city", masterSheetSubmitDto.getCity());
-		return getJdbcTemplate().update(dataImportConfig.getUpdateCentreDetails(), centreParameters);
-	} catch (DataAccessException e) {
-		LOGGER.debug("Exception Handled while updating the centre records"+e);
-		return -1;
-	}
-}
-
-public int updateBatchDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
-	try {
-		LOGGER.debug("In Data Import Dao");
-		LOGGER.debug("To update the batch details");
-		Map<String, Object> batchParameters = new HashMap<>();
-		batchParameters.put("batchStartDate", masterSheetSubmitDto.getBatchStartDate());
-		batchParameters.put("batchEndDate", masterSheetSubmitDto.getBatchEndDate());
-		batchParameters.put("assessmentDate", masterSheetSubmitDto.getAssessmentDate());
-		batchParameters.put("medicalExamDate", masterSheetSubmitDto.getMedicalExamDate());
-		batchParameters.put("selectionCommitteeDate", masterSheetSubmitDto.getSelectionCommitteeDate());
-		batchParameters.put("municipality", masterSheetSubmitDto.getMunicipality());
-		batchParameters.put("wardType", masterSheetSubmitDto.getWardType());
-		batchParameters.put("wardNumber", masterSheetSubmitDto.getWardNumber());
-		batchParameters.put("trainerName", masterSheetSubmitDto.getTrainerName());
-		batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
 		
-		return getJdbcTemplate().update(dataImportConfig.getUpdateBatchDetails(), batchParameters);
-	} catch (DataAccessException e) {
-		LOGGER.debug("Exception handled while updating the batch details in DataImportDao"+e);
-		return -1;
 	}
-	
-	
-	
-}
 
 
 

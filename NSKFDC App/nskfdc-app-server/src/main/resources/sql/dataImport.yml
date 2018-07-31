@@ -5,17 +5,12 @@ dataImport:
     WHERE userEmail= :userEmail);
 
  ShowTotalTargets: >
-  SELECT
-   CASE WHEN MONTH(curdate())>=4 THEN
-    concat(YEAR(curdate()),YEAR(curdate())+1)
-     ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year,targets from trainingpartnerdetails where userEmail = :userEmail and targetApprovalDate <= curdate();
+  select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
+  
+ ShowTargetAchieved: >
+  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail=:userEmail) and (batchdetails.assessmentDate<curdate()) and (batchdetails.assessmentDate between :date1 and :date2);
  
- #ShowRemainingTargets: >
-  #SELECT ( SELECT targets FROM trainingpartnerdetails  where trainingpartnerdetails.userEmail = :userEmail) - (select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail) as remainingTarget;
-
- #ShowTargetAchieved: >
-  #select COUNT(candidate.enrollmentNumber) from candidate inner join batchdetails on candidate.batchId = batchdetails.batchId where batchdetails.batchEndDate<curdate() and batchdetails.userEmail= :userEmail;
-
+ 
  ShowFinancialYear: >
   SELECT
    CASE WHEN MONTH(curdate())>=4 THEN
