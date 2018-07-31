@@ -32,9 +32,9 @@ scgj.controller("viewDocumentController" , function($scope, $http){
         },
         
         {
-       	 name: 'tpDocUrl', 
-       	 displayName: 'Download Zip File', 
-       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.DownloadZipFileForBatchId()" ng-click="grid.appScope.DownloadZipFileForSearchscgjBtNumber()"class="pointer">'
+       	 name: 'zipFileLink', 
+       	 displayName: 'Download Zip File' ,
+       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.DownloadZipFileForBatchId()" class="pointer">'
         }
         
         
@@ -42,6 +42,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 };
   //Zip download start FileForBatchId
 	  $scope.DownloadZipFileForBatchId = function(){
+		  if($scope.scgjBtNumber==null){
 		  console.log("working in batch id");
 		  var url='/downloadZipFileForBatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId;
 		  console.log("This is downloading")
@@ -69,38 +70,37 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 				 $scope.zipSuccess='File downloaded successfully';
 				 }
 		  });
+	  }
+		  else{
+			  console.log("working working in SCGJbatch number");
+			  var url='/downloadZipFileForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber;
+			  console.log("This is downloading")
+			  $http.get(url, { responseType : 'arraybuffer' })
+			  .then(function(response){
+				  
+				  if(response.data.length==0){
+						 $scope.zipError='File not found';
+					 }
+					 else{
+					 $scope.uploadedDocument.data=response.data;
+					 $scope.zipSuccess='File downloaded successfully';
+					 }
+				  
+				  console.log("done"+$scope.scgjBtNumber + response.data);
+				  var zipFile = new Blob([response.data], { type : 'application/zip' })
+				  var downloadURL = URL.createObjectURL(zipFile);
+				  var link = document.createElement('a');
+				  //from here:: move the rest from up
+				  link.href = downloadURL;
+				  link.download =$scope.tpName +$scope.scgjBtNumber + '.zip';
+				  document.body.appendChild(link);
+				  link.click();
+			  });
+		  }
 	  };
 	  //zip download end
 
-	  //zip download start ForSearchscgjBtNumber
-	  $scope.DownloadZipFileForSearchscgjBtNumber = function(){
-		  
-		  console.log("working working in SCGJbatch number");
-		  var url='/downloadZipFileForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber;
-		  console.log("This is downloading")
-		  $http.get(url, { responseType : 'arraybuffer' })
-		  .then(function(response){
-			  
-			  if(response.data.length==0){
-					 $scope.zipError='File not found';
-				 }
-				 else{
-				 $scope.uploadedDocument.data=response.data;
-				 $scope.zipSuccess='File downloaded successfully';
-				 }
-			  
-			  console.log("done"+$scope.batchID + response.data);
-			  var zipFile = new Blob([response.data], { type : 'application/zip' })
-			  var downloadURL = URL.createObjectURL(zipFile);
-			  var link = document.createElement('a');
-			  //from here:: move the rest from up
-			  link.href = downloadURL;
-			  link.download =$scope.tpname +$scope.scgjBtNumber + '.zip';
-			  document.body.appendChild(link);
-			  link.click();
-		  });
-	  };
-	  /*zip download end*/
+	 
 
 
 $scope.searchDocuments=function(){
@@ -110,6 +110,7 @@ $scope.searchDocuments=function(){
 	
 	$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
 		.then(function (response) {	
+			console.log(response);
 			if(response.data.length==0){
 				 $scope.searchError='No Data Found';
 			 }
@@ -126,6 +127,7 @@ $scope.searchDocuments=function(){
 	});
     }
     else{
+    	console.log($scope.scgjBtNumber);
 	$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
 	.then(function (response) {
 		if(response.data.length==0){
