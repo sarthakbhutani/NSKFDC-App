@@ -11,5 +11,19 @@
 	padding:1%;
 }
 .searchTable{
-	
+	margin-top:1%;
+}
+.ui-grid-header-cell-primary-focus{
+	background-color:#0090af;
+	color: white;
+	text-align: center;
+}
+.ui-grid-cell-contents{
+    text-align: center;
+}
+#error{
+	color:red;
+}
+#success{
+	color:green;
 }

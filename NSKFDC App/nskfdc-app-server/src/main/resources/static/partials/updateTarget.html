@@ -2,7 +2,7 @@
     <link href="css/updateTarget.css" type="text/css" rel="stylesheet">
 </head>
 
-<div>
+<div ng-controller="updateTargetController">
 <div class="heading">
 <h3>Update Target</h3>
 </div>
@@ -10,25 +10,27 @@
 <div class="updateTarget">
 		    <div class="row updateTargetform">
                 <div class="col-sm-4" id="Registrationid">
-                    <input type="text" class="form-control form-rounded placeHolderFont" ng-model="nsdcRegNumber"placeholder="Enter NSDC Registration Number">
+                    <input type="text" class="form-control form-rounded placeHolderFont" ng-model="data.nsdcRegNumber"placeholder="Enter NSDC Registration Number">
                 </div>
-                <div class="col-sm-3" id="Registrationid">
-                    <input type="text" class="form-control form-rounded placeHolderFont" ng-model="target"placeholder="New Target">
+                <div class="col-sm-3" id="target">
+                    <input type="text" class="form-control form-rounded placeHolderFont" ng-model="data.targets"placeholder="New Target">
                 </div>
                 <div class="col-sm-2">
-                    <button type="button" class="btn btn-info" ng-click="search(nsdcRegNumber)" id="searchbutton">Update Target</button>
-                	<span ng-bind="searchError" id="error"></span>
+                    <button type="button" class="btn btn-info" ng-click="update()" id="updatebutton">Update Target</button>
+                	<span ng-bind="updateError" id="error"></span>
                 </div>
                 <div class="col-sm-3">
                 </div>
             </div>
+            <span ng-show="errorMessage" id="error"> An error occured while updating targets for training partner with NSDC Registration Number </span>
+                        <span ng-show="successMessage" id="success">You have Successfully Updated the Target!</span>
 </div>
 <div class="heading">
 <h3>Updated Targets</h3>
 </div>
 <div class="updatedTargets">
 		    <div class="row updatedTargetsform">
-                <div class="col-sm-5" id="Registrationid">
+                <div class="col-sm-5" id="nsdcNo">
                     <input type="text" class="form-control form-rounded placeHolderFont" ng-model="nsdcRegNumber"placeholder="NSDC Registration Number">
                 </div>
               <div class="col-sm-2">
