@@ -10,8 +10,17 @@ import org.springframework.stereotype.Component;
 public class ReadApplicationConstants {
 
     private String saveExcelSheetAtLocation;
+    private String saveDocumentsAtLocation;
 
-    public String getSaveExcelSheetAtLocation() {
+    public String getSaveDocumentsAtLocation() {
+		return saveDocumentsAtLocation;
+	}
+
+	public void setSaveDocumentsAtLocation(String saveDocumentsAtLocation) {
+		this.saveDocumentsAtLocation = saveDocumentsAtLocation;
+	}
+
+	public String getSaveExcelSheetAtLocation() {
         return saveExcelSheetAtLocation;
     }
 

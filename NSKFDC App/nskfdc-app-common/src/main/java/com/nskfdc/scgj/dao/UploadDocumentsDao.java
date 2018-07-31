@@ -25,7 +25,6 @@ import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.UploadDocumentConfig;
-
 import com.nskfdc.scgj.dto.BatchDto;
 
 //import com.nskfdc.scgj.config.UploadDocumentsConfig;
@@ -33,33 +32,29 @@ import com.nskfdc.scgj.dto.UploadDocumentsDto;
 
 @Repository	
 public class UploadDocumentsDao extends AbstractTransactionalDao{
-	static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsDao.class);   
+	
+	private static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsDao.class);   
+	
 	private static final UploadDocumentsRowMapper uploadDocumentsRowMapper = new UploadDocumentsRowMapper();
+	
 	private static final BATCHRowmapper getBatchIdRowMapper = new BATCHRowmapper();
+	
 	static StringBuilder s2 = new StringBuilder("");
 
 	@Autowired
 	private UploadDocumentConfig uploadDocumentsConfig;
 	
-//	@Autowired
-//	private static  ReadApplicationConstants readApplicationConstantsObj;
+	public int insertInUploadedDocument(Map<String , Object> recordToInsert)
+	{
+		LOGGER.debug("Request Received from Service");
+		LOGGER.debug("In DataImportCertificateDao - insertDataInUploadedDocument");
+		LOGGER.debug("Parameters Received from Service are  - HashMap 'recordToInsert'");
+				   	
+		LOGGER.debug("Inserting data in UploadedDocument Table");
+		LOGGER.debug("Executing SQL query and returning response");
+        return getJdbcTemplate().update(uploadDocumentsConfig.getInsertIntoUploadDocument(), recordToInsert);	
+	}
 	
-	public void saveUploadedDocument() {
-		//write Logger here
-		
-				try {
-					
-					//write Logger here 
-					//write code here and change the return type
-				}
-				catch(Exception e) {
-					
-					// write Logger
-					// return null;
-				}
-				
-				
-			}
 	
 	
 	public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail) {

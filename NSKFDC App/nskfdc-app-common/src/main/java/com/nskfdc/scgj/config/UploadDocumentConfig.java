@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix="uploadDocuments",locations="classpath:sql/uploadDocuments.yml")
 public class UploadDocumentConfig {
+	
+	private String insertIntoUploadDocument;
+	
 	private String uploadDocumentsQuery;
 
 	public String getUploadDocumentsQuery() {
@@ -38,6 +41,14 @@ public class UploadDocumentConfig {
 	}
 	public void setShowScgjDetails(String showScgjDetails) {
 		this.showScgjDetails = showScgjDetails;
+	}
+
+	public String getInsertIntoUploadDocument() {
+		return insertIntoUploadDocument;
+	}
+
+	public void setInsertIntoUploadDocument(String insertIntoUploadDocument) {
+		this.insertIntoUploadDocument = insertIntoUploadDocument;
 	}
 	
 }
