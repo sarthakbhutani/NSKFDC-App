@@ -39,7 +39,7 @@ dataImport:
   UPDATE centredetails set centreState=:state, centreCity=:city where centreId=:centreId;
 
  updateBatchDetails: >
-  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName where batchId=:batchId;
+  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName,centreId=:centreId where batchId=:batchId;
 
  importCandidate: >
   INSERT INTO nskfdc.candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,:guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS);
