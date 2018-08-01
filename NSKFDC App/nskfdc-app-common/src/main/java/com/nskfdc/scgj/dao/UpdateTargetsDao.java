@@ -31,15 +31,33 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
         try {
 
             LOGGER.debug("Request received from service to update targets of training partner with NSDC Reg. Number : " + nsdcRegNumber);
-            LOGGER.debug("The new target to be updated is : " + targets);
-            LOGGER.debug("Creating hashmap of objects");
-            Map<String, Object> parameters = new HashMap<>();
-            LOGGER.debug("Inserting values into the hashmap");
-            parameters.put("nsdcRegNumber", nsdcRegNumber);
-            parameters.put("updatedTargets", targets);
+            
+            LOGGER.debug("Checking existence of user with NSDC Registration Number : " + nsdcRegNumber);
+            
+            Integer existenceStatus = checkExistenceStatus(nsdcRegNumber);
+            LOGGER.debug("The status of existence of user is : " + existenceStatus);
+            
+            
+            if(existenceStatus == 1)
+            {
+            	LOGGER.debug("User with NSDC Reg. Number :" + nsdcRegNumber + "exists");
+            	  LOGGER.debug("The new target to be updated is : " + targets);
+                  LOGGER.debug("Creating hashmap of objects");
+                  Map<String, Object> parameters = new HashMap<>();
+                  LOGGER.debug("Inserting values into the hashmap");
+                  parameters.put("nsdcRegNumber", nsdcRegNumber);
+                  parameters.put("updatedTargets", targets);
+                  return getJdbcTemplate().update(updateTargetsConfig.getUpdateTargets(), parameters);
 
-            return getJdbcTemplate().update(updateTargetsConfig.getUpdateTargets(), parameters);
-
+            }
+            
+            else
+            {
+            	LOGGER.debug("User with NSDC Reg. Number does not exist in the database");
+            	return existenceStatus;
+            }
+            
+          
         }
 
         catch(Exception e )
@@ -52,7 +70,27 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 
     }
 
-    public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
+    private Integer checkExistenceStatus(String nsdcRegNumber) {
+		
+    	LOGGER.debug("In method checkExistenceStatus to check existence of user with NSDC Reg. Number : " + nsdcRegNumber);
+    	
+    	Map<String,Object>existenceParam = new HashMap<>();
+    	LOGGER.debug("Hashmap of object created");
+    	existenceParam.put("nsdcRegNumber", nsdcRegNumber);
+    	try
+    	{
+    		LOGGER.debug("Inserting params into JDBC Template to check the existence of user");
+    		return getJdbcTemplate().queryForObject(updateTargetsConfig.getCheckUserExistence(),existenceParam,Integer.class);
+    	}
+    	catch(Exception e)
+    	{
+    		LOGGER.error("An exception occured while checking the existence of user with nsdcRegNumber : " +nsdcRegNumber);
+    		return -30;
+    	}
+	
+	}
+
+	public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
         LOGGER.debug("Request received from service to get details of updated target for training partner");
         try
         {
@@ -63,7 +101,7 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
         }
         catch(Exception e)
         {
-
+        	LOGGER.error("An Exception occured while fetching the details for the updated targets " + e);
             return null;
         }
 
