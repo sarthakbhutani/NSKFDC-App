@@ -21,7 +21,7 @@
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'ceo@sscgj.in','ceo1955','scgj',NULL),(2,'kamal@sscgj.in','kamal123#','scgj',NULL),(3,'prashant@sscgj.in','prashant123#','scgj',NULL),(4,'arpit@sscgj.in','arpit123#',NULL,NULL);
+INSERT INTO `user` VALUES (1,'ceo@sscgj.in','ceo1955','scgj',NULL),(2,'kamal@sscgj.in','kamal123#','scgj',NULL),(3,'prashant@sscgj.in','prashant123#','scgj',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
