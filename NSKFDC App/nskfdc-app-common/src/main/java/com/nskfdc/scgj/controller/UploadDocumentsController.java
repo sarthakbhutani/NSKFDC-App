@@ -34,16 +34,50 @@ public class UploadDocumentsController {
 	
 	@Autowired
 	private SessionUserUtility sessionUserUtility;
+	
+	int status = -25;
 
+	
+	/**
+	 * 
+	 * @param batchId
+	 * @param scgjBatchNumber
+	 * @param file
+	 * @param fileType
+	 * @return
+	 */
 
-	@RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
-	public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("batchId") String batchId,String fileType)
-	{
-		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
-		LOGGER.debug("Sending request to service to upload file");
-		return uploadDocumentService.uploadFileService(file,batchId,fileType,userEmail);
-		
-	}
+	 @RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
+	 public String checkBatchNumberandBatchId(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber, @RequestParam("file") MultipartFile file,String fileType ) {
+	 		
+	 		LOGGER.debug("Request received from frontend");
+	 		LOGGER.debug("In Scgj Controller");
+	 		
+	 		try {
+	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+	 			
+	 			LOGGER.debug("In try block of Controller to check if the batch Id and SCGJ batch number matches");
+	 			
+	 			int status = uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);
+	 			
+	 			if(status == 1)
+	 			{
+	 				LOGGER.debug("The SCGJ batch number and batch id matched");
+	 				LOGGER.debug("Sending request to service to upload the folder");
+	 				return uploadDocumentService.uploadFileService(file, batchId, fileType, userEmail);
+	 			}
+	 			else
+	 			{
+	 				LOGGER.debug("The BatchId and SCGJBatchNumber does not match");
+	 				return "SCGJ Batch Number against the Batch ID does not match";
+	 			}
+	 			
+	 		}catch(Exception e) {
+	 			LOGGER.error("In catch block of Scgj Controller"+e);
+	 			return "File cannot be uploaded";
+	 		}
+	 		
+	 	}
 	
 	
 	
@@ -143,30 +177,7 @@ try {
 			 return null;
 		 }
 	}
-	/**
-	 * Method to check if batch id 
-	 * @param batchId
-	 * @param scgjBatchNumber
-	 * @return
-	 */
-	 @RequestMapping("/getScgjDetails")
-	 public int scgjDetails(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber) {
-	 		
-	 		LOGGER.debug("Request received from frontend");
-	 		LOGGER.debug("In Scgj Controller");
-	 		
-	 		try {
-	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
-	 			
-	 			LOGGER.debug("In try block of Scgj Controller");
-	 			return uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);	
-	 			
-	 		}catch(Exception e) {
-	 			LOGGER.error("In catch block of Scgj Controller"+e);
-	 			return 0;
-	 		}
-	 		
-	 	}
+	
 	 /**
 	  * 
 	  * @param batchId
