@@ -454,8 +454,8 @@ public class DataImportDao extends AbstractTransactionalDao{
 				
 			}
 			catch(Exception e) {
-				LOGGER.error("In catch block of BatchDetailsDao");
-				LOGGER.error("Error occured in BatchDetailsDao with exception" + e);
+				e.printStackTrace();
+				LOGGER.error("Error occured while finding data for batch" + e);
 				return null;
 			}
 			

@@ -68,7 +68,7 @@ public class DataImportController {
 	
 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();		
 			LOGGER.debug("Email is " + userEmail);
-			LOGGER.debug("In try block ");
+			LOGGER.debug("Trying to get details for the corresponding batch id:"+ batchId+ "to display on master import sheet tab");
 			LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
 			return  dataImportService.BatchDetails(userEmail,batchId);
 			
