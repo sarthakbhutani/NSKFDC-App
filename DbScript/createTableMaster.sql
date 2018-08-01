@@ -136,7 +136,7 @@ CREATE TABLE `trainingpartnerdetails` (
   CONSTRAINT `trainingPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 CREATE TABLE `uploadeddocuments` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `finalBatchReport` tinyint(1) DEFAULT NULL,
   `occupationCertificate` tinyint(1) DEFAULT NULL,
   `minuteOfSelectionCommittee` tinyint(1) DEFAULT NULL,
@@ -157,4 +157,4 @@ CREATE TABLE `uploadeddocuments` (
   KEY `fk_1` (`batchId`),
   CONSTRAINT `fk_1` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`),
   CONSTRAINT `tpmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+) 
