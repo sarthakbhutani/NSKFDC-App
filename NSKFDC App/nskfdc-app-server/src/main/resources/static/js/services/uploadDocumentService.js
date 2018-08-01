@@ -1,16 +1,16 @@
-uploadDocument.service('fileUpload', ['$http', function ($http) {
-    this.uploadFileToUrl = function (file, uploadUrl,myVar, myVar2, myVar3 ) {
+uploadDocument.service('uploadFile', ['$http', function ($http) {
+    this.uploadFileToUrl = function (file, uploadUrl,fileType, batchId, scgjBatchNumber ) {
         var fd = new FormData();
         console.log('File is :'+file);
         var file = document.getElementById('file').files[0];
-        fd.append('fileType', myVar);
+        fd.append('fileType', fileType);
         fd.append('file', file);
-        fd.append('batchId', myVar2);
-        fd.append('batchNo', myVar3);
+        fd.append('batchId', batchId);
+        fd.append('scgjBatchNumber', scgjBatchNumber);
         //fd.append('file',  document.getElementById('csvFile').files[0]);
-        console.log('myVar:---'+myVar);
-        console.log('myVar2:---'+myVar2);
-        console.log('myVar3:---'+myVar3);
+        console.log('fileType:---'+fileType);
+        console.log('batchId:---'+batchId);
+        console.log('scgjBatchNumber:---'+scgjBatchNumber);
         console.log('FILE-----'+file);
                 
         $http({
@@ -28,16 +28,16 @@ uploadDocument.service('fileUpload', ['$http', function ($http) {
             }
         }).then(function(response) {
             
-        	//console.log("response of success -----");
-        	//console.log(thisIsResponse);
-        	responseOfUpload(thisIsResponse);
-        	 
-            return response.data;
-           
-            
-        }, function errorCallback(response) {
-        	//console.log("Error in receiving response from backend------" +response);
-            //console.log('Error: '+response);
+//        	//console.log("response of success -----");
+//        	//console.log(thisIsResponse);
+//        	responseOfUpload(thisIsResponse);
+//        	 
+//            return response.data;
+//           
+//            
+//        }, function errorCallback(response) {
+//        	//console.log("Error in receiving response from backend------" +response);
+//            //console.log('Error: '+response);
             return response.data;
          });
         

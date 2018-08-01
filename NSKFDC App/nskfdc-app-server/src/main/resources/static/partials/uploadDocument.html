@@ -19,34 +19,44 @@
     <form name="uploadform">
       <div id="r2d" class="col-md-3">
         
-          <select  class="form-control form-rounded placeholderfont" ng-model="myVar" id="d1" required>
+          <select  class="form-control form-rounded placeholderfont" ng-model="fileType" id="d1" required>
             <option value=""disabled selected>Select document to be uploaded</option>
-            <option value="oc">Occupation Certificate</option>
-            <option value="msc">Signed Minutes of Selection Committee</option> 
-            <option value="dsnsk">Data Sheet for NSKFDC</option>
-            <option value="dssdms">Data Sheet for SDMS</option>
-            <option value="fbr">Final Batch Report</option>
-            <option value="as">Attendance Sheet</option>
+            <option value="occupationCertificate">Occupation Certificate</option>
+            <option value="selectionCommitteeMeeting">Signed Minutes of Selection Committee</option> 
+            <option value="NSKFDCSheet">Data Sheet for NSKFDC</option>
+            <option value="SDMSSheet">Data Sheet for SDMS</option>
+            <option value="finalBatchReport">Final Batch Report</option>
+            <option value="attendanceSheet">Attendance Sheet</option>
           </select>
         
       </div>
-      <div id="r2t1" class="col-md-1" >
-       <select ng-click="getBatchId()"   ng-model="myVar2"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
+      <div id="r2t1" class="col-md-2" >
+       <select ng-click="getBatchId()"   ng-model="batchId"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
        <option value=""disabled selected>BatchID</option>
        </select>
        
        
       </div>
-       <div id="r2t2" class="col-md-2" ng-switch="myVar" >
-        <div ng-show="myVar=='fbr'" ng-model="myVar"> 
+       <div id="r2t2" class="col-md-2" ng-switch="fileType" >
+        <div ng-show="fileType=='finalBatchReport'" ng-model="fileType"> 
         
-          <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="myVar3" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch ID">
+          <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="scgjBatchNumber" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch Number">
        
         </div>
       </div>
-                  <div class="col-md-4" id="uploadFileDiv">
+                  <div class="col-md-3 btn-wrapper" id="uploadFileDiv">
                     <div class="form-group">
-                        <input type="file" id="file" accept=".pdf, .xls" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" file-model="dataImport.upload" />
+             <span >
+                  <input type="text" name="file_name" id="file_name" class="form-control"></span>
+                 <span>
+                 <button type="button" class="btn btn-primary" ng-disabled="uploadform.$invalid">Browse</button></span>
+                 <input type="file" id="file" accept=".pdf, .xls" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
+
+
+             
+                    
+                    
+                        
                         <!-- <div class="input-group col-xs-12">
                             <input type="text" id="fileName" ng-model="fileName" class="form-control input" data-error="Please enter .xls or .pdf file" placeholder="Upload .pdf or .xls File Here" required/>
                             <span class="input-group-btn">
@@ -55,7 +65,7 @@
                         </div> -->
                         <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please Select a .pdf or .xls file</span>
                     </div>
-                </div>
+                    </div>
     
        <!-- <div id="r2b1" class="col-md-1 btn btn-default btn-file">
         <input type="file" name="file" id="file" class="inputfile " ng-model=" browse" ng-disabled="uploadform.$invalid" />

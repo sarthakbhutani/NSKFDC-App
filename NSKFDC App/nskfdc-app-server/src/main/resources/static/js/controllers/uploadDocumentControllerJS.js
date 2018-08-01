@@ -1,6 +1,6 @@
 var uploadDocument = angular.module('app');
 
-uploadDocument.controller("uploadDocumentController" , function($scope, $http, fileUpload){
+uploadDocument.controller("uploadDocumentController" , function($scope, $http, uploadFile){
 	
 	   $scope.ids = [];
 	    $http.get('/getBatchIdDet')
@@ -50,19 +50,19 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, f
 
 	      	var file = $scope.dataImport.upload;
 	      	console.log('File selected is :'+file);
-	      	var myVar = $scope.myVar;
-	      	var myVar2 = $scope.myVar2;
-	      	var myVar3 = $scope.myVar3;
+	      	var fileType = $scope.fileType;
+	      	var batchId = $scope.batchId;
+	      	var scgjBatchNumber = $scope.scgjBatchNumber;
 
-	          var uploadUrl = "/uploadDocuments";
-	        var fileuploaded = fileUpload.uploadFileToUrl(file, uploadUrl, myVar, myVar2, myVar3);
+	          var uploadUrl = "/uploadFile";
+	        var uploadedFile = uploadFile.uploadFileToUrl(file, uploadUrl, fileType, batchId, scgjBatchNumber);
 	        
-	        fileuploaded.then(function(response){
+	      /*  uploadFileed.then(function(response){
 	     	  console.log("I am here");
 	        },
 	        function(errorResponse){
 	     	   
-	        });
+	        });*/
 
 	      };
 	      
@@ -139,8 +139,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, f
 		  
 		  
 		  $scope.submitForm1=function(){
-				if($scope.myVar=='fbr'){
-					$http.get("/getScgjDetails?batchId="+$scope.myVar2+"&scgjBatchNumber="+$scope.myVar3)
+				if($scope.fileType=='fbr'){
+					$http.get("/getScgjDetails?batchId="+$scope.batchId+"&scgjBatchNumber="+$scope.scgjBatchNumber)
 					.then(function (response){
 						console.log("working5");
 						$scope.status= response.data;
@@ -164,8 +164,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, f
 					});
 				}
 				else{
-					if($scope.myVar!=null){
-					$http.get("/getBatchDetails?batchId="+$scope.myVar2)
+					if($scope.fileType!=null){
+					$http.get("/getBatchDetails?batchId="+$scope.batchId)
 					.then(function (response){
 						//console.log("working5");
 						$scope.status= response.data;
