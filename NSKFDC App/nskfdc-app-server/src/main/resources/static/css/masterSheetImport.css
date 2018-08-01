@@ -194,3 +194,7 @@
 #error{
 	color:red;
 }
+
+.uploadGuidelinesLink{
+	color: blue !important;
+}
