@@ -9,8 +9,20 @@ public class UpdateTargetsConfig {
 
     private String updateTargets;
     private String updatedTargetDetails;
+    private String checkUserExistence;
+    
+    
+    
 
-    public String getUpdatedTargetDetails() {
+    public String getCheckUserExistence() {
+		return checkUserExistence;
+	}
+
+	public void setCheckUserExistence(String checkUserExistence) {
+		this.checkUserExistence = checkUserExistence;
+	}
+
+	public String getUpdatedTargetDetails() {
         return updatedTargetDetails;
     }
 
