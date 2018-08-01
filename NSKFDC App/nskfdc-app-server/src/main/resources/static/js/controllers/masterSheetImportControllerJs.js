@@ -31,10 +31,12 @@ function checkforstate() {
 
 
 var app = angular.module('app');
-app.controller('importController', function($scope, $http) {
+app.controller('importController', function($scope, $http, $rootScope) {
 	
 	
-
+	$http.get('/getNameOfUser').then(function(response){
+		$rootScope.nameOfuser=response.data.trainingPartnerName;
+	});
 	
 	
 	$http.get('/getFinancialYear')
@@ -44,7 +46,6 @@ app.controller('importController', function($scope, $http) {
     	let first = year%10000;
     	let second = year/10000;
     	
-//    	str.substr(4,1)
     	console.log(year);
     	$scope.financialyear = Math.floor(second) + " - " + first;
     })

@@ -39,15 +39,15 @@ app.controller('mainController', function($rootScope, $scope, $http, $location, 
 	$scope.invalidErrorMessage="";
 	$scope.credential={userEmail: '',password:''}
 	
-	var nameOfUser = function()
-	{
-		$http.get('/getNameOfUser')
-		.then(function(response){
-			
-		});
-	}
+//	var nameOfUser = function()
+//	{
+//		$http.get('/getNameOfUser')
+//		.then(function(response){
+//			
+//		});
+//	}
 	
-	$rootScope.nameOfuser=$window.localStorage.getItem('nameOfUser');
+	
 	
 	var authenticate = function(credentials){
 		
@@ -65,8 +65,8 @@ app.controller('mainController', function($rootScope, $scope, $http, $location, 
 			if(credentials){
 				
 				$http.get('/getNameOfUser').then(function(nameOfUser){
-					$rootScope.nameofUser=nameOfUser.data.trainingPartnerName;
-					$window.localStorage.setItem('nameOfUser',$rootScope.nameofUser);
+					$rootScope.nameOfuser=nameOfUser.data.trainingPartnerName;
+					
 					
 				},function(error){
 					
