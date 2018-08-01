@@ -44,6 +44,243 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	@Autowired
 	private UploadDocumentConfig uploadDocumentsConfig;
 	
+	Integer checkUserDocumentExistence = -25;
+	int updateStatus = - 5;
+	
+	public String uploadDocuments(String batchId,String userEmail,String fileType,String path)
+	{
+		LOGGER.debug("Received request from service to upload file path into the database");
+		LOGGER.debug("Checking Existence of user uploaded documents in the uploaded documents table");
+		LOGGER.debug("Creating hashmap of objects");
+		
+		try
+		{
+			Map<String,Object> params = new HashMap<>();
+			params.put("batchId", batchId);
+			params.put("userEmail",userEmail);
+			
+			LOGGER.debug("Inserted parameters into the hashmap");
+			 checkUserDocumentExistence = getJdbcTemplate().queryForObject(uploadDocumentsConfig.getCheckExistence(), params, Integer.class);
+			 LOGGER.debug("Existence of user in the uploaded documents table is : " + checkUserDocumentExistence);
+			 
+			
+			 if(checkUserDocumentExistence == 1)
+			 {
+				 LOGGER.debug("User Documents exists in the database");
+				 LOGGER.debug("Updating the path of the documents");
+				 return updateDocumentPath(batchId,userEmail,fileType,path);
+			 }	
+			 	
+			 else 
+			 {
+				 LOGGER.debug("User does not exists in the database");
+				 LOGGER.debug("Inserting the batchId and userEmail in uploaded documents table");
+				 
+				 Integer insertStatus = getJdbcTemplate().update(uploadDocumentsConfig.getInsertUserDetails(), params);
+				 
+				 if(insertStatus == 1)
+				 {
+					 LOGGER.debug("batchId and userEmail inserted into table");
+					 LOGGER.debug("Sending control to updateDocumentPath to update the path of the documents");
+					   return updateDocumentPath(batchId,userEmail,fileType,path);
+				 }
+				 
+				 else
+				 {
+
+					 return "Document cannot be uploaded";
+				 }
+				 
+				 
+			 }	
+
+		 } 
+		catch(Exception e)
+				{
+					LOGGER.debug("An Exception occured while uploading documents in the database " + e);
+					return "Document cannot be uploaded";
+				}
+		
+		
+ 	}
+	
+
+	
+	/**
+	 * Update Document Method
+	 * @param batchId
+	 * @param userEmail
+	 * @param fileType
+	 * @param path
+	 * @return String which is tells the status of update of file path
+	 */
+	
+	private String updateDocumentPath(String batchId, String userEmail, String fileType, String path) 
+	{
+	   
+		LOGGER.debug("In method updateDocumentPath to update the path of the document");
+		LOGGER.debug("Creating hashmap of objects");
+		Map<String,Object>updateParams = new HashMap<>();
+		
+		 switch (fileType) 
+		 {
+		 
+		 case "occupationCertificate":
+			 
+			 LOGGER.debug("The document is occupation certificate");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 LOGGER.debug("Inserting query into the JDBC Template");
+			 try
+			 {
+				 LOGGER.debug("In try block of upload occupationCertificate");
+				  updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateOccupationCertificatePath(), updateParams);
+	
+					 if(updateStatus < 1)
+					 {
+						 return "File cannot be uplaoded, Please try again"; 
+					 }
+					 	
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.error("An Exception occured while updating path of occupation certificate " + e);
+				 return "Cannot upload the occupation certificate";
+			 }
+			 
+			 					break;
+		 			
+		 case "attendanceSheet":
+			 
+			 LOGGER.debug("The type of file to be uploaded is attendance sheet");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 try
+			 {
+				 LOGGER.debug("Inserted the path for attendance sheet in hashmap");
+				 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateAttendanceSheetPath(), updateParams);
+				 
+				 if(updateStatus < 1)
+				 {
+					 LOGGER.debug("Attendance Sheet path is not updated");
+					 return "File cannot be uploaded";
+				 }
+	
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.error("An Exception occured while uplaoding the attendance sheet");
+				 return "File cannot be uplaoded";
+			 }
+			 			
+			 						break;
+		 
+		 case "NSKFDCSheet":
+			 
+			 LOGGER.debug("The received file is NSKFDC Sheet");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 
+			 try
+			 {
+			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateNSKFDCSheet(), updateParams);
+	
+				 if(updateStatus < 1)
+				 {
+					 LOGGER.debug("NSKFDC Sheet path cannot be updated");
+					 return "File cannot be uploaded";
+				 }
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.debug("Exception occured while uplaoding file for NSKFDC Sheet " + e);
+				 return "File cannot be uploaded";
+			 }
+		 
+			 						break;
+		
+		case "SDMSSheet" :
+			
+			LOGGER.debug("The document is SDMS Sheet");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 try
+			 {
+			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateSDMSSheet(), updateParams);
+	
+				 if(updateStatus < 1)
+				 {
+					 LOGGER.debug("SDMS Sheet path cannot be updated");
+					 return "File cannot be uploaded";
+				 }
+
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.debug("Exception occured while uplaoding file for NSKFDC Sheet " + e);
+				 return "File cannot be uploaded";
+			 }	
+			 			break;
+			
+		case "selectionCommitteeMeeting" :
+			
+			LOGGER.debug("The document is minutes of selection committee meeting");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 
+			 try
+			 {
+			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateMinuteOfSelectionCommittee(), updateParams);
+	
+				 if(updateStatus < 1)
+				 {
+					 LOGGER.debug("Selection Committee Meeting path cannot be updated");
+					 return "File cannot be uploaded";
+				 }
+
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.debug("Exception occured while uplaoding file for Selection Committee Meeting " + e);
+				 return "File cannot be uploaded";
+			 }	
+			 					break;
+			 					
+		case "finalBatchReport":
+			
+			LOGGER.debug("The document is final batch report");
+			 updateParams.put("batchId", batchId);
+			 updateParams.put("userEmail", userEmail);
+			 updateParams.put("path",path);
+			 
+			 try
+			 {
+			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateFinalBatchReportPath(), updateParams);
+	
+				 if(updateStatus < 1)
+				 {
+					 LOGGER.debug("Final Batch Report path cannot be updated");
+					 return "File cannot be uploaded";
+				 }
+
+			 }
+			 catch(Exception e)
+			 {
+				 LOGGER.debug("Exception occured while uplaoding file for final batch Report " + e);
+				 return "File cannot be uploaded";
+			 }	
+ 
+		 }
+		
+		
+		 return "File Uploaded Successfully";
+	}
+	
 	public int insertInUploadedDocument(Map<String , Object> recordToInsert)
 	{
 		LOGGER.debug("Request Received from Service");

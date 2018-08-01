@@ -8,15 +8,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
-import com.nskfdc.scgj.dto.BatchDto;
-import com.nskfdc.scgj.dto.BatchIdDto;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.SessionUserUtility;
-import com.nskfdc.scgj.dto.BatchIdDto;
+import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
 import com.nskfdc.scgj.service.UploadDocumentService;
 
@@ -38,44 +34,31 @@ public class UploadDocumentsController {
 	
 	@Autowired
 	private SessionUserUtility sessionUserUtility;
-	
-	
-	
-	
-/*	@RequestMapping("/uploadDocuments")
-	public void uploadDocuments() {
-		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
-		uploadDocumentService.saveUploadedDocument();
-	}*/
-	
-	@RequestMapping(value = "/uploadDocuments", method =RequestMethod.POST ,consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String singleFileUpload(@RequestParam("file") MultipartFile file,@RequestParam("fileType") String fileType,@RequestParam("batchId") String batchId,@RequestParam("batchNo") String batchNo){
-		
-		/*LOGGER.debug("In Controller Upload");
-		
-		if(file.isEmpty()){
-			
-			LOGGER.debug("File is Empty"+batchId);
-			return 0;
-		}
-		else{
-		
-		LOGGER.debug("File is not Empty"+batchId);
-		return 1;
-		}*/
-		
-		LOGGER.debug("Request Received from front end to Upload document For a particular Batch in upload documents");
-		LOGGER.debug("Parameters Received from front end are - 'file': "+file+" 'fileType': "+fileType+" 'batchId':"+batchId+" 'batchNo': "+batchNo );
-		LOGGER.debug("Sending Request to get User Email from Session");
-		String userEmail=sessionUserUtility
-				.getSessionMangementfromSession().getUsername();
-		LOGGER.debug("User Logged in is : "+ userEmail);
-		LOGGER.debug("Sending Request to service to upload the file");
-		return uploadDocumentService.saveUploadedDocument(file, fileType, batchId, batchNo, userEmail);
-		
 
+
+	@RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
+	public String uploadFile(@RequestParam("file") MultipartFile file,@RequestParam("batchId") String batchId,String fileType)
+	{
+		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+		LOGGER.debug("Sending request to service to upload file");
+		return uploadDocumentService.uploadFileService(file,batchId,fileType,userEmail);
+		
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
 	
 	@RequestMapping("/searchDocument")
 	public Collection<UploadDocumentsDto> searchDocument(@RequestParam("batchId") String batchId){
@@ -160,6 +143,12 @@ try {
 			 return null;
 		 }
 	}
+	/**
+	 * Method to check if batch id 
+	 * @param batchId
+	 * @param scgjBatchNumber
+	 * @return
+	 */
 	 @RequestMapping("/getScgjDetails")
 	 public int scgjDetails(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber) {
 	 		
@@ -178,6 +167,11 @@ try {
 	 		}
 	 		
 	 	}
+	 /**
+	  * 
+	  * @param batchId
+	  * @return
+	  */
 	 @RequestMapping("/getBatchDetails")
 	 public int scgjDetails(@RequestParam("batchId") String batchId) {
 	 		
