@@ -48,32 +48,47 @@ public class UploadDocumentsController {
 	 */
 
 	 @RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
-	 public String checkBatchNumberandBatchId(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber, @RequestParam("file") MultipartFile file,String fileType ) {
+	 public String checkBatchNumberandBatchId(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber, @RequestParam("file") MultipartFile file,String fileType)
+	 {
 	 		
-	 		LOGGER.debug("Request received from frontend");
-	 		LOGGER.debug("In Scgj Controller");
+	 		LOGGER.debug("Request received from frontend to upload file for batchId : " + batchId);
 	 		
 	 		try {
-	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+	 			
+	 			String userEmail = "prateek@gmail.com";
+	 					//sessionUserUtility.getSessionMangementfromSession().getUsername();
 	 			
 	 			LOGGER.debug("In try block of Controller to check if the batch Id and SCGJ batch number matches");
 	 			
-	 			int status = uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);
 	 			
-	 			if(status == 1)
+	 			if("finalBatchReport".equals(fileType))
 	 			{
-	 				LOGGER.debug("The SCGJ batch number and batch id matched");
-	 				LOGGER.debug("Sending request to service to upload the folder");
-	 				return uploadDocumentService.uploadFileService(file, batchId, fileType, userEmail);
+	 				LOGGER.debug("File Type is final batch report : " + fileType);
+		 			int status = uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);
+		 			
+		 			if(status == 1)
+		 			{
+		 				LOGGER.debug("The SCGJ batch number and batch id matched");
+		 				LOGGER.debug("Sending request to service to upload the folder");
+		 				return uploadDocumentService.uploadFileService(file, batchId, fileType, userEmail);
+		 			}
+		 			else
+		 			{
+		 				LOGGER.debug("The BatchId and SCGJBatchNumber does not match");
+		 				return "SCGJ Batch Number against the Batch ID does not match";
+		 			}
 	 			}
+	 			
 	 			else
 	 			{
-	 				LOGGER.debug("The BatchId and SCGJBatchNumber does not match");
-	 				return "SCGJ Batch Number against the Batch ID does not match";
+	 				LOGGER.debug("File type is: " + fileType);
+	 			
+	 				return uploadDocumentService.uploadFileService(file, batchId, fileType, userEmail);
 	 			}
 	 			
-	 		}catch(Exception e) {
-	 			LOGGER.error("In catch block of Scgj Controller"+e);
+	 		}
+	 		catch(Exception e) {
+	 			LOGGER.error("An Exception occured in Upload Documents Controller while uploading the file : " +e);
 	 			return "File cannot be uploaded";
 	 		}
 	 		

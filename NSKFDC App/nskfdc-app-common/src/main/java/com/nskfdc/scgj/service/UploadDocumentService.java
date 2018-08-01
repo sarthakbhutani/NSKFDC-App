@@ -94,18 +94,17 @@ public class UploadDocumentService {
 			
 				try {	
 					
-					LOGGER.debug("In try block of Scgj Details Service");
-					
-				return uploadDocumentsDao.scgjBatchIdField(batchId, scgjBatchId);
-				
-					
-					
-			         
+					LOGGER.debug("In try block to check the existence of batchID against the batchNumber");
+				    return uploadDocumentsDao.scgjBatchIdField(batchId, scgjBatchId);
+
 				}
-				catch(Exception e){
-				return 0;	
+				catch(Exception e)
+				{
+					LOGGER.error("An exception occured while checking the existence of batchID against the batchNumber :" + e);
+				    return  - 25;	
 				}
 		}
+		
 		public int BatchIdField(String batchId) {
 			
 			LOGGER.debug("Request received from controller");

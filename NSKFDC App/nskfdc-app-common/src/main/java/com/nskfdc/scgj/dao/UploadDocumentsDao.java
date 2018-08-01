@@ -333,43 +333,20 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			LOGGER.error("Null Parameter");
 		}
 		
-try {
-			
-	LOGGER.debug("In try block of upload documents dao to get batch ID");
-	return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,getBatchIdRowMapper );
-			
-		}
-
-
-		
-catch(Exception e) {
-			
-	LOGGER.error("In Catch Block");
-			
-	LOGGER.error("An error occured while fetching the batch ID " + e);
-			
-	return null;
-}
+			try {
+						
+				LOGGER.debug("In try block of upload documents dao to get batch ID");
+				return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,getBatchIdRowMapper );
+						
+				}		
+			catch(Exception e)
+			{
+	
+				LOGGER.error("An exception occured while fetching the batch ID " + e);
+						
+				return null;
+			}
 	}
-	
-	
-//	public Collection<BatchDto> showBatchIdDetails(String userEmail){
-//		
-//		try {
-//			
-//			Map<String,Object> parameters = new HashMap<>();
-//			parameters.put("userEmail", userEmail);
-//		
-//			return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters, BATCH_RowMapper);
-//			
-//		} catch (Exception e) {
-//			
-//			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
-//			return null;
-//			
-//		}
-//		
-//	}
 
 	
 
@@ -387,23 +364,22 @@ catch(Exception e) {
 	
 	public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
 		
-		LOGGER.debug("Request received from scgj service");
-		LOGGER.debug("In scgj Dao");
-		
+		LOGGER.debug("Request received from scgj service");		
 		try {
 			
-			LOGGER.debug("In try block of scgj Dao");
+			LOGGER.debug("In try block of scgj Dao the existence of batchID against the batchNumber");
+			LOGGER.debug("Creating hash map of objects");
 			Map<String, Object> parameters = new HashMap<>();
 			parameters.put("batchId",batchId);
 			parameters.put("scgjBatchNumber", scgjBatchNumber);
 			
-			
+			LOGGER.debug("Inserting the params in JDBC Template to check the existence of batchID against the batchNumber");
 			return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowScgjDetails(), parameters,Integer.class);
 			
 		}catch(Exception e) {
 			
-			LOGGER.debug("In catch block of scgj Dao"+e);
-			return 0;
+			LOGGER.error("An exception occured while checking the existence of batchID against the batchNumber : " + e);
+			return -35;
 		}
 	}	
 	public int BatchIdField(String batchId) {
