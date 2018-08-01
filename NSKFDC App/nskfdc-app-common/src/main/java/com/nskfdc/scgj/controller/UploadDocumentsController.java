@@ -44,7 +44,7 @@ public class UploadDocumentsController {
 	 * @param scgjBatchNumber
 	 * @param file
 	 * @param fileType
-	 * @return
+	 * @Description this method checks if the batch ID and Batch Numbre matches and then uploads the file if the match is done 
 	 */
 
 	 @RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
