@@ -634,6 +634,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 			batchParameters.put("wardType", masterSheetSubmitDto.getWardType());
 			batchParameters.put("wardNumber", masterSheetSubmitDto.getWardNumber());
 			batchParameters.put("trainerName", masterSheetSubmitDto.getTrainerName());
+			batchParameters.put("centreId", masterSheetSubmitDto.getCentreId());
 			batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
 			
 			return getJdbcTemplate().update(dataImportConfig.getUpdateBatchDetails(), batchParameters);
