@@ -31,7 +31,9 @@ function checkforstate() {
 
 
 var app = angular.module('app');
-app.controller('importController', function($scope, $http, $rootScope) {
+app.controller('importController', function($scope, $http, $rootScope, fileUpload) {
+	$scope.submitMsg=false;
+	$scope.batch = {}
 	
 	
 	$http.get('/getNameOfUser').then(function(response){
@@ -119,9 +121,8 @@ var url = '/getBatchIdfortrainer';
        
         /*----------------- To get the existing details of Batch Id--------------*/
         $http.get("/BatchDetails?batchId="+$scope.batchDetails.value)
-        .then(function(response){
-        
-        	$scope.batch= response;
+        .then(function(response){        
+        	$scope.batch = response;
         	$scope.batch.centreId= response.data.centreId;
         	$scope.batch.state= response.data.state;
         	$scope.batch.centreCity=response.data.centreCity;
@@ -230,7 +231,30 @@ var url = '/getBatchIdfortrainer';
     			'Content-type' : 'application/json'
     		}
     	}).then(function(response){
-    		
+    		$scope.status= response.data;
+			if($scope.status==1){
+				$scope.submitMsg=true;
+				$scope.errorMsg=false;
+			 	var file = $scope.masterSheet.import;
+		      	console.log('File selected is :'+file);
+		      	var batchId = $scope.batchDetails.value;
+		      	console.log('batch  is :'+batchId)
+		          var importUrl = "/importMasterSheet";
+		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
+		        
+		    /*    fileuploaded.then(function(response){
+		     	  console.log("I am here");
+		        });*/
+				
+			}
+		
+		
+			else{
+				console.log("working10");
+				
+				$scope.submitMsg=false;
+				$scope.errorMsg=true;
+			}          
     	});
     }
     

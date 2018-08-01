@@ -5,7 +5,7 @@
    <div class="row" id="headmargin">
       <div class="col-sm-6" >
          <div class="heading">
-            <font size="4">Overall Information</font>
+            <h3>Overall Information</h3>
          </div>
       </div>
       <div class="col-sm-6" >
@@ -52,10 +52,13 @@
       </div>
    </div>
    <!--       text feild section-->
-   <form name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()"  >
-      <div class="row" "cointainer-fluid" id="style">
+   <div class="heading">
+   <h3>Update Existing Batch</h3>
+   </div>
+   <form name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()">
+      <div class="row" id="style">
          <div class="col-sm-3" >
-            <font size="4">Update Existing Batch</font>
+            
          </div>
          <div class="col-sm-3">
             <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
@@ -141,23 +144,28 @@
             <span id="warning"  ng-show="pattern.Employer.$error.pattern">enter only number</span></li>
          </div>
       </div>
+      
       <div id="padding">
          <div class="row" >
-             <div class="btn-wrapper">
-             <span>
+         <div class="col-sm-4"></div>
+             <div class="col-sm-4 btn-wrapper">
+             <span style="margin-left:15%">
                   <input type="text" name="file_name" id="file_name" class="form-control"></span>
                  <span>
-                 <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button></span>
-                 <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" />
+                 <button style="margin-bottom:4%" type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button></span>
+                 <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import"/>
 
 
              </div>
+             <div class="col-sm-4"></div>
+             <span ng-show="submitMsg" id="success">Centre data is successfully inserted</span>
+             <span ng-show="errorMsg" id="error">An error occured while inserting Centre data</span>
              </div>
 
             </div>
             <div class="row">
-               <div class="col-sm-4"></div>
-               <div class="col-sm-4">
+               <div class="col-sm-5"></div>
+               <div class="col-sm-2">
                   <div id="color" ng-disabled="batchDetails.value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
@@ -165,9 +173,7 @@
                      <input id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload" />
                   </div>
                </div>
+               <div class="col-sm-5"></div>
             </div>
-         </div>
-      </div>
-
    </form>
 </div>

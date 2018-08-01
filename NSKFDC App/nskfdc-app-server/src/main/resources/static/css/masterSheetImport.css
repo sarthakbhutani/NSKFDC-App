@@ -30,7 +30,7 @@
 }
 #panel
 {
-       margin: auto;
+       margin-bottom: 2%;
     padding: 1rem;
 }
 #panel-1
@@ -128,11 +128,7 @@
   visibility: hidden;
   position: absolute;
 }
-#style
-{
-        padding: 2rem;
-        margin-top: 2rem;
-}
+
 .wrapper
 {
     padding: 1rem;
@@ -170,10 +166,6 @@
 #uploadFile{
     margin-right: 1.562rem;
 }
-#headmargin
-{
-	    margin-top: -3rem;
-}
 #warning
 {
 	color:Red; font-size:1.2rem
@@ -185,17 +177,20 @@
     position: relative;
     overflow: hidden;
     display: inline;
-    margin-left: 30%;
-    margin-right: 30%;
 }
 
 
 .btn-wrapper input[type=file] {
-    font-size: 100px;
-    margin-left: 30%;
-    margin-right: 30%;
     position: absolute;
     left: 0;
     top: 0;
     opacity: 0;
+        margin-left: 16%;
+    cursor: pointer;
+}
+#success{
+	color:green;
+}
+#error{
+	color:red;
 }
