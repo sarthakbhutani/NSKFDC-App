@@ -590,7 +590,7 @@ public class DataImportService {
     }
 
 
-    public int getGenerateBatchService(String userEmail) {
+    public Integer getGenerateBatchService(String userEmail) {
 
         LOGGER.debug("Request received from Controller to create batch for email id: " + userEmail);
 
@@ -653,17 +653,17 @@ public class DataImportService {
         if(masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null)
         {
         	int status =-2;
-        	int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId(), userEmail);
+        	int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
         	if (checkEmployer == 0)
         	{
         		LOGGER.debug("Employer does not exists for this batch an user.Trying to insert now");
-        		status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId(), userEmail);
+        		status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(), userEmail);
         		LOGGER.debug("Status of Employer insertion " + status);
         	}
         	else if (checkEmployer == 1)
         	{
         		LOGGER.debug("Employer does exists trying to update Employer information");
-        		status = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId(), userEmail);
+        		status = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(), userEmail);
         		LOGGER.debug("Status of Employer udation " + status);
         	}
         }      

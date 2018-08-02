@@ -4,7 +4,7 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class MasterSheetSubmitDto extends BaseDto{
 
-	private String batchId;
+	private Integer batchId;
 	private String wardType;
 	private String wardNumber;
 	private String centreId;
@@ -34,7 +34,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public MasterSheetSubmitDto(String batchId, String wardType, String wardNumber, String centreId, String state,
+	public MasterSheetSubmitDto(Integer batchId, String wardType, String wardNumber, String centreId, String state,
 			String city, String municipality, String selectionCommitteeDate, String trainerName, String batchStartDate,
 			String batchEndDate, String assessmentDate, String medicalExamDate, String employerName,
 			String employerNumber) {
@@ -63,7 +63,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public String getBatchId() {
+	public Integer getBatchId() {
 		return batchId;
 	}
 
@@ -72,7 +72,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public void setBatchId(String batchId) {
+	public void setBatchId(Integer batchId) {
 		this.batchId = batchId;
 	}
 

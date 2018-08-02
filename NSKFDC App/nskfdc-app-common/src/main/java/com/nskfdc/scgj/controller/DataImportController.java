@@ -177,7 +177,7 @@ public class DataImportController {
                  			
                  			LOGGER.debug("In try block of generate Master Sheet Controller");
                  			
-                 		   String userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();;
+                 		   String userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
                  		   String report = dataImportService.downloadMasterSheetService(userEmail);
                  			
                  			if(report!=null) {
@@ -212,7 +212,7 @@ public class DataImportController {
                      /*--------------------Method to Generate BatchId-------------------*/
                 	 
                  	@RequestMapping("/generateBatch")
-                 	 public int generateBatchController(){
+                 	 public Integer generateBatchController(){
                  		 String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
                  		 LOGGER.debug("Request received from frontend to create batch for email id : " + userEmail);
                  		
@@ -244,8 +244,6 @@ public class DataImportController {
             		public Collection<BatchDto> getBatchDetail(){
             			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
             			LOGGER.debug("Request received from frontend to show batch ID");
-            			
-            			
             			try {
             				return dataImportService.getBatchDetail(userEmail);
             				
