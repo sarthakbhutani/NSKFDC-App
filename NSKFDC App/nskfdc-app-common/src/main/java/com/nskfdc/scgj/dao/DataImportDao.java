@@ -469,7 +469,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 	public GetBatchDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		int centreId = rs.getInt("centreId");
-		String state = rs.getString("state");
+		String state = rs.getString("centreState");
 		String centreCity = rs.getString("centreCity");
 		String municipality = rs.getString("municipality");
 		Date selectionCommitteeDate = rs.getDate("selectionCommitteeDate");
