@@ -264,7 +264,7 @@ public class DataImportController {
             /*---------------Method to save batch Details in the database-------------*/
             		@RequestMapping(value="/submitBatchDetails", method=RequestMethod.POST, consumes=MediaType.APPLICATION_JSON_VALUE)
             		public int submitBatchDetails(@RequestBody MasterSheetSubmitDto masterSheetSubmitDto) {
-            			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+            			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();            		
             			return dataImportService.submitBatchDetails(userEmail, masterSheetSubmitDto);
             		}
             		

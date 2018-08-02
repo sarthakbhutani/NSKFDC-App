@@ -587,7 +587,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 		}
 	}
 
-	public int insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+	public String insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
 		try {
 			
 			LOGGER.debug("In Data Import Dao to insert the centre details");
@@ -596,11 +596,11 @@ public class DataImportDao extends AbstractTransactionalDao{
 			centreParameters.put("state", masterSheetSubmitDto.getState());
 			centreParameters.put("city", masterSheetSubmitDto.getCity());
 			centreParameters.put("userEmail", userEmail);
-			
-			return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
+			return insertString(dataImportConfig.getInsertCentreDetails(), centreParameters, "centerId");
+			//return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
 		} catch (DataAccessException e) {
 			LOGGER.debug("Exception handled while inserting centre detail"+e);
-			return -1;
+			return "-1";
 		}
 		
 	}

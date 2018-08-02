@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.ReadApplicationConstants;
 import com.nskfdc.scgj.dao.DataImportDao;
+import com.nskfdc.scgj.dao.EmployerDao;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
@@ -57,6 +58,9 @@ public class DataImportService {
 
     @Autowired
     private DataImportDao dataImportDao;
+    
+    @Autowired
+    private EmployerDao employerDao;
 
     @Autowired
     private ReadApplicationConstants readApplicationConstants;
@@ -627,19 +631,46 @@ public class DataImportService {
     /*-------------------- Submit data from MasterSheet Import into the database---------------*/
 
     public int submitBatchDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+    	int updatedCentre = 0;
+    	String centerInserted = "";
         LOGGER.debug("In Data Import Service");
         LOGGER.debug("1. Check if the centre Id exists in the database");
         int centreExistence = dataImportDao.checkCentreExistence(masterSheetSubmitDto);
         LOGGER.debug("The response of existence" + centreExistence);
-        if (centreExistence == 1) {
+        //To check the existence of center and insert or update center information
+        if (centreExistence == 1) 
+        {
             LOGGER.debug("Centre Id already exist, hence update the records in database");
-            int updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
-        } else {
+            updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
+        } 
+        else {
             LOGGER.debug("Centre Id does not exist, hence inserting the centre id in database");
-            int updatedCentre = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
+            centerInserted = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
+            LOGGER.debug("The center Id inserted is" + updatedCentre);
         }
 
+        //To insert the employer
+        if(masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null)
+        {
+        	int status =-2;
+        	int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId(), userEmail);
+        	if (checkEmployer == 0)
+        	{
+        		LOGGER.debug("Employer does not exists for this batch an user.Trying to insert now");
+        		status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId(), userEmail);
+        		LOGGER.debug("Status of Employer insertion " + status);
+        	}
+        	else if (checkEmployer == 1)
+        	{
+        		LOGGER.debug("Employer does exists trying to update Employer information");
+        		status = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId(), userEmail);
+        		LOGGER.debug("Status of Employer udation " + status);
+        	}
+        }      
         LOGGER.debug("Updated the centre Details, updating batch details corresponding to the selected centre id & batch id");
+        
+        LOGGER.debug(masterSheetSubmitDto.getCentreId());
+        //masterSheetSubmitDto.setCentreId(centerInserted);
         return dataImportDao.updateBatchDetails(masterSheetSubmitDto);
 
     }
