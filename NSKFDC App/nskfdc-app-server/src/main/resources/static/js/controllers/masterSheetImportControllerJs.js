@@ -31,8 +31,7 @@ function checkforstate() {
 var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
 	$scope.submitMsg=false;
-	$scope.batch = {}
-	
+	$scope.batch = {};
 	
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
