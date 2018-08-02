@@ -189,7 +189,7 @@ public class GetBatchDetailsDto  extends BaseDto{
 
 
 
-				public GetBatchDetailsDto(int centreId,String state,String cntreCity,String municipality,Date selectionCommitteeDate,String principalTrainerName,Date batchStartDate,Date batchEndDate,Date assessmentDate,Date medicalExamDate,String employerName,Long employerContactNumber) {
+				public GetBatchDetailsDto(int centreId,String state,String centreCity,String municipality,Date selectionCommitteeDate,String principalTrainerName,Date batchStartDate,Date batchEndDate,Date assessmentDate,Date medicalExamDate,String employerName,Long employerContactNumber) {
 			super();
 			this.centreId = centreId;
 			this.state = state;

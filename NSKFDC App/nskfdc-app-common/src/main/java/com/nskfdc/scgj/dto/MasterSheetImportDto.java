@@ -11,7 +11,7 @@ public class MasterSheetImportDto extends BaseDto{
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private long    mobileNumber;
+	private long   mobileNumber;
 	private String educationQualification;
 	private String state;
 	private String district;
