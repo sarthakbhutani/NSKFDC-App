@@ -42,22 +42,25 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateReportDao.class);
 	
 	public Collection<GetBatchIdDto> getBatchId(String userEmail){
-	     
-		 Map<String, Object> parameters = new HashMap<>();
-		 parameters.put("userEmail",userEmail);
+	    
+		LOGGER.debug("Request received from Service");
+		LOGGER.debug("In method getBatchId, to get Batch Id for logged in TP");
+		LOGGER.debug("Inserting userEmail in parameter for SQL Query");
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("userEmail",userEmail);
 		 
-		 LOGGER.debug("Request received from Service");
-		 LOGGER.debug("In GetBatchIdDao, to get Batch Ids' for Training Partner");
 		
 		try{
 			
-			LOGGER.debug("In try block");
+			LOGGER.debug("TRYING -- To get all the batch Id of TP");
 			LOGGER.debug("Execute query to get batch ids for Training Partner");
 			return  getJdbcTemplate().query(generateReportConfig.getShowBatchId(),parameters, batchIdRowmapper);
 		}
 		catch(Exception e){
 			
-			LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+			LOGGER.error("CATCHING -- Exception handled while getting batch Id for TP");
+			LOGGER.error("In GenerateReportDao - getBatchId");	
+			LOGGER.error("Exception is"+e);
 			return null;
 		}
 		}
@@ -65,21 +68,25 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	public Collection<GenerateOccupationCertificateReportDto> generateOccupationCertificateReport(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Generate Occupation Certificate Dao");
+		LOGGER.debug("In GenerateReportDao - generateOccupationCertificateReport");
 		
 		try {
 			
-			LOGGER.debug("In try block of Generate Occupation Certificate Dao");
+			LOGGER.debug("TRYING -- To get details for Occupation Certificate Report");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId, userEmail in parameters");
 			parameters.put("batchId",batchId);
 			parameters.put("userEmail", userEmail);
 			
-			
+			LOGGER.debug("Executing query to get Occupation certificate Details");
 			return getJdbcTemplate().query(generateReportConfig.getShowOccupationCertificateReportDetails(), parameters ,generateOccupationCertificateReportRowMapper);
 			
 		}catch(Exception e) {
 			
-			LOGGER.debug("In catch block of Generate Occupation Certificate Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting OC report details");
+			LOGGER.error("In GenerateReportDao - generateOccupationCertificateReport");	
+			LOGGER.error("Exception is"+e);
+			LOGGER.error("Returning null");
 			return null;
 		}
 	}	
@@ -87,128 +94,150 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	public Collection<GenerateAttendanceSheetDto> generateAttendanceSheet(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Generate Attendance Sheet Dao");
+		LOGGER.debug("To get Attendance Sheet details - generateAttendanceSheet");
 		
 		try {
 			
-			LOGGER.debug("In try block of Generate Attendance Sheet Dao");
+			LOGGER.debug("TRYING -- In GenerateReportDao - generateAttendanceSheet");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId & userEmail in parameters");
 			parameters.put("batchId",batchId);
 			parameters.put("userEmail", userEmail);
-			
+			LOGGER.debug("Executing query to get Occupation certificate Details");
 			return getJdbcTemplate().query(generateReportConfig.getShowAttendanceSheetDetails(), parameters ,generateAttendanceSheetRowMapper);
 			
 		}catch(Exception e) {
 		
-			LOGGER.error("In catch block of Generate Attendance Sheet Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting Attendance Sheet details");
+			LOGGER.error("In GenerateReportDao - generateAttendanceSheet");	
+			LOGGER.error("Exception is"+e);
+			LOGGER.error("Returning null");
 			return null;
 		}	
 	}
 	
 	public Collection<GenerateNSKFDCExcelSheetDto> generateNSKFDCExcelSheet(String batchId,String userEmail) {
 		
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Generate NSKFDC Excel Sheet Dao");
+		LOGGER.debug("Request received from service to GenerateReportDao");
+		LOGGER.debug("To get NSKFDC Excel Sheet details - generateNSKFDCExcelSheet");
 		
 		try {
 			
-			LOGGER.debug("In try block of Generate NSKFDC Excel Sheet Dao");
+			LOGGER.debug("TRYING -- In GenerateReportDao - generateNSKFDCExcelSheet");			
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId & userEmail in parameters");
 			parameters.put("batchId",batchId);
 			parameters.put("userEmail", userEmail);
+			LOGGER.debug("Executing query to get NSKFDC Excel Sheet Details");
 			return getJdbcTemplate().query(generateReportConfig.getShowNSKFDCExcelSheet(), parameters ,generateNSKFDCExcelSheetRowMapper);
 			
 		}catch(Exception e) {
-			
-			LOGGER.error("In catch block of Generate NSKFDC Excel Sheet Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting NSKFDC Excel Sheet details");
+			LOGGER.error("In GenerateReportDao - generateNSKFDCExcelSheet");	
+			LOGGER.error("Exception is"+e);
+			LOGGER.error("Returning null");
 			return null;
 		}	
 	}
 	
 	public Collection<GenerateSDMSExcelSheetDto> generateSDMSExcelSheet(String batchId,String userEmail) {
 		
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Generate NSKFDC Excel Sheet Dao");
+		LOGGER.debug("Request received from service to GenerateReportDao");
+		LOGGER.debug("To get SDMS Excel Sheet Details - generateSDMSExcelSheet");
 		
 		try {
 			
-			LOGGER.debug("In try block of Generate NSKFDC Excel Sheet Dao");
+			LOGGER.debug("TRYING -- In GenerateReportDao - generateSDMSExcelSheet");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId & userEmail in parameters");
 			parameters.put("batchId",batchId);
 			parameters.put("userEmail", userEmail);
+			LOGGER.debug("Executing query to get SDMS Excel sheet Details");
 			return getJdbcTemplate().query(generateReportConfig.getShowSDMSExcelSheet(), parameters ,generateSDMSExcelSheetRowMapper);
 			
 		}catch(Exception e) {
 			
-			LOGGER.error("In catch block of Generate NSKFDC Excel Sheet Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting SDMS Excel Sheet details");
+			LOGGER.error("In GenerateReportDao - generateSDMSExcelSheet");	
+			LOGGER.error("Exception is"+e);
+			LOGGER.error("Returning null");
 			return null;
 		}	
 	}
 	
 	public Collection<GenerateMinutesOfSelectionDto> generateMinutesOfSelection(String batchId,String userEmail) {
 
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("Generate minutes Of Selection details ");
+		LOGGER.debug("Request received from service to GenerateReportDao");
+		LOGGER.debug("To get Minutes of Selection committee Details - generateMinutesOfSelection");
 		
 		try {
 			
-			LOGGER.debug("In try block of Generate Minutes Of Selection  Dao");
+			LOGGER.debug("TRYING -- In GenerateReportDao - generateMinutesOfSelection");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId & userEmail in parameters");
 			parameters.put("batchId",batchId);
 			parameters.put("userEmail",userEmail);
-			
+			LOGGER.debug("Executing query to get Minutes of Selection Committee Details");
 			return getJdbcTemplate().query(generateReportConfig.getShowMinutesOfSelectionMeetingDetails() ,parameters , generateMinutesOfSelectionRowMapper);
 			
 		}catch(Exception e) {
 			
-			LOGGER.debug("In catch block of Generate  Minutes Of Selection  Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting Minutes of Selection Committee details");
+			LOGGER.error("In GenerateReportDao - generateMinutesOfSelection");	
+			LOGGER.error("Exception is"+e);
+			LOGGER.error("Returning null");
 			return null;
 		}
 	}
 	
 	public void updateTableGenerateReports(String generateReportsId,Date generatedOn, String reportType, String batchId ,String userEmail) {
 		
+		LOGGER.debug("Request received from service to GenerateReportDao");
+		LOGGER.debug("To Update records in the generateReportTable for the recently generated report");
+		LOGGER.debug("In method - updateTableGenerateReports");
+		
+		int result;
 		Map<String, Object> parameters = new HashMap<>();
+		
+		try {
+		LOGGER.debug("Inserting generateReportsId, generatedOn, reportType, batchId & userEmail in parameters");
 		parameters.put("generateReportsId", generateReportsId);
 		parameters.put("generatedOn",generatedOn);
 		parameters.put("reportType",reportType);
 		parameters.put("batchId",batchId);
 		parameters.put("userEmail",userEmail);
 		
-		int result;
-		
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Update Database Dao");
-		
-		try {
-			
-			LOGGER.debug("In try block of Update Database Dao");
-			result = getJdbcTemplate().update(generateReportConfig.getUpdateGenerateReportsTable(),parameters);
-			LOGGER.debug("The result of the query is : " + result);
+		LOGGER.debug("Executing query to update record of generated report");		
+		result = getJdbcTemplate().update(generateReportConfig.getUpdateGenerateReportsTable(),parameters);
 			
 		}catch(Exception e) {
-			LOGGER.error("In catch block of Update Database Dao"+e);
-		
+
+			LOGGER.error("CATCHING -- Exception handled while updating record of generated report");
+			LOGGER.error("In GenerateReportDao - updateTableGenerateReports");	
+			LOGGER.error("Exception is"+e);
 		}			
 	}
 	
 	public Collection<DisplayAuditTableRecordDto> getRecordsForAuditTable(String userEmail) {
 		
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Get Records For Audit Table Dao");
+		LOGGER.debug("Request received from service to GenerateReportDao");
+		LOGGER.debug("To Get Records For Audit Table - getRecordsForAuditTable");
+		LOGGER.debug("Having records of generated reports by logged in TP");
 		
 		try {
 			
-			LOGGER.debug("In try block of Get Records For Audit Table Dao");
+			LOGGER.debug("TRYING -- To get records for Audit Table");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting userEmail in parameters");
 			parameters.put("userEmail", userEmail);
-			
-			
+			LOGGER.debug("Executing query to get generated report record for TP");
 			return getJdbcTemplate().query(generateReportConfig.getShowAuditTableRecords(), parameters ,getRecordsForAuditTableRowMapper);
 			
 		}catch(Exception e) {
 			
-			LOGGER.debug("In catch block of Get Records For Audit Table Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while getting record of generated report for logged in TP");
+			LOGGER.error("In GenerateReportDao - getRecordsForAuditTable");	
+			LOGGER.error("Exception is"+e);
 			return null;
 		}
 	}
