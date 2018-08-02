@@ -45,29 +45,31 @@ public class DashboardDao extends AbstractTransactionalDao{
 	
 	public Integer getNumberOfCandidatesTrained(){
 		
-		LOGGER.debug("Request received from Service");
-		LOGGER.debug("In NumberOfCandidatesTrained Dao, to get Number of CandidatesTrained");
+		LOGGER.debug("Request received from Service - getNumberOfCandidatesTrained");
+		LOGGER.debug("In DASHBOARD DAO");
+		LOGGER.debug("To get Number of Candidates Trained");
 		
 		
 		try {
 			
-			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get NumberOfCandidatesTrained");
+			LOGGER.debug("TRYING -- getNumberOfCandidatesTrained");
 			Map<String,Object> parameters = new HashMap<> ();
+			LOGGER.debug("EXECUTING query to get NumberOfCandidatesTrained");
 			return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfCandidatesTrained(),parameters,Integer.class);
 			
 		} 
 		catch(DataAccessException de)
 		{
-			LOGGER.error("A data access exception has occured: " + de);
-			LOGGER.error("Returning zero");
+			LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfCandidatesTrained" + de);
 			return null;
 		}
 		
 		catch(Exception e)
 		{
-			LOGGER.error("An Exception occured: " + e);
-			LOGGER.error("Returning 0");
+			LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfCandidatesTrained");
+			LOGGER.error("An exception occurred is "+e);
 			return null;
 		}
 		
@@ -86,31 +88,33 @@ public class DashboardDao extends AbstractTransactionalDao{
 	
 	public Integer getNumberOfOngoingTrainings(){
 		
-		LOGGER.debug("Request received from Service");
-		LOGGER.debug("In get Number Of Ongoing Trainings Dao, to get Number of OngoingTrainings");
+		LOGGER.debug("Request received from Service - getNumberOfOngoingTrainings");
+		LOGGER.debug("In DASHBOARD Dao, To get Number of OngoingTrainings");
 		
 		
 		try {
 			
-			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get Number Of OngoingTrainings");
+			LOGGER.debug("TRYING -- getNumberOfOngoingTrainings");
+			LOGGER.debug("EXECUTING  query to get Number Of Ongoing Trainings");
 			Map<String,Object> parameters = new HashMap<> ();
 			return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfOngoingTrainings(),parameters,Integer.class);
 			
 		} 
 		catch(DataAccessException de)
 		{
-			LOGGER.error("A data access exception has occured: " + de);
-			LOGGER.error("Returning 0");
+			LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfOngoingTrainings" + de);
 			return null;
 		}
-		
+	
 		catch(Exception e)
 		{
-			LOGGER.error("An exception occured: " + e);
+			LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfOngoingTrainings");
+			LOGGER.error("An exception occurred is "+e);
 			return null;
 		}
-		
+			
 		
 	}
 /**
@@ -126,28 +130,29 @@ public class DashboardDao extends AbstractTransactionalDao{
 	
 public Integer getNumberOfTrainingPartners(){
 	
-	LOGGER.debug("Request received from Service");
-	LOGGER.debug("In Number Of Training Partners Dao, to get Number Of TrainingPartners");
-	
+	LOGGER.debug("Request received from Service - getNumberOfTrainingPartners");
+	LOGGER.debug("In DASHBOARD Dao");
+	LOGGER.debug(" To get total Number Of TrainingPartners");
 	
 	try {    
 		
-		LOGGER.debug("In try block");
-		LOGGER.debug("Execute query to get Number Of Training Partners");
+		LOGGER.debug("TRYING -- getNumberOfTrainingPartners");
+		LOGGER.debug("Execute query -- Get Total Number of Training Partners");
 		Map<String,Object> parameters = new HashMap<>();
 		return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfTrainingPartners(),parameters, Integer.class);
-		
 	} 
 	catch(DataAccessException de)
 	{
-		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.error("Returning 0");
+		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfTrainingPartners" + de);
 		return null;
 	}
-	
+
 	catch(Exception e)
 	{
-		LOGGER.error("An exception occured: " + e);
+		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfTrainingPartners");
+		LOGGER.error("An exception occurred is "+e);
 		return null;
 	}
 	
@@ -166,30 +171,32 @@ public Integer getNumberOfTrainingPartners(){
 
 public Integer getNumberOfUpcomingAssessments(){
 	
-	LOGGER.debug("Request received from Service");
-	LOGGER.debug("In Number Of Upcoming Assessments Dao, to get Number Of UpcomingAssessments");
+	LOGGER.debug("Request received from Service - getNumberOfUpcomingAssessments");
+	LOGGER.debug("In DASHBOARD Dao");
+	LOGGER.debug("To get Total number Of Upcoming Assessments");
 	
 	
 	try {
 		
-		LOGGER.debug("In try block");
-		LOGGER.debug("Execute query to get  Number Of Upcoming Assessments");
+		LOGGER.debug("TRYING -- getNumberOfUpcomingAssessments ");
+		LOGGER.debug("Execute query to get Number Of Upcoming Assessments");
 		Map<String,Object> parameters = new HashMap<> ();
 		return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfUpcomingAssessments(),parameters,Integer.class);
 		
 	} 
 	catch(DataAccessException de)
 	{
-		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.error("Returning 0");
-		return  null;
-	}
-	catch (Exception e) {
-		
-		LOGGER.debug("In Catch Block");
-		LOGGER.error("An exception occured while getting the Number Of Upcoming Assessments" + e);
+		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfUpcomingAssessments" + de);
 		return null;
-		
+	}
+
+	catch(Exception e)
+	{
+		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfUpcomingAssessments");
+		LOGGER.error("An exception occurred is "+e);
+		return null;
 	}
 	
 }
@@ -202,13 +209,14 @@ public Integer getNumberOfUpcomingAssessments(){
 
 public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesTrainedInLast6Months(){
 	
-	LOGGER.debug("Request received from Service");
-	LOGGER.debug("In DashboardDao, to get total number of Candidates Trained in last 6 months ");
+	LOGGER.debug("Request received from Service - getShowTotalNumberOfCandidatesTrainedInLast6Months");
+	LOGGER.debug("In DASHBOARD DAO");
+	LOGGER.debug("To get total number of Candidates Trained in last 6 months ");
 	
 	
 	try {
 		
-		LOGGER.debug("In try block");
+		LOGGER.debug("TRYING -- getTotalNumberOfCandidatesTrainedInLast6Months");
 		LOGGER.debug("Execute query to get total number of Candidates Trained in last 6 months");
 		Map<String,Object> parameters= new HashMap<>();
 		return getJdbcTemplate().query(dashboardConfig.getShowTotalNumberOfCandidatesTrainedInLast6Months(),parameters,rm1);
@@ -217,16 +225,17 @@ public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesT
 	} 
 	catch(DataAccessException de)
 	{
-		LOGGER.error("A data access exception has occured: " + de);
-		LOGGER.debug("Returning 0");
+		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getTotalNumberOfCandidatesTrainedInLast6Months" + de);
 		return null;
 	}
-	catch (Exception e) {
-		
-		LOGGER.debug("In Catch Block");
-		LOGGER.debug("An error occured while getting the total number of candidates trained in last 6 months" + e);
+
+	catch(Exception e)
+	{
+		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+		LOGGER.error("In method - getTotalNumberOfCandidatesTrainedInLast6Months");
+		LOGGER.error("An exception occurred is "+e);
 		return null;
-		
 	}
 	
 }
@@ -241,21 +250,22 @@ public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesT
 
 public Collection<StateDetailsDto> getShowStateDetails(){
 	
-	LOGGER.debug("Request received from Service");
-	LOGGER.debug("In DashboardDao, to get StateChart Detail");
+	LOGGER.debug("Request received from Service - getShowStateDetails");
+	LOGGER.debug("In DASHBOARD DAO");
+	LOGGER.debug("To get Top 5 states with maximum Training centers");
 	
 	
 	try {
-		LOGGER.debug("In try block");
-		LOGGER.debug("Execute query to get Statechart details");
+		LOGGER.debug("TRYING -- getShowStateDetails");
+		LOGGER.debug("Execute query to get Top 5 states for BAR chart - 1");
 		Map<String,Object> parameters= new HashMap<>();
 		return getJdbcTemplate().query(dashboardConfig.getShowStateDetails(),parameters,rm);
 		
 	} catch (Exception e) {
-		LOGGER.debug("In Catch Block");
-		LOGGER.debug("An error occured while getting the state chart details" + e);
+		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+		LOGGER.error("In method - getTotalNumberOfCandidatesTrainedInLast6Months");
+		LOGGER.error("An exception occurred is "+e);
 		return null;
-		
 	}
 	
 }
@@ -295,22 +305,23 @@ private static class BarchartRowmapper1 implements RowMapper<CandidatesTrainedIn
 
 public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
 
-LOGGER.debug("Request received from Service");
-LOGGER.debug("In DashboardDao, to get  Map StateChart Detail");
-
-
-try {
-	LOGGER.debug("In try block");
-	LOGGER.debug("Execute query to get Map Statechart details");
-	Map<String,Object> parameters= new HashMap<>();
-	return getJdbcTemplate().query(dashboardConfig.getshowStateDetailsForMapChart(),parameters,rm2);
+	LOGGER.debug("Request received from Service - getshowStateDetailsForMapChart");
+	LOGGER.debug("In DASHBOARD DAO");
+	LOGGER.debug("To get number of Training centers in each state");
 	
-} catch (Exception e) {
-	LOGGER.debug("In Catch Block");
-	LOGGER.debug("An error occured while getting the Map state chart details" + e);
-	return null;
 	
-}
+	try {
+		LOGGER.debug("TRYING -- getshowStateDetailsForMapChart");
+		LOGGER.debug("Execute query to get training centers in state in MAP CHART ");
+		Map<String,Object> parameters= new HashMap<>();
+		return getJdbcTemplate().query(dashboardConfig.getshowStateDetailsForMapChart(),parameters,rm2);
+		
+	} catch (Exception e) {
+		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
+		LOGGER.error("In method - getshowStateDetailsForMapChart");
+		LOGGER.error("An exception occurred is "+e);
+		return null;
+	}
 
 }
 

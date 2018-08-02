@@ -43,7 +43,8 @@ public class GenerateBatchReportController {
 	
 	private String userEmail;
 	private String Paths[] = new String[20];
-	private Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportController.class);
+	
 	
 	/**
 	 
@@ -57,38 +58,70 @@ public class GenerateBatchReportController {
 	public Collection<GetBatchIdDto> getBatchIdDetails(){
 		
 		LOGGER.debug("Request received from frontend");
-		LOGGER.debug("In GetBatchId Controller");
-		
+		LOGGER.debug("In GenerateBatchReportController");
+		LOGGER.debug("To get batch Id for logged in user - getBatchIdDetails");
 		
 		try {
+			LOGGER.debug("Getting User Email from Session");
 			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
-			LOGGER.debug("In try block to get training partner details for Training Partner");
-			LOGGER.debug("Sending request to Service");
+			LOGGER.debug("TRYING -- getBatchIdDetails");
+			LOGGER.debug("Sending request to GENERATE_BATCH_REPORT_SERVICE");
+			LOGGER.debug("Method - getBatchDetails");
 			return generateBatchReportService.getBatchDetails(userEmail);
 			
 		} catch (Exception e) {
-			LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
+			LOGGER.error("In method getBatchIdDetails");
+			LOGGER.error("An exception is "+e);
 			return null;
 		}
 	}
 	@RequestMapping("/getLocationDetails")
 	public Collection<LocationDetailsDto> locationDetails(@RequestParam ("batchId") String batchId){
+		
+		LOGGER.debug("In GenerateBatchReportController");
+		LOGGER.debug("To get Location Details");
+		
 		try{ 
+			LOGGER.debug("TRYING -- locationDetails");
+			LOGGER.debug("Sending request to GENERATE_BATCH_REPORT_SERVICE");
+			LOGGER.debug("Method - locationDetails");
 			return generateBatchReportService.locationDetails(batchId);
 		}
 		catch (Exception e) {
+			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
+			LOGGER.error("In method locationDetails");
+			LOGGER.error("An exception is "+e);
 			return null;
 		}
 	}
+	
+	
+	
+	
 	@RequestMapping("/getTrainingDetails")
 	public Collection<TrainingDetailsDto> trainingDetails(@RequestParam ("batchId") String batchId){
+		
+			LOGGER.debug("In Generate Batch Report Controller");
+			LOGGER.debug("To get Training Details respective to Batch Id entered");
+		
 		try{
+			LOGGER.debug("TRYING -- method trainingDetails");
+			LOGGER.debug("Sending request to generateBatchReportService");
+			LOGGER.debug("Method - trainingDetails");
 			return generateBatchReportService.trainingDetails(batchId);
 		}
 		catch (Exception e) {
+			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
+			LOGGER.error("In method trainingDetails");
+			LOGGER.error("An exception is "+e);
 			return null;
 		}
+		
 	}
+	
+	
+	
 	@RequestMapping("/getCandidateDetails")
 	public Collection<CandidateDetailsDto> candidateDetails(@RequestParam ("batchId") String batchId){
 		try{
@@ -100,10 +133,19 @@ public class GenerateBatchReportController {
 	}
 	@RequestMapping("/embedimages")
 	public int embeddimages(@RequestParam ("file") MultipartFile file){
+		
+		LOGGER.debug("In GenerateBatchReportController");
+		LOGGER.debug("In the controller -- embeddimages");
+		
 		try{
+			LOGGER.debug("TRYING -- to embed images");
+			LOGGER.debug("Sending request to service - embeddimages");
 			return generateBatchReportService.embeddimages(file);
 		}
 		catch(Exception e){
+			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
+			LOGGER.error("In method embeddimages");
+			LOGGER.error("An exception is "+e);
 			return -1;
 		}
 	}
@@ -111,21 +153,26 @@ public class GenerateBatchReportController {
 	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
 		
-		LOGGER.debug("In BATCH REPORT GENERATE CONTROLLER"+batchId+batchnumber);
+		LOGGER.debug("In BATCH REPORT GENERATE CONTROLLER");
+		LOGGER.debug("In the method - batchReport");
+		LOGGER.debug("To generate the final batch report based on BatchId & batchNumber");
 		String report;
 		File dir = null;
 		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
 		try{
 			
-					//To store Images
+					LOGGER.debug("TRYING -- to get final batch Report");
+					LOGGER.debug("Checkin if the files are receieved from the frontend");
 					if (files.length ==0)
 						return ;
 					
-					LOGGER.debug("----------length is"+files.length);
+					LOGGER.debug("Calling a FOR loop");
 					String message = "";
 					for (int i = 0; i <files.length; i++) {
 						MultipartFile file =  files[i];
 						try {
+							LOGGER.debug("Try Block -- In For Loop");
+							LOGGER.debug("Read the Files and Write the file ina temporary Location\"");
 							File convFile = new File(file.getOriginalFilename());
 						    convFile.createNewFile();
 						    FileOutputStream fos = new FileOutputStream(convFile);
@@ -151,16 +198,16 @@ public class GenerateBatchReportController {
 							
 							Paths[i]=serverFile.getAbsolutePath();
 
-							LOGGER.debug("Server File Location="
-									+ serverFile.getAbsolutePath());
+							LOGGER.debug("Server File Location is="+ serverFile.getAbsolutePath());
 
 							message = message + "You successfully uploaded file=" ;
 						} catch (Exception e) {
-							LOGGER.debug("Error in Saving File");
+							LOGGER.error("CATCHING Exception while executing For Loop");
+							LOGGER.error("Error in Saving File" + e);
 						}
 					}
 				
-					report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
+				report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
 				if(report!=null) {
 					
 				
@@ -180,8 +227,7 @@ public class GenerateBatchReportController {
 		    		outStream.write(buffer, 0, bytesRead);
 		    	}
 		    
-		    	LOGGER.debug("Pdf Generated successfully");
-		    
+		    	LOGGER.debug("Pdf of Final Batch Report is Generated successfully");
 		    	outStream.flush();
 		    	inStrem.close();
 		    	
@@ -199,10 +245,10 @@ public class GenerateBatchReportController {
 		}
 		
 		try {
-			LOGGER.debug("Deleting the Directory");
+			LOGGER.debug("Deleting the Directory where Temporary Files were stored");
 			FileUtils.deleteDirectory(dir);
 		} catch (IOException e) {
-			LOGGER.debug("Exception occured while deleting the directory");
+			LOGGER.debug("Exception occured while deleting the Temporary Files directory of Final Batch Report" + e);
 		}
 	}
 	

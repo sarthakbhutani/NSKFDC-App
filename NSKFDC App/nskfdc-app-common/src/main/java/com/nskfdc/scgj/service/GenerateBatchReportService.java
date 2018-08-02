@@ -39,7 +39,7 @@ public class GenerateBatchReportService {
 	@Autowired
 	private GenerateBatchReportDao generateBatchReportDao;
 	
-	private Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportService.class);
 	
 	int success=0;
 	Date date=new Date();
@@ -64,64 +64,105 @@ public class GenerateBatchReportService {
 		
 	try{
 		
-		LOGGER.debug("In try block to get training partner details for Training Partner");
-		LOGGER.debug("Sending request to Dao");
+		LOGGER.debug("TRYING -- To get batch Id of Training Partner");
+		LOGGER.debug("Sending request to Dao - getBatchId");
 		return generateBatchReportDao.getBatchId(userEmail);
 	}
 	catch(Exception e){
-		
-		LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+		LOGGER.error("CATCHING -- Exception in GEnerate Batch Report Service");
+		LOGGER.error("An error occurred while getting batch Id for Training Partner");
+		LOGGER.error("Excetion Handled is "+e);
 		return null;
 	}
   }
+	
+	
 	public Collection<LocationDetailsDto> locationDetails(String batchId){
 		
+		LOGGER.debug("In Generate Batch Report Service");
+		LOGGER.debug("To get Location Details - locationDetails");
 		try{
+			LOGGER.debug("TRYING -- to get location details");
+			LOGGER.debug("Sending request to Generate Batch Report DAO");
 			return generateBatchReportDao.getLocationDetails(batchId);
 		}
 		catch(Exception e){
+			LOGGER.error("CATCHING -- Exception handled while getting Location Details");
+			LOGGER.error("In method locationDetails");
+			LOGGER.error("An exception is" + e);
 			return null;
 		}
 	}
+	
+	
+	
 	public Collection<TrainingDetailsDto> trainingDetails(String batchId){
-			
+		
+			LOGGER.debug("In Generate Batch Report Service");
+			LOGGER.debug("To get details of Training of entered Batch - trainingDetails");
 			try{
+				LOGGER.debug("TRYING -- to get training details");
+				LOGGER.debug("Sending request to Generate Batch Report DAO");
 				return generateBatchReportDao.getTrainingDetails(batchId);
 			}
 			catch(Exception e){
+				LOGGER.error("CATCHING -- EXCEPTION handled while getting training Details");
+				LOGGER.error("In method - trainingDetails");
+				LOGGER.error("An exception is" + e);
 				return null;
 			}
 		}
+	
+	
 	public Collection<CandidateDetailsDto> candidateDetails(String batchId){
+		LOGGER.debug("In Generate Batch Service");
+		LOGGER.debug("Method - candidateDetails");
 		
 		try{
+			LOGGER.debug("TRYING -- To get candidate Details of entered Batch Id");
+			LOGGER.debug("Sending the request to generateBatchReportDao - getCandidateDetails");
 			return generateBatchReportDao.getCandidateDetails(batchId);
 		}
 		catch(Exception e){
+			LOGGER.error("CATCHING -- EXCEPTION Handled in candidateDetails");
+			LOGGER.error("An exception is"+e);
 			return null;
 		}
 	}
+	
+	
+	
 	public String generateBatchReport(String batchId, String batchnumber,String userEmail, String[] paths){
 		LOGGER.debug("Request received from controller");
 		LOGGER.debug("In Generate Batch Report Service");
+		LOGGER.debug("To generate Final Batch Report PDF - generateBatchReport");
 		
 		try{
-			LOGGER.debug("In try block of Generate Batch Report Service");
+			LOGGER.debug("TRYING -- Final Batch Report PDF Generation");
+			LOGGER.debug("1. Insert SCGJ Batch Number in the Database");
+			LOGGER.debug("Sending request to Generate Batch Report DAO - insertSCGJBatchNumber");
 			int insert=generateBatchReportDao.insertSCGJBatchNumber(batchId,batchnumber,userEmail);
-			LOGGER.debug(""+insert);
+			LOGGER.debug("Response after Inserting the SCGJ BAtch Number"+insert);
 			if(insert!=-1)
 			{
+			LOGGER.debug("SCGJ Batch Number Inserted Successfully");
 			String userHomeDirectory =System.getProperty("user.dir");
 			String userHomeDirectory2 = System.getProperty("user.home");
+			LOGGER.debug("Sending request to generateBatchReportDao to get Location Details");
 			Collection<LocationDetailsDto> locationDetails= generateBatchReportDao.getLocationDetails(batchId);
+			LOGGER.debug("Sending request to generateBatchReportDao to get Training Details");
 			Collection<TrainingDetailsDto> trainingDetails=generateBatchReportDao.getTrainingDetails(batchId);
+			LOGGER.debug("Sending request to generateBatchReportDao to get Candidate Details");
 			Collection<CandidateDetailsDto> candidateDetails=generateBatchReportDao.getCandidateDetails(batchId);
 			
-			LOGGER.debug("Create object of JRBean Collection Data Source ");
+			LOGGER.debug("Create object of JRBean Collection Data Source -- locationDetails");
 			JRBeanCollectionDataSource locationDetailsBeans = new JRBeanCollectionDataSource(locationDetails);
+			LOGGER.debug("Create object of JRBean Collection Data Source -- trainingDetails");
 			JRBeanCollectionDataSource trainingDetailsBeans = new JRBeanCollectionDataSource(trainingDetails);
+			LOGGER.debug("Create object of JRBean Collection Data Source -- candidateDetails");
 			JRBeanCollectionDataSource candidateDetailsBeans = new JRBeanCollectionDataSource(candidateDetails);
 			
+			LOGGER.debug("Inserting Paths of Images in Objects");
 			Object i1=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
 			Object i2=userHomeDirectory+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
 			Object i3=paths[0];
@@ -142,10 +183,11 @@ public class GenerateBatchReportService {
 			/* Map to hold Jasper Report Parameters */
 			LOGGER.debug("Create Map to hold Jasper Report Parameters ");
 			Map<String,Object> param=new HashMap<String,Object>();
+			LOGGER.debug("Inserting dataSource beans in a param - HashMap");
 			param.put("LocationDataSource",locationDetailsBeans);
 			param.put("TrainingDataSource", trainingDetailsBeans);
 			param.put("CandidateDataSource",candidateDetailsBeans);
-
+			LOGGER.debug("Inserting Image objects in a param - HashMap");
 			param.put("ImageSource",i1);
 			param.put("ImageSource2",i2);
 			param.put("Day1Pic1",i3);
@@ -168,48 +210,55 @@ public class GenerateBatchReportService {
 		    
 		    
 		    outputFile = userHomeDirectory2 + File.separatorChar + "Downloads" + File.separatorChar + "FinalBatchReport "+df.format(date)+" "+hour+"-"+minute+"-"+second+".pdf";
-		    LOGGER.debug("THE OUTPUT FILE IS IN " +userHomeDirectory2+"in ---------"+ outputFile);
+		    LOGGER.debug("THE OUTPUT FILE Path IS  " + outputFile);
 	        
 	        LOGGER.debug("Getting input stream");
 		    InputStream inputStream = resource.getInputStream();
 		    
 		    try {
+		    	LOGGER.debug("TRYING -- To Print Jasper Report PDF");
+		    	LOGGER.debug("To generate Final Barch Report");
 	            JasperPrint printFileName = JasperFillManager.fillReport(inputStream,param, new JREmptyDataSource());
 	            OutputStream outputStream = new FileOutputStream(new File(outputFile));
 			
 	            if (printFileName != null && CollectionUtils.isNotEmpty(locationDetails)&& CollectionUtils.isNotEmpty(trainingDetails) && CollectionUtils.isNotEmpty(candidateDetails)) {
 	            	
-	            	LOGGER.debug("Creating the jrprint file..");
+	            	LOGGER.debug("IN IF -- to export the Final Batch Report -- jrprint file..");
 	                JasperExportManager.exportReportToPdfStream(printFileName, outputStream);
-	                LOGGER.debug("Successfully created the jrprint file >> " );
+	                LOGGER.debug("Successfully created the jrprint file for Final Batch Report " );
 	                success = 1;       
-	                LOGGER.debug("PDF generated successfully..!!");
+	                LOGGER.debug("PDF of Final Batch Report is generated successfully..!!");
 	                
 	            } else {
 	                success = -1;
-	                LOGGER.debug("jrprint file is empty..");
+	                LOGGER.debug("IN ELSE -- When PDF file is empty");
+	                LOGGER.debug("Final batch Report -- jrprint file is empty..");
 	            }
 	            
 	            outputStream.close();
 		} catch (JRException e) { 
-        	LOGGER.error("Exception caught, unable to create pdf"+e);
+			LOGGER.error("CATCHING -- Exception handled while Generating Final Batch Report PDF");
+        	LOGGER.error("Exception is in method - generateBatchReport"+e);
         }
-			}
+		}
 
 	} catch (Exception e) {
-    	LOGGER.error("In catch block of Final Batch Report Service"+e);
+    	LOGGER.error("CATCHING -- Exception handled while performing PDF Generation for Final Batch Report");
+    	LOGGER.error("Exception is in generateBatchReport"+e);
 	}
+		
 		String reportType="Final Batch Report";
 		String generateReportsId="FBR"+batchId+userEmail;
 if(success==1) {
-        	
-        	LOGGER.debug("Updating Database....");
+        	LOGGER.debug("IN IF -- When PDF generated successfully.");
+        	LOGGER.debug("Updating Database table records having details regarding printing PDF");
+        	LOGGER.debug("Sending Request to DAO - updateTableGenerateReports");
         	generateBatchReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
         }
-	return outputFile;
+		return outputFile;
 	}
 	public int embeddimages(MultipartFile file) {
-		
+		LOGGER.debug("In embeddimages method - in Generate Batch Report Service");
 		return 0;
 	}
 	
