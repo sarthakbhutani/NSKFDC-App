@@ -30,58 +30,76 @@ public class UploadDocumentService {
 	private ReadApplicationConstants readApplicationConstants;
 	
 	public String uploadFileService(MultipartFile file, String batchId,String fileType,String userEmail)
-	{		
+	{	
+		LOGGER.debug("Request received from Controller to UploadDocumentService");
+		LOGGER.debug("In method - uploadFileService");
+		LOGGER.debug("To upload the documents");
+		
 		String filePath = "";
 		
 		try
 		{
+			LOGGER.debug("TRYING -- to upload the files");
+			LOGGER.debug("Saving the files at a physical location");
 			filePath = saveFile(batchId,file,readApplicationConstants.getSaveDocumentsAtLocation());
-			LOGGER.debug("The path of file is : " + filePath);
+			LOGGER.debug("File saved at location : " + filePath);
+			LOGGER.debug("Sending request to UploadDocumentsDao - uploadDocuments");
 			return uploadDocumentsDao.uploadDocuments(batchId, userEmail, fileType, filePath);
 
 		}
 		catch(Exception e)
 		{
-			LOGGER.error("An exception occured while saving file : " + e);	
+			LOGGER.error("CATCHING -- Exception handled while saving the file in the System");
+			LOGGER.error("In UploadDocumentService - uploadFileService" + e);	
+			LOGGER.error("Returning string 'File cannot be uploaded'");
 			return "File cannot be uploaded";
 		}
-		
 		
 	
 	}
 	
 
 		public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail){
-		//write LOGGER here
+		
 		LOGGER.debug("Request received from Controller");
-		LOGGER.debug("In getSearchedDocumentService");
+		LOGGER.debug("In UploadDocumentService - getSearchedDocumentService");
+		LOGGER.debug("To get the documents against batchId & userEmail");
 			
 			try {
-			
-				LOGGER.debug("In try block of UploadDocumentService to get search results for batch Id: " + batchId);
+				LOGGER.debug("TRYING -- getSearchedDocument - To get documents for searched BatchId of TP");
+				LOGGER.debug("Sending request to uploadDocumentsDao - getSearchedDocument");
 				return uploadDocumentsDao.getSearchedDocument(batchId, userEmail);
 				
 			} catch (Exception e) {
 				
-				LOGGER.debug("An error occurred while getting the Document details for UploadDocumentsService"+ e);
-				LOGGER.debug("Return NULL");
+				LOGGER.error("CATCHING -- Exception handled while getting documents uploaded against entered batchId of TP");
+				LOGGER.error("In UploadDocumentService - getSearchedDocument");
+				LOGGER.error("Exception is "+ e);;
+				LOGGER.error("Returning NULL");
 				return null;
 				
 			}
-		}		
+		}	
+		
 		public List<BatchDto> getBatchDetails(String userEmail){
-			LOGGER.debug("Request received from upload documents Controller to get batch id corresponding to user : " + userEmail);
+			
+			
+			LOGGER.debug("Request received from controller to UploadDocumentService");
+			LOGGER.debug("In getBatchDetails - To get batch Ids corresponding to logged in TP");
 			
 			
 			try {
-				LOGGER.debug("In try block of upload documents service to get batch id " + userEmail);
+				LOGGER.debug("TRYING -- To get BatchId of logged in TP");
+				LOGGER.debug("Sending requests to uploadDocumentsDao - getBatchDetail");
 				return uploadDocumentsDao.getBatchDetail(userEmail);
 				
 			}
 			catch(Exception d) {
 				
-				LOGGER.error("DataAccessException in service to create Batch" + d);
-				
+				LOGGER.error("CATCHING -- Exception handled while getting batch Id for Logged in TP");
+				LOGGER.error("In UploadDocumentService - getBatchDetails");
+				LOGGER.error("Exception is "+ d);
+				LOGGER.error("Returning NULL");				
 				return null;
 			}
 
@@ -89,18 +107,22 @@ public class UploadDocumentService {
 		}
 		public int scgjBatchIdField(String batchId, String scgjBatchId) {
 			
-			LOGGER.debug("Request received from controller");
-			LOGGER.debug("In Scgj Details Service");
+			LOGGER.debug("Request received from controller to UploadDocumentService");
+			LOGGER.debug("In scgjBatchIdField - To check existence of batchId & scgjBatchNumber");
 			
 				try {	
 					
-					LOGGER.debug("In try block to check the existence of batchID against the batchNumber");
+					LOGGER.debug("TRYING -- To check the existence of batchId & batchNumber");
+					LOGGER.debug("Sending request to uploadDocumentsDao - scgjBatchIdField ");
 				    return uploadDocumentsDao.scgjBatchIdField(batchId, scgjBatchId);
 
 				}
 				catch(Exception e)
 				{
-					LOGGER.error("An exception occured while checking the existence of batchID against the batchNumber :" + e);
+					LOGGER.error("CATCHING -- Exception handled while checking the Existence of batchId & scgjBatchNumber");
+					LOGGER.error("In UploadDocumentService - scgjBatchIdField");
+					LOGGER.error("Exception is "+ e);
+					LOGGER.error("Returning status code -25");		
 				    return  - 25;	
 				}
 		}
@@ -108,48 +130,53 @@ public class UploadDocumentService {
 		public int BatchIdField(String batchId) {
 			
 			LOGGER.debug("Request received from controller");
-			LOGGER.debug("In Scgj Details Service");
+			LOGGER.debug("In UploadDocumentService - BatchIdField");
 			
-				try {	
-					
-					LOGGER.debug("In try block of Scgj Details Service");
-					
-				return uploadDocumentsDao.BatchIdField(batchId);
-				
-					
-					
-			         
+				try {
+					LOGGER.debug("TRYING -- To check the existence of entered BatchId");
+					LOGGER.debug("Sending request to uploadDocumentsDao - BatchIdField");
+					return uploadDocumentsDao.BatchIdField(batchId);			         
 				}
 				catch(Exception e){
-				return 0;	
+					LOGGER.error("CATCHING -- Exception handled while checking the Existence of batchId");
+					LOGGER.error("In UploadDocumentService - BatchIdField");
+					LOGGER.error("Exception is "+ e);
+					LOGGER.error("Returning status code 0");
+					return 0;	
 				}
 		}
 		
 		
 		private String saveFile(String batchId, MultipartFile file, String pathToFolder) throws IOException
 		{
+			LOGGER.debug("Request received to save File");
+			LOGGER.debug("In UploadDocumentService - saveFile");
 			String pathOfUploadedFile = "";
 			String pathTillBatchId="";
 			int folderCreated = 0;
 			
 			if(!file.isEmpty())
 			{
-				
+				LOGGER.debug("IN IF -- When file is received");
 				String fileName = file.getOriginalFilename();
 				pathTillBatchId = pathToFolder + batchId + "//";
 				
+				LOGGER.debug("Creating a new Folder at"+ pathTillBatchId);
 				File folder = new File(pathTillBatchId);
 				
 				if(!folder.exists())
 				{
+					LOGGER.debug("In IF -- When folder exists");
 					if(folder.mkdirs() || folder.canWrite())
 					{
+						LOGGER.debug("In IF -- When folder can be a directory OR folder has the write permissions");
 						folderCreated = 1;
 						LOGGER.debug("Folder Created");
 						LOGGER.debug("File name is : " + fileName);
 					}
 					else
 					{
+						LOGGER.debug("In ELSE -- When folder cannot be made as directory or cannot be updated");
 						folderCreated = -1;
 						LOGGER.debug("Could not create or update the given directory");
 					}
@@ -158,7 +185,7 @@ public class UploadDocumentService {
 				    byte[] bytes = file.getBytes();
 					String fileNameToBeSaved = fileName;	
 			        Path path = Paths.get(pathTillBatchId + fileNameToBeSaved);
-			        LOGGER.debug("The path is : " + path);
+			        LOGGER.debug("The path of the file : " + path);
 			        
 			        pathOfUploadedFile = path.toAbsolutePath().toString();
 					LOGGER.debug("Path to absolute file is : " + pathOfUploadedFile);
@@ -168,6 +195,7 @@ public class UploadDocumentService {
 				
 				
 			}
+			LOGGER.debug("Returning path of File");
 			return pathOfUploadedFile;
 			
 		}
