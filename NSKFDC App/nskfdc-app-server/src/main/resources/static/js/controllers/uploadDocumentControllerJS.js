@@ -1,15 +1,15 @@
 var uploadDocument = angular.module('app');
 
-uploadDocument.controller("uploadDocumentController" , function($scope, $http, uploadFile){
+uploadDocument.controller("uploadDocumentController" , function($scope, $http, uploadFile, $timeout){
 	
 	   $scope.ids = [];
 	    $http.get('/getBatchIdDet')
 		    .then(function(response) {
-		        let dt = response.data;
-		        console.log(dt);
+		        let dt = response.data;/*
+		        console.log(dt);*/
 		        for (i in dt) {
-		            $scope.ids.push(response.data[i].batchId);
-		            console.log(dt[i]);
+		            $scope.ids.push(response.data[i].batchId);/*
+		            console.log(dt[i]);*/
 		        }
 		    });
 	
@@ -48,15 +48,14 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 
 	     $scope.uploadFile = function(){
 
-	      	var file = $scope.dataImport.upload;
-	      	console.log('File selected is :'+file);
+	      	var file = $scope.dataImport.upload;/*
+	      	console.log('File selected is :'+file);*/
 	      	var fileType = $scope.fileType;
 	      	var batchId = $scope.batchId;
 	      	var scgjBatchNumber = $scope.scgjBatchNumber;
 
 	          var uploadUrl = "/uploadFile";
 	        var uploadedFile = uploadFile.uploadFileToUrl(file, uploadUrl, fileType, batchId, scgjBatchNumber);
-	        
 	      /*  uploadFileed.then(function(response){
 	     	  console.log("I am here");
 	        },
@@ -106,11 +105,11 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 	  	  
 	  //zip download start
 	  $scope.downloadZip = function(){
-		  var url='/downloadZipFileService?batchId='+$scope.batchID;
-		  console.log("This is downloading")
+		  var url='/downloadZipFileService?batchId='+$scope.batchID;/*
+		  console.log("This is downloading")*/
 		  $http.get(url, { responseType : 'arraybuffer' })
-		  .then(function(response){
-			  console.log("done"+$scope.batchID + response.data);
+		  .then(function(response){/*
+			  console.log("done"+$scope.batchID + response.data);*/
 			  var zipFile = new Blob([response.data], { type : 'application/zip' })
 			  var downloadURL = URL.createObjectURL(zipFile);
 			  var link = document.createElement('a');
@@ -141,8 +140,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 		  $scope.submitForm1=function(){
 				if($scope.fileType=='fbr'){
 					$http.get("/getScgjDetails?batchId="+$scope.batchId+"&scgjBatchNumber="+$scope.scgjBatchNumber)
-					.then(function (response){
-						console.log("working5");
+					.then(function (response){/*
+						console.log("working5");*/
 						$scope.status= response.data;
 						if($scope.status==1){
 							document.getElementById("successful").innerHTML="Done";	
@@ -152,8 +151,8 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 						}
 					
 					
-						else{
-							console.log("working10");
+						else{/*
+							console.log("working10");*/
 							 document.getElementById("error_msg1").innerHTML="Please Enter the Valid Details";
 							 //document.getElementById("error_msg2").innerHTML="Invalid ScgjID";
 							 document.getElementById("successful").innerHTML="";

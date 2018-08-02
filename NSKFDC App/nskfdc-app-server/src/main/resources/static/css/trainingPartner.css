@@ -255,12 +255,4 @@ h6{
         padding: 10pt !important;
     }
 
- /*   #sidebar a[aria-expanded="false"]::before, #sidebar a[aria-expanded="true"]::before {
-        top: auto;
-        bottom: 5px;
-        right: 50%;
-        -webkit-transform: translateX(50%);
-        -ms-transform: translateX(50%);
-        transform: translateX(50%);
-    }*/
 }

@@ -5,14 +5,10 @@
 <div ng-app="app">
 <div ng-controller="uploadDocumentController">
 
-  <!--  <div id="content" class="container-fluid background">-->
- <div id="content-div" class="container-fluid background">
-    <div id="r1" class="row">
-      <div  class="col-md-12">
+
         <h3 id="marginForUpload">Upload Documents</h3>
-      </div>
       
-    </div>
+  
     <div id="drop" class="row">
     <form name="uploadform">
       <div id="r2d" class="col-md-3">
@@ -45,42 +41,28 @@
                   <div class="col-md-3 btn-wrapper" id="uploadFileDiv">
                     <div class="form-group">
              <span >
-                  <input type="text" name="file_name" id="file_name" class="form-control"></span>
+                  <input type="text" name="file_name" id="file_name" class="form-control" required></span>
                  <span>
                  <button type="button" class="btn btn-primary" ng-disabled="uploadform.$invalid">Browse</button></span>
                  <input type="file" id="file" accept=".pdf, .xls" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
 
-
-             
-                    
-                    
-                        
-                        <!-- <div class="input-group col-xs-12">
-                            <input type="text" id="fileName" ng-model="fileName" class="form-control input" data-error="Please enter .xls or .pdf file" placeholder="Upload .pdf or .xls File Here" required/>
-                            <span class="input-group-btn">
-                                        <button class="browse btn btn-primary input" id="browseButton" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
-                                    </span>
-                        </div> -->
                         <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please Select a .pdf or .xls file</span>
                     </div>
                     </div>
     
-       <!-- <div id="r2b1" class="col-md-1 btn btn-default btn-file">
-        <input type="file" name="file" id="file" class="inputfile " ng-model=" browse" ng-disabled="uploadform.$invalid" />
-		<label for="file">Browse</label> 
-      </div> -->
       <div class="col-md-2" id="uploadButtonDiv">
                     <button type="submit" class="form-control btn btn-info btn data-disable" id="uploadButton" ng-click="uploadFile()">Upload</button>
                 </div>
+                <span ng-bind="searchdetailError" id="error"></span>
+                <span id="Error"></span>
+                <span id="Success"></span>
+                
        </form>
     </div>
    
-    <div class="row">
      <!-- heading --> 
-      <div class="col-md-12 paddingrem">
         <h3 id="marginForSearch">Search Documents</h3>
-      </div>
-    </div>
+        
     <!--  form name-->
     <form name="searchForDocByTp">
       <div class="row background ">
@@ -90,6 +72,8 @@
      <span id="searchBox"></span>
      
         </div>
+        
+      
         <div class="col-md-2 col-sm-4 searchDocumentTxt">
           <button type="submit" class="btn btn-primary btncolor" ng-click="submitForm()">  
           Search</button>

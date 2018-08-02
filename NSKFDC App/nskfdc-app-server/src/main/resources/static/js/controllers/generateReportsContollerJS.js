@@ -1,6 +1,6 @@
 var report = angular.module('app');
 	
-report.controller('reportController',function($scope, $http) {
+report.controller('reportController',function($scope, $http, $timeout) {
 	
 	
     $scope.Submit1=function(batchId){
@@ -9,7 +9,7 @@ report.controller('reportController',function($scope, $http) {
     	{
     		if(response.data.byteLength!=0)
     		{
-    			document.getElementById("error_msg").innerHTML="";
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";
     			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -22,6 +22,10 @@ report.controller('reportController',function($scope, $http) {
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}
     		$scope.onLoad();
+    		$timeout(function() {
+    			document.getElementById("success_msg").innerHTML="";
+    			document.getElementById("error_msg").innerHTML="";
+             }, 3000);
     	}); 
     	
     	
@@ -33,7 +37,7 @@ report.controller('reportController',function($scope, $http) {
     	{
     		if(response.data.byteLength!=0)
     		{
-    			document.getElementById("error_msg").innerHTML="";	
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
     			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -46,6 +50,10 @@ report.controller('reportController',function($scope, $http) {
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}
     		$scope.onLoad();
+    		$timeout(function() {
+    			document.getElementById("success_msg").innerHTML="";
+    			document.getElementById("error_msg").innerHTML="";
+             }, 3000);
     	}); 
     	
     };
@@ -56,7 +64,7 @@ report.controller('reportController',function($scope, $http) {
     	{
     		if(response.data.byteLength!=0)
     		{
-    			document.getElementById("error_msg").innerHTML="";
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";
     			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -69,6 +77,10 @@ report.controller('reportController',function($scope, $http) {
     			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
     		}
     		$scope.onLoad();
+    		$timeout(function() {
+    			document.getElementById("success_msg").innerHTML="";
+    			document.getElementById("error_msg").innerHTML="";
+             }, 3000);
     	});
     };
     
@@ -78,7 +90,7 @@ report.controller('reportController',function($scope, $http) {
     	{	
     		if(response.data.byteLength!=0)
     		{
-    			document.getElementById("error_msg").innerHTML="";	
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
     			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -91,6 +103,10 @@ report.controller('reportController',function($scope, $http) {
 				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
 			}
     		$scope.onLoad();
+    		$timeout(function() {
+    			document.getElementById("success_msg").innerHTML="";
+    			document.getElementById("error_msg").innerHTML="";
+             }, 3000);
     	});
     };
     
@@ -100,8 +116,8 @@ report.controller('reportController',function($scope, $http) {
     	{	
     		if(response.data.byteLength!=0)
     		{
-    			console.log("the length of response is " + response.data.byteLength)
-    			document.getElementById("error_msg").innerHTML="";	
+    			/*console.log("the length of response is " + response.data.byteLength)*/
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
     			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -111,10 +127,14 @@ report.controller('reportController',function($scope, $http) {
     			link.click();
     		}
     	else{
-    			console.log("the length of response is " + response.data.byteLength)
+    			/*console.log("the length of response is " + response.data.byteLength)*/
 				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
 			}
     		$scope.onLoad();
+    		$timeout(function() {
+    			document.getElementById("success_msg").innerHTML="";
+    			document.getElementById("error_msg").innerHTML="";
+             }, 3000);
     	});
     };
 
@@ -170,6 +190,6 @@ report.controller('reportController',function($scope, $http) {
                		$scope.ids.push(response.data[i].batchId); 
                	}
                	let length=$scope.ids.length;
-               	console.log(length);
+               	/*console.log(length);*/
            	});
 });

@@ -51,6 +51,12 @@ input.ng-invalid {
 #error_msg{
 	color: red;
     padding-left: 16%;
+    font-weight: bold;
+}
+#success_msg{
+	color: green;
+	padding-left:16%;
+	font-weight: bold;
 }
 .ui-grid-cell-contents{
     text-align: center;

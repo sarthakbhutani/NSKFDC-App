@@ -1,5 +1,3 @@
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
 
 .r2d{
     
@@ -66,25 +64,13 @@ background-color: #02B0F0;
     padding:0rem;
 }
 
-.background{
-background: #fbfbfb;
-
-    padding-right: 0px;
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-bottom: 0px;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
 #marginForSearch{
-    margin-left: 2rem;
-     margin-top: 14px;
-    margin-bottom: 15px;
-     font-size: 2rem;
+  	font-size: 2rem;
+	padding: 2%;
 }
 #marginForUpload{
 	font-size: 2rem;
+	padding: 2%;
 }
 
 .form-rounded {
@@ -250,6 +236,19 @@ h3{
 }
 #error{
 	color:red;
+	font-weight: bold;
+}
+#success{
+	color:green;
+	font-weight: bold;
+}
+#Error{
+	color:red;
+	font-weight: bold;
+}
+#Success{
+	color:green;
+	font-weight: bold;
 }
 #uploadButton
 {

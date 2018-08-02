@@ -33,6 +33,7 @@
  #errormessage{
     margin-right: 41%;
     color:red;
+    font-weight: bold;
 }
 #formcolor
 {
@@ -78,11 +79,13 @@ div.ui-grid-canvas{
 #errorMessage{
 	color:red;
 	font-size:1.5rem;
+	font-weight: bold;
 }
 #errorMessageBatch
 {
 	color:red;
-	font-size:1.5rem;	
+	font-size:1.5rem;
+	font-weight: bold;	
 }
 .pointer{
 	width:10%;
@@ -90,9 +93,11 @@ div.ui-grid-canvas{
 }
 #error{
 	color:red;
+	font-weight: bold;
 }
 #success{
 	color:green;
+	font-weight: bold;
 }
 .ui-grid-cell-contents{
     text-align: center;

@@ -38,7 +38,7 @@ tp.controller("generateBatchReportController" , function($scope, $http){
     	}).then(function(response){
     		if(response.data.byteLength!=0)
     		{
-    			document.getElementById("Error").innerHTML="";
+    			document.getElementById("Success").innerHTML="<center> Batch Report Successfully generated ! </center>";
     			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
@@ -69,8 +69,8 @@ tp.controller("generateBatchReportController" , function($scope, $http){
                   	for(i in dt){
                   		$scope.ids.push(response.data[i].batchId); 
                   	}
-                  	let length=$scope.ids.length;
-                  	console.log(length);
+                  	let length=$scope.ids.length;/*
+                  	console.log(length);*/
               	});
               
           

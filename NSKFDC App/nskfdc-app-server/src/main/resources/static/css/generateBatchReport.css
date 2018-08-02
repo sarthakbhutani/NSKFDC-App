@@ -42,21 +42,7 @@
     font-size: 1.5rem;
     padding:0rem;
 }
-/* .grid{
-	
-	width: 100%;
-	height: 5%;
-	margin-top: 2%;
-	margin-left:-1.5%;
-	border-collapse: separate;
-    border-spacing: 2% 2%;
-	text-align: center;
-}
 
-div.ui-grid-header-cell-row{
-	background-color:#19b2cc;
-	color:#ffffff;
-} */
 h4{
 	color:black;
 	padding-top:1rem;
@@ -108,6 +94,11 @@ input[type="text"] {
 }
 #Error{
 	color:red;
+	font-size: 1.75rem;
+	font-weight: bold;
+}
+#Success{
+	color:green;
 	font-size: 1.75rem;
 	font-weight: bold;
 }
