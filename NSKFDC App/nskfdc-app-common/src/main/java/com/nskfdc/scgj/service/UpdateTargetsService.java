@@ -19,14 +19,17 @@ public class UpdateTargetsService {
 
     public Integer updateTargets(String nsdcRegNumber, int targets)
     {
-        LOGGER.debug("Received request from controller to update targets of training partner with nsdcRegNumber:  " + nsdcRegNumber);
-        LOGGER.debug("Sending request to dao to update the targets of training partner");
+        LOGGER.debug("Received request from Controller to UpdateTargetsService");
+        LOGGER.debug("In updateTargets - to update targets of training partner for entered NSDC Reg Number ");
+        LOGGER.debug("Sending request to updateTargetsDao - updateTargets");
         return updateTargetsDao.updateTargets(nsdcRegNumber,targets);
     }
 
     public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
 
-        LOGGER.debug("Request received from controller to get details of updated targets");
+        LOGGER.debug("Request received from controller to UpdateTargetsService");
+        LOGGER.debug("In updateTargetDetails - To get the details of targets corresponding to NSDC Reg Number");
+        LOGGER.debug("Sending request to UpdateTargetsDao - updateTargetDetails");
         return updateTargetsDao.updateTargetDetails(nsdcRegNumber);
     }
 }

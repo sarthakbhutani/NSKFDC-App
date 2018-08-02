@@ -28,43 +28,43 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
     private static final UpdateTargetRowMapper updateTargetRowMapper = new UpdateTargetRowMapper();
     public Integer updateTargets(String nsdcRegNumber, int targets)
     {
+    	 LOGGER.debug("Request received from service to UpdateTargetsDao");
+         LOGGER.debug("In updateTargets - To update targets of TP for entered NSDC Reg. Number");
+         
         try {
 
-            LOGGER.debug("Request received from service to update targets of training partner with NSDC Reg. Number : " + nsdcRegNumber);
+           LOGGER.debug("TRYING -- To update the targets for a TP");
+           LOGGER.debug("Checking existence of user for entered NSDC Registration Number : " + nsdcRegNumber);
+           Integer existenceStatus = checkExistenceStatus(nsdcRegNumber);
+           LOGGER.debug("The status of existence of user is : " + existenceStatus);
             
-            LOGGER.debug("Checking existence of user with NSDC Registration Number : " + nsdcRegNumber);
-            
-            Integer existenceStatus = checkExistenceStatus(nsdcRegNumber);
-            LOGGER.debug("The status of existence of user is : " + existenceStatus);
-            
-            
-            if(existenceStatus == 1)
+           if(existenceStatus == 1)
             {
-            	LOGGER.debug("User with NSDC Reg. Number :" + nsdcRegNumber + "exists");
-            	  LOGGER.debug("The new target to be updated is : " + targets);
-                  LOGGER.debug("Creating hashmap of objects");
-                  Map<String, Object> parameters = new HashMap<>();
-                  LOGGER.debug("Inserting values into the hashmap");
-                  parameters.put("nsdcRegNumber", nsdcRegNumber);
-                  parameters.put("updatedTargets", targets);
-                  return getJdbcTemplate().update(updateTargetsConfig.getUpdateTargets(), parameters);
+        	   	LOGGER.debug("In IF -- When user EXISTS for entered NSDC Reg Number");
+                LOGGER.debug("Creating hashmap of objects");
+                Map<String, Object> parameters = new HashMap<>();
+                LOGGER.debug("Inserting nsdcRegNumber, updatedTargets into parameters");
+                parameters.put("nsdcRegNumber", nsdcRegNumber);
+                parameters.put("updatedTargets", targets);
+                LOGGER.debug("Executing query to update Targets for passed nsdcRegNumber");
+                return getJdbcTemplate().update(updateTargetsConfig.getUpdateTargets(), parameters);
 
             }
             
             else
             {
-            	LOGGER.debug("User with NSDC Reg. Number does not exist in the database");
+            	LOGGER.debug("In ELSE -- When user with entered NSDC Reg Number does not exists");
+            	LOGGER.debug("Returning existence status as 0");
             	return existenceStatus;
-            }
-            
-          
+            }          
         }
 
         catch(Exception e )
         {
-            LOGGER.error("An exception occured while updating targets for training partner with NSDC Registration Number : " + nsdcRegNumber);
-            LOGGER.error("The exception is : " + e);
-            LOGGER.error("Returning -23");
+        	LOGGER.error("CATCHING -- Exception handled while updating targets");
+            LOGGER.error("In UpdateTargetsDao - updateTargets");
+            LOGGER.error("The Exception is : " + e);
+            LOGGER.error("Returning status code -23");
             return -23;
         }
 
@@ -72,36 +72,50 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 
     private Integer checkExistenceStatus(String nsdcRegNumber) {
 		
-    	LOGGER.debug("In method checkExistenceStatus to check existence of user with NSDC Reg. Number : " + nsdcRegNumber);
+    	LOGGER.debug("Request received in method checkExistence for entered nsdcRegNumber");
+    	LOGGER.debug("To check existence of user with NSDC Reg. Number : " + nsdcRegNumber);
     	
     	Map<String,Object>existenceParam = new HashMap<>();
-    	LOGGER.debug("Hashmap of object created");
+    	LOGGER.debug("Inserting nsdcRegNumber into parameters");
     	existenceParam.put("nsdcRegNumber", nsdcRegNumber);
     	try
     	{
-    		LOGGER.debug("Inserting params into JDBC Template to check the existence of user");
+    		LOGGER.debug("TRYING -- checkExistenceStatus");
+    		LOGGER.debug("Executing query to check existence of enetered NSDC Reg Number");
     		return getJdbcTemplate().queryForObject(updateTargetsConfig.getCheckUserExistence(),existenceParam,Integer.class);
     	}
     	catch(Exception e)
     	{
-    		LOGGER.error("An exception occured while checking the existence of user with nsdcRegNumber : " +nsdcRegNumber);
+    		
+    		LOGGER.error("CATCHING -- Exception handled while checking existence of nsdcRegNumber");
+            LOGGER.error("In UpdateTargetsDao - checkExistenceStatus");
+            LOGGER.error("The Exception is : " + e);
+            LOGGER.error("Returning status code -30");
     		return -30;
     	}
 	
 	}
 
 	public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
-        LOGGER.debug("Request received from service to get details of updated target for training partner");
+        LOGGER.debug("Request received from service to UpdateTargetsDao");
+        LOGGER.debug("To get Target Details for training partner");
+        LOGGER.debug("Against entered NSDC Reg Number");
         try
         {
+        	LOGGER.debug("TRYING -- updateTargetDetails");
             LOGGER.debug("Creating hashmap of objects");
             Map<String,Object> param = new HashMap<>();
+            LOGGER.debug("Inserting entered nsdcRegNumber in parameter map");
             param.put("nsdcRegNumber",nsdcRegNumber);
+            LOGGER.debug("Executing query to get target details againest enterded nsdcRegNumber");
             return getJdbcTemplate().query(updateTargetsConfig.getUpdatedTargetDetails(), param,updateTargetRowMapper);
         }
         catch(Exception e)
         {
-        	LOGGER.error("An Exception occured while fetching the details for the updated targets " + e);
+        	LOGGER.error("CATCHING -- Exception handled while checking existence of nsdcRegNumber");
+            LOGGER.error("In UpdateTargetsDao - checkExistenceStatus");
+            LOGGER.error("The Exception is : " + e);
+            LOGGER.error("Returning null");
             return null;
         }
 
