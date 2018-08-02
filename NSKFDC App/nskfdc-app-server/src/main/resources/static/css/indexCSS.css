@@ -1,4 +1,13 @@
 
+#google_translate_element {
+  	position: absolute;
+    z-index: 99999;
+    margin: 30% 0 0 -5%;
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
 .backgroundImageForLogin{
 	 background-image: url("../images/loginBackground.jpg");
 	 background-size: cover;
