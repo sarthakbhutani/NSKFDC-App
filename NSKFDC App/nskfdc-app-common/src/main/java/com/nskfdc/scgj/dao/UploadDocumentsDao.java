@@ -49,45 +49,47 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	
 	public String uploadDocuments(String batchId,String userEmail,String fileType,String path)
 	{
-		LOGGER.debug("Received request from service to upload file path into the database");
-		LOGGER.debug("Checking Existence of user uploaded documents in the uploaded documents table");
-		LOGGER.debug("Creating hashmap of objects");
+		LOGGER.debug("Received request from service to saving path of Uploaded files into the database");
+		LOGGER.debug("In UploadDocumentsDao - uploadDocuments");
 		
 		try
 		{
+			LOGGER.debug("TRYING -- To save the paths for Uploaded documents for the entered batchId of TP");
+			LOGGER.debug("Checking - If user is uploading documents for the first time or not");
+			LOGGER.debug("Creating hashmap of objects");
 			Map<String,Object> params = new HashMap<>();
+			LOGGER.debug("Inserting batchId & userEmail into Hashmap to check");
 			params.put("batchId", batchId);
 			params.put("userEmail",userEmail);
-			
-			LOGGER.debug("Inserted parameters into the hashmap");
-			 checkUserDocumentExistence = getJdbcTemplate().queryForObject(uploadDocumentsConfig.getCheckExistence(), params, Integer.class);
-			 LOGGER.debug("Existence of user in the uploaded documents table is : " + checkUserDocumentExistence);
+			checkUserDocumentExistence = getJdbcTemplate().queryForObject(uploadDocumentsConfig.getCheckExistence(), params, Integer.class);
+			LOGGER.debug("Result of checking if the user's documents exists is : " + checkUserDocumentExistence);
 			 
 			
 			 if(checkUserDocumentExistence == 1)
 			 {
-				 LOGGER.debug("User Documents exists in the database");
+				 LOGGER.debug("In IF -- User Documents already exists");
 				 LOGGER.debug("Updating the path of the documents");
+				 LOGGER.debug("Calling method - updateDocumentPath for logged in User");
 				 return updateDocumentPath(batchId,userEmail,fileType,path);
 			 }	
 			 	
 			 else 
 			 {
-				 LOGGER.debug("User does not exists in the database");
+				 LOGGER.debug("In ELSE -- When User documents does not exist");
 				 LOGGER.debug("Inserting the batchId and userEmail in uploaded documents table");
-				 
 				 Integer insertStatus = getJdbcTemplate().update(uploadDocumentsConfig.getInsertUserDetails(), params);
-				 
+				 LOGGER.debug("Status of userEmail & batchId inserted in uploaded documents "+ insertStatus);
 				 if(insertStatus == 1)
 				 {
-					 LOGGER.debug("batchId and userEmail inserted into table");
-					 LOGGER.debug("Sending control to updateDocumentPath to update the path of the documents");
-					   return updateDocumentPath(batchId,userEmail,fileType,path);
+					 LOGGER.debug("In IF -- When batchId & userEmail inserted successfully in uploadedDocuments table");
+					 LOGGER.debug("Calling mathod - updateDocumentPath, to update the path of the documents");
+					 return updateDocumentPath(batchId,userEmail,fileType,path);
 				 }
 				 
 				 else
 				 {
-
+					 LOGGER.debug("In ELSE -- When batchId & userEmail in uploaded Documents table");
+					 LOGGER.debug("Returning string 'Document cannot be uploaded'");
 					 return "Document cannot be uploaded";
 				 }
 				 
@@ -97,7 +99,10 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		 } 
 		catch(Exception e)
 				{
-					LOGGER.debug("An Exception occured while uploading documents in the database " + e);
+					LOGGER.error("CATCHING -- Exception handled while saving paths of uploaded documents");
+					LOGGER.error("In UploadDocumentsDao - uploadDocuments ");
+					LOGGER.error("Exception is : "+ e);
+					LOGGER.debug("Returning string 'Document cannot be uploaded'");
 					return "Document cannot be uploaded";
 				}
 		
@@ -118,34 +123,42 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	private String updateDocumentPath(String batchId, String userEmail, String fileType, String path) 
 	{
 	   
-		LOGGER.debug("In method updateDocumentPath to update the path of the document");
-		LOGGER.debug("Creating hashmap of objects");
+		LOGGER.debug("In method - updateDocumentPath, to update the path of the uploaded documents");
+		LOGGER.debug("Creating hashmap of objects to pass in the query");
 		Map<String,Object>updateParams = new HashMap<>();
 		
+		LOGGER.debug(" In Switch Case -- For different fileType");
 		 switch (fileType) 
 		 {
 		 
 		 case "occupationCertificate":
 			 
-			 LOGGER.debug("The document is occupation certificate");
+			 LOGGER.debug("Case - When document is occupation certificate");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
-			 LOGGER.debug("Inserting query into the JDBC Template");
+			 
 			 try
 			 {
-				 LOGGER.debug("In try block of upload occupationCertificate");
+				 LOGGER.debug("TRYING -- To upload occupationCertificate");
+				 LOGGER.debug("Executing update query to save path for Occupation Certificate");
 				  updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateOccupationCertificatePath(), updateParams);
 	
 					 if(updateStatus < 1)
 					 {
+						 LOGGER.debug("In IF -- When updating status of OC is <1");
+						 LOGGER.debug("Returning message 'File cannot be uplaoded, Please try again'");
 						 return "File cannot be uplaoded, Please try again"; 
 					 }
 					 	
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.error("An Exception occured while updating path of occupation certificate " + e);
+				 LOGGER.error("CATCHING -- Exception handled while updating OC filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'Cannot upload the occupation certificate'");
 				 return "Cannot upload the occupation certificate";
 			 }
 			 
@@ -153,25 +166,31 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		 			
 		 case "attendanceSheet":
 			 
-			 LOGGER.debug("The type of file to be uploaded is attendance sheet");
+			 LOGGER.debug("Case - When document is attendance sheet");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
 			 try
 			 {
-				 LOGGER.debug("Inserted the path for attendance sheet in hashmap");
+				 LOGGER.debug("TRYING -- To upload AttendanceSheet");
+				 LOGGER.debug("Executing update query to save path for AttendanceSheet");
 				 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateAttendanceSheetPath(), updateParams);
 				 
 				 if(updateStatus < 1)
 				 {
-					 LOGGER.debug("Attendance Sheet path is not updated");
+					 LOGGER.debug("In IF -- When updating status of Attendance Sheet is <1");
+					 LOGGER.debug("Returning message 'File cannot be uplaoded'");
 					 return "File cannot be uploaded";
 				 }
 	
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.error("An Exception occured while uplaoding the attendance sheet");
+				 LOGGER.error("CATCHING -- Exception handled while updating AttendanceSheet filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'File cannot be uplaoded'");
 				 return "File cannot be uplaoded";
 			 }
 			 			
@@ -179,24 +198,31 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		 
 		 case "NSKFDCSheet":
 			 
-			 LOGGER.debug("The received file is NSKFDC Sheet");
+			 LOGGER.debug("Case - When document is NSKFDCSheet");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
 			 
 			 try
 			 {
+				 LOGGER.debug("TRYING -- To upload NSKFDCSheet");
+				 LOGGER.debug("Executing update query to save path for NSKFDCSheet");
 			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateNSKFDCSheet(), updateParams);
 	
 				 if(updateStatus < 1)
 				 {
-					 LOGGER.debug("NSKFDC Sheet path cannot be updated");
+					 LOGGER.debug("In IF -- When updating status of NSKFDCSheet is <1");
+					 LOGGER.debug("Returning message 'File cannot be uplaoded'");
 					 return "File cannot be uploaded";
 				 }
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.debug("Exception occured while uplaoding file for NSKFDC Sheet " + e);
+				 LOGGER.error("CATCHING -- Exception handled while updating NSKFDCSheet filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'File cannot be uplaoded'");
 				 return "File cannot be uploaded";
 			 }
 		 
@@ -204,74 +230,96 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		
 		case "SDMSSheet" :
 			
-			LOGGER.debug("The document is SDMS Sheet");
+			 LOGGER.debug("Case - When document is SDMSSheet");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
 			 try
 			 {
-			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateSDMSSheet(), updateParams);
+				 LOGGER.debug("TRYING -- To upload SDMSSheet");
+				 LOGGER.debug("Executing update query to save path for SDMSSheet");
+				 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateSDMSSheet(), updateParams);
 	
 				 if(updateStatus < 1)
 				 {
-					 LOGGER.debug("SDMS Sheet path cannot be updated");
+					 LOGGER.debug("In IF -- When updating status of SDMSSheet is <1");
+					 LOGGER.debug("Returning message 'File cannot be uplaoded'");
 					 return "File cannot be uploaded";
 				 }
 
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.debug("Exception occured while uplaoding file for NSKFDC Sheet " + e);
+				 LOGGER.error("CATCHING -- Exception handled while updating SDMSSheet filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'File cannot be uplaoded'");
 				 return "File cannot be uploaded";
 			 }	
 			 			break;
 			
 		case "selectionCommitteeMeeting" :
 			
-			LOGGER.debug("The document is minutes of selection committee meeting");
+			LOGGER.debug("Case - When document is selectionCommitteeMeeting");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
 			 
 			 try
 			 {
-			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateMinuteOfSelectionCommittee(), updateParams);
+				 LOGGER.debug("TRYING -- To upload selectionCommitteeMeeting");
+				 LOGGER.debug("Executing update query to save path for selectionCommitteeMeeting");
+				 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateMinuteOfSelectionCommittee(), updateParams);
 	
 				 if(updateStatus < 1)
 				 {
-					 LOGGER.debug("Selection Committee Meeting path cannot be updated");
+					 LOGGER.debug("In IF -- When updating status of selectionCommitteeMeeting is <1");
+					 LOGGER.debug("Returning message 'File cannot be uplaoded'");
 					 return "File cannot be uploaded";
 				 }
 
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.debug("Exception occured while uplaoding file for Selection Committee Meeting " + e);
+				 LOGGER.error("CATCHING -- Exception handled while updating selectionCommitteeMeeting filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'File cannot be uplaoded'");
 				 return "File cannot be uploaded";
 			 }	
 			 					break;
 			 					
 		case "finalBatchReport":
 			
-			LOGGER.debug("The document is final batch report");
+			
+			LOGGER.debug("Case - When document is finalBatchReport");
+			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
 			 updateParams.put("batchId", batchId);
 			 updateParams.put("userEmail", userEmail);
 			 updateParams.put("path",path);
 			 
 			 try
 			 {
+				 LOGGER.debug("TRYING -- To upload finalBatchReport");
+				 LOGGER.debug("Executing update query to save path for finalBatchReport");
 			 updateStatus = getJdbcTemplate().update(uploadDocumentsConfig.getUpdateFinalBatchReportPath(), updateParams);
 	
 				 if(updateStatus < 1)
 				 {
-					 LOGGER.debug("Final Batch Report path cannot be updated");
+					 LOGGER.debug("In IF -- When updating status of finalBatchReport is <1");
+					 LOGGER.debug("Returning message 'File cannot be uplaoded'");
 					 return "File cannot be uploaded";
 				 }
 
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.debug("Exception occured while uplaoding file for final batch Report " + e);
+				 LOGGER.error("CATCHING -- Exception handled while updating finalBatchReport filepath");
+				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning message 'File cannot be uplaoded'");
 				 return "File cannot be uploaded";
 			 }	
  
@@ -295,37 +343,37 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	
 	
 	public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail) {
-		//write Logger here
-		LOGGER.debug("Request received from Service");
-		LOGGER.debug("In UploadDocumentsuploadDao, to populate the grid-ui" + batchId);
+		
+		LOGGER.debug("Request received from Service - UploadDocumentsDao ");
+		LOGGER.debug("In getSearchedDocument, to get documents for searched BatchId of TP" + batchId);
 		
 				try {
-					
-					LOGGER.debug("In Try Block of UploadDocumentsDao" + batchId);
+					LOGGER.debug("TRYING -- To get Documents for entered batchId");
 					LOGGER.debug("Creating hashmap of objects");
 					Map<String,Object> parameters = new HashMap<>();
-					LOGGER.debug("Inserting parameters into the hashmap " + batchId+"email:"+userEmail);
-					parameters.put("batchId",batchId); //add, tpEmailId later  
+					LOGGER.debug("Inserting parameters - batchId, userEmail into the hashmap");
+					parameters.put("batchId",batchId);  
 					parameters.put("userEmail", userEmail);
-					LOGGER.debug("The parameter inserted in hashmap are : " + parameters.get("batchId"));
-					LOGGER.debug("The query after inserting the parameters is : " + uploadDocumentsConfig.getUploadDocumentsQuery());
+					LOGGER.debug("Executing query to get searched batchId documents");
 					return  getJdbcTemplate().query(uploadDocumentsConfig.getUploadDocumentsQuery(),parameters,uploadDocumentsRowMapper);
 
 					
 				}
 				catch(Exception e) {
-					LOGGER.error("In catch block of UploadDocumentsuploadDao");
-					LOGGER.error("Error occured in UploadDocumentsuploadDao with exception" + e);
+					 LOGGER.error("CATCHING -- Exception handled while getting Searched documents");
+					 LOGGER.error("In UploadDocumentsDao - getSearchedDocument");
+					 LOGGER.error("Exception is :"+ e);
+					 LOGGER.error("Returning null");
 					return null;
 				}
 				
 				
 			}
 	public List<BatchDto> getBatchDetail(String userEmail){
-		LOGGER.debug("Request received from UploadService to get batch Id");
-		LOGGER.debug("In UploadDocumentsDao" + userEmail);
+		LOGGER.debug("Request received from Service to UploadDocumentsDao");
+		LOGGER.debug("In UploadDocumentsDao - To get BatchId for logged in TP");
 		Map<String, Object> parameters = new HashMap<>();
-		LOGGER.debug("Generating hashmap of parameters");
+		LOGGER.debug("Inserting userEmail into hashmap");
 		parameters.put("userEmail",userEmail);
 		LOGGER.debug("The username put into hashmap is : " + parameters.get(userEmail));
 		if(parameters.isEmpty())
@@ -335,16 +383,19 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		
 			try {
 						
-				LOGGER.debug("In try block of upload documents dao to get batch ID");
+				LOGGER.debug("TRYING -- To get batch ID");
+				LOGGER.debug("Executing query to get batchId of logged in TP");
 				return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,getBatchIdRowMapper );
 						
 				}		
 			catch(Exception e)
 			{
 	
-				LOGGER.error("An exception occured while fetching the batch ID " + e);
-						
-				return null;
+				 LOGGER.error("CATCHING -- Exception handled while getting BatchId for TP");
+				 LOGGER.error("In UploadDocumentsDao - getBatchDetail");
+				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error("Returning null");						
+				 return null;
 			}
 	}
 
@@ -364,46 +415,54 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	
 	public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
 		
-		LOGGER.debug("Request received from scgj service");		
+		LOGGER.debug("Request received from service to UploadDocumentsDao");
+		LOGGER.debug("In scgjBatchIdField - To check existence of entered batchId & scgjBatchNumber");
 		try {
 			
-			LOGGER.debug("In try block of scgj Dao the existence of batchID against the batchNumber");
+			LOGGER.debug("TRYING -- To check the existence of batchId & SCGJbatchNumber");
 			LOGGER.debug("Creating hash map of objects");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting parameters - batchId & scgjBatchNumber into HashMap");
 			parameters.put("batchId",batchId);
 			parameters.put("scgjBatchNumber", scgjBatchNumber);
 			
-			LOGGER.debug("Inserting the params in JDBC Template to check the existence of batchID against the batchNumber");
+			LOGGER.debug("Executing query to check the existence of batchID against the batchNumber");
 			return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getShowScgjDetails(), parameters,Integer.class);
 			
 		}catch(Exception e) {
 			
-			LOGGER.error("An exception occured while checking the existence of batchID against the batchNumber : " + e);
+			LOGGER.error("CATCHING -- Exception handled while check the existence of batchID against the entered SCGJbatchNumber");
+			LOGGER.error("In UploadDocumentsDao - scgjBatchIdField");
+			LOGGER.error("Exception is :"+ e);
+			LOGGER.error("Returning status code -35");
 			return -35;
 		}
 	}	
 	public int BatchIdField(String batchId) {
 		
-		LOGGER.debug("Request received from scgj service");
-		LOGGER.debug("In scgj Dao");
+		LOGGER.debug("Request received from service to UploadDocumentsDao");
+		LOGGER.debug("In BatchIdField - To check the existence of BatchId");
 		
 		try {
 			
-			LOGGER.debug("In try block of scgj Dao");
+			LOGGER.debug("TRYING -- To check if entered batchId exists");
 			Map<String, Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting batchId in HashMap");
 			parameters.put("batchId",batchId);
+			LOGGER.debug("Executing query to check existence of batchId in batch table");
 			return getJdbcTemplate().queryForObject(uploadDocumentsConfig.getBatchidDetails(), parameters,Integer.class);
 			
 		}catch(Exception e) {
 			
-			LOGGER.debug("In catch block of scgj Dao"+e);
+			LOGGER.error("CATCHING -- Exception handled while check the existence of entered batchID");
+			LOGGER.error("In UploadDocumentsDao - scgjBatchIdField");
+			LOGGER.error("Exception is :"+ e);
+			LOGGER.error("Returning status code 0");
 			return 0;
 		}
 	}	
 
 
-
-//bhutano
 
 	static class UploadDocumentsRowMapper implements RowMapper<UploadDocumentsDto>{
 		@Override
@@ -423,35 +482,42 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			  String dataSheetForSDMSPath = rs.getString("dataSheetForSDMSPath");
 			  String dataSheetForNSKFCPath = rs.getString("dataSheetForNSKFCPath");
 			  String attendanceSheetPath = rs.getString("attendanceSheetPath");
-			  LOGGER.debug("IN DAO, checking for values"+batchId);
+			 
+
+			  LOGGER.debug("In UploadDocumentsRowMapper");
 	
 			  
 			  if(s2!=null){
-				  LOGGER.debug("STRING NOT NULL");
+				  LOGGER.debug("In IF -- When STRING NOT NULL");
+				  LOGGER.debug("Stting string length to 0");
 				  s2.setLength(0);
 			  }else{
-				  LOGGER.debug("STRING NULL");
+				  LOGGER.debug("In ELSE -- When STRING NULL");
 			  }
 			//MANIPULATION FOR FILE 
-			  LOGGER.debug("In rowmapper VARIABLE DECLARATION");
-			  
+			  LOGGER.debug("UploadDocumentsRowMapper VARIABLE DECLARATION");
+			  LOGGER.debug("UploadDocumentsRowMapper for FinalBatchReport VARIABLE DECLARATION");
 			  if(finalBatchReport==1){
 				  s2.append("Final Batch Report, ");
 			  }
-			  LOGGER.debug("In rowmapper BEFORE occupationCertificate VARIABLE DECLARATION");
+			  LOGGER.debug("In UploadDocumentsRowMapper occupationCertificate VARIABLE DECLARATION");
 			  if(occupationCertificate==1){
 			  
 				  s2.append("Occupation Certificate, ");
 			  }
+			  LOGGER.debug("In UploadDocumentsRowMapper MinutesOfSelectionCommittee VARIABLE DECLARATION");
 			  if(minuteOfSelectionCommittee==1){
 				  s2.append("Signed Minute Of Selection Committee, ");
 			  }
+			  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForSDDMS VARIABLE DECLARATION");
 			  if(dataSheetForSDDMS==1){
 				  s2.append("Data Sheet For SDDMS, ");
 			  }
+			  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForNSKFC VARIABLE DECLARATION");
 			  if(dataSheetForNSKFC==1){
 				  s2.append("Data Sheet For NSKFC, ");
 			  }
+			  LOGGER.debug("In UploadDocumentsRowMapper AttendanceSheet VARIABLE DECLARATION");
 			  if(attendanceSheet==1){
 				  s2.append("Attendance Sheet, ");
 			  }
@@ -462,54 +528,62 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			  ArrayList<String> files = new ArrayList<String>();
 				
 
-				//condition to handle file paths::
+			  LOGGER.debug("Condition to store File Paths");
 			  if(finalBatchReportPath!=null){
+				  LOGGER.debug("In IF -- When Final Batch Report Path is not NULL");
 				  files.add(finalBatchReportPath);
 			  }
 			  if(occupationCertificatePath!=null){
+				  LOGGER.debug("In IF -- When occupation Certificate Path is not NULL");
 				  files.add(occupationCertificatePath);
 			  }
 			  if(minuteOfSelectionCommitteePath!=null){
+				  LOGGER.debug("In IF -- When minute Of Selection Committee Path is not NULL");
 				  files.add(minuteOfSelectionCommitteePath);
 			  }
 			  if(dataSheetForSDMSPath!=null){
-//				  files.add("D:/sarthak/testZIp/test1.txt");  //prototype
+				  LOGGER.debug("In IF -- When dataSheetForSDMSPath is not NULL");
 				  files.add(dataSheetForSDMSPath);
 			  }
 			  if(dataSheetForNSKFCPath!=null){
+				  LOGGER.debug("In IF -- When dataSheetForNSKFCPath is not NULL");
 				  files.add(dataSheetForNSKFCPath);
 			  }
 			  if(attendanceSheetPath!=null){
+				  LOGGER.debug("In IF -- When attendanceSheetPath is not NULL");
 				  files.add(attendanceSheetPath);
 			  }
-			  LOGGER.debug("In try block  BEFORE ZIP data for Search Document Functionality");
 				
 			  String zipFileLink = " ";
 
 			  if(s2!=null){
-				  LOGGER.debug("STRING NOT NULL");
+				  LOGGER.debug("In IF -- When STRING Is NOT NULL");
 			  }else{
-				  LOGGER.debug("STRING NULL");
+				  LOGGER.debug("In ELSE -- When STRING is NULL");
 			  }
-			  //String zipLocationRead = readApplicationConstantsObj.getCreateZipFileAtLocation();  //should be actual thing
-			  String zipLocationRead = System.getProperty("user.dir");  //getting working directory
-  // THE ABOVE LINE NEEDS TO CHANGED AS IT NEEDS TO PICK THE DYNAMIC PATH FOR STORING ZIP FILE.
-  //PRAVEK SIR WILL BE IMPLEMENTING THOSE CHANGES
+			 
 
-			  LOGGER.debug("the current working directory is " + zipLocationRead);
+			  LOGGER.debug("Getting Local Working Directory");
+  			  String zipLocationRead = System.getProperty("user.dir");  
+  			  LOGGER.debug("The current working directory is " + zipLocationRead);
 			  if(s2!=null){
+				  LOGGER.debug("In IF -- When Paths of Files is Not NULL");
+  				  LOGGER.debug("Creating Folder at current Working Directory");
 				   File folder = new File(zipLocationRead);
-				  LOGGER.debug(zipLocationRead);
+				  
 				  if(!folder.exists()){
+					  LOGGER.debug("In IF -- When Folder does not exists");
 					  if(folder.mkdirs() || folder.canWrite())
 					  {
+						  LOGGER.debug("In IF -- When Folder can be made directory & Folder can be updated");
 						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
 						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+						  LOGGER.debug("Zipped file location" + zipFileLink);
 						  FileOutputStream fileOutputStream = null;
-					        ZipOutputStream zipOut = null;
-					        FileInputStream fileInputStream = null;
+					      ZipOutputStream zipOut = null;
+					      FileInputStream fileInputStream = null;
 					        try {
-					        	LOGGER.debug("In try block of ZipFIleCreation");
+					        	LOGGER.debug("TRYING -- To create Zip file");
 					            fileOutputStream = new FileOutputStream(zipFileLink);
 					            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
 					            for(String filePath:files){
@@ -527,29 +601,36 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					                fileInputStream.close();
 					            }
 					            zipOut.close();
-					            LOGGER.debug("Done... Zipped the files...");   					            
+					            LOGGER.debug("Zipped the files successfully");  					            
 					        } catch (FileNotFoundException e) {
-					            // TODO Auto-generated catch block
-//					            e.printStackTrace();
-					            LOGGER.debug("File not found exception :" +e);
+					        	LOGGER.error("CATCHING -- Exception handled  while Zipping the files");
+  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+  					            LOGGER.error("File not found exception :" +e);
 					        } catch (IOException e) {
-					            // TODO Auto-generated catch block
-//					            e.printStackTrace();
-					        	LOGGER.debug("Input output exception :" +e);
+					        	LOGGER.error("CATCHING -- IOException handled  while Zipping the files");
+  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+  					            LOGGER.error(" Exception is :" +e);
 					        } finally{
 					            try{
+					            	LOGGER.debug("TRYING -- Closing the fileOutputStream");
 					                if(fileOutputStream != null) fileOutputStream.close();
 					            } catch(Exception ex){
-					            	LOGGER.debug("Error"+ex);
+					            	LOGGER.error("CATCHING -- Exception handled  while Closing the fileOutputStream");
+      					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+      					            LOGGER.error("Exception is :" +ex);
 					            }
 					        }
 					  }
-					  else{
-						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
-					  }
+						  else{
+							  LOGGER.debug("In ELSE -- When Folder cannot be made directory & Folder cannot be updated");
+	  						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
+						  }
 					  
-				  }else{
+				  }
+				  else{
+					  LOGGER.debug("In ELSE -- When Folder exists");
 					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+					  LOGGER.debug("Location of Zipped File is :"+zipFileLink);
 					  FileOutputStream fileOutputStream = null;
 				        ZipOutputStream zipOut = null;
 				        FileInputStream fileInputStream = null;
@@ -572,18 +653,23 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				                fileInputStream.close();
 				            }
 				            zipOut.close();
-				            LOGGER.debug("Done... Zipped the files... at location:" + zipFileLink);
+				            LOGGER.debug("Zipped the files successfully");   					            
 				        } catch (FileNotFoundException e) {
-				            // TODO Auto-generated catch block
-				            e.printStackTrace();
+				        		LOGGER.error("CATCHING -- Exception handled  while Zipping the files");
+					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+					            LOGGER.error("File not found exception :" +e);
 				        } catch (IOException e) {
-				            // TODO Auto-generated catch block
-				            e.printStackTrace();
+				        	LOGGER.error("CATCHING -- IOException handled  while Zipping the files");
+					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+					            LOGGER.error(" Exception is :" +e);
 				        } finally{
 				            try{
+				            	LOGGER.debug("TRYING -- Closing the fileOutputStream");
 				                if(fileOutputStream != null) fileOutputStream.close();
 				            } catch(Exception ex){
-				                 
+				            	LOGGER.error("CATCHING -- Exception handled  while Closing the fileOutputStream");
+  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
+  					            LOGGER.error("Exception is :" +ex);  
 				            }
 				        }
 				  }
@@ -593,6 +679,8 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 
 				}
 			  else{
+				  LOGGER.debug("When no file path is Appended - UploadDocumentsRowMapper");
+  				  LOGGER.debug("Returning NULL");
 				  return null;
 			  }
 		}
