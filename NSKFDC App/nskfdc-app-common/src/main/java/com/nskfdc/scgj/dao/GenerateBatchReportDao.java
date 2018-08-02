@@ -51,64 +51,84 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	
 	public Collection<GetBatchIdDto> getBatchId(String userEmail){
      
-	 Map<String, Object> parameters = new HashMap<>();
-	 parameters.put("userEmail",userEmail);
+		 LOGGER.debug("Request received from Service");
+		 LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Batch Ids' for logged in Training Partner");
+		
+		 Map<String, Object> parameters = new HashMap<>();
+		 LOGGER.debug("Inserting user Email in the parameters");
+		 parameters.put("userEmail",userEmail);
 	 
-	 LOGGER.debug("Request received from Service");
-	 LOGGER.debug("In GetBatchIdDao, to get Batch Ids' for Training Partner");
-	
 	try{
 		
-		LOGGER.debug("In try block");
+		LOGGER.debug("TRYING -- getBatchId");
 		LOGGER.debug("Execute query to get batch ids for Training Partner");
 		return  getJdbcTemplate().query(generateBatchReportConfig.getShowBatchId(),parameters, batchIdRowmapper);
 	}
 	catch(Exception e){
-		
-		LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+		LOGGER.error("CATCHING -- EXCEPTION Handled in - getBatchId");
+		LOGGER.error("Exception is" + e);
 		return null;
 	}
 	}
 	
 	public Collection<LocationDetailsDto> getLocationDetails(String batchId)
 	{
+		LOGGER.debug("Request Received from GenerateBatchReportService");
+		LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Location Details for Final Batch Report");
 		Map<String,Object> parameters=new HashMap<>();
+		LOGGER.debug("Inserting batchId in parameters");
 		parameters.put("batchId", batchId);
 		try{
 		
-		LOGGER.debug("In try block");
-		LOGGER.debug("Execute query to get batch ids for Training Partner"+generateBatchReportConfig.getShowLocationDetails());
+		LOGGER.debug("TRYING -- getLocationDetails ");
+		LOGGER.debug("Execute query to get Location Details for entered batchId");
 		return getJdbcTemplate().query(generateBatchReportConfig.getShowLocationDetails(),parameters, locationDetailsRowmapper);
 		}
 		catch(Exception e){
-			LOGGER.error("An error occurred while getting the training partner details for Training Partner");
+			LOGGER.error("CATCHING -- EXCEPTION handled in getLocationDetails");
+			LOGGER.error("Exception while getting the loaction Details");
+			LOGGER.error("Exception is"+ e);
 			return null;
 		}
 	}
 	
 	public Collection<TrainingDetailsDto> getTrainingDetails(String batchId){
+		LOGGER.error("Request received from GenerateBatchReportService");
+		LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Training details for Final Batch Report");
 		Map<String,Object> param=new HashMap<>();
+		
+		LOGGER.debug("Inserting batchId in parameters");
 		param.put("batchId",batchId);
 		try{
 			
-			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get batch ids for Training Partner");
+			LOGGER.debug("TRYING -- getTrainingDetails");
+			LOGGER.debug("Execute query to get Training Partner details for entered Batch Id");
 			return getJdbcTemplate().query(generateBatchReportConfig.getShowTrainingDetails(),param,trainingDetailsRowmapper);
 		}
 		catch(Exception e){
+			LOGGER.error("CATCHING -- EXCEPTION handled in getTrainingDetails");
+			LOGGER.error("Exception while getting Training Details");
+			LOGGER.error("Exception is " + e);
 			return null;
 		}
 	}
 	
 	public Collection<CandidateDetailsDto> getCandidateDetails(String batchId){
+		
+		LOGGER.debug("Request received from GenerateBatchReportService");
+		LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Candidate details for Final Batch Report");
 		Map<String,Object> param=new HashMap<>();
+		LOGGER.debug("Inserting batch Id in parameter");
 		param.put("batchId", batchId);
 		try{
-			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get batch ids for Training Partner");
+			LOGGER.debug("TRYING -- getCandidateDetails");
+			LOGGER.debug("Execute query to get Candidate Details for entered Batch Id");
 			return getJdbcTemplate().query(generateBatchReportConfig.getShowCandidateDetails(),param,candiateDetailsRowmapper);
 		}
 		catch (Exception e) {
+			LOGGER.error("CATCHING -- EXCEPTION handled in getCandidateDetails");
+			LOGGER.error("Exception while getting Candidate Details for enetered Batch Id");
+			LOGGER.error("Exception is " + e);
 			return null;
 		}
 	}
@@ -122,37 +142,16 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	 **/
 	
 	
-	/*public Collection<SearchReportDto> getReport(String batchId, String userEmail) {
-		Map<String, Object> parameters = new HashMap<>();
-		
-		parameters.put("batchId",batchId);
-		parameters.put("userEmail", userEmail);
-		
-		try {  
-			
-			LOGGER.debug("In try block");
-			LOGGER.debug("Execute query to get BATCH details ");
-			return getJdbcTemplate().query(generateBatchReportConfig.getShowReport(), parameters, SearchReport_RowMapper);
 	
-			
-		} catch (Exception e) {
-			
-			LOGGER.error("In Catch Block");
-			LOGGER.error("An error occured while getting the REPORT" + e);
-			return null;
-			}
-	}*/
-
-	
+	/**
+	 
+	 *@author Samridhi Srivastava
+	 *@description This method is a RowMapper that gets the batch Ids of the particular SCGJ Batch Number which is being passed as parameters from the database, maps it to a Batch Id column and sends it to the DTO to set values and make a collection. 
+	 *@return  Batch Ids corresponding to the particular SCGJ Batch Number to the GetBatchIdDto Parameterized Constructor.
+	 
+	 **/	
 	private static class BatchIdRowmapper implements RowMapper<GetBatchIdDto>{
 
-		/**
-		 
-		 *@author Samridhi Srivastava
-		 *@description This method is a RowMapper Method that gets the batch Ids of the particular SCGJ Batch Number which is being passed as parameters from the database, maps it to a Batch Id column and sends it to the DTO to set values and make a collection. 
-		 *@return  Batch Ids corresponding to the particular SCGJ Batch Number to the GetBatchIdDto Parameterized Constructor.
-		 
-		 **/
 		
 		@Override
 		public GetBatchIdDto mapRow(ResultSet rs, int rowNum)throws SQLException {
@@ -163,6 +162,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		}
 		
 	}
+	
+	/**
+	 *@description This is the Rowmapper getting Location Details for Entered Batch Id
+	 * 
+	 **/
 	private static class LocationDetailsRowmapper implements RowMapper<LocationDetailsDto>{
 		@Override
 		public LocationDetailsDto mapRow(ResultSet rs,int rowNum)throws SQLException{
@@ -181,6 +185,13 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			return new LocationDetailsDto(state,city,municipalCorporation,ward,scgjBatchNumber,uploadStatus);
 		}
 	}
+	
+	
+	/**
+	 *@description This is the Rowmapper getting Training Details for Entered Batch Id
+	 * 
+	 **/
+	
 	private static class TrainingDetailsRowmapper implements RowMapper<TrainingDetailsDto>{
 		
 		@Override
@@ -201,6 +212,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			return new TrainingDetailsDto(dateOfScreeningCommittee, startDateOfTraining, endDateOfTraining, trainingPartner, prinicipalTrainer, candidatesRegistered, candidatesAssessed, candidatesPassed, dateOfMedicalExamination, candidatesMedicallyExamined, payoutToCandidates, participantHandbook);
 		}
 	}
+	
+	/**
+	 *@description This is the Rowmapper getting Candidate Details for Entered Batch Id
+	 * 
+	 **/
 	private static class CandiateDetailsRowmapper implements RowMapper<CandidateDetailsDto>{
 		
 		@Override
@@ -215,66 +231,61 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			return new CandidateDetailsDto(name, aadharNumber, mobileNumber, candidateNumber, remarks);
 		}
 	}
+	
+	
 	public int insertSCGJBatchNumber(String batchId,String batchnumber,String userEmail) {
+		
+		LOGGER.debug("Request Received for GenerateBatchReportService");
+		LOGGER.debug("To Insert the SCGJ BAtch Number in BatchDetails table");
+		
 		Map<String,Object> param=new HashMap<>();
+		LOGGER.debug("Inserting batchId, SCGJ batchNumber, userEmail in parameters");
 		param.put("batchId",batchId );
 		param.put("batchNumber", batchnumber);
 		param.put("userEmail",userEmail );
+		
 		try{
-			LOGGER.debug("IN DAO TO INSERT BATCHNUMBER");
+			LOGGER.debug("TRYING -- insertSCGJBatchNumber");
+			LOGGER.debug("Executing insert query for storing SCGJ Batch Number");
 			Integer result = getJdbcTemplate().update(generateBatchReportConfig.getShowUpdateBatchNumber(),param);
 			return result;
 		}
 		catch(Exception e){
-		return -1;
+			LOGGER.error("CATCHING -- Exception handled while inserting Batch number");
+			LOGGER.error("In method - insertSCGJBatchNumber");
+			LOGGER.error("Exception is" + e);
+			return -1;
 		}
 	}
 	
 	
-	/* Declaring inner class search report Rowmapper */
-    /*private static class SearchReportRowmapper implements RowMapper<SearchReportDto>{
-    	
-    	*//**
-		 
-		 *@author Shivangi singh
-		 *@description This method is a RowMapper Method that gets the reports of the particular batchid entered. 
-		 *@return  reports  corresponding to the particular BatchId to the searchreportDto Parameterized Constructor.
-		 
-		 **//*
-		
-		@Override
-		public SearchReportDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			String batchId = rs.getString("batchId");
-			String userEmail = rs.getString("userEmail");
-							
-			return new SearchReportDto(batchId,userEmail);
-			
-		}
 
-	}*/
-	public void updateTableGenerateReports(String generateReportsId, Date date,
-			String reportType, String batchId, String userEmail) {
+	public void updateTableGenerateReports(String generateReportsId, Date date, String reportType, String batchId, String userEmail) {
+		LOGGER.debug("Request received from Generate Report Service");
+		LOGGER.debug("In Method - updateTableGenerateReports");
+		LOGGER.debug("To update the timings of Report Generation in the Database");
+		
 		Map<String, Object> parameters = new HashMap<>();
+		LOGGER.debug("Inserting report Id , Generated On date, Report Type in parameters");
 		parameters.put("generateReportsId", generateReportsId);
 		parameters.put("generatedOn",date);
 		parameters.put("reportType",reportType);
+		LOGGER.debug("Inserting batchId, userEmail in parameters");
 		parameters.put("batchId",batchId);
 		parameters.put("userEmail",userEmail);
 		
-int result;
-		
-		LOGGER.debug("Request received from service");
-		LOGGER.debug("In  Dao");
+		int result;
 		
 		try {
 			
-			LOGGER.debug("In try block of  Dao");
+			LOGGER.debug("TRYING -- updateTableGenerateReports");
+			LOGGER.debug("Executing update quert to update the generated Reports data");
 			result = getJdbcTemplate().update(generateBatchReportConfig.getUpdateGenerateReportsTable(),parameters);
-			LOGGER.debug("The result of the query is : " + result);
 			
 		}catch(Exception e) {
-			LOGGER.error("In catch block of Update Database Dao"+e);
+			LOGGER.error("CATCHING -- EXCEPTION handled while Updating generated report data");
+			LOGGER.error("In method - updateTableGenerateReports ");
+			LOGGER.error("Exception is "+e);
 		
 		}	
 		

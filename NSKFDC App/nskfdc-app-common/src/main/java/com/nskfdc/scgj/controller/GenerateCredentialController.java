@@ -27,20 +27,21 @@ public class GenerateCredentialController {
 	 @RequestMapping(value="/getGenerateCredential",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	 public Integer generatecredentialController(@RequestBody GenerateCredentialDto generateCredentialDto){
 	 
-		 LOGGER.debug("Request received from frontend to generate credential" + generateCredentialDto.getJobRole());
-		
-		 LOGGER.debug("In GenerateCredential Controller to generate credential");
+		 LOGGER.debug("Request received from frontend");
+		 LOGGER.debug("In GenerateCredential Controller");
+		 LOGGER.debug("To generate credential");
+		 
 
 	 try{
-		
+		LOGGER.debug("TRYING -- generatecredentialController to generate credential");
+		LOGGER.debug("Sending Request to service - generatecredentialService");
 		 return generatecredentialService.checkUserExistence(generateCredentialDto);
-		 
 	 }
 		
 		 catch(Exception e) {
-		
-			 LOGGER.error("An error occurred while generating credentials" + e);
-				
+			 LOGGER.error("CATCHING -- Exception handled while Generating Credential");
+			 LOGGER.error("In GenerateCredentialController, method - generatecredentialController" + e);
+			LOGGER.error("Exception is"+e);
 			 return -1;
 		 }
 
@@ -49,17 +50,22 @@ public class GenerateCredentialController {
 		@RequestMapping("/SearchService")
 		public Collection<GenerateCredentialSearchDto> getTrainingPartnerDetail(@RequestParam("nsdcRegNumber") String nsdcRegNumber){
 			LOGGER.debug("Request received from frontend");
-			LOGGER.debug("In generate credential search  Controller");
+			LOGGER.debug("In getTrainingPartnerDetail");
+			LOGGER.debug("To get Generated Credential details");
+			LOGGER.debug("For entered NSDC Reg Number");
 			
 			try {
 				
-				LOGGER.debug("In try block to get training partner details ");
-				LOGGER.debug("Sending request to service");
+				LOGGER.debug("TRYING -- to get Generated Credential details for searched NSDC Reg Number");
+				LOGGER.debug("Sending request to Generate Credential service");
+				LOGGER.debug("Method - getTrainingPartnerDetail");
 				return generatecredentialService.getTrainingPartnerDetail(nsdcRegNumber);
 				
 			}catch(Exception e) {
-				
-				LOGGER.debug("An error occurred while getting the training partner details " + e);
+				LOGGER.error("CATCHING -- EXCEPTION handled in GenerateBatchReportController");
+				LOGGER.debug("In method - getTrainingPartnerDetail ");
+				LOGGER.error("Searching for credentials corresponding entered NSDC Reg Number");
+				LOGGER.error("Exception is "+ e);
 				return null;
 				
 			}
