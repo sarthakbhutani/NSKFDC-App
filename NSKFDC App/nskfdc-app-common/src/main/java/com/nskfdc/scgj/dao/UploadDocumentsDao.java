@@ -102,7 +102,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					LOGGER.error("CATCHING -- Exception handled while saving paths of uploaded documents");
 					LOGGER.error("In UploadDocumentsDao - uploadDocuments ");
 					LOGGER.error("Exception is : "+ e);
-					LOGGER.debug("Returning string 'Document cannot be uploaded'");
+					LOGGER.error("Returning string 'Document cannot be uploaded'");
 					return "Document cannot be uploaded";
 				}
 		
