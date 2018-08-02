@@ -100,18 +100,17 @@ CREATE TABLE `bankdetails` (
   CONSTRAINT `enrollmentNumber` FOREIGN KEY (`enrollmentNumber`) REFERENCES `candidate` (`enrollmentNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
 
-
-
-
-CREATE TABLE `employerdetails` (
-  `employerId` int(11) NOT NULL,
-  `employerName` varchar(60) DEFAULT NULL,
-  `employerContactNumber` bigint(20) DEFAULT NULL,
-  `enrollmentNumber` varchar(50) NOT NULL,
-  PRIMARY KEY (`employerId`),
-  KEY `enrollNumber_idx` (`enrollmentNumber`),
-  CONSTRAINT `enrollNumber` FOREIGN KEY (`enrollmentNumber`) REFERENCES `candidate` (`enrollmentNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
+CREATE TABLE employerdetails (
+  employerId int(11) primary key auto_increment,
+  employerName varchar(60) DEFAULT NULL,
+  employerContactNumber bigint(20) DEFAULT NULL,
+  batch_id int(11) NOT NULL,
+  user_email varchar(100) NOT NULL,
+  foreign key (batch_id) references batchdetails(batchId),
+  foreign key (user_email) references user(userEmail)
 );
+
+
 CREATE TABLE `generatereports` (
   `generateReportId` varchar(100) NOT NULL,
   `reportType` varchar(40) DEFAULT NULL,
