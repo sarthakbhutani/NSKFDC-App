@@ -21,19 +21,19 @@ public class LoginController {
 	@RequestMapping("/user")
 	public Principal loginDetailsAuthentication(Principal user){
 		
-		LOGGER.debug("In LoginController, to get the authenticated user details");
+		LOGGER.debug("In LoginController, to get the user authenticated");
 		LOGGER.debug("Request received from the frontend for authorised login");
 		
 		try {
 			
-			LOGGER.debug("In TRY block of LoginController"+user);
+			LOGGER.debug("TRYING -- to get user authorized");
 			
 			return user;
 			
 			
 		}catch(Exception e) {
-			LOGGER.debug("In CATCH block of LoginControlller");
-			LOGGER.error("ERROR: Encountered an exception.");
+			LOGGER.debug("CATCHING -- Exception in LoginControlller");
+			LOGGER.error("In method - loginDetailsAuthentication");
 			LOGGER.error("Exception is :"+e);
 			LOGGER.debug("returning NULL");
 			return null;

@@ -35,30 +35,25 @@ public class LoginDao extends AbstractTransactionalDao{
 	public int userExistence(String userEmail){
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - userExistence");
-
 		LOGGER.debug("Checking Existense of User");
-		LOGGER.debug("Creating HashMap object");
 		
-		
-		LOGGER.debug("object created successfully");
-		LOGGER.debug("Inserting parameters to HashMap object");
-		
-    	
-    	
-		LOGGER.debug("Parameters inserted");
-		LOGGER.debug("Executing SQL query and returning response");
 		
         try {
+        	LOGGER.debug("TRYING -- userExistence - to check existence of entered userEmail");
+        	LOGGER.debug("Creating HashMap object");
         	Map<String,Object> parameters = new HashMap<>();
+        	LOGGER.debug("Inserting userEmail in parameters");
         	parameters.put("userEmail", userEmail);
-        	LOGGER.debug("In try block for user existence in Login Dao" + parameters);
+        	LOGGER.debug("Executing query to check if userEmail exists");
         	int result = getJdbcTemplate().queryForObject(loginConfigSql.getCheckUserSql(), parameters ,Integer.class);
-        	LOGGER.debug("Executed details are" + result);
+        	LOGGER.debug("Returning existence result");
         	return result; 
         }
         catch(Exception e) {
-        	
-        	LOGGER.debug("Error occured while checking user existence for Login" + e);
+        	LOGGER.error("CATCHING -- Exception Handled in LoginDao");
+        	LOGGER.error("In method - userExistence, while checking userEmail existence ");
+        	LOGGER.error("Exception is"+e);
+        	LOGGER.error("Returning -1");
         	return -1;
         }
 		
@@ -68,49 +63,52 @@ public class LoginDao extends AbstractTransactionalDao{
 
 
 	public String getNameOfUser(String userEmail) {
-		LOGGER.debug("Request Received from Service to get name of the logged in user");
+		LOGGER.debug("Request Received from GetNameOfUserService to get name of the logged in user");
 		LOGGER.debug("In LoginDao - getNameOfUser");
-		
 		LOGGER.debug("Creating HashMap object");
 		Map<String, Object> parameters = new HashMap<>();
-		LOGGER.debug("object created successfully");
+	
 		
-		LOGGER.debug("Inserting parameters to HashMap object");
+		LOGGER.debug("Inserting logged in userEmail in parameters");
 		parameters.put("userEmail", userEmail);
 		try {
+			
+			LOGGER.debug("TRYING -- To get logged in User Detail");
+			LOGGER.debug("Executing query to get name of the logged in user");
 			return getJdbcTemplate().queryForObject(loginConfigSql.getGetNameOfUser(), parameters, String.class);
+			
 		} catch (Exception e) {
-			LOGGER.debug("In catch block to get name of user, exception handled"+e);
+			
+			LOGGER.error("CATCHING -- Exception Handled in LoginDao");
+        	LOGGER.error("In method - getNameOfUser, while getting name of Logged in User ");
+        	LOGGER.error("Exception is"+e);
+        	LOGGER.error("Returning null");
 			return null;
 		}
 	}
 
 	
    public SessionManagementDto getValidUserDetails(String userEmail) {
-		LOGGER.debug("Request Received from Service");
+		LOGGER.debug("Request Received from LoginService");
 		LOGGER.debug("In LoginDao - getValidateLoginUser");
-		
+		LOGGER.debug("To get login details of user to Validate");
 		LOGGER.debug("Creating HashMap object");
 		Map<String, Object> parameters = new HashMap<>();
-		LOGGER.debug("object created successfully");
 		
-		LOGGER.debug("Inserting parameters to HashMap object");
+		LOGGER.debug("Inserting userEmail to HashMap object");
 		parameters.put("userEmail", userEmail);
-		
-		LOGGER.debug("Parameters inserted"+parameters);
-		
-		LOGGER.debug("Executing SQL query and returning response");
+				
         try {
         	
-        	LOGGER.debug("In try block to get details of user in Login Dao");	
-        	
-        	
-        	return getJdbcTemplate().queryForObject(loginConfigSql.getGetValidUserDetails(),parameters,login_RowMapper);
-        	
-        	
+        	LOGGER.debug("TRYING -- To get login details of user in Login Dao");	
+        	LOGGER.debug("Executing SQL query and returning response");        	
+        	return getJdbcTemplate().queryForObject(loginConfigSql.getGetValidUserDetails(),parameters,login_RowMapper);        	
         }catch(Exception e) {
         	
-        	LOGGER.debug("Error occured while getting valid user details on login" + e);
+        	LOGGER.error("CATCHING -- Exception Handled in LoginDao");
+        	LOGGER.error("In method - getValidUserDetails, while getting Login details for entered userEmail ");
+        	LOGGER.error("Exception is"+e);
+        	LOGGER.error("Returning null");
         	return null;
         	
         }

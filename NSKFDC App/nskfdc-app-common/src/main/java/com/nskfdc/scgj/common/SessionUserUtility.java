@@ -15,14 +15,11 @@ public class SessionUserUtility {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(SessionUserUtility.class);
 	
-	/*To get the userEmail from session, in your controller get userEmail in a String variable using
-	*sessionUserUtility.getSessionMangementfromSession().getUsername(); in your controller method
-	*/
+	
 	
 	 public SessionManagementDto getSessionMangementfromSession(){
-		 	LOGGER.debug("Request Received to get Session");
-		 	
-		 	LOGGER.debug("Sending Request to get SessionManagementDto");
+		 	LOGGER.debug("Request Received to get Session details of Logged In user");
+		 	LOGGER.debug("Returning Session in a SessionManagementDto of Logged in User");
 		 	return (SessionManagementDto)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
 

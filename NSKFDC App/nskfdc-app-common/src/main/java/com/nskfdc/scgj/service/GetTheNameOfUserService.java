@@ -16,7 +16,9 @@ public class GetTheNameOfUserService {
 	private LoginDao loginDao;
 	
 	public String getNameOfUser(String userEmail) {
-		LOGGER.debug("In service: GetTheNameOfUser, to get name of User");
+		LOGGER.debug("Request received to get the name of logged in user");
+		LOGGER.debug("In GetTheNameOfUserService - getNameOfUser");
+		LOGGER.debug("Sending request to LoginDao - getNameOfUser");
 		return loginDao.getNameOfUser(userEmail);		
 	}
 

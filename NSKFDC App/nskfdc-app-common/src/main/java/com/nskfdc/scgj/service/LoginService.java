@@ -31,18 +31,23 @@ public class LoginService implements UserDetailsService{
 	@Override
 	public SessionManagementDto loadUserByUsername(String userEmail) throws UsernameNotFoundException {
 		
-		
+		LOGGER.debug("In Login Service - to get user logged in");
 		
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
 		
+		LOGGER.debug("Sending request to Login DAO - to check if user exists");
 		int status = loginDao.userExistence(userEmail); 
-		LOGGER.debug("The status is : " + status);
+		
 		if(status == 0) {
-
+			LOGGER.debug("In IF -- When userEmail doesn't exist");
 			authorities.add(new SimpleGrantedAuthority(null));
+			LOGGER.debug("Returning null");
 			return new SessionManagementDto(null, null, null);
 			
 		}
+		LOGGER.debug("In ELSE -- When userEmail does exist");
+		LOGGER.debug("Sending request to loginDao");
+		LOGGER.debug("To get Login details corresponding to userEmail");
 		return loginDao.getValidUserDetails(userEmail);
 	
 	
