@@ -12,29 +12,29 @@
 			<!-- form div -->
 						
 			<div class="row " id="formcolor" >
-				<form class="form-group " >
+				<form class="form-group "  ng-submit="searchDocuments()">
 						<div class="col-sm-4" >
-						<input type="text" id="tpname" type="text" class="form-control"  placeholder="Enter Training Partner Name"  ng-model="tpName" >
+						<input type="text" id="tpname" type="text" class="form-control"  placeholder="Enter Training Partner Name"  ng-model="tpName" required>
 						<span id="errorMessage"></span>	
 						</div>
 					
 						<div class="col-sm-2 ">
-						<input  type = "number" id="enterBatchId" type="text" class="form-control" placeholder="Enter Batch ID" ng-model="batchId" ng-disabled="scgjBtNumber">
+						<input  type = "number" id="enterBatchId" type="text" class="form-control" placeholder="Enter Batch ID" ng-model="batchId" ng-disabled="scgjBtNumber" >
 						</div> 
 									
 						<div id="or" class="col-sm-1"  >
 						or
 						</div>
 						
-						<div class="col-sm-3"><input type="number"  id="scgjbtno" type="text" class="form-control" placeholder="SCGJ Batch Number" ng-model="scgjBtNumber" ng-disabled="batchId">
+						<div class="col-sm-3"><input type="number"  id="scgjbtno" type="text" class="form-control" placeholder="SCGJ Batch Number" ng-model="scgjBtNumber" ng-disabled="batchId" >
 						</div>
 											
 						<div class="col-sm-2">
-						<button type="submit" class="btn btn-info" id="button" ng-click="searchDocuments()">Search</button>
+						<button type="submit" class="btn btn-info" id="button">Search</button>
 						<span ng-bind="searchError" id="error"></span>
 						</div>
 						
-						<span id="errorMessageBatch"></span>
+						<span ng-bind="errorMessageBatch" id="error"></span>
 														
 						
 																						

@@ -1,8 +1,56 @@
 var scgj = angular.module("app");
 
-scgj.controller("viewDocumentController" , function($scope, $http){
+scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 	
 	$scope.errorMessage="";
+	
+//	Search Document functionality
+	
+	$scope.searchDocuments=function(){
+	    if($scope.batchId!=null){
+		
+		$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
+			.then(function (response) {
+				if(response.data.length==0){
+					 $scope.searchError='No Data Found';
+				 }
+				 else{
+				 $scope.uploadedDocument.data=response.data;
+				 $scope.searchError='';
+				 }
+
+		});
+	    }
+	    else if($scope.scgjBtNumber!=null){
+		$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
+		.then(function (response) {
+			if(response.data.length==0){
+				 $scope.searchError='No Data Found';
+			 }
+			 else{
+			 $scope.uploadedDocument.data=response.data;
+			 $scope.searchError='';
+			 }
+
+			 
+
+		});
+	    }
+		else{
+			
+			if(($scope.batchId==null)&&($scope.scgjBtNumber==null)){
+				
+				$scope.errorMessageBatch="Please enter BatchId or SCGJ Batch Number";
+	    		}
+
+		}
+	    $timeout(function() {
+	        $scope.searchError="";
+	        $scope.errorMessageBatch=";"
+	     }, 3000);
+	}
+	
+//	Uploaded Document table code starts
 	
     $scope.uploadedDocument = {
     enableGridMenus: false,
@@ -40,18 +88,18 @@ scgj.controller("viewDocumentController" , function($scope, $http){
         
         ]
 };
-  //Zip download start FileForBatchId
+//	Uploaded Document table code ends
+    
+  //Zip download start FileForBatchId and SCGJ Batch Number
 	  $scope.DownloadZipFileForBatchId = function(){
 		  if($scope.scgjBtNumber==null){
-		  console.log("working in batch id");
 		  var url='/downloadZipFileForBatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId;
-		  console.log("This is downloading")
 		  $http.get(url, { responseType : 'arraybuffer' })
 		  .then(function(response){
 			  
 			
 			  
-			  console.log("done"+$scope.batchID + response.data);
+			 
 			  var zipFile = new Blob([response.data], { type : 'application/zip' })
 			  var downloadURL = URL.createObjectURL(zipFile);
 			  var link = document.createElement('a');
@@ -72,9 +120,7 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 		  });
 	  }
 		  else{
-			  console.log("working working in SCGJbatch number");
 			  var url='/downloadZipFileForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber;
-			  console.log("This is downloading")
 			  $http.get(url, { responseType : 'arraybuffer' })
 			  .then(function(response){
 				  
@@ -86,7 +132,6 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 					 $scope.zipSuccess='File downloaded successfully';
 					 }
 				  
-				  console.log("done"+$scope.scgjBtNumber + response.data);
 				  var zipFile = new Blob([response.data], { type : 'application/zip' })
 				  var downloadURL = URL.createObjectURL(zipFile);
 				  var link = document.createElement('a');
@@ -97,70 +142,13 @@ scgj.controller("viewDocumentController" , function($scope, $http){
 				  link.click();
 			  });
 		  }
+		  $timeout(function() {
+		        $scope.zipError="";
+		        $scope.zipSuccess=""
+		     }, 3000);
 	  };
 	  //zip download end
 
-	 
-
-
-$scope.searchDocuments=function(){
-	//console.log("working");
-    if($scope.batchId!=null){
-	console.log($scope.tpName);
-	
-	$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
-		.then(function (response) {	
-			console.log(response);
-			if(response.data.length==0){
-				 $scope.searchError='No Data Found';
-			 }
-			 else{
-			 $scope.uploadedDocument.data=response.data;
-			 $scope.searchError='';
-			 }
-
-		
-
-		 $scope.uploadedDocument.data= response.data;
-		 console.log("batchid");
-
-	});
-    }
-    else{
-    	console.log($scope.scgjBtNumber);
-	$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
-	.then(function (response) {
-		if(response.data.length==0){
-			 $scope.searchError='No Data Found';
-		 }
-		 else{
-		 $scope.uploadedDocument.data=response.data;
-		 $scope.searchError='';
-		 }
-
-		
-		
-
-		 $scope.uploadedDocument.data= response.data;
-		 console.log("scgj");
-		 
-
-	});
-    }
-	if($scope.tpName==null){
-		document.getElementById("errorMessage").innerHTML="Please enter Training Partner Name";
-		
-	}
-	else{
-		
-		if(($scope.batchId==null)&&($scope.scgjBtNumber==null)){
-			
-			document.getElementById("errorMessageBatch").innerHTML="Please enter BatchId or SCGJ Batch Number";
-    		}
-
-	}
-		
-}
 
 /*----------- Grid Height -------------*/
 $scope.getTableHeight=function(){

@@ -33,7 +33,7 @@ app.config(function($routeProvider, $httpProvider){
 
 
 // main controller of the App
-app.controller('mainController', function($rootScope, $scope, $http, $location, $route,$window)  {
+app.controller('mainController', function($rootScope, $scope, $http, $location, $route, $window, $timeout)  {
 		
 	$rootScope.mainTemplate=true;
 	$scope.invalidErrorMessage="";
@@ -98,6 +98,9 @@ app.controller('mainController', function($rootScope, $scope, $http, $location, 
 			else{
 				$scope.invalidErrorMessage="";
 			}
+			$timeout(function() {
+		         $scope.invalidErrorMessage="";
+		      }, 3000);
 		});
 	}
 	
@@ -121,7 +124,7 @@ app.controller('mainController', function($rootScope, $scope, $http, $location, 
         });
 	}
 	
-	
+	 
 	
 	
 });

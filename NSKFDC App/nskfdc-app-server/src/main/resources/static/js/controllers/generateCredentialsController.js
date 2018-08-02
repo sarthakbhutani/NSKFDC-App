@@ -1,6 +1,6 @@
 var scgj = angular.module("app");
 
-scgj.controller("generateCredentialsController" , function($scope, $http){
+scgj.controller("generateCredentialsController" , function($scope, $http, $timeout){
 	
 	$scope.credentialTable= false;
 	
@@ -62,7 +62,6 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 	 $scope.check=function()
 	 {
 		 var generatecredential="/getGenerateCredential";
-		 console.log("Our credentials"+angular.toJson($scope.data));
 		 $http({
 			 url: generatecredential,
 			 method: "POST",
@@ -71,7 +70,6 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 				 'Content-Type': 'application/json'
 			 }
 		 }).then(function(response){
-			 console.log(response);
 			if(response.data==-25)
 				{
 				$scope.credentialErrorMessage=true;
@@ -84,11 +82,14 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 				$scope.data=null;
 				}
 		 });
+		 $timeout(function() {
+             $scope.credentialErrorMessage="";
+             $scope.credentialSuccessMessage="";
+          }, 3000);
 
 	 }
 	 
 	 $scope.search=function(nsdcRegNumber) {
-		 console.log($scope.nsdcRegNumber);
 		 $http.get("/SearchService?nsdcRegNumber="+$scope.nsdcRegNumber)
 			.then(function (response) {	
 				 
@@ -100,6 +101,9 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 				 $scope.searchError='';
 				 }
 			});
+		 $timeout(function() {
+             $scope.searchError="";
+          }, 3000);
 	 }
 	 
 	

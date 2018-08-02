@@ -1,6 +1,6 @@
 var scgj = angular.module("app");
 
-scgj.controller("updateTargetController" , function($scope, $http){
+scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 	
 	$scope.errorMessage=false;
 	
@@ -38,14 +38,12 @@ scgj.controller("updateTargetController" , function($scope, $http){
 		             
 		        ]
 		    };
-	 
+
 	 $scope.update=function()
 	 {
 		
 		 $http.get("/updateTargets?nsdcRegNumber="+$scope.data.nsdcRegNumber+"&targets="+$scope.data.targets)
-			.then(function (response) {	
-			console.dir(response.data);
-			console.log(response.status);
+			.then(function (response) {
 			if(response.data==1)
 			{
 			$scope.errorMessage=false;
@@ -57,6 +55,13 @@ scgj.controller("updateTargetController" , function($scope, $http){
 			$scope.successMessage=false;
 			}
 			});
+		 $timeout(function() {
+             $scope.errorMessage="";
+             $scope.successMessage="";
+             $scope.data.nsdcRegNumber="";
+    		 $scope.data.targets="";
+          }, 3000);
+		 
 
 	 }
 	 
@@ -66,12 +71,17 @@ scgj.controller("updateTargetController" , function($scope, $http){
 				 
 				 if(response.data.length==0){
 					 $scope.searchError='No Data Found';
+					 
 				 }
 				 else{
 				 $scope.updatedData.data=response.data;
 				 $scope.searchError='';
+				 
 				 }
 			});
+		 $timeout(function() {
+             $scope.searchError="";
+          }, 3000);
 	 }
 	
 	 /*----------- Grid Height -------------*/

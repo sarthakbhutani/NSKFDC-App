@@ -100,11 +100,9 @@ scgj.controller("dashboardController" , function($scope, $http){
          var processed_json1 = new Array();   
          $.getJSON('/getTotalNumberOfCandidatesTrainedInLast6Months', function(data) {
              // Populate series
-             console.log(data.length);
              for (i = 0; i<data.length; i++){
                  processed_json1.push([data[i].month, data[i].count]);
-             }
-             console.log(processed_json1);
+             };
           
              // draw chart
              $('#container1').highcharts({
