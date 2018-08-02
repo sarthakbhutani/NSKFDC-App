@@ -54,7 +54,7 @@
    <!--       text feild section-->
    <div class="heading">
   <span> <h3>Update Existing Batch</h3></span>
-   <span class="pull-right"><a class="uploadGuidelinesLink" href="Guidelines MASTER SHEET IMPORT.pdf" target="_blank">Guidelines | Upload Master Sheet</a></span>
+   <span class="pull-right"><a class="uploadGuidelinesLink" href="Guidelines MASTER SHEET IMPORT.pdf" target="_blank">Guidelines</a></span>
    </div>
    <form name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()">
       <div class="row" id="style">
@@ -70,7 +70,7 @@
             
          </div>
          <div class="col-sm-3">
-                        <select name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
+                        <select required name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="batch.myVar">
               <option value="none" selected  >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
@@ -79,9 +79,9 @@
             
          </div>
          <div class="col-sm-3">
-            <div ng-if="myVar === 'Single Ward'"  id="general-1" >
+            <div ng-if="batch.myVar === 'Single Ward'"  id="general-1" >
                <div >
-                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" ng-model="wardNumber">
+                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" ng-model="batch.wardNumber">
                </div>
             </div>
          </div>
@@ -159,8 +159,8 @@
 
              </div>
              <div class="col-sm-4"></div>
-             <span ng-show="submitMsg" id="success">Centre data is successfully inserted</span>
-             <span ng-show="errorMsg" id="error">An error occured while inserting Centre data</span>
+             <span ng-show="submitMsg" id="success">Batch data is successfully inserted</span>
+             <span ng-show="errorMsg" id="error">Data can't be inserted for the batch </span>
              </div>
 
             </div>

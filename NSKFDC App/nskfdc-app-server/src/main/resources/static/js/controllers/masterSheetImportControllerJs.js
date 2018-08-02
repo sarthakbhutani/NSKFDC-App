@@ -3,7 +3,6 @@ function checkforward() {
     var location = document.getElementById('Loca');
     var invalid = location.value == "none";
     if (invalid) {
-       alert('First Choose Ward Type');
         location.className = 'state';
     } else {
         location.className = 'state';
@@ -16,7 +15,6 @@ function checkforstate() {
    var location = document.getElementById('State');
   var invalid = location.value == "State";
  if (invalid) {
-       alert('choose State');
       location.className = 'state';
   } else {
      location.className = 'state';
@@ -31,7 +29,7 @@ function checkforstate() {
 
 
 var app = angular.module('app');
-app.controller('importController', function($scope, $http, $rootScope, fileUpload) {
+app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
 	$scope.submitMsg=false;
 	$scope.batch = {}
 	
@@ -43,15 +41,13 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	
 	$http.get('/getFinancialYear')
     .then(function (response) {
-    	console.log("the data for financial year is " + response.data);
     	let year = response.data;
     	let first = year%10000;
     	let second = year/10000;
     	
-    	console.log(year);
     	$scope.financialyear = Math.floor(second) + " - " + first;
     })
-    .catch((response) => console.log("error in getting the value " + response + " " + response.status + " "  + response.data));
+    /*.catch((response) => console.log("error in getting the value " + response + " " + response.status + " "  + response.data));*/
 	
 	$http.get('/getTotalTargets')
     .then(function (response) {
@@ -100,10 +96,9 @@ var url = '/getBatchIdfortrainer';
 	        }
 	    });
 
-    $scope.myVar = 'none';
-    //	 $scope.value = 'select';
+    $scope.batch.myVar = 'none';
     $scope.enable = function() {
-        console.log("inside function " + $scope.batchDetails.value);
+        /*console.log("inside function " + $scope.batchDetails.value);*/
         $scope.isDisabled = false;
         $scope.isDisabled1 = false;
         $scope.isDisabled2 = false;
@@ -181,11 +176,11 @@ var url = '/getBatchIdfortrainer';
             $scope.theFile = element.files[0];
             $scope.FileMessage = '';
             var filename = $scope.theFile.name;
-            console.log(filename.length)
+            /*console.log(filename.length)*/
             var index = filename.lastIndexOf(".");
             var strsubstring = filename.substring(index, filename.length);
             if ( strsubstring == '.xlsx') {
-                console.log('File Uploaded sucessfully');
+                /*console.log('File Uploaded sucessfully');*/
             } else {
                 $scope.theFile = '';
                 $scope.FileMessage = 'please upload correct File ,File extension should be .xlsx';
@@ -203,8 +198,8 @@ var url = '/getBatchIdfortrainer';
     	
     	$scope.sumbitBatchDetails={
     			batchId : $scope.batchDetails.value,
-    			wardType : $scope.myVar,
-    			wardNumber : $scope.wardNumber,
+    			wardType : $scope.batch.myVar,
+    			wardNumber : $scope.batch.wardNumber,
     			centreId : $scope.batch.centreId,
     			state : $scope.batch.state,
     			city : $scope.batch.centreCity,
@@ -236,26 +231,27 @@ var url = '/getBatchIdfortrainer';
 				$scope.submitMsg=true;
 				$scope.errorMsg=false;
 			 	var file = $scope.masterSheet.import;
-		      	console.log('File selected is :'+file);
+		      	/*console.log('File selected is :'+file);*/
 		      	var batchId = $scope.batchDetails.value;
-		      	console.log('batch  is :'+batchId)
+		      	/*console.log('batch  is :'+batchId)*/
 		          var importUrl = "/importMasterSheet";
 		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
-		        
-		    /*    fileuploaded.then(function(response){
-		     	  console.log("I am here");
-		        });*/
+		    
 				
 			}
 		
 		
 			else{
-				console.log("working10");
 				
 				$scope.submitMsg=false;
 				$scope.errorMsg=true;
 			}          
     	});
+    	
+    	$timeout(function() {
+            $scope.submitMsg="";
+            $scope.errorMsg="";
+         }, 3000);
     }
     
     
