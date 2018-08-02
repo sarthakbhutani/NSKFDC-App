@@ -18,11 +18,11 @@ generateReport:
      candidate.batchId=batchdetails.batchId and candidate.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;  
  
  showSDMSExcelSheet: >
-  select nsdcRegNumber,batchdetails.centreId,candidate.enrollmentNumber,firstName,lastName,dob,firstNameFather,lastNameFather,guardianType,
-   salutation,gender,state,district,mobileNumber,educationLevel,sectorSkillCouncil,jobRole,batchStartDate,batchEndDate,assessmentDate,employerName,
-    employerContactNumber,employmentType,aadharCardNumber,disabilityType  from candidate,batchdetails,trainingpartnerdetails,centredetails,employerdetails where 
-     centredetails.userEmail=trainingpartnerdetails.userEmail and employerdetails.enrollmentNumber = candidate.enrollmentNumber and 
-      batchdetails.centreId=centredetails.centreId and candidate.batchId=batchdetails.batchId and batchdetails.batchId= :batchId and trainingpartnerdetails.userEmail= :userEmail;
+  select t.nsdcRegNumber, cd.centreId, c.enrollmentNumber, c.firstName, c.lastName, c.dob,c.firstNameFather,c.lastNameFather,c.guardianType,
+   c.salutation,c.gender,c.state, c.district, c.mobileNumber, c.educationLevel, t.sectorSkillCouncil, t.jobRole, b.batchStartDate, b.batchEndDate, b.assessmentDate, e.employerName,
+    e.employerContactNumber, c.employmentType, c.aadharCardNumber, c.disabilityType  from candidate c INNER JOIN batchdetails b INNER JOIN trainingpartnerdetails t INNER JOIN centredetails cd INNER JOIN employerdetails e ON  
+     cd.userEmail = cd.userEmail and e.batch_id = b.batchId and e.user_email = b.userEmail and 
+      b.centreId=cd.centreId and c.batchId=b.batchId and b.batchId= :batchId and t.userEmail= :userEmail;
 
  showMinutesOfSelectionMeetingDetails: >  
   select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails join centredetails on trainingpartnerdetails.userEmail=centredetails.userEmail join batchdetails on batchdetails.centreId=centredetails.centreId where batchdetails.userEmail=:userEmail AND batchdetails.batchId=:batchId;
