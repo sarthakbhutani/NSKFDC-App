@@ -66,47 +66,46 @@ public class DataImportService {
     private ReadApplicationConstants readApplicationConstants;
 
 
-    /*-------- Master Sheet Import -----------*/
-
-
     public String masterSheetImport(MultipartFile file, int batchId) throws IOException {
-        LOGGER.debug("In Service to read Excel sheet ");
-        boolean flag = true; //for iterating
+    	LOGGER.debug("Request received from Controller to DataImportService");
+        LOGGER.debug("In masterSheetImport - to read Excel sheet ");
+        boolean flag = true; 
         Integer insertResult = -25;
         String fileNameReceived = "";
         String uploadedFolder = readApplicationConstants.getSaveExcelSheetAtLocation();
 
-        LOGGER.debug("The path to uploaded folder is : " + uploadedFolder);
+        LOGGER.debug("The path to folder where file would be uploaded "+uploadedFolder);
         byte[] bytes = file.getBytes();
-
+        LOGGER.debug("Creating a Folder at the above path");
         File folder = new File(uploadedFolder);
 
-        /*-- Creating a directory --*/
-
         if (!folder.exists() || folder.canWrite()) {
+        	LOGGER.debug("In IF -- When Folder doesn't exist OR folder cannot be updated");
             if (folder.mkdirs()) {
-                LOGGER.debug("Folder Created whose path is : " + folder);
+                LOGGER.debug("In IF -- When Folder is Created ");
             } else if (folder.exists()) {
-                LOGGER.debug("Folder Already exists");
+                LOGGER.debug("In ELSE-IF Folder Already exists");
             } else {
-                LOGGER.error("Folder cannot be created");
+                LOGGER.error("In ELSE - When Folder cannot be created");
             }
 
         }
 
         fileNameReceived = file.getOriginalFilename();
-        LOGGER.debug("The file name is : " + fileNameReceived);
+        LOGGER.debug("The imported file name is : " + fileNameReceived);
 
         Path path = Paths.get(uploadedFolder + fileNameReceived);
-        LOGGER.debug("The path of file is : " + path);
+        LOGGER.debug("The path to the file is : " + path);
 
         try {
-            LOGGER.debug("Inside TRY block");
+            LOGGER.debug("TRYING -- To write a file");
             LOGGER.debug("Writing file");
             Files.write(path, bytes);
             LOGGER.debug("Exiting TRY block");
         } catch (Exception e) {
-            LOGGER.error("Error writting file" + e);
+            LOGGER.error("CATCHING -- Exception handled while writting file");
+            LOGGER.error("In DataImportService - masterSheetImport");
+            LOGGER.error("Returning message 'Cannot write file on local machine'");
             return "Cannot write file on local machine";
         }
 
@@ -118,11 +117,11 @@ public class DataImportService {
 
         if (path.toString().toLowerCase().endsWith(".xlsx")) {
 
-            LOGGER.debug(".xlsx file");
+            LOGGER.debug("In IF -- When file is .xlsx file");
             LOGGER.debug("Creating the workbook object for .xlsx file");
             workbook = new XSSFWorkbook(fileStream);
         } else if (path.toString().toLowerCase().endsWith(".xls")) {
-            LOGGER.debug(".xls file");
+            LOGGER.debug("In ELSE-IF -- When File is .xls file");
             LOGGER.debug("Creating workbook object for .xls file type");
             workbook = new HSSFWorkbook(fileStream);
         }
@@ -134,25 +133,25 @@ public class DataImportService {
 
         Iterator < Row > rowIterator = sheet.rowIterator();
 
-    //    LOGGER.debug("Physical Number of rows in the sheet are : " + sheet.getPhysicalNumberOfRows());
-
         while (rowIterator.hasNext()) {
 
             Row row = sheet.getRow(0);
             row = rowIterator.next();
 
-            if (row.getRowNum() == 2) // Extract BatchId from the excel sheet
+            if (row.getRowNum() == 2) 
             {
                 Iterator < Cell > cellIterator = row.cellIterator();
 
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-                        LOGGER.debug("The value of batchId is : " + cell.getNumericCellValue());
-                        if (cell.getNumericCellValue() == batchId) //Checking the batchId from the front end and the batch id in excelsheet
+                        LOGGER.debug("The value of batchId from ExcelSheet is : " + cell.getNumericCellValue());
+                        if (cell.getNumericCellValue() == batchId) 
                         {
-                            LOGGER.debug("BatchId matched");
+                            LOGGER.debug("In IF -- When BatchId matched");
                         } else {
+                        	LOGGER.debug("In ELSE -- When BatchId doesn't matched");
+                        	LOGGER.debug("Returning message - 'batchId in excel sheet and batch Id entered does not match'");
                             return "batchId in excel sheet and batch Id entered does not match";
                         }
 
@@ -161,7 +160,8 @@ public class DataImportService {
             }
 
             if (row.getRowNum() < 6) {
-                continue; //just skip the rows if row number is less than 6
+            	LOGGER.debug("Skipping the Rows at index less than 6");
+                continue; 
             }
             Iterator < Cell > cellIterator = row.cellIterator();
 
@@ -420,10 +420,14 @@ public class DataImportService {
         
 		if(insertResult < 1)
 		{
+			LOGGER.debug("In IF -- When insertResult of Excel Sheet is <1");
+			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
 			return "File cannot be uplaoded";
 		}
 		else
 		{
+			LOGGER.debug("In ELSE -- When insertResult of Excel Sheet is not <1");
+			LOGGER.debug("Returning message - 'File Uploaded Successfully'");
 			return "File Uploaded Successfully";
 		}
 		
@@ -435,22 +439,24 @@ public class DataImportService {
 
 
 
-    /*----------- Dashboard --------------*/
+   
     public GetBatchDetailsDto BatchDetails(String userEmail, String batchId) {
 
-        LOGGER.debug("Request received from Controller");
-        LOGGER.debug("In BatchDetailsService");
+        LOGGER.debug("Request received from Controller - DataImportService");
+        LOGGER.debug("In BatchDetails -- To get batchDetails for entered batchId");
 
         try {
 
-            LOGGER.debug("email is" + userEmail);
-            LOGGER.debug("In try block of BatchDetailsService to get search results for user Email1: " + userEmail);
+            LOGGER.debug("TRYING -- To get batchDetails for batchId entered by Logged in TP");
+            LOGGER.debug("Sending request to dataImportDao - BatchDetails");
             return dataImportDao.BatchDetails(userEmail, batchId);
 
         } catch (Exception e) {
 
-            LOGGER.debug("An error occurred while getting the batch details for userEmail" + e);
-            LOGGER.debug("Return NULL");
+            LOGGER.error("CATCHING -- Exception handled while getting entered batchDetails");
+            LOGGER.error("In DataImportService - BatchDetails");
+            LOGGER.error("Exception is "+e);
+            LOGGER.error("Returning null");
             return null;
 
         }
@@ -458,62 +464,78 @@ public class DataImportService {
 
     public Integer getTotalTargets(String userEmail) {
 
-        LOGGER.debug("Request received from Control to get Total Targets");
-        LOGGER.debug("In CandidatesTrained Service, to get Total Targets ");
+        LOGGER.debug("Request received from Controller - to get Total Targets");
+        LOGGER.debug("In DataImportService - getTotalTargets");
 
         try {
 
-            LOGGER.debug("In try block to get Total Targets");
+            LOGGER.debug("TRYING -- To get Total Targets of logged in TP");
+            LOGGER.debug("Sending request to DataImportDao - getTotalTargets");
             return dataImportDao.getTotalTargets(userEmail);
         } catch (Exception e) {
 
-            LOGGER.error("An error occurred while getting the Total Targets" + e);
+        	LOGGER.error("CATCHING -- Exception handled while getting total Targets of Logged in TP");
+            LOGGER.error("In DataImportService - getTotalTargets");
+            LOGGER.error("Exception is "+e);
+            LOGGER.error("Returning null");
             return null;
         }
     }
 
     public Integer getTargetAchieved(String userEmail) {
 
-        LOGGER.debug("Request received from Control to get Target Achieved");
-        LOGGER.debug("In CandidatesTrained Service, to get Target Achieved ");
+        LOGGER.debug("Request received from Controller - to get Targets Achieved");
+        LOGGER.debug("In DataImportService -  getTargetAchieved");
 
         try {
 
-            LOGGER.debug("In try block to get Target Achieved");
+        	LOGGER.debug("TRYING -- To get Total Acheived Targets of logged in TP");
+            LOGGER.debug("Sending request to DataImportDao - getTargetAchieved");
             return dataImportDao.getTargetAchieved(userEmail);
         } catch (Exception e) {
 
-            LOGGER.error("An error occurred while getting the Target Achieved" + e);
+        	LOGGER.error("CATCHING -- Exception handled while getting total Targets acheived of Logged in TP");
+            LOGGER.error("In DataImportService - getTargetAchieved");
+            LOGGER.error("Exception is "+e);
+            LOGGER.error("Returning null");
             return null;
         }
     }
     public Integer getRemainingTargets(String userEmail) {
 
-        LOGGER.debug("Request received from Control to get Remaining Targets");
-        LOGGER.debug("In CandidatesTrained Service, to get Remaining Targets ");
+        LOGGER.debug("Request received from Controller - To get Remaining Targets");
+        LOGGER.debug("In DataImportService - getRemainingTargets");
 
         try {
 
-            LOGGER.debug("In try block to get Remaining Targets");
+        	LOGGER.debug("TRYING -- To get Total Remaining Targets of logged in TP");
+            LOGGER.debug("Sending request to DataImportDao - getTargetAchieved");
             return dataImportDao.getRemainingTargets(userEmail);
         } catch (Exception e) {
 
-            LOGGER.error("An error occurred while getting the Remaining Targets" + e);
+        	LOGGER.error("CATCHING -- Exception handled while getting total Targets remaining of Logged in TP");
+            LOGGER.error("In DataImportService - getRemainingTargets");
+            LOGGER.error("Exception is "+e);
+            LOGGER.error("Returning null");
             return null;
         }
     }
     public Integer getFinancialYear(String userEmail) {
 
-        LOGGER.debug("Request received from Control to get FinancialYear");
-        LOGGER.debug("In CandidatesTrained Service, to get FinancialYear ");
+        LOGGER.debug("Request received from Controller - to get FinancialYear");
+        LOGGER.debug("In DataImportService, to getFinancialYear ");
 
         try {
 
-            LOGGER.debug("In try block to get Remaining Targets");
+        	LOGGER.debug("TRYING -- To get Total Remaining Targets of logged in TP");
+            LOGGER.debug("Sending request to DataImportDao - ShowFinancialYear");
             return dataImportDao.ShowFinancialYear(userEmail);
         } catch (Exception e) {
 
-            LOGGER.error("An error occurred while getting the FinancialYear" + e);
+        	LOGGER.error("CATCHING -- Exception handled while getting Financial Year");
+            LOGGER.error("In DataImportService - getFinancialYear");
+            LOGGER.error("Exception is "+e);
+            LOGGER.error("Returning null");
             return null;
         }
     }
@@ -522,12 +544,12 @@ public class DataImportService {
 
     public String downloadMasterSheetService(String userEmail) {
 
-        LOGGER.debug("Request received from controller");
-        LOGGER.debug("In Download Final Master Sheet Service");
+        LOGGER.debug("Request received from controller - DataImportService");
+        LOGGER.debug("To Download Final Master Sheet while generating batch");
 
         try {
 
-            LOGGER.debug("In try block of Download Final Master Sheet Service");
+        	LOGGER.debug("TRYING -- To Generate Master Sheet");
             Collection < DownloadFinalMasterSheetDto > downloadMasterSheetInformation = dataImportDao.downloadMasterSheetDao(userEmail);
             if (CollectionUtils.isNotEmpty(downloadMasterSheetInformation)) {
 
@@ -541,27 +563,24 @@ public class DataImportService {
                 parameters.put("DataSource", masterSheetBeans);
 
 
-                LOGGER.debug("Creating object of Class Path Resource ");
+                LOGGER.debug("Creating object of Class Path Resource - With FinalMasterSheet Template");
                 ClassPathResource resource = new ClassPathResource("/static/FinalMasterSheet.jasper");
                 String userHomeDirectory = System.getProperty("user.home");
 
-                LOGGER.debug("Getting input stream");
+                LOGGER.debug("Getting input stream for FinalMasterSheet");
                 InputStream inputStream = resource.getInputStream();
                 LOGGER.debug("Input Stream successfully generated");
                 LOGGER.debug("Creating the jrprint file..");
                 JasperPrint printFileName = JasperFillManager.fillReport(inputStream, parameters, new JREmptyDataSource());
-                LOGGER.debug("Successfuly created the jrprint file >> " + printFileName);
+                LOGGER.debug("Successfuly created the jrprint file for MasterSheet ");
 
                 if (printFileName != null) {
 
-                    /*------------------------- In Excel---------------------------------------------*/
-                    LOGGER.debug("Exporting the file to excel..");
-
+                	LOGGER.debug("In IF -- When printFileName is not NULL");
+                    LOGGER.debug("Exporting the file to EXCEL");
                     JRXlsxExporter exporter = new JRXlsxExporter();
                     exporter.setExporterInput(new SimpleExporterInput(printFileName));
-
                     outputFile = userHomeDirectory + File.separatorChar + "FinalMasterSheet.xlsx";
-
                     exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
                     SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
                     configuration.setDetectCellType(true);
@@ -569,21 +588,25 @@ public class DataImportService {
                     exporter.setConfiguration(configuration);
                     exporter.exportReport();
 
-                    LOGGER.debug("Successfully Generated excel..");
+                    LOGGER.debug("Successfully Generated excel of FinalBatchSheet");
 
                 } else {
-                    LOGGER.debug("jrprint file is empty..");
+                    LOGGER.debug("In ELSE -- When jrprint file is empty..");
                 }
 
-                LOGGER.debug("Excel Sheet generated successfully....!!!");
+                LOGGER.debug("Excel Sheet generated successfully");
 
             } else {
+            	LOGGER.debug("When MasterSheetImport Collection is empty");
+            	LOGGER.debug("Setting outputFile as null");
                 outputFile = null;
                 LOGGER.debug("Collection is null");
             }
 
         } catch (Exception e) {
-            LOGGER.debug("Exception caught, Error in generating Excel Sheet" + e);
+        	LOGGER.error("CATCHING -- Exception handled - DataImportService - downloadMasterSheetService ");
+        	LOGGER.error("While generating BatchId");
+        	LOGGER.error("Exception is "+ e);
 
         }
         return outputFile;
@@ -592,36 +615,41 @@ public class DataImportService {
 
     public Integer getGenerateBatchService(String userEmail) {
 
-        LOGGER.debug("Request received from Controller to create batch for email id: " + userEmail);
-
-        LOGGER.debug("In Import Service to create batch for email id: " + userEmail);
+        LOGGER.debug("Request received from Controller to create batch for logged in TP ");
+        LOGGER.debug("In DataImportService  - getGenerateBatchService");
 
         try {
 
-            LOGGER.debug("In try block to generate batch for training partner with email id: " + userEmail);
-
+        	LOGGER.debug("TRYING -- To get batchdetails of TP");
+            LOGGER.debug("Sending request to DataImportDao - generateBatchDao");
             return dataImportDao.generateBatchDao(userEmail);
 
         } catch (DataAccessException d) {
 
-            LOGGER.error("DataAccessException in service to create Batch" + d);
-
+            LOGGER.error("CATCHING -- DataAccessException in DataImportService to create Batch");
+            LOGGER.error("Exception is "+d);
+            LOGGER.error("Returning status code as -1");
             return -1;
         } catch (Exception e) {
 
-            LOGGER.error("An error occurred while creating the Batch" + e);
-
+        	LOGGER.error("CATCHING -- Exception in DataImportService while creating Batch");
+            LOGGER.error("Exception in getGenerateBatchService "+e);
+            LOGGER.error("Returning status code as -1");
             return -1;
         }
     }
 
     public Collection < BatchDto > getBatchDetail(String userEmail) {
+    	LOGGER.debug("Request received to get batchId of TP logged in");
+    	LOGGER.debug("In the method - getBatchDetail");
         try {
-
+        	LOGGER.debug("TRYING -- to get batchId for Logged in TP");
+        	LOGGER.debug("Sending Request to DataImportDao - getBatchDetail");
             return dataImportDao.getBatchDetail(userEmail);
         } catch (Exception e) {
-
-            LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
+        	LOGGER.error("CATCHING -- Exception in DataImportService while getting BatchId");
+            LOGGER.error("In DataImportService - getBatchDetail "+e);
+            LOGGER.error("Returning null");
             return null;
         }
     }
@@ -637,14 +665,16 @@ public class DataImportService {
         LOGGER.debug("1. Check if the centre Id exists in the database");
         int centreExistence = dataImportDao.checkCentreExistence(masterSheetSubmitDto);
         LOGGER.debug("The response of existence" + centreExistence);
-        //To check the existence of center and insert or update center information
+        
         if (centreExistence == 1) 
         {
-            LOGGER.debug("Centre Id already exist, hence update the records in database");
+            LOGGER.debug("In IF -- When Centre Id already exist");
+            LOGGER.debug("Sending Data to DataImportDao - updateCentreDetails");
             updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
         } 
         else {
-            LOGGER.debug("Centre Id does not exist, hence inserting the centre id in database");
+            LOGGER.debug("In ELSE -- When Centre Id does not exist, hence inserting the centre id");
+            LOGGER.debug("Sending request to DAO to insert new centreDetais");
             centerInserted = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
             LOGGER.debug("The center Id inserted is" + updatedCentre);
         }
