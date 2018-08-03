@@ -80,11 +80,15 @@
               <form id="login-form" name="LoginForm" ng-submit="login()">
                 <div class="main-login-form">
                   <div class="login-group">
-                    <div class="username-text">
-                      <input type="email" class="form-control" id="email"  placeholder="Enter Username" name="email" ng-model="credential.userEmail" required>
-                      <span class="glyphicon glyphicon-user user-icon"></span>
-                    </div>
-                    <div class="password-text">
+                    <div class="username-text form-group input-group">
+                       <input type="email" class="form-control" id="email"  placeholder="Enter Username" name="email" ng-model="credential.userEmail" required>
+                       <div class="user-icon">
+                              <span class="glyphicon glyphicon-user"></span>
+                              
+                       </div>
+                       </div>
+                    
+                    <div class="password-text form-group input-group">
                       <br>
                       <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" ng-model="credential.password" required>
                       <div id="eye" class="password-icon" ng-model="collapsed" ng-click="collapsed=!collapsed">
@@ -93,7 +97,8 @@
                     </div>
                     <span id="errorMessage">{{invalidErrorMessage}}</span>
                     <br>
-                    <button type="submit" class="btn btn-primary" class="login-button"  >Login</button>
+                    <div class="login-btn"> <button type="submit" class="btn btn-primary" class="login-button"  >Login</button> </div>
+                    
                   </div>
                   
                 </div>
