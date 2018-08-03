@@ -216,7 +216,7 @@ public class DataImportController {
                  		 String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
                  		 LOGGER.debug("Request received from frontend to create batch for email id : " + userEmail);
                  		
-                 		 LOGGER.debug("In Import Controller to create batch for rmail id: " + userEmail);
+                 		 LOGGER.debug("In Import Controller to create batch for email id: " + userEmail);
                  		 try{
                  			
                  			 return dataImportService.getGenerateBatchService(userEmail);
