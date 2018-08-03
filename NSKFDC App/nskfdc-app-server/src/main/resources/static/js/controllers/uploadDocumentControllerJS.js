@@ -81,7 +81,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 //		        enableColumnResizing: true,
 		        columnDefs: [
 		            {
-		            	name: 'batchId',  width: '12%', 
+		            	name: 'batchId',  width: '11%', 
 		                displayName: 'Batch ID'
 		            },
 		            {
