@@ -4,9 +4,20 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateOccupationCertificateReportDto extends BaseDto{
      
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String gender;
 	private String age;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
 	private String fatherName;
 	private String aadharCardNumber;
 	private String residentialAddress;

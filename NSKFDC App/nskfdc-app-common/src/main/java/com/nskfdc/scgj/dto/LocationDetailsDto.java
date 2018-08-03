@@ -3,6 +3,10 @@ package com.nskfdc.scgj.dto;
 import com.nskfdc.scgj.common.BaseDto;
 
 public class LocationDetailsDto extends BaseDto{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String state;
 	private String city;
 	private String municipalCorporation;

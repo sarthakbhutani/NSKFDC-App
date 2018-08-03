@@ -5,6 +5,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateMinutesOfSelectionDto extends BaseDto {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String jobRole;
 	private String trainingPartnerName;
 	private String sectorSkillCouncil;

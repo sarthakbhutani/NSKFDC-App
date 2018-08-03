@@ -5,6 +5,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GetBatchDetailsDto  extends BaseDto{
 
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 		int centreId;
 		String state;
 		String centreCity;

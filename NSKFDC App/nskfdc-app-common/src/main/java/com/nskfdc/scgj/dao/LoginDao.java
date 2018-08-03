@@ -63,28 +63,32 @@ public class LoginDao extends AbstractTransactionalDao{
 
 
 	public String getNameOfUser(String userEmail) {
+		
 		LOGGER.debug("Request Received from GetNameOfUserService to get name of the logged in user");
 		LOGGER.debug("In LoginDao - getNameOfUser");
 		LOGGER.debug("Creating HashMap object");
 		Map<String, Object> parameters = new HashMap<>();
 	
-		
+		String userName;
 		LOGGER.debug("Inserting logged in userEmail in parameters");
 		parameters.put("userEmail", userEmail);
 		try {
 			
 			LOGGER.debug("TRYING -- To get logged in User Detail");
 			LOGGER.debug("Executing query to get name of the logged in user");
-			return getJdbcTemplate().queryForObject(loginConfigSql.getGetNameOfUser(), parameters, String.class);
+			userName = getJdbcTemplate().queryForObject(loginConfigSql.getGetNameOfUser(), parameters, String.class);
 			
-		} catch (Exception e) {
+			
+		} 
+		catch (Exception e) {
 			
 			LOGGER.error("CATCHING -- Exception Handled in LoginDao");
         	LOGGER.error("In method - getNameOfUser, while getting name of Logged in User ");
-        	LOGGER.error("Exception is"+e);
-        	LOGGER.error("Returning null");
-			return e.getLocalizedMessage();
+        	LOGGER.error("Exception is: "+e);
+        	LOGGER.error("Setting Username to null");
+        	userName = null;
 		}
+		return userName;
 	}
 
 	

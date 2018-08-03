@@ -2,7 +2,9 @@ package com.nskfdc.scgj.controller;
 
 import java.util.Collection;
 import java.io.*;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 import com.nskfdc.scgj.service.DataImportService;
+
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -61,26 +66,40 @@ public class DataImportController {
 		  }
 	  }
 
-	@RequestMapping("/BatchDetails")
-	public GetBatchDetailsDto BatchDetails(@RequestParam("batchId") String batchId){
-	
-		try {
-	
-			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();		
-			LOGGER.debug("Email is " + userEmail);
-			LOGGER.debug("Trying to get details for the corresponding batch id:"+ batchId+ "to display on master import sheet tab");
-			LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
-			return  dataImportService.BatchDetails(userEmail,batchId);
-			
-		}
-		catch(Exception e) {	
-			LOGGER.debug("An error occurred while searching for batch details" + e);
-			LOGGER.debug("Returning NULL!");
-			return null;
-			
-		}	
-	}
-              
+//	@RequestMapping("/BatchDetails")
+//	public GetBatchDetailsDto getBatchDetails(@RequestParam("batchId") String batchId){
+//	
+//		try {
+//	
+//			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();		
+//			LOGGER.debug("Email is " + userEmail);
+//			LOGGER.debug("Trying to get details for the corresponding batch id:"+ batchId+ "to display on master import sheet tab");
+//			LOGGER.debug("Sending request to service to get batch details by id :" + userEmail);	
+//			return  dataImportService.BatchDetails(userEmail,batchId);
+//			
+//		}
+//		catch(Exception e) {	
+//			LOGGER.debug("An error occurred while searching for batch details" + e);
+//			LOGGER.debug("Returning NULL!");
+//			return null;
+//			
+//		}	
+//	}
+	  
+	  /**
+	   * Method to get details of a batch
+	   * @param batchId
+	   * @return object of GetBatchDetailsDto
+	   */
+      @RequestMapping("/get-batch-details")
+	  public BatchImportDto getBatchDetails(String batchId)
+      {
+    	  String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+    	  LOGGER.debug("Trying to get batch details for batch:" + batchId+ "of user : "+userEmail);
+    	  return dataImportService.BatchDetails(userEmail, batchId);
+      }
+      
+      
 	@RequestMapping("/getTotalTargets")
      public Integer getTotalTargets(){
                      String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();

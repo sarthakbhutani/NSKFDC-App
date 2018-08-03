@@ -5,6 +5,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class UploadDocumentsDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	int batchId;
 	String dateUploaded;
 	StringBuilder documentsUploaded;

@@ -9,6 +9,28 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Calendar getC() {
+		return c;
+	}
+	public void setC(Calendar c) {
+		this.c = c;
+	}
+	public DateFormat getDf() {
+		return df;
+	}
+	public void setDf(DateFormat df) {
+		this.df = df;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
 	private String name;
 	private int age;
 	private String gender;

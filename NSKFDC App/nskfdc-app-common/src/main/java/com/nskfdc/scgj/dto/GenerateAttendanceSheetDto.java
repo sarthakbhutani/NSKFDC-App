@@ -6,6 +6,44 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateAttendanceSheetDto extends BaseDto{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Calendar getC() {
+		return c;
+	}
+	public void setC(Calendar c) {
+		this.c = c;
+	}
+	public DateFormat getDf() {
+		return df;
+	}
+	public void setDf(DateFormat df) {
+		this.df = df;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+	public void setStringdate1(String stringdate1) {
+		this.stringdate1 = stringdate1;
+	}
+	public void setStringdate2(String stringdate2) {
+		this.stringdate2 = stringdate2;
+	}
+	public void setStringdate3(String stringdate3) {
+		this.stringdate3 = stringdate3;
+	}
+	public void setStringdate4(String stringdate4) {
+		this.stringdate4 = stringdate4;
+	}
+	public void setStringdate5(String stringdate5) {
+		this.stringdate5 = stringdate5;
+	}
+
 	private String name;
 	private String fatherName;
 	private String mobileNumber;

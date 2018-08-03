@@ -6,6 +6,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class MasterSheetImportDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String enrollmentNumber;
 	private String salutation;
 	private String firstName;

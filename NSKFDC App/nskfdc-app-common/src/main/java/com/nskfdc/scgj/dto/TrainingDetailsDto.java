@@ -4,6 +4,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class TrainingDetailsDto extends BaseDto {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String dateOfScreeningCommittee;
 	private String startDateOfTraining;
 	private String endDateOfTraining;

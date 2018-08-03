@@ -6,7 +6,11 @@ import java.util.Date;
 
 public class UpdateTargetsDto extends BaseDto {
 
-    private String nsdcRegNumber;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String nsdcRegNumber;
     private String trainingPartnerName;
     private int targets;
     private Date targetApprovalDate;

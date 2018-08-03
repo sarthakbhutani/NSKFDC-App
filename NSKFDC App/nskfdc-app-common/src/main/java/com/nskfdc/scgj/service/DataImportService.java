@@ -33,6 +33,7 @@ import com.nskfdc.scgj.common.ReadApplicationConstants;
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dao.EmployerDao;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
 import com.nskfdc.scgj.dto.MasterSheetImportDto;
@@ -437,7 +438,7 @@ public class DataImportService {
 
 
    
-    public GetBatchDetailsDto BatchDetails(String userEmail, String batchId) {
+    public BatchImportDto BatchDetails(String userEmail, String batchId) {
 
         LOGGER.debug("Request received from Controller - DataImportService");
         LOGGER.debug("In BatchDetails -- To get batchDetails for entered batchId");

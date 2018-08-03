@@ -4,6 +4,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GetTheNameOfUserDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String trainingPartnerName;
 
 	public String getTrainingPartnerName() {

@@ -5,6 +5,10 @@ import java.util.Date;
 import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateCredentialSearchDto extends BaseDto {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nsdcRegNumber;
 	private String trainingPartner;
 	private String userEmail;

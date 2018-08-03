@@ -9,9 +9,36 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateSDMSExcelSheetDto extends BaseDto {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nsdcRegNumber;
 	private int id;
 	private String enrollmentNumber;
+	public Calendar getC() {
+		return c;
+	}
+	public void setC(Calendar c) {
+		this.c = c;
+	}
+	public DateFormat getDf() {
+		return df;
+	}
+	public void setDf(DateFormat df) {
+		this.df = df;
+	}
+	public void setBatchStartDate(String batchStartDate) {
+		this.batchStartDate = batchStartDate;
+	}
+	public void setBatchEndDate(String batchEndDate) {
+		this.batchEndDate = batchEndDate;
+	}
+	public void setAssessmentDate(String assessmentDate) {
+		this.assessmentDate = assessmentDate;
+	}
+
+
 	private String firstName;
 	private String lastName;
 	private Date date_dob;

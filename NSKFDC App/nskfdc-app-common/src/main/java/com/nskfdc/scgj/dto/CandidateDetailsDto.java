@@ -4,6 +4,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class CandidateDetailsDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String name;
 	private String aadharNumber;
 	private String mobileNumber;

@@ -1,6 +1,12 @@
 package com.nskfdc.scgj.dto;
 
-public class GetBatchIdDto {
+import com.nskfdc.scgj.common.BaseDto;
+
+public class GetBatchIdDto extends BaseDto{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String batchId;
 	
 	/**

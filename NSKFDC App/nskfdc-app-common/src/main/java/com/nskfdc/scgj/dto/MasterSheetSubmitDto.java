@@ -4,6 +4,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class MasterSheetSubmitDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer batchId;
 	private String wardType;
 	private String wardNumber;

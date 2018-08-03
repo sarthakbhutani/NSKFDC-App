@@ -4,6 +4,10 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateCredentialDto extends BaseDto{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String trainingPartnerName;
 	private String nsdcRegNumber;
 	private String userEmail;

@@ -5,6 +5,10 @@ import com.nskfdc.scgj.common.BaseDto;
 public class CandidatesTrainedInLast6Months extends BaseDto{
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * @author Shivanshu Garg
 	 * @description Initialising data members to get  total number of candidates trained in last 6 months
 	 */

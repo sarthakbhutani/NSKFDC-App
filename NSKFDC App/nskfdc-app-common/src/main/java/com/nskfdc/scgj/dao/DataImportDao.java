@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.FinancialDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
@@ -497,7 +498,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 	private static final BatchDetailsRowmapper BatchDetailsRM = new BatchDetailsRowmapper();
 
 
-	public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
+	public BatchImportDto BatchDetails(String userEmail,String batchId) {
 	
 	LOGGER.debug("Request received from Service");
 	LOGGER.debug("In DataImportDao - BatchDetails to get details of batch of logged in TP" );
@@ -513,7 +514,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 				
 				LOGGER.debug("Executing query to get batch details for selected batch Id of logged in TP");
 				//return  getJdbcTemplate().
-				return  getJdbcTemplate().queryForObject(dataImportConfig.getBatchDetails(),parameters,BatchDetailsRM);
+				return  getJdbcTemplate().queryForObject(dataImportConfig.getBatchDetails(),parameters, BatchDetailsRM);
 
 				
 			}
@@ -528,10 +529,10 @@ public class DataImportDao extends AbstractTransactionalDao{
 		}
 
 
-	private static class BatchDetailsRowmapper implements RowMapper<GetBatchDetailsDto>{
+	private static class BatchDetailsRowmapper implements RowMapper<BatchImportDto>{
 	
 	@Override
-	public GetBatchDetailsDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public BatchImportDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 		
 		int centreId = rs.getInt("centreId");
 		String state = rs.getString("centreState");
@@ -545,11 +546,10 @@ public class DataImportDao extends AbstractTransactionalDao{
 		Date medicalExamDate = rs.getDate("medicalExamDate");
 		String employerName = rs.getString("employerName");
 		String wardType = rs.getString("wardType");
-		String wardNumber = rs.getString("wardNumber");
-		
+		String wardNumber = rs.getString("wardNumber");		
 		Long employerContactNumber = rs.getLong("employerContactNumber");
 		
-		return new GetBatchDetailsDto(centreId,state,centreCity,municipality,selectionCommitteeDate,principalTrainerName,batchStartDate,batchEndDate,assessmentDate,medicalExamDate,employerName,wardNumber,wardType,employerContactNumber);
+		return new BatchImportDto(batchStartDate, batchEndDate, assessmentDate, medicalExamDate, selectionCommitteeDate, municipality, wardType,employerContactNumber,  wardNumber,principalTrainerName,centreId,  employerName, state,  centreCity);
 		
 	}
 	
