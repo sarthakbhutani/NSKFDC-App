@@ -4,6 +4,11 @@ report.controller('reportController',function($scope, $http, $timeout) {
 	
 	
     $scope.Submit1=function(batchId){
+    	if($scope.batchId==null)
+    		{
+    		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+    		}
+    	else{
     	var url='/generateOccupationCertificateReport?batchId='+$scope.batchId;	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{
@@ -19,19 +24,25 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
     		}
     		$scope.onLoad();
-    		$timeout(function() {
-    			document.getElementById("success_msg").innerHTML="";
-    			document.getElementById("error_msg").innerHTML="";
-             }, 3000);
+    		
     	}); 
+    	}
     	
-    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
     };
     
     $scope.Submit2=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
     	var url='/generateAttendanceSheet?batchId='+$scope.batchId; 	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{
@@ -47,18 +58,25 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
     		}
-    		$scope.onLoad();
-    		$timeout(function() {
-    			document.getElementById("success_msg").innerHTML="";
-    			document.getElementById("error_msg").innerHTML="";
-             }, 3000);
+	$scope.onLoad();
+    		
     	}); 
+    	}
     	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
     };
     
     $scope.Submit3=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
     	var url='/generateNSKFDCSheet?batchId='+$scope.batchId;  	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{
@@ -74,17 +92,25 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			link.click();
     		}
     		else{
-    			document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
     		}
-    		$scope.onLoad();
-    		$timeout(function() {
-    			document.getElementById("success_msg").innerHTML="";
-    			document.getElementById("error_msg").innerHTML="";
-             }, 3000);
-    	});
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
     };
     
     $scope.Submit4=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
     	var url='/generateSDMSSheet?batchId='+$scope.batchId; 	  
     	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
     	{	
@@ -100,17 +126,25 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			link.click();
     		}
     	else{
-				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+				document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
 			}
-    		$scope.onLoad();
-    		$timeout(function() {
-    			document.getElementById("success_msg").innerHTML="";
-    			document.getElementById("error_msg").innerHTML="";
-             }, 3000);
-    	});
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
     };
     
     $scope.submitMinutes = function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
     	var urlReq='/generateMinutesOfSelectionCommitteeDetails?batchId='+$scope.batchId; 	  
     	$http.get(urlReq, { responseType : 'arraybuffer' }).then(function(response)
     	{	
@@ -128,14 +162,17 @@ report.controller('reportController',function($scope, $http, $timeout) {
     		}
     	else{
     			/*console.log("the length of response is " + response.data.byteLength)*/
-				document.getElementById("error_msg").innerHTML="<center> Data Not Found ! <br> Report cannot be generated ! </center>";
+				document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
 			}
-    		$scope.onLoad();
-    		$timeout(function() {
-    			document.getElementById("success_msg").innerHTML="";
-    			document.getElementById("error_msg").innerHTML="";
-             }, 3000);
-    	});
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
     };
 
     

@@ -6,10 +6,10 @@
 	<div class="row">
 		<h4>Generate Reports</h4>
 	</div>
-	<form>
+	<form name="report">
 	<div class="row generateReports">
 		<div class="col-md-5">
-   			<select ng-model="selectReport" class="dropdown">
+   			<select class="form-control" ng-model="selectReport" class="dropdown">
       			<option value="" disabled selected>Select Report to be Generated</option>
 	  			<option value="occupationCertificate" ng-model="report">Occupation Certificate</option>
 	 			<option value="attendanceSheet">Attendance Sheet</option>
@@ -17,45 +17,45 @@
       			<option value="SDMSSheet">Data Sheet of SDMS</option>
 	  			<option value="minutesOfSelectionCommittee">Minutes of Selection Committee</option>
   			</select>
+  			<span id="error_msg"></span><span id="success_msg"></span>
   		</div>
   		<div class="col-md-3" ng-show="selectReport=='occupationCertificate' || selectReport=='attendanceSheet' || selectReport=='NSKFDCSheet' || selectReport=='SDMSSheet' || selectReport=='minutesOfSelectionCommittee'">	
   			<select ng-model="batchId" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
   			<option selected disabled value="">Batch ID</option>
   			</select>
   			
-  			<span id="error_msg"></span>
-  			<span id="success_msg"></span>
  		</div>
  		
 		<div ng-switch="selectReport">
 		<div ng-switch-when="occupationCertificate" class="col-md-3">
-		  <button type="submit" class="btn btn-info" ng-click="Submit1(batchId)">Generate Report</button>
+		  <button type="submit" class="btn btn-info" ng-click="Submit1(batchId)" ng-disabled="report.$invalid">Generate Report</button>
    		</div>
   		<div ng-switch-when="attendanceSheet" class="col-md-3">
-    	  <button type="submit" class="btn btn-info" ng-click="Submit2(batchId)">Generate Report</button>
+    	  <button type="submit" class="btn btn-info" ng-click="Submit2(batchId)" ng-disabled="report.$invalid">Generate Report</button>
    		</div>
    		<div ng-switch-when="NSKFDCSheet" class="col-md-3">
-    	  <button type="submit" class="btn btn-info" ng-click="Submit3(batchId)">Generate Report</button>
+    	  <button type="submit" class="btn btn-info" ng-click="Submit3(batchId)" ng-disabled="report.$invalid">Generate Report</button>
    		</div>
    		<div ng-switch-when="SDMSSheet" class="col-md-3">
-    	  <button type="submit" class="btn btn-info" ng-click="Submit4(batchId)">Generate Report</button>
+    	  <button type="submit" class="btn btn-info" ng-click="Submit4(batchId)" ng-disabled="report.$invalid">Generate Report</button>
    		</div>
    		<div ng-switch-when="minutesOfSelectionCommittee" class="col-md-3">
-    	  <button type="submit" class="btn btn-info" ng-click="submitMinutes(batchId)">Generate Report</button>
+    	  <button type="submit" class="btn btn-info" ng-click="submitMinutes(batchId)" ng-disabled="report.$invalid">Generate Report</button>
    		</div>
    		<div ng-switch-default class="col-md-3">
-			<button type="submit" class="btn btn-info">Generate Report</button>
+			<button type="submit" class="btn btn-info" ng-disabled="report.$invalid">Generate Report</button>
   		</div>
   		</div>
   		
   		
   	</div>
+  	</form>
 	<div class="row">
 		<h4> Audit Table </h4>
 	</div> 
 	<div class="table">
 		<div ui-grid="auditTable"  class="searchreport grid-align"  ui-grid-auto-resize ></div> 
 	</div>  
-  	</form>
+  	
   	
 </div>
