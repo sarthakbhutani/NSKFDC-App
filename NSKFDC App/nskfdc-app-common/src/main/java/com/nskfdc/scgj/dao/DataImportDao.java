@@ -60,7 +60,6 @@ public class DataImportDao extends AbstractTransactionalDao{
      		while(itr.hasNext())
 			{
      			// Checking existence of candidate in database using enrollment number
-     		   
      			parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 				LOGGER.debug("Inserting batchId into hashmap to check existence of the user");
 				checkCandidateExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckCandidateExistance(), parameters, Integer.class);
@@ -515,9 +514,15 @@ public class DataImportDao extends AbstractTransactionalDao{
 		Date assessmentDate = rs.getDate("assessmentDate");
 		Date medicalExamDate = rs.getDate("medicalExamDate");
 		String employerName = rs.getString("employerName");
+		String wardType = rs.getString("wardType");
+		String wardNumber = rs.getString("wardNumber");
+		
 		Long employerContactNumber = rs.getLong("employerContactNumber");
 		
-		return new GetBatchDetailsDto(centreId,state,centreCity,municipality,selectionCommitteeDate,principalTrainerName,batchStartDate,batchEndDate,assessmentDate,medicalExamDate,employerName,employerContactNumber);
+		return new GetBatchDetailsDto( centreId,  state,  centreCity,  municipality,
+				 selectionCommitteeDate,  principalTrainerName,  batchStartDate,  batchEndDate,
+				 assessmentDate,  medicalExamDate,  employerName,  wardNumber,  wardType,
+				 employerContactNumber);
 		
 	}
 	

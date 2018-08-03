@@ -16,6 +16,50 @@ public class GetBatchDetailsDto  extends BaseDto{
 		Date assessmentDate;
 		Date medicalExamDate;
 		String employerName;
+		String wardNumber;
+		String wardType;
+		public String getCentreCity() {
+			return centreCity;
+		}
+
+
+
+
+		public void setCentreCity(String centreCity) {
+			this.centreCity = centreCity;
+		}
+
+
+
+
+		public String getWardNumber() {
+			return wardNumber;
+		}
+
+
+
+
+		public void setWardNumber(String wardNumber) {
+			this.wardNumber = wardNumber;
+		}
+
+
+
+
+		public String getWardType() {
+			return wardType;
+		}
+
+
+
+
+		public void setWardType(String wardType) {
+			this.wardType = wardType;
+		}
+
+
+
+
 		Long employerContactNumber;
 		
 		
@@ -189,21 +233,31 @@ public class GetBatchDetailsDto  extends BaseDto{
 
 
 
-				public GetBatchDetailsDto(int centreId,String state,String centreCity,String municipality,Date selectionCommitteeDate,String principalTrainerName,Date batchStartDate,Date batchEndDate,Date assessmentDate,Date medicalExamDate,String employerName,Long employerContactNumber) {
+		public GetBatchDetailsDto(int centreId, String state, String centreCity, String municipality,
+				Date selectionCommitteeDate, String principalTrainerName, Date batchStartDate, Date batchEndDate,
+				Date assessmentDate, Date medicalExamDate, String employerName, String wardNumber, String wardType,
+				Long employerContactNumber) {
 			super();
 			this.centreId = centreId;
 			this.state = state;
 			this.centreCity = centreCity;
 			this.municipality = municipality;
-			this.selectionCommitteeDate = selectionCommitteeDate ; 
+			this.selectionCommitteeDate = selectionCommitteeDate;
 			this.principalTrainerName = principalTrainerName;
 			this.batchStartDate = batchStartDate;
 			this.batchEndDate = batchEndDate;
 			this.assessmentDate = assessmentDate;
 			this.medicalExamDate = medicalExamDate;
 			this.employerName = employerName;
+			this.wardNumber = wardNumber;
+			this.wardType = wardType;
 			this.employerContactNumber = employerContactNumber;
 		}
+
+
+
+
+			
 
 
 
