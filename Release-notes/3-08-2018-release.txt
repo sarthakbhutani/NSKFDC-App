@@ -1,0 +1,2 @@
+This build number consist sprint scope for Sprint 1 
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail
