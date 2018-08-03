@@ -20,7 +20,6 @@ import com.nskfdc.scgj.common.BaseDto;
 
 		public BatchDto() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
 		
 

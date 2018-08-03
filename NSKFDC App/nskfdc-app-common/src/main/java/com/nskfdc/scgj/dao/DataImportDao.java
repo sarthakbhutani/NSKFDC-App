@@ -549,10 +549,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 		
 		Long employerContactNumber = rs.getLong("employerContactNumber");
 		
-		return new GetBatchDetailsDto( centreId,  state,  centreCity,  municipality,
-				 selectionCommitteeDate,  principalTrainerName,  batchStartDate,  batchEndDate,
-				 assessmentDate,  medicalExamDate,  employerName,  wardNumber,  wardType,
-				 employerContactNumber);
+		return new GetBatchDetailsDto(centreId,state,centreCity,municipality,selectionCommitteeDate,principalTrainerName,batchStartDate,batchEndDate,assessmentDate,medicalExamDate,employerName,wardNumber,wardType,employerContactNumber);
 		
 	}
 	

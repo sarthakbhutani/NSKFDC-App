@@ -257,6 +257,14 @@ public class GetBatchDetailsDto  extends BaseDto{
 
 
 
+		public GetBatchDetailsDto() {
+			super();
+		}
+		
+
+
+
+
 			
 
 

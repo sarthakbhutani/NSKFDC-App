@@ -43,5 +43,8 @@ public class DisplayAuditTableRecordDto extends BaseDto {
 		this.generatedBy = generatedBy;
 		
 	}
+	public DisplayAuditTableRecordDto() {
+		super();
+	}
 	
 }

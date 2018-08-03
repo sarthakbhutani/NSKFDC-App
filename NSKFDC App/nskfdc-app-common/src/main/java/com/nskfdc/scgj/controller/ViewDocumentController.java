@@ -113,9 +113,10 @@ private static final Logger LOGGER= LoggerFactory.getLogger(ViewDocumentControll
 				    if(file.delete())
 				    	LOGGER.debug("FILE DELETED SUCCESSFULLY");
 				    else
-				    	LOGGER.debug("NOT DELETED FILE");
+				    	LOGGER.debug("COULD NOT DELETE FILE");
 				    
-			}catch(Exception e) {
+			}
+			catch(Exception e) {
 				
 				LOGGER.debug("An error occurred" + e);
 				

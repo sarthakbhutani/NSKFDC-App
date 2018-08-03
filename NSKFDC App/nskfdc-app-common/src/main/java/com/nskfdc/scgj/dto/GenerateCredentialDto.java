@@ -54,6 +54,17 @@ public class GenerateCredentialDto extends BaseDto{
 	public void setTargets(int targets) {
 		this.targets = targets;
 	}
+	
+	/**
+	 * Parameterized Constructor
+	 * @param trainingPartnerName
+	 * @param nsdcRegNumber
+	 * @param userEmail
+	 * @param password
+	 * @param jobRole
+	 * @param sectorSkillCouncil
+	 * @param targets
+	 */
 	public GenerateCredentialDto(String trainingPartnerName, String nsdcRegNumber, String userEmail, String password,
 			String jobRole, String sectorSkillCouncil, int targets) {
 		super();
@@ -65,9 +76,11 @@ public class GenerateCredentialDto extends BaseDto{
 		this.sectorSkillCouncil = sectorSkillCouncil;
 		this.targets = targets;
 	}
+	/**
+	 * Default Constructor
+	 */
 	public GenerateCredentialDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 		

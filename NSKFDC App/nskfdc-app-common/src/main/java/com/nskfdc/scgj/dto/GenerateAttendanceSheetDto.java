@@ -75,7 +75,16 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 		stringdate5=df.format(c.getTime());
 	}
 	
-	/*------CONSTRUCTOR-------------*/
+	/**
+	 * Parameterized Constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param firstNameFather
+	 * @param lastNameFather
+	 * @param mobileNumber
+	 * @param batchId
+	 * @param batchStartDate
+	 */
 	public GenerateAttendanceSheetDto(String firstName, String lastName,String firstNameFather, String lastNameFather,String mobileNumber,String batchId,Date batchStartDate)
 	{
 		name = firstName+" "+lastName;

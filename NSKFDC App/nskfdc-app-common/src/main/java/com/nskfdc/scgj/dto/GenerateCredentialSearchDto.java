@@ -34,6 +34,15 @@ public class GenerateCredentialSearchDto extends BaseDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	/**
+	 * Parameterized Constructor
+	 * @param nsdcRegNumber
+	 * @param trainingPartner
+	 * @param userEmail
+	 * @param password
+	 * @param generatedOn
+	 */
 	public GenerateCredentialSearchDto (String nsdcRegNumber,String trainingPartner, String userEmail, String password, Date generatedOn) {
 		super();
 		this.nsdcRegNumber= nsdcRegNumber;
@@ -44,10 +53,11 @@ public class GenerateCredentialSearchDto extends BaseDto {
 		
 	}
 	
-	
+	/**
+	 * Default Constructor
+	 */
 	public GenerateCredentialSearchDto () {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public Date getGeneratedOn() {
 		return generatedOn;

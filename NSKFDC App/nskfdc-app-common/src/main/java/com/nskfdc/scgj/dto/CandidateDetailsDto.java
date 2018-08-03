@@ -48,6 +48,9 @@ public class CandidateDetailsDto extends BaseDto{
 		this.candidateNumber = candidateNumber;
 		this.remarks = remarks;
 	}
+	public CandidateDetailsDto() {
+		super();
+	}
 	
 	
 }

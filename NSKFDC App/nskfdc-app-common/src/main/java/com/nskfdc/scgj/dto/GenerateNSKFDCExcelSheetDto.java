@@ -162,7 +162,31 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 	public void setRelationWithSKMS(String relationWithSKMS) {
 		this.relationWithSKMS = relationWithSKMS;
 	}
-	/*------CONSTRUCTOR-------------*/
+	/**
+	 * Parameterized Constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param age
+	 * @param gender
+	 * @param dob
+	 * @param educationLevel
+	 * @param firstNameFather
+	 * @param lastNameFather
+	 * @param motherName
+	 * @param aadharCardNumber
+	 * @param residentialAddress
+	 * @param mobileNumber
+	 * @param occupationType
+	 * @param msId
+	 * @param idProofType
+	 * @param idProofNumber
+	 * @param bankName
+	 * @param ifscCode
+	 * @param accountNumber
+	 * @param batchId
+	 * @param trainingPartnerName
+	 * @param relationWithSKMS
+	 */
 	public GenerateNSKFDCExcelSheetDto(String firstName, String lastName,int age,String gender,Date dob,String educationLevel,String firstNameFather, String lastNameFather,
 			String motherName,String aadharCardNumber,String residentialAddress,String mobileNumber,String occupationType,String msId,
 			String idProofType,String idProofNumber,String bankName,String ifscCode,String accountNumber, String batchId, String trainingPartnerName,String relationWithSKMS) 
@@ -189,4 +213,12 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 		this.trainingPartnerName = trainingPartnerName;
 		this.relationWithSKMS=relationWithSKMS;
 	}
+	/**
+	 * Default Constructor
+	 */
+	public GenerateNSKFDCExcelSheetDto() {
+		super();
+	}
+	
+	
 }

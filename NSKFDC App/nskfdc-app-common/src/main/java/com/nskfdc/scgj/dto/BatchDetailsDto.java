@@ -199,6 +199,20 @@ public class BatchDetailsDto  extends BaseDto{
 
 
 
+				public String getCentreCity() {
+			return centreCity;
+		}
+
+
+
+
+		public void setCentreCity(String centreCity) {
+			this.centreCity = centreCity;
+		}
+
+
+
+
 				public BatchDetailsDto(int centreId,String state,String cntreCity,String municipality,Date selectionCommitteeDate,String principalTrainerName,Date batchStartDate,Date batchEndDate,Date assessmentDate,Date medicalExamDate,String employerName,Long employerContactNumber) {
 			super();
 			this.centreId = centreId;
@@ -214,6 +228,11 @@ public class BatchDetailsDto  extends BaseDto{
 			this.employerName = employerName;
 			this.employerContactNumber = employerContactNumber;
 		}
+				public BatchDetailsDto() {
+					super();
+					
+				}
+				
 	}
 
 

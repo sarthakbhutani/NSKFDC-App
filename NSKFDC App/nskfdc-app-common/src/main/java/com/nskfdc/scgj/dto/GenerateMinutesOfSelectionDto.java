@@ -50,8 +50,14 @@ public class GenerateMinutesOfSelectionDto extends BaseDto {
 		this.centreCity = centreCity;
 	}
 
-	/*CONSTRUCTOR*/
-	
+	/**
+	 * Parameterized Constructor
+	 * @param selectionCommitteeDate
+	 * @param jobRole
+	 * @param trainingPartnerName
+	 * @param sectorSkillCouncil
+	 * @param centreCity
+	 */
 	public  GenerateMinutesOfSelectionDto(String selectionCommitteeDate,String jobRole,String trainingPartnerName,String sectorSkillCouncil,String centreCity){
 
 		super();
@@ -63,6 +69,14 @@ public class GenerateMinutesOfSelectionDto extends BaseDto {
 		this.centreCity=centreCity;
 		
 	}
+	
+	/**
+	 * Default Constructor
+	 */
+	public GenerateMinutesOfSelectionDto() {
+		super();
+	}
+	
 
 	
 }

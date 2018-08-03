@@ -42,8 +42,15 @@ public class DownloadFinalMasterSheetDto extends BaseDto {
 		this.batchId = batchId;
 	}
 	
-	/*------------------------------CONSTRUCTOR--------------------------------*/
 	
+	/**
+	 * Parameterized Constructor
+	 * @param trainingPartnerName
+	 * @param sectorSkillCouncil
+	 * @param jobRole
+	 * @param nsdcRegNumber
+	 * @param batchId
+	 */
 	public DownloadFinalMasterSheetDto(String trainingPartnerName, String sectorSkillCouncil,String jobRole,String nsdcRegNumber,String batchId){
 	
 	this.trainingPartnerName = trainingPartnerName;
@@ -52,6 +59,9 @@ public class DownloadFinalMasterSheetDto extends BaseDto {
 	this.nsdcRegNumber = nsdcRegNumber;
 	this.batchId = batchId;
 	
+	}
+	public DownloadFinalMasterSheetDto() {
+		super();
 	}
 	
 }

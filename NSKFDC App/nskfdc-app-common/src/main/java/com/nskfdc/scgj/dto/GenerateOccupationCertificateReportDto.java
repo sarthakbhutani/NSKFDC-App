@@ -55,7 +55,18 @@ public class GenerateOccupationCertificateReportDto extends BaseDto{
 		this.residentialAddress = residentialAddress;
 	}
 
-	/*------CONSTRUCTOR-------------*/
+	/**
+	 * Parameterized Constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param gender
+	 * @param age
+	 * @param firstNameFather
+	 * @param lastNameFather
+	 * @param aadharCardNumber
+	 * @param residentialAddress
+	 * @param workplaceAddress
+	 */
 	public GenerateOccupationCertificateReportDto(String firstName, String lastName,String gender, String age, String firstNameFather, String lastNameFather, String aadharCardNumber,	String residentialAddress, String workplaceAddress) {
 		
 		name = firstName+" "+lastName;
@@ -66,5 +77,14 @@ public class GenerateOccupationCertificateReportDto extends BaseDto{
 		this.workplaceAddress = workplaceAddress;
 		this.residentialAddress = residentialAddress;
 	}
+	
+	/**
+	 * Default Constructor
+	 */
+	public GenerateOccupationCertificateReportDto() {
+		super();
+	}
+	
+	
 	
 }

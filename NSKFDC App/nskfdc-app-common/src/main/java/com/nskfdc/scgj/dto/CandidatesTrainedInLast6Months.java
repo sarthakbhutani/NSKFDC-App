@@ -45,6 +45,7 @@ public class CandidatesTrainedInLast6Months extends BaseDto{
 		this.month = month;
 		this.count = count;
 	}
+	
 
 	
 	
