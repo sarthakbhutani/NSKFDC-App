@@ -32,7 +32,7 @@ var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
 	$scope.submitMsg=false;
 	$scope.batch = {};
-	
+	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
 	});
@@ -114,7 +114,7 @@ var url = '/getBatchIdfortrainer';
         $scope.isDisabled13 = false;
        
         /*----------------- To get the existing details of Batch Id--------------*/
-        $http.get("/BatchDetails?batchId="+$scope.batchDetails.value)
+        $http.get("/get-batch-details?batchId="+$scope.batchDetails.value)
         .then(function(response){        
         	$scope.batch = response;
         	$scope.batch.centreId= response.data.centreId;
