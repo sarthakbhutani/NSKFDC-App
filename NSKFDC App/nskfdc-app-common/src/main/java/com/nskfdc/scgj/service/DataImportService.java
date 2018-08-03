@@ -381,10 +381,7 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 25)
                 {
                 	LOGGER.debug("Capturing value of header : Residential Address ");
-
-                		masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());	
-                	
-                	
+                	masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());	                	
                 }
                 
                 else if(cell.getColumnIndex() == 26)
@@ -686,21 +683,21 @@ public class DataImportService {
         	int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
         	if (checkEmployer == 0)
         	{
-        		LOGGER.debug("Employer does not exists for this batch an user.Trying to insert now");
+        		LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
+        		LOGGER.debug("Sending request to employerDao - to insert new employer");
         		status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(), userEmail);
         		LOGGER.debug("Status of Employer insertion " + status);
         	}
         	else if (checkEmployer == 1)
         	{
-        		LOGGER.debug("Employer does exists trying to update Employer information");
+        		LOGGER.debug("In ELSE-IF -- When Employer does exist");
+        		LOGGER.debug("Sending request to employerDao - to update employer details");
         		status = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(), masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(), userEmail);
-        		LOGGER.debug("Status of Employer udation " + status);
+        		LOGGER.debug("Status of Employer updation " + status);
         	}
         }      
-        LOGGER.debug("Updated the centre Details, updating batch details corresponding to the selected centre id & batch id");
-        
-        LOGGER.debug(masterSheetSubmitDto.getCentreId());
-        //masterSheetSubmitDto.setCentreId(centerInserted);
+       LOGGER.debug("Updated the centre Details, updating batch details corresponding to the selected centre id & batch id");
+       LOGGER.debug("Sending request to dataImportDao - updateBatchDetails");
         return dataImportDao.updateBatchDetails(masterSheetSubmitDto);
 
     }
