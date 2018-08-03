@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -58,11 +59,17 @@ public class DashboardDao extends AbstractTransactionalDao{
 			return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfCandidatesTrained(),parameters,Integer.class);
 			
 		} 
+		catch(EmptyResultDataAccessException re)
+		{
+			LOGGER.error("CATCHING -- EmptyResultDataAccessException Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfCandidatesTrained" + re);
+			return 0;
+		}
 		catch(DataAccessException de)
 		{
 			LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
 			LOGGER.error("In method - getNumberOfCandidatesTrained" + de);
-			return null;
+			return 0;
 		}
 		
 		catch(Exception e)
@@ -70,7 +77,7 @@ public class DashboardDao extends AbstractTransactionalDao{
 			LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
 			LOGGER.error("In method - getNumberOfCandidatesTrained");
 			LOGGER.error("An exception occurred is "+e);
-			return null;
+			return -1;
 		}
 		
 	}
@@ -100,11 +107,17 @@ public class DashboardDao extends AbstractTransactionalDao{
 			return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfOngoingTrainings(),parameters,Integer.class);
 			
 		} 
+		catch(EmptyResultDataAccessException re)
+		{
+			LOGGER.error("CATCHING -- EmptyResultDataAccessException Handled in Dashboard DAO");
+			LOGGER.error("In method - getNumberOfOngoingTrainings" + re);
+			return 0;
+		}
 		catch(DataAccessException de)
 		{
 			LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
 			LOGGER.error("In method - getNumberOfOngoingTrainings" + de);
-			return null;
+			return -1;
 		}
 	
 		catch(Exception e)
@@ -112,7 +125,7 @@ public class DashboardDao extends AbstractTransactionalDao{
 			LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
 			LOGGER.error("In method - getNumberOfOngoingTrainings");
 			LOGGER.error("An exception occurred is "+e);
-			return null;
+			return -2;
 		}
 			
 		
@@ -140,12 +153,18 @@ public Integer getNumberOfTrainingPartners(){
 		LOGGER.debug("Execute query -- Get Total Number of Training Partners");
 		Map<String,Object> parameters = new HashMap<>();
 		return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfTrainingPartners(),parameters, Integer.class);
-	} 
+	}
+	catch(EmptyResultDataAccessException re)
+	{
+		LOGGER.error("CATCHING -- EmptyResultDataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfTrainingPartners" + re);
+		return 0;
+	}
 	catch(DataAccessException de)
 	{
 		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
 		LOGGER.error("In method - getNumberOfTrainingPartners" + de);
-		return null;
+		return -1;
 	}
 
 	catch(Exception e)
@@ -153,7 +172,7 @@ public Integer getNumberOfTrainingPartners(){
 		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
 		LOGGER.error("In method - getNumberOfTrainingPartners");
 		LOGGER.error("An exception occurred is "+e);
-		return null;
+		return -2;
 	}
 	
 	
@@ -182,21 +201,25 @@ public Integer getNumberOfUpcomingAssessments(){
 		LOGGER.debug("Execute query to get Number Of Upcoming Assessments");
 		Map<String,Object> parameters = new HashMap<> ();
 		return getJdbcTemplate().queryForObject(dashboardConfig.getShowNumberOfUpcomingAssessments(),parameters,Integer.class);
-		
 	} 
+	catch(EmptyResultDataAccessException re)
+	{
+		LOGGER.error("CATCHING -- EmptyResultDataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getNumberOfUpcomingAssessments" + re);
+		return 0;
+	}
 	catch(DataAccessException de)
 	{
 		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");
 		LOGGER.error("In method - getNumberOfUpcomingAssessments" + de);
-		return null;
+		return -1;
 	}
-
 	catch(Exception e)
 	{
 		LOGGER.error("CATCHING -- Exception Handled in Dashboard DAO");
 		LOGGER.error("In method - getNumberOfUpcomingAssessments");
 		LOGGER.error("An exception occurred is "+e);
-		return null;
+		return -2;
 	}
 	
 }
@@ -223,6 +246,12 @@ public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesT
 				
 		
 	} 
+	catch(EmptyResultDataAccessException de)
+	{
+		LOGGER.error("CATCHING -- EmptyResultDataAccessException Handled in Dashboard DAO");
+		LOGGER.error("In method - getTotalNumberOfCandidatesTrainedInLast6Months" + de);
+		return null;
+	}
 	catch(DataAccessException de)
 	{
 		LOGGER.error("CATCHING -- DataAccessException Handled in Dashboard DAO");

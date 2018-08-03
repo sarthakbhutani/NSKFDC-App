@@ -83,7 +83,7 @@ public class LoginDao extends AbstractTransactionalDao{
         	LOGGER.error("In method - getNameOfUser, while getting name of Logged in User ");
         	LOGGER.error("Exception is"+e);
         	LOGGER.error("Returning null");
-			return null;
+			return e.getLocalizedMessage();
 		}
 	}
 

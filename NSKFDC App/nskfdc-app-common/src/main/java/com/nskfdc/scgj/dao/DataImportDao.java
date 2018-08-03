@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -260,12 +261,17 @@ public class DataImportDao extends AbstractTransactionalDao{
                return getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
                
         } 
+        catch(EmptyResultDataAccessException re)
+        {
+        	LOGGER.error("EXCEPTION :" + re);
+        	return 0;
+        }
         catch(DataAccessException de)
         {
         	LOGGER.error("CATCHING -- Data Access Exception has occured, while getting total Targets");
 	        LOGGER.error("In DataImportDao - getTotalTargets" + de);
 	        LOGGER.error("Returning zero");
-               return 0;
+               return -1;
         }
         
         catch(Exception e)
@@ -317,7 +323,14 @@ public class DataImportDao extends AbstractTransactionalDao{
            parameters.put("date2", date2);
            LOGGER.debug("Executing query to get acheived targets of logged in TP");
            return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
-        } 
+        }
+    	catch(EmptyResultDataAccessException re)
+		 {
+			 LOGGER.error("CATCHING -- Data Access Exception has occured, while getting achieved Targets");
+		        LOGGER.error("In DataImportDao - getTargetAchieved" + re);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
 		 catch(DataAccessException de)
 		 {
 			 LOGGER.error("CATCHING -- Data Access Exception has occured, while getting achieved Targets");
@@ -375,13 +388,22 @@ public class DataImportDao extends AbstractTransactionalDao{
 		    int acheivedTargets=getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
 		        return (totalTargets-acheivedTargets);
 		 } 
+		 catch(EmptyResultDataAccessException de)
+		 {
+
+		        LOGGER.error("CATCHING --EmptyResultDataAccessException has occured,while getting Remaining Targets " );
+		        LOGGER.error("In DataImportDao - getRemainingTargets" +de);
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+		 
 		 catch(DataAccessException de)
 		 {
 
 		        LOGGER.error("CATCHING -- data access exception has occured,while getting Remaining Targets " );
 		        LOGGER.error("In DataImportDao - getRemainingTargets" +de);
 		        LOGGER.error("Returning zero");
-		        return 0;
+		        return -1;
 		 }
 		 
 		 catch(Exception e)
@@ -390,7 +412,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 		        LOGGER.error("CATCHING -- Exception has occured, while getting Remaining Targets");
 		        LOGGER.error("In DataImportDao - getRemainingTargets" + e);
 		        LOGGER.error("Returning zero");
-		        return 0;
+		        return -2;
 		 }
 	
 	}
@@ -411,12 +433,20 @@ public class DataImportDao extends AbstractTransactionalDao{
 		        return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
 		        
 		 } 
+		 catch(EmptyResultDataAccessException re)
+		 {
+		        LOGGER.error("CATCHING --EmptyResultDataAccessException has occured: " + re);
+		        LOGGER.error("In DataImportDao - ShowFinancialYear");
+		        LOGGER.error("Returning zero");
+		        return 0;
+		 }
+		 
 		 catch(DataAccessException de)
 		 {
 		        LOGGER.error("CATCHING -- data access exception has occured: " + de);
 		        LOGGER.error("In DataImportDao - ShowFinancialYear");
 		        LOGGER.error("Returning zero");
-		        return 0;
+		        return -1;
 		 }
 		 
 		 catch(Exception e)
@@ -425,7 +455,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 		        LOGGER.error("CATCHING -- Exception has occured: " + e);
 		        LOGGER.error("In DataImportDao - ShowFinancialYear");
 		        LOGGER.error("Returning zero");
-		        return 0;
+		        return -2;
 		 }
 		 
 	}
@@ -482,7 +512,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 				parameters.put("batchId",batchId);
 				
 				LOGGER.debug("Executing query to get batch details for selected batch Id of logged in TP");
-				
+				//return  getJdbcTemplate().
 				return  getJdbcTemplate().queryForObject(dataImportConfig.getBatchDetails(),parameters,BatchDetailsRM);
 
 				
@@ -558,13 +588,20 @@ public class DataImportDao extends AbstractTransactionalDao{
 			LOGGER.debug("Returning result");	
 			return result;
 		}
-				
+			
+		
+		catch(EmptyResultDataAccessException e) {
+					
+			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
+			LOGGER.error("In DataImportDao - generateBatchDao " + e);
+			LOGGER.error("Returning -1");
+			return 0;
+		}
 		catch(DataAccessException d) {
 					
 			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
 			LOGGER.error("In DataImportDao - generateBatchDao " + d);
 			LOGGER.error("Returning -1");
-					
 			return -1;
 		}
 				
@@ -573,8 +610,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 			LOGGER.error("CATCHING -- Exception handled while generating batch");
 			LOGGER.error("In DataImportDao - generateBatchDao " + e);
 			LOGGER.error("Returning -1");
-					
-			return -1;
+			return -2;
 		}
 	}
 
