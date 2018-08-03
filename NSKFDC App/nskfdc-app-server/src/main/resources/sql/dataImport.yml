@@ -19,7 +19,7 @@ dataImport:
 
  BatchDetails: >
   SELECT c.centreId, c.centreState, c.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate,
-   b.batchEndDate,b.assessmentDate, b.medicalExamDate, e.employerName, e.employerContactNumber from batchdetails  b INNER JOIN centredetails  c INNER JOIN employerdetails e ON 
+   b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber, e.employerName, e.employerContactNumber from batchdetails  b INNER JOIN centredetails  c INNER JOIN employerdetails e ON 
    b.userEmail = c.userEmail and b.centreId = c.centreId and b.userEmail=e.user_email and b.batchId = e.batch_id and b.batchId= :batchId and b.userEmail= :userEmail;
 
  generateBatch: >
