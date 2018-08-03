@@ -56,6 +56,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 			Integer checkCandidateExistence = - 50;
      		Integer candidateInsertStatus   = - 25;
      
+     		LOGGER.debug("Inserting candidate details from Excel sheet imported");
      		while(itr.hasNext())
 			{
      			// Checking existence of candidate in database using enrollment number
@@ -100,12 +101,14 @@ public class DataImportDao extends AbstractTransactionalDao{
 					
 					try
 					{
+						
 						candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(), parameters);
 					}
 					
 					catch(Exception e)
 					{
-						LOGGER.debug("An exception occured while inserting new values in the database" + e);
+						LOGGER.error("An exception occured while inserting new values in the database" + e);
+						LOGGER.error("Returning null");
 						return null;
 					}
 					
@@ -119,13 +122,16 @@ public class DataImportDao extends AbstractTransactionalDao{
 							params.put("ifscCode", candidateDetails.get(i).getIfscCode());
 							params.put("bankName", candidateDetails.get(i).getBankName());
 							params.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
-							
+							LOGGER.debug("Executing query to uplate bank details of candidate");
 							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(), params);
 
 						}
 						catch(Exception e)
 						{
-							LOGGER.debug("An Exception occured at line 120 while inserting new enteries in database");
+							LOGGER.error("CATCHING -- Exception Handled while inserting bank details of candidate from sheet");
+							LOGGER.error("An Exception occured at line 120 while inserting new enteries in database");
+							LOGGER.error("Exception is"+ e);
+							LOGGER.error("Returning null");
 							return null;
 						}
 												
@@ -135,22 +141,25 @@ public class DataImportDao extends AbstractTransactionalDao{
 				
 				else if(checkCandidateExistence == 1)
 				{
+				
 					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(), parameters);
 					if(candidateInsertStatus > 0)
 					{
 						try
 						{
+							LOGGER.debug("TRYING -- To update the existing candidate from the sheet");
 							Map<String,Object> updatedParams = new HashMap<>();
 							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
 							updatedParams.put("ifscCode", candidateDetails.get(i).getIfscCode());
 							updatedParams.put("bankName", candidateDetails.get(i).getBankName());
 							updatedParams.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
-							
+							LOGGER.debug("Executing update query for existing candidate while importing excel sheet");
 							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(), updatedParams);
 						}
 						catch(Exception e)
 						{
-							LOGGER.debug("An exception occured at line 148 while updating the details of candidates" + e);
+							LOGGER.error("CATCHING -- Exception while updating import sheet details of candidate");
+							LOGGER.error("An exception occured at line 148 while updating the details of candidates" + e);
 							return null;
 						}
 						
@@ -159,12 +168,14 @@ public class DataImportDao extends AbstractTransactionalDao{
 				i++;
 				
 			}
-     		
+     		LOGGER.debug("Returning insert status for Excel Sheet import");
 			return candidateInsertStatus;
 		}
 		catch(Exception e)
 		{
-			LOGGER.debug("An Exception occured while inserting the sheet details into database : " + e);
+			LOGGER.error("CATCHING -- Exception while inserting the Excel sheet");			
+			LOGGER.error("In masterSheetImport" + e);
+			LOGGER.error("Returning -25");
 			return -25;
 		}
 			
@@ -175,19 +186,21 @@ public class DataImportDao extends AbstractTransactionalDao{
 	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(String userEmail){
 		
 		LOGGER.debug("Request received from service");
-		LOGGER.debug("In Generate Occupation Certificate Dao");
+		LOGGER.debug("In downloadMasterSheetDao - to get masterSheet details");
 		
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("userEmail", userEmail);
 		
 		try {
 			
-			LOGGER.debug("In try block to download Final Master Sheet");
+			LOGGER.debug("TRYING -- to get details for final Master Sheet");
+			LOGGER.debug("Executing query to get details for Final Master Sheet");
 			return getJdbcTemplate().query(dataImportConfig.getDownloadMasterSheet(), parameters, generateMasterSheetRowMapper);
 		}catch(Exception e) {
 					
-			LOGGER.error("In Catch Block");			
-			LOGGER.error("An error occured while downloading the Final Master Sheet" + e);
+			LOGGER.error("CATCHING -- Exception while getting details for final Master Sheet");			
+			LOGGER.error("In downloadMasterSheetDao" + e);
+			LOGGER.error("Returning NULL");
 					
 			return null;
 		}
@@ -213,7 +226,7 @@ public class DataImportDao extends AbstractTransactionalDao{
     public Integer getTotalTargets(String userEmail){
         
         LOGGER.debug("Request received from Service");
-        LOGGER.debug("In Total Targets Dao, to get Total Targets");
+        LOGGER.debug("In getTotalTargets, to get Total Targets");
         
         
         try {
@@ -238,25 +251,29 @@ public class DataImportDao extends AbstractTransactionalDao{
         		
         	}
                
-               LOGGER.debug("In try block");
-               LOGGER.debug("Execute query to get TotalTargets");
+               LOGGER.debug("TRYING -- To get Total targets of logged in TP");
+               
                Map<String,Object> parameters = new HashMap<> ();
                parameters.put("userEmail", userEmail);
                parameters.put("date1", date1);
                parameters.put("date2", date2);
+               LOGGER.debug("Execute query to get TotalTargets");
                return getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
                
         } 
         catch(DataAccessException de)
         {
-               LOGGER.error("A data access exception has occured: " + de);
-               LOGGER.error("Returning zero");
+        	LOGGER.error("CATCHING -- Data Access Exception has occured, while getting total Targets");
+	        LOGGER.error("In DataImportDao - getTotalTargets" + de);
+	        LOGGER.error("Returning zero");
                return 0;
         }
         
         catch(Exception e)
         {
-               LOGGER.error("An Exception occured: " + e);
+        	LOGGER.error("CATCHING -- Exception has occured, while getting total Targets");
+	        LOGGER.error("In DataImportDao - getTotalTargets" + e);
+	        LOGGER.error("Returning zero");
                return 0;
         }
         
@@ -269,7 +286,7 @@ public class DataImportDao extends AbstractTransactionalDao{
     public Integer getTargetAchieved(String userEmail){
  
     	LOGGER.debug("Request received from Service");
-    	LOGGER.debug("In Target Achieved Dao, to get Target Achieved");
+    	LOGGER.debug("In getTargetAchieved, to get Target Achieved");
  
     	try {
     		String date1;
@@ -293,24 +310,29 @@ public class DataImportDao extends AbstractTransactionalDao{
     		
     	}
            
-           LOGGER.debug("In try block");
-           LOGGER.debug("Execute query to get Achieved Targets");
+           LOGGER.debug("TRYING -- to get Acheived targets");
+           
            Map<String,Object> parameters = new HashMap<> ();
            parameters.put("userEmail", userEmail);
            parameters.put("date1", date1);
            parameters.put("date2", date2);
+           LOGGER.debug("Executing query to get acheived targets of logged in TP");
            return getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
         } 
 		 catch(DataAccessException de)
 		 {
-		        LOGGER.error("A data access exception has occured: " + de);
+			 LOGGER.error("CATCHING -- Data Access Exception has occured, while getting achieved Targets");
+		        LOGGER.error("In DataImportDao - getTargetAchieved" + de);
 		        LOGGER.error("Returning zero");
 		        return 0;
 		 }
 		 
 		 catch(Exception e)
 		 {
-		        LOGGER.error("An Exception occured: " + e);
+			 	LOGGER.error("CATCHING -- Exception has occured, while getting achieved Targets");
+		        LOGGER.error("In DataImportDao - getTargetAchieved" + e);
+		        LOGGER.error("Returning zero");
+		      
 		        return 0;
 		 }
 		 
@@ -318,7 +340,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 		public Integer getRemainingTargets(String userEmail){
 		 
 		 LOGGER.debug("Request received from Service");
-		 LOGGER.debug("In Remaining Target Dao, to get Remaining Target");
+		 LOGGER.debug("In getRemainingTargets, to get Remaining Target");
 		 
 		 
 		 try {
@@ -343,26 +365,31 @@ public class DataImportDao extends AbstractTransactionalDao{
      		
      	}
             
-            LOGGER.debug("In try block");
-            LOGGER.debug("Execute query to get Remaining Targets");
+            LOGGER.debug("TRYING -- To get remaining targets of logged in tP");
+            
             Map<String,Object> parameters = new HashMap<> ();
             parameters.put("userEmail", userEmail);
             parameters.put("date1", date1);
             parameters.put("date2", date2);
-		        int totalTargets = getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
-		        int acheivedTargets=getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
+            LOGGER.debug("Executing queries to get Remaining Targets");
+		    int totalTargets = getJdbcTemplate().queryForObject(dataImportConfig.getShowTotalTargets(),parameters,Integer.class);
+		    int acheivedTargets=getJdbcTemplate().queryForObject(dataImportConfig.getShowTargetAchieved(),parameters,Integer.class);
 		        return (totalTargets-acheivedTargets);
 		 } 
 		 catch(DataAccessException de)
 		 {
-		        LOGGER.error("A data access exception has occured: " + de);
+
+		        LOGGER.error("CATCHING -- data access exception has occured,while getting Remaining Targets " );
+		        LOGGER.error("In DataImportDao - getRemainingTargets" +de);
 		        LOGGER.error("Returning zero");
 		        return 0;
 		 }
 		 
 		 catch(Exception e)
 		 {
-		        LOGGER.error("An Exception occured: " + e);
+
+		        LOGGER.error("CATCHING -- Exception has occured, while getting Remaining Targets");
+		        LOGGER.error("In DataImportDao - getRemainingTargets" + e);
 		        LOGGER.error("Returning zero");
 		        return 0;
 		 }
@@ -372,29 +399,33 @@ public class DataImportDao extends AbstractTransactionalDao{
 	
 	public Integer ShowFinancialYear(String userEmail){
 		 
-		 LOGGER.debug("Request received from Service");
-		 LOGGER.debug("In Remaining Target Dao, to get FinancialYear");
+		 LOGGER.debug("Request received from Service to DataImportDao - ShowFinancialYear");
+		 LOGGER.debug("To get FinancialYear");
 		 
 		 
 		 try {
 		        
-		        LOGGER.debug("In try block");
-		        LOGGER.debug("Execute query to get FinancialYear");
+		        LOGGER.debug("TRYING -- To get Financial year");
 		        Map<String,Object> parameters = new HashMap<> ();
 		        parameters.put("userEmail", userEmail);
+		        LOGGER.debug("Execute query to get FinancialYear");
 		        return getJdbcTemplate().queryForObject(dataImportConfig.getShowFinancialYear(),parameters,Integer.class);
 		        
 		 } 
 		 catch(DataAccessException de)
 		 {
-		        LOGGER.error("A data access exception has occured: " + de);
+		        LOGGER.error("CATCHING -- data access exception has occured: " + de);
+		        LOGGER.error("In DataImportDao - ShowFinancialYear");
 		        LOGGER.error("Returning zero");
 		        return 0;
 		 }
 		 
 		 catch(Exception e)
 		 {
-		        LOGGER.error("An Exception occured: " + e);
+
+		        LOGGER.error("CATCHING -- Exception has occured: " + e);
+		        LOGGER.error("In DataImportDao - ShowFinancialYear");
+		        LOGGER.error("Returning zero");
 		        return 0;
 		 }
 		 
@@ -405,12 +436,16 @@ public class DataImportDao extends AbstractTransactionalDao{
 
 
 	public Collection<FinancialDto> FinancialRowmapper(){
+		
 		 try {
-		        
+		        LOGGER.debug("TRYING -- to get the Financial Year");
+		        LOGGER.debug("Executing query to get financial year");
 		        return getJdbcTemplate().query(dataImportConfig.getShowFinancialYear(), Financial_RowMapper);
 		        
 		 } catch (Exception e) {
-		        
+		        LOGGER.error("CATCHING -- Exception handled while getting financial year");
+		        LOGGER.error("Exception in DataImportDao - FinancialRowmapper"+e);
+		        LOGGER.error("Returning null");
 		        
 		        return null;
 		        
@@ -436,26 +471,27 @@ public class DataImportDao extends AbstractTransactionalDao{
 	public GetBatchDetailsDto BatchDetails(String userEmail,String batchId) {
 	
 	LOGGER.debug("Request received from Service");
-	LOGGER.debug("In BatchDetailsDao to get details of batch with userEmail" + userEmail);
+	LOGGER.debug("In DataImportDao - BatchDetails to get details of batch of logged in TP" );
 	
 			try {
 				
-				LOGGER.debug("In Try Block of BatchDetailsDao" + userEmail);
+				LOGGER.debug("TRYING to get batch details for selected batchId ");
 				LOGGER.debug("Creating hashmap of objects");
 				Map<String,Object> parameters = new HashMap<>();
-				LOGGER.debug("Inserting parameters into the hashmap " + userEmail);
+				LOGGER.debug("Inserting parameters into the hashmap ");
 				parameters.put("userEmail",userEmail); 
 				parameters.put("batchId",batchId);
 				
-				LOGGER.debug("The parameter inserted in hashmap are : " + parameters.get("userEmail"));
+				LOGGER.debug("Executing query to get batch details for selected batch Id of logged in TP");
 				
 				return  getJdbcTemplate().queryForObject(dataImportConfig.getBatchDetails(),parameters,BatchDetailsRM);
 
 				
 			}
 			catch(Exception e) {
-				e.printStackTrace();
-				LOGGER.error("Error occured while finding data for batch" + e);
+				LOGGER.error("CATCHING -- Exception handled while getting batch details of selected batchId");
+				LOGGER.error("In DataImportDao - BatchDetails " + e);
+				LOGGER.error("Returning null");
 				return null;
 			}
 			
@@ -493,40 +529,45 @@ public class DataImportDao extends AbstractTransactionalDao{
 
 	public Integer generateBatchDao(String userEmail){
 				
-		LOGGER.debug("Request received from Service");
+		LOGGER.debug("Request received from Service , to create new batch for logged in TP");
 				
-		LOGGER.debug("In  Import Dao, to get create batch for email id:" + userEmail);
+		LOGGER.debug("In  DataImportDao - generateBatchDao");
 				
 		Map<String, Object> parameters = new HashMap<>();
-				
+		LOGGER.debug("Inserting parameters in hashMap");		
 		parameters.put("userEmail",userEmail);
 				
 		if(parameters.isEmpty())
 		{
+			LOGGER.debug("In IF -- When HasMap parameters are empty");
+			LOGGER.debug("In DataImportDao - generateBatchDao");
 			LOGGER.error("Null Parameter");
 		}
 		
 		try{
-		        
+		      
+			LOGGER.debug("TRYING -- To generate batch");
+			LOGGER.debug("Executing insert query to enter a new batch");
 			Integer result = insert(dataImportConfig.getGenerateBatch(),parameters,"batchId");
-					
 			LOGGER.debug("The result of the query is : " + result);
-					
+			LOGGER.debug("Returning result");	
 			return result;
 		}
 				
 		catch(DataAccessException d) {
 					
-			LOGGER.error("DataAccessException in Dao" + d);
+			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
+			LOGGER.error("In DataImportDao - generateBatchDao " + d);
+			LOGGER.error("Returning -1");
 					
 			return -1;
 		}
 				
 		catch(Exception e) {
 					
-			LOGGER.error("In Catch Block");
-					
-			LOGGER.error("An error occured while generating the batch" + e);
+			LOGGER.error("CATCHING -- Exception handled while generating batch");
+			LOGGER.error("In DataImportDao - generateBatchDao " + e);
+			LOGGER.error("Returning -1");
 					
 			return -1;
 		}
@@ -537,16 +578,23 @@ public class DataImportDao extends AbstractTransactionalDao{
 	
 	public Collection<BatchDto> getBatchDetail(String userEmail){
 	
+		LOGGER.debug("Request receive to get Batch Ids of TP logged in");
+		LOGGER.debug("In DataImportDao - getBatchDetail");
+		
 		try {
+			LOGGER.debug("TRYING -- To get batchId of TP");
 			
 			Map<String,Object> parameters = new HashMap<>();
+			LOGGER.debug("Inserting userEmail into HashMap");
 			parameters.put("userEmail", userEmail);
-		
+			LOGGER.debug("Executing query to get batchId of TP");
 			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(),parameters, BATCH_RowMapper);
 			
 		} catch (Exception e) {
 			
-			LOGGER.debug("An Exception occured while fetching batch id for email " + userEmail + e);
+			LOGGER.error("CATCHING -- Exception handled while getting batchId of Logged in TP");
+			LOGGER.error("In DataImportDao - getBatchDetail " + e);
+			LOGGER.error("Returning null");
 			return null;
 			
 		}
@@ -573,58 +621,78 @@ public class DataImportDao extends AbstractTransactionalDao{
 	/*-----------------------Submit the data in database for respective batch---------------*/
 	
 	public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
+		LOGGER.debug("Request receive to check centre Id existence");
+		LOGGER.debug("In DataImportDao - checkCentreExistence");
 		
 		try {
-			
-			LOGGER.debug("In Data Import Dao to check Existence of centre with respective centre Id");
+			LOGGER.debug("TRYING -- To check existence of entered centre id");
 			Map<String, Object> batchDetailsParameters = new HashMap<>();
+			LOGGER.debug("Inserting parameters to be checked, in HashMap");
 			batchDetailsParameters.put("centreId", masterSheetSubmitDto.getCentreId());
-			
+			LOGGER.debug("Exectuing query to check if entered centreId exists");
 			return getJdbcTemplate().queryForObject(dataImportConfig.getCheckCentreExistence(), batchDetailsParameters, Integer.class);
 		} catch (Exception e) {
-			LOGGER.debug("Exception handled in checking the existence of centre"+e);
+			LOGGER.error("CATCHING -- Exception handled while checking centre existence");
+			LOGGER.error("In DataImportDao - checkCentreExistence " + e);
+			LOGGER.error("Returning status code -1");
 			return -1;
 		}
 	}
 
 	public String insertCentreDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
+		LOGGER.debug("Request receive to insert the centre Details");
+		LOGGER.debug("In DataImportDao - insertCentreDetails");
+		
 		try {
-			
-			LOGGER.debug("In Data Import Dao to insert the centre details");
+			LOGGER.debug("TRYING -- To insert centre details");
 			Map<String, Object> centreParameters = new HashMap<>();
+			LOGGER.debug("Inserting parameters to be inserted, in HashMap");
 			centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
 			centreParameters.put("state", masterSheetSubmitDto.getState());
 			centreParameters.put("city", masterSheetSubmitDto.getCity());
 			centreParameters.put("userEmail", userEmail);
+			LOGGER.debug(" Calling method to insert the details of entered centreId into database");
 			return insertString(dataImportConfig.getInsertCentreDetails(), centreParameters, "centerId");
-			//return getJdbcTemplate().update(dataImportConfig.getInsertCentreDetails(), centreParameters);
+			
 		} catch (DataAccessException e) {
-			LOGGER.debug("Exception handled while inserting centre detail"+e);
+			LOGGER.error("CATCHING -- Exception handled while inserting centre details");
+			LOGGER.error("In DataImportDao - insertCentreDetails " + e);
+			LOGGER.error("Returning status code -1");
 			return "-1";
 		}
 		
 	}
 
 	public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+		LOGGER.debug("Request receive to update the centre Details");
+		LOGGER.debug("In DataImportDao - updateCentreDetails");
+		
 		try {
-			LOGGER.debug("In Data Import Dao");
-			LOGGER.debug("To update the centre records");
+			LOGGER.debug("TRYING -- To update centre details");
 			Map<String, Object> centreParameters = new HashMap<>();
+			LOGGER.debug("Inserting parameters to be updated in HashMap");
 			centreParameters.put("centreId", masterSheetSubmitDto.getCentreId());
 			centreParameters.put("state", masterSheetSubmitDto.getState());
 			centreParameters.put("city", masterSheetSubmitDto.getCity());
+			LOGGER.debug("Executing Update query to update the details of entered centreId");
 			return getJdbcTemplate().update(dataImportConfig.getUpdateCentreDetails(), centreParameters);
 		} catch (DataAccessException e) {
-			LOGGER.debug("Exception Handled while updating the centre records"+e);
+			LOGGER.error("CATCHING -- Exception handled while updating centre details");
+			LOGGER.error("In DataImportDao - updateCentreDetails " + e);
+			LOGGER.error("Returning status code -1");
 			return -1;
 		}
 	}
 
 	public int updateBatchDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+		LOGGER.debug("Request receive to update the batchDetails");
+		LOGGER.debug("In DataImportDao - updateBatchDetails");
+		
 		try {
-			LOGGER.debug("In Data Import Dao");
-			LOGGER.debug("To update the batch details");
+			LOGGER.debug("TRYING -- To update batch details");
+			
 			Map<String, Object> batchParameters = new HashMap<>();
+			LOGGER.debug("Inserting parameters to be updated in HashMap");
 			batchParameters.put("batchStartDate", masterSheetSubmitDto.getBatchStartDate());
 			batchParameters.put("batchEndDate", masterSheetSubmitDto.getBatchEndDate());
 			batchParameters.put("assessmentDate", masterSheetSubmitDto.getAssessmentDate());
@@ -636,10 +704,12 @@ public class DataImportDao extends AbstractTransactionalDao{
 			batchParameters.put("trainerName", masterSheetSubmitDto.getTrainerName());
 			batchParameters.put("centreId", masterSheetSubmitDto.getCentreId());
 			batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
-			
+			LOGGER.debug("Executing Update query to update the details of selected batchId");
 			return getJdbcTemplate().update(dataImportConfig.getUpdateBatchDetails(), batchParameters);
 		} catch (DataAccessException e) {
-			LOGGER.debug("Exception handled while updating the batch details in DataImportDao"+e);
+			LOGGER.error("CATCHING -- Exception handled while updating batch details");
+			LOGGER.error("In DataImportDao - updateBatchDetails " + e);
+			LOGGER.error("Returning status code -1");
 			return -1;
 		}
 		

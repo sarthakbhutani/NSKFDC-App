@@ -37,12 +37,17 @@ public class EmployerDao extends AbstractTransactionalDao{
 		parameters.put("userEmail", userEmail);
 		try
 		{
+			LOGGER.debug("TRYING -- To insert Employer details");
+			LOGGER.debug("In EmployerDao - insertEmployer");
+			LOGGER.debug("Executing query to insert the employer details");
 			status = getJdbcTemplate().update(employerConfigSql.getInsert(),parameters);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
-			LOGGER.error("An exception occured while inserting employer details" + e);
+			
+			LOGGER.error("CATCHING -- exception occured while inserting employer details" + e);
+			LOGGER.error("In EmployerDao - insertEmployer");
+			LOGGER.error("Returning -2");
 			status = -2;
 		}
 		
@@ -67,13 +72,18 @@ public class EmployerDao extends AbstractTransactionalDao{
 		parameters.put("userEmail", userEmail);
 		try
 		{
+			LOGGER.debug("TRYING -- To update Employer details");
+			LOGGER.debug("In EmployerDao - updateEmployer");
+			LOGGER.debug("Executing query to update the employer details");
 			status = getJdbcTemplate().update(employerConfigSql.getUpdate(), parameters);
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			LOGGER.error("CATCHING -- exception occured while updating employer details" + e);
+			LOGGER.error("In EmployerDao - updateEmployer");
+			LOGGER.error("Returning -2");
 			status =-2;
-			LOGGER.error("An exception occured while updating employer details" + e);
+			
 		}
 		return status;
 	}
