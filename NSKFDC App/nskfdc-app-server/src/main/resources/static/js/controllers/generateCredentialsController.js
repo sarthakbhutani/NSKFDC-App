@@ -35,7 +35,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		        columnDefs: [
 		            {
 		            	name: 'nsdcRegNumber', 
-		                displayName: 'NSDC Reg. Number',
+		                displayName: 'NSDC Registration Number',
 		             
 		            },
 		            {
