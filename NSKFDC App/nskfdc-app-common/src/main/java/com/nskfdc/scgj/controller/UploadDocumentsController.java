@@ -55,8 +55,7 @@ public class UploadDocumentsController {
 	 		
 	 		try {
 	 			
-	 			String userEmail = "prateek@gmail.com";
-	 					//sessionUserUtility.getSessionMangementfromSession().getUsername();
+	 			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 	 			
 	 			LOGGER.debug("In try block of Controller to check if the batch Id and SCGJ batch number matches");
 	 			
