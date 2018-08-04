@@ -70,7 +70,7 @@
             
          </div>
          <div class="col-sm-3">
-                        <select required name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="batch.myVar">
+                        <select required name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="batch.wardType">
               <option value="none" selected >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
@@ -79,7 +79,7 @@
             
          </div>
          <div class="col-sm-3">
-            <div ng-if="batch.myVar === 'Single Ward'"  id="general-1" >
+            <div ng-if="batch.wardType === 'Single Ward'"  id="general-1" >
                <div >
                   <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" ng-model="batch.wardNumber">
                </div>
@@ -96,7 +96,7 @@
          </div>
          <div class="col-sm-3 margin" id="div" >
             <li>
-               <select  required name="State" id="State" onchange="checkforstate()" ng-model="batch.state" ng-disabled="batchDetails.value == undefined"  required class="state form-control" name="Type">
+               <select  required name="State" id="State" onchange="checkforstate()" ng-model="batch.state" ng-disabled="batchDetails.value == undefined"  required class="state form-control" name="Type" >
                   <option value=""selected disabled>State</option>
                   <option value="Andhra Pradesh">Andhra Pradesh</option>
                   <option value="Arunachal Pradesh">Arunachal Pradesh</option>

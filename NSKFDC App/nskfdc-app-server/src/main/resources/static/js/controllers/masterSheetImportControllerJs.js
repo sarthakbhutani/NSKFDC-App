@@ -129,6 +129,8 @@ var url = '/getBatchIdfortrainer';
         	$scope.batch.medicalExamDate=response.data.medicalExamDate;
         	$scope.batch.employerName=response.data.employerName;
         	$scope.batch.employerContactNumber=response.data.employerContactNumber;
+        	$scope.batch.wardType = response.data.wardType;
+        	$scope.batch.wardNumber = response.data.wardNumber;
         });
     };
     
@@ -197,7 +199,7 @@ var url = '/getBatchIdfortrainer';
     	
     	$scope.sumbitBatchDetails={
     			batchId : $scope.batchDetails.value,
-    			wardType : $scope.batch.myVar,
+    			wardType : $scope.batch.wardType,
     			wardNumber : $scope.batch.wardNumber,
     			centreId : $scope.batch.centreId,
     			state : $scope.batch.state,
