@@ -71,7 +71,7 @@
          </div>
          <div class="col-sm-3">
                         <select required name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="batch.myVar">
-              <option value="none" selected  >Choose Ward Type</option>
+              <option value="none" selected >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
             </select>
@@ -164,13 +164,13 @@
              </div>
 
             </div>
+             <p id="importExcelMessage" class="importExcelMessageStyle"></p>
             <div class="row">
                <div class="col-sm-5"></div>
                <div class="col-sm-2">
                   <div id="color" ng-disabled="batchDetails.value == undefined" class="fileUpload btn btn-primary">
                      <div class="col-xs-4">  <span>Submit</span>
                      </div>
-                     
                      <input id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload" />
                   </div>
                </div>

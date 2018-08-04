@@ -200,3 +200,9 @@
 .uploadGuidelinesLink{
 	color: blue !important;
 }
+
+
+.importExcelMessageStyle{
+	    text-align: center;
+    	margin: 0;
+}
