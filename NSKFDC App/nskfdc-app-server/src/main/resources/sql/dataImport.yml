@@ -6,7 +6,7 @@ dataImport:
   select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
   
  ShowTargetAchieved: >
-  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail=:userEmail) and (batchdetails.assessmentDate<curdate()) and (batchdetails.assessmentDate between :date1 and :date2);
+  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate())  and (batchdetails.assessmentDate between :date1 and :date2);
  
  
  ShowFinancialYear: >
