@@ -225,6 +225,7 @@ public class DataImportController {
                  		    	LOGGER.debug("Deleting temporary generated file");
                  		    	
                  		    	boolean result = file.delete(); //Delete the temporary files
+                 		    	
                  		    	LOGGER.debug("The result of file temporary file deletion is : "  + result);
                  		    	
                  			} else {
