@@ -23,6 +23,7 @@
 {
 	background-color: #ffffff;
 	padding:1.5%;
+	margin:1%;
 }
 #searchdocuments{
 	color: #999;
@@ -77,6 +78,10 @@
 }
 span{
 	padding: 0.2%;
+}
+.table{
+	margin-left:1%;
+	margin-right:1%;
 }
 /* extra */
 
