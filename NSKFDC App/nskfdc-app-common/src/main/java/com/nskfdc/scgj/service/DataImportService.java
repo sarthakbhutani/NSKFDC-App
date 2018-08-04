@@ -458,7 +458,12 @@ public class DataImportService {
 
 
 
-   
+   /**
+    * Method to return details of Batch Import Dto
+    * @param userEmail
+    * @param batchId
+    * @return
+    */
     public BatchImportDto BatchDetails(String userEmail, String batchId) {
 
         LOGGER.debug("Request received from Controller - DataImportService");
