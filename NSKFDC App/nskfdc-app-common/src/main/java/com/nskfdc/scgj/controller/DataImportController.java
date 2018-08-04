@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
@@ -36,7 +37,7 @@ public class DataImportController {
 	private DataImportService dataImportService;
 
 	/*---------- Master Sheet Import --------------*/
-
+	@Privilege(value= {"TP"})
 	@RequestMapping(value = "/importMasterSheet", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
 	public String masterSheetImport(@RequestParam("file") MultipartFile file,
 			@RequestParam("batchId") int batchId) throws FileNotFoundException {
@@ -88,6 +89,7 @@ public class DataImportController {
 	 * @param batchId
 	 * @return object of GetBatchDetailsDto
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/get-batch-details")
 	public BatchImportDto getBatchDetails(String batchId) {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -102,6 +104,7 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getTotalTargets")
 	public Integer getTotalTargets() {
                      String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
@@ -128,6 +131,7 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getTargetAchieved")
 	public Integer getTargetAchieveds() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -155,6 +159,7 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getRemainingTargets")
 	public Integer getRemainingTargets() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -182,6 +187,7 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getFinancialYear")
 	public Integer getFinancialYear() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -209,6 +215,7 @@ public class DataImportController {
 	 * 
 	 * @param response
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/downloadFinalMasterSheet")
 	public void downloadMasterSheetController(HttpServletResponse response) {
 
@@ -262,6 +269,7 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/generateBatch")
 	public Integer generateBatchController() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -298,6 +306,7 @@ public class DataImportController {
 	 * Method to get Batch Id for training partner based on its email
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getBatchIdfortrainer")
 	public Collection<BatchDto> getBatchDetail() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -318,6 +327,7 @@ public class DataImportController {
 	 * @param masterSheetSubmitDto object
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping(value = "/submitBatchDetails", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public int submitBatchDetails(
 			@RequestBody MasterSheetSubmitDto masterSheetSubmitDto) {

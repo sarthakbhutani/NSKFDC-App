@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.DisplayAuditTableRecordDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
@@ -29,6 +30,7 @@ public class GenerateReportController {
 	
 	String userEmail,report;
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getBatchIdDetailsForGenerateReport")
 	public Collection<GetBatchIdDto> getBatchIdDetails(){
 		
@@ -46,7 +48,7 @@ public class GenerateReportController {
 			return null;
 		}
 	}
-	
+	@Privilege(value= {"TP"})
 	@RequestMapping(value="generateOccupationCertificateReport",  method = RequestMethod.GET)
 	public void generateOccupationCertificateReport(@RequestParam("batchId") String batchId,HttpServletResponse response) {
 		
@@ -90,6 +92,7 @@ public class GenerateReportController {
 		}
 	}
 
+	@Privilege(value= {"TP"})
 	@RequestMapping(value="generateAttendanceSheet", method = RequestMethod.GET)
 	public void generateAttendanceSheet(@RequestParam("batchId") String batchId, HttpServletResponse response) {
 		
@@ -126,6 +129,7 @@ public class GenerateReportController {
 		
 	}
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/generateNSKFDCSheet")
 	public void generateNSKFDCExcelSheet(@RequestParam("batchId") String batchId, HttpServletResponse response) {
 		
@@ -162,6 +166,7 @@ public class GenerateReportController {
 		
 	}
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/generateSDMSSheet")
 	public void generateSDMSExcelSheet(@RequestParam("batchId") String batchId, HttpServletResponse response) {
 		
@@ -200,7 +205,7 @@ public class GenerateReportController {
 	
 	}
 
-
+	@Privilege(value= {"TP"})
     @RequestMapping(value = "/generateMinutesOfSelectionCommitteeDetails", method = RequestMethod.GET)
 	public void generateMinutesOfSelection(@RequestParam("batchId") String batchId, HttpServletResponse response) {
 		
@@ -239,6 +244,7 @@ public class GenerateReportController {
 	
 	}
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getAuditTableRecords")
 	public Collection<DisplayAuditTableRecordDto> getRecordsForAuditTable() {
 		

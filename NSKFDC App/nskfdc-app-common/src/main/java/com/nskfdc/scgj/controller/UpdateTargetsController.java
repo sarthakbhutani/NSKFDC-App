@@ -1,5 +1,6 @@
 package com.nskfdc.scgj.controller;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.dto.UpdateTargetsDto;
 import com.nskfdc.scgj.service.UpdateTargetsService;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ public class UpdateTargetsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UpdateTargetsController.class);
 
+    @Privilege(value= {"scgj"})
     @RequestMapping("/updateTargets")
     public Integer updateTargets(@RequestParam ("nsdcRegNumber") String nsdcRegNumber, @RequestParam("targets") int targets)
     {
@@ -27,6 +29,7 @@ public class UpdateTargetsController {
         return updateTargetsService.updateTargets(nsdcRegNumber,targets);
     }
 
+    @Privilege(value= {"scgj"})
     @RequestMapping("/getUpdatedTargets")
     public Collection<UpdateTargetsDto> updateTargetDetails(@RequestParam("nsdcRegNumber") String nsdcRegNumber)
     {

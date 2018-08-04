@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.dto.CandidatesTrainedInLast6MonthsDto;
 import com.nskfdc.scgj.dto.StateDetailsDto;
 import com.nskfdc.scgj.service.DashboardService;
@@ -30,7 +29,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @description Method to Get Number of candidates trained 
 	 */
 	
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfCandidatesTrained")
 	public Integer getNumberOfCandidatesTrained(){
 		LOGGER.debug("In DASHBOARD Controller");
@@ -61,6 +60,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Number of Training Partners
 	 * @description Method to get Number of Training Partners
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfTrainingPartners")
 	public Integer getNumberOfTrainingPartners(){
 			LOGGER.debug("In DASHBOARD Controller");
@@ -90,7 +90,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Number of Upcoming assessments
 	 * @description Method to find Number of Upcoming Assessments 
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfUpcomingAssessments")
 	public Integer getNumberOfUpcomingAssessments(){
 		
@@ -119,7 +119,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Number of Ongoing Trainings
 	 * @desciption Method to get Number of Ongoing Trainings
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfOngoingTrainings")
 	public Integer getNumberOfOngoingTrainings(){
 		
@@ -152,6 +152,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Total number of candidates trained in last 6 months
 	 * 
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getTotalNumberOfCandidatesTrainedInLast6Months")
 	public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesTrainedInLast6Months(){
 		
@@ -183,7 +184,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @author Aman
 	 * @description method to get details of states
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getStateDetails")
 	public Collection<StateDetailsDto> getdetails(){
 		LOGGER.debug("In DASHBOARD Controller");
@@ -213,7 +214,7 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @author Aman
 	 * @description method to get details of Map
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getshowStateDetailsForMapChart")
 	public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
 		LOGGER.debug("In DASHBOARD Controller");

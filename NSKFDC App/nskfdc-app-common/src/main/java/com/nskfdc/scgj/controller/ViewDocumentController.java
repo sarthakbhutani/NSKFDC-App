@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.ViewDocumentDto;
 import com.nskfdc.scgj.service.ViewDocumentService;
@@ -41,6 +42,7 @@ public class ViewDocumentController {
 	 * @param batchId
 	 * @return
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getTrainingPartnerDetailForSearchbatchId")
 	public Collection<ViewDocumentDto> getTrainingPartnerDetailForSearchbatchId(
 			@RequestParam("tpName") String tpName,
@@ -73,6 +75,7 @@ public class ViewDocumentController {
 	 * @param scgjBtNumber
 	 * @return
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getTrainingPartnerDetailForSearchscgjBtNumber")
 	public Collection<ViewDocumentDto> getTrainingPartnerDetailForSearchscgjBtNumber(
 			@RequestParam("tpName") String tpName,
@@ -97,6 +100,7 @@ public class ViewDocumentController {
 	}
 
 	// adding my own code for downloadZipFileForBatchId :
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/downloadZipFileForBatchId")
 	public void DownloadZipFileForBatchId(
 			@RequestParam("tpName") String tpName,
@@ -165,6 +169,7 @@ public class ViewDocumentController {
 	 * @param scgjBtNumber
 	 * @param response
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/downloadZipFileForSearchscgjBtNumber")
 	public void DownloadZipFileForSearchscgjBtNumber(
 			@RequestParam("tpName") String tpName,

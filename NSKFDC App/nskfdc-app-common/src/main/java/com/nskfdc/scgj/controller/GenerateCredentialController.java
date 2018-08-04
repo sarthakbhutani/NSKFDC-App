@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.dto.GenerateCredentialDto;
 import com.nskfdc.scgj.dto.GenerateCredentialSearchDto;
 import com.nskfdc.scgj.service.GenerateCredentialService;
@@ -23,7 +24,7 @@ public class GenerateCredentialController {
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateCredentialController.class);
 	@Autowired
 	private GenerateCredentialService generatecredentialService;
-	
+	@Privilege(value= {"scgj"})
 	 @RequestMapping(value="/getGenerateCredential",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_UTF8_VALUE)
 	 public Integer generatecredentialController(@RequestBody GenerateCredentialDto generateCredentialDto){
 	 
@@ -47,6 +48,7 @@ public class GenerateCredentialController {
 
 	 }
 	
+		@Privilege(value= {"scgj"})
 		@RequestMapping("/SearchService")
 		public Collection<GenerateCredentialSearchDto> getTrainingPartnerDetail(@RequestParam("nsdcRegNumber") String nsdcRegNumber){
 			LOGGER.debug("Request received from frontend");

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
@@ -47,6 +48,7 @@ public class UploadDocumentsController {
 	 * @Description this method checks if the batch ID and Batch Number matches and then uploads the file if the match is done 
 	 */
 
+	@Privilege(value= {"TP"})
 	 @RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
 	 public String checkBatchNumberandBatchId(@RequestParam("batchId") String batchId, @RequestParam("scgjBatchNumber") String scgjBatchNumber, @RequestParam("file") MultipartFile file,String fileType)
 	 {
@@ -101,6 +103,7 @@ public class UploadDocumentsController {
 	 * @param batchId
 	 * @return Collection of object to type Upload documents table
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/searchDocument")
 	public Collection<UploadDocumentsDto> searchDocument(@RequestParam("batchId") String batchId){
 		try {
@@ -123,6 +126,7 @@ public class UploadDocumentsController {
 	 * @param id
 	 * @param response
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/downloadZipFileService")
 	public void DownloadDoc(@RequestParam("batchId") String id, HttpServletResponse response){
 		LOGGER.debug("In block DOWNLOAD");
@@ -172,6 +176,7 @@ public class UploadDocumentsController {
 	 * List of batch for a training Partner
 	 * @return
 	 */
+	@Privilege(value= {"TP"})
 	@RequestMapping("/getBatchIdDet")
 	public List<BatchDto> getBatchIdDetails(){
 		LOGGER.debug("Request received from frontend");
@@ -199,6 +204,7 @@ public class UploadDocumentsController {
 	  * @param batchId
 	  * @return
 	  */
+	@Privilege(value= {"TP"})
 	 @RequestMapping("/getBatchDetails")
 	 public int scgjDetails(@RequestParam("batchId") String batchId) {
 	 		
