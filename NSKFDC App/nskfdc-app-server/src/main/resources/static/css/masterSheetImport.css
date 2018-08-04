@@ -7,7 +7,12 @@
 .heading
 {
       
-    padding: 1.5rem;
+    color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+}
+.info{
+	margin:1%;
 }
 
 .panel-s

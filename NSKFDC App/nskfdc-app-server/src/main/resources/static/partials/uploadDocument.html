@@ -2,7 +2,7 @@
   <link href="css/uploadDocumentCSS.css" type="text/css" rel="stylesheet">
 
 </head>
-<div ng-app="app" class="container-fluid">
+<div ng-app="app">
 <div ng-controller="uploadDocumentController">
 
 
@@ -39,7 +39,7 @@
        
         </div>
       </div>
-                  <div class="col-md-3 btn-wrapper" id="uploadFileDiv">
+                  <div class="col-md-4 btn-wrapper" id="uploadFileDiv">
                     <div class="form-group">
              <span >
                   <input type="text" name="file_name" id="file_name" class="form-control" required></span>
@@ -51,10 +51,9 @@
                     </div>
                     </div>
     
-      <div class="col-md-2" id="uploadButtonDiv">
+      <div class="col-md-1" id="uploadButtonDiv">
                     <button type="submit" class="form-control btn btn-info btn data-disable" id="uploadButton" ng-click="uploadFile()">Upload</button>
                 </div>
-                <span ng-bind="searchdetailError" id="error"></span>
                 <span id="Error"></span>
                 <span id="Success"></span>
              </div>   
@@ -83,10 +82,10 @@
         <div class="col-md-6"></div>
       </div>
     </form>
-    <div>
+    <div class="details-table">
       <!-- grid via angular -->
       
-          <div ui-grid="details"  class="grid grid-align grid-small " ui-grid-auto-resize ></div>
+          <div ui-grid="details"  class="grid grid-align " ui-grid-auto-resize ></div>
       </div>
     </div>
   </div>

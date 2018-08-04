@@ -3,8 +3,8 @@
 </head>
 
 <div ng-controller="reportController">
-	<div class="row">
-		<h4>Generate Reports</h4>
+	<div class="heading">
+		<h3>Generate Reports</h3>
 	</div>
 	<form name="report">
 	<div class="row generateReports">
@@ -50,11 +50,11 @@
   		
   	</div>
   	</form>
-	<div class="row">
-		<h4> Audit Table </h4>
+	<div class="auditTable">
+		<h3> Audit Table </h3>
 	</div> 
-	<div class="table">
-		<div ui-grid="auditTable"  class="searchreport grid-align"  ui-grid-auto-resize ></div> 
+	<div class="gridTable">
+		<div ui-grid="auditTable" ui-if="auditTable.data.length>0" class="grid grid-align" ui-grid-auto-resize ng-style="getTableHeight()"></div> 
 	</div>  
   	
   	

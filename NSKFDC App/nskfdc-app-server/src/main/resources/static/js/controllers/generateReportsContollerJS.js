@@ -229,4 +229,15 @@ report.controller('reportController',function($scope, $http, $timeout) {
                	let length=$scope.ids.length;
                	/*console.log(length);*/
            	});
+               
+               /*----------- Grid Height -------------*/
+               $scope.getTableHeight=function(){
+               	 var rowHeight=30;
+               	 var headerHeight=30;
+               	
+               	 return{
+               		 height:($scope.auditTable.data.length * rowHeight + headerHeight)+"px"
+               	 };
+
+               };
 });

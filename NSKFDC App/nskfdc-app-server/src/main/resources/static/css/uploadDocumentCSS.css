@@ -31,11 +31,8 @@
 	z-index: -1;
 }
 #drop{
-	   /*  padding-right: 4.5rem; */
-    background-color: white;
-    /* margin-left: 1rem;
-    margin-right: 1rem;
-    height:6.5rem; */
+	 background-color: #ffffff;
+	margin:1%;
 }
 
 
@@ -70,15 +67,14 @@
 }
 
 #marginForSearch{
-  	
-	padding-top:1%;
-	padding-right:1%;
-	padding-bottom:1%;
+  color: #999;
+	font-size: 2.4rem;
+	padding:1%;
 }
 #marginForUpload{
-		padding-top:1%;
-	padding-right:1%;
-	padding-bottom:1%;
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
 }
 
 /* .form-rounded {
@@ -265,10 +261,22 @@ h3{
     left: 0;
     top: 0;
     opacity: 0;
-        margin-left: 16%;
+        margin-left: 2%;
     cursor: pointer;
 }
 .formpadding{
 	padding:1%;
 	margin-top:2%;
 }
+#uploadButtonDiv{
+	margin-left:-8%;
+}
+.background{
+	margin-left:1%;
+	margin-right:1%;
+}
+.details-table{
+	margin-left:1%;
+	margin-right:1%;
+}
+	
