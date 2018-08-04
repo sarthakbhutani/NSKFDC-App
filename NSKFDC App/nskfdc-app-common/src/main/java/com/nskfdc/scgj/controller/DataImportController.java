@@ -221,6 +221,12 @@ public class DataImportController {
                  		    
                  		    	outStream.flush();
                  		    	inStrem.close();
+                 		    	
+                 		    	LOGGER.debug("Deleting temporary generated file");
+                 		    	
+                 		    	boolean result = file.delete(); //Delete the temporary files
+                 		    	LOGGER.debug("The result of file temporary file deletion is : "  + result);
+                 		    	
                  			} else {
                  				LOGGER.debug("Path not found");
                  			}
