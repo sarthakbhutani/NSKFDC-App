@@ -35,7 +35,7 @@ uploadDocument.service('uploadFile', ['$http', function ($http, $timeout) {
 			setTimeout(function(){
 				document.getElementById("Success").innerHTML="";
 				document.getElementById("Error").innerHTML
-			},3500);
+			},4000);
 			
             return response.data;
             
