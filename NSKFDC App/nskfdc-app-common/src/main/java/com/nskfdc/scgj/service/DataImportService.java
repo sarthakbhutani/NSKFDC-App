@@ -67,23 +67,28 @@ public class DataImportService {
     private ReadApplicationConstants readApplicationConstants;
 
 
-    public String masterSheetImport(MultipartFile file, int batchId) throws IOException {
+    public String masterSheetImport(MultipartFile file, int batchId,String userEmail) throws IOException {
     	LOGGER.debug("Request received from Controller to DataImportService");
         LOGGER.debug("In masterSheetImport - to read Excel sheet ");
         boolean flag = true; 
         Integer insertResult = -25;
-        String fileNameReceived = "";
-        String uploadedFolder = readApplicationConstants.getSaveExcelSheetAtLocation();
 
-        LOGGER.debug("The path to folder where file would be uploaded "+uploadedFolder);
+    	String fileName = "Master Sheet"+file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+    	
+        String uploadedFolder = readApplicationConstants.getSaveExcelSheetAtLocation();
+        LOGGER.debug("The path to folder where file would be uploaded "+ uploadedFolder);
+       
         byte[] bytes = file.getBytes();
         LOGGER.debug("Creating a Folder at the above path");
-        File folder = new File(uploadedFolder);
+        String pathTillBatchId = uploadedFolder + "//" +userEmail + "//" +batchId+"//";
+        
+        File folder = new File(pathTillBatchId);
 
         if (!folder.exists() || folder.canWrite()) {
         	LOGGER.debug("In IF -- When Folder doesn't exist OR folder cannot be updated");
             if (folder.mkdirs()) {
                 LOGGER.debug("In IF -- When Folder is Created ");
+                LOGGER.debug("File Name is : " + fileName);
             } else if (folder.exists()) {
                 LOGGER.debug("In ELSE-IF Folder Already exists");
             } else {
@@ -92,10 +97,8 @@ public class DataImportService {
 
         }
 
-        fileNameReceived = file.getOriginalFilename();
-        LOGGER.debug("The imported file name is : " + fileNameReceived);
-
-        Path path = Paths.get(uploadedFolder + fileNameReceived);
+    	String fileNameReceived = fileName;
+        Path path = Paths.get(pathTillBatchId + fileNameReceived);
         LOGGER.debug("The path to the file is : " + path);
 
         try {
@@ -111,7 +114,7 @@ public class DataImportService {
         }
 
 
-        String uploadFile = uploadedFolder + fileNameReceived;
+        String uploadFile = pathTillBatchId + fileNameReceived;
         Workbook workbook = null;
 
         FileInputStream fileStream = new FileInputStream(uploadFile);

@@ -43,6 +43,8 @@ public class DataImportController {
 			@RequestParam("batchId") int batchId) throws FileNotFoundException {
 		LOGGER.debug("In Data import controller to read excel file");
 		try {
+			String userEmail = sessionUserUtility.getSessionMangementfromSession()
+					.getUsername();
 			if (file == null) {
 				LOGGER.debug("Null File in controller");
 				return "File is null";
@@ -50,7 +52,7 @@ public class DataImportController {
 				LOGGER.error("BatchID is null");
 				return "batchID is null";
 			} else
-				return dataImportService.masterSheetImport(file, batchId);
+				return dataImportService.masterSheetImport(file, batchId,userEmail);
 		}
 
 		catch (Exception e) {
