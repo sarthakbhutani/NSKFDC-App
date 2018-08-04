@@ -28,7 +28,7 @@ public class CreateZipFile {
 	                File input = new File(filePath);
 	                fis = new FileInputStream(input);
 	                ZipEntry ze = new ZipEntry(input.getName());
-	                System.out.println("Zipping the file: "+input.getName());
+	                LOGGER.debug("Zipping the file: "+input.getName());
 	                zipOut.putNextEntry(ze);
 	                byte[] tmp = new byte[4*1024];
 	                int size = 0;
@@ -41,13 +41,13 @@ public class CreateZipFile {
 	            }
 	            zipOut.closeEntry();
 	            zipOut.close();
-	            System.out.println("Done... Zipped the files...");
+	            LOGGER.debug("Done... Zipped the files...");
 	        } catch (FileNotFoundException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
+	        	LOGGER.error("File not found exception while zipping file: " + e);
+
 	        } catch (IOException e) {
-	            // TODO Auto-generated catch block
-	            e.printStackTrace();
+	            LOGGER.error("" +  e);
+	            //e.printStackTrace();
 	        } finally{
 	                 try{
 	                  if(fos != null) fos.close();

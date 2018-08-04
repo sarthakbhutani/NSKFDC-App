@@ -47,18 +47,21 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	Integer checkUserDocumentExistence = -25;
 	int updateStatus = - 5;
 	
+	/**
+	 * Method to upload Documents 
+	 * @param batchId
+	 * @param userEmail
+	 * @param fileType
+	 * @param path
+	 * @return
+	 */
 	public String uploadDocuments(String batchId,String userEmail,String fileType,String path)
 	{
-		LOGGER.debug("Received request from service to saving path of Uploaded files into the database");
-		LOGGER.debug("In UploadDocumentsDao - uploadDocuments");
-		
+	
 		try
 		{
-			LOGGER.debug("TRYING -- To save the paths for Uploaded documents for the entered batchId of TP");
-			LOGGER.debug("Checking - If user is uploading documents for the first time or not");
-			LOGGER.debug("Creating hashmap of objects");
 			Map<String,Object> params = new HashMap<>();
-			LOGGER.debug("Inserting batchId & userEmail into Hashmap to check");
+
 			params.put("batchId", batchId);
 			params.put("userEmail",userEmail);
 			checkUserDocumentExistence = getJdbcTemplate().queryForObject(uploadDocumentsConfig.getCheckExistence(), params, Integer.class);
@@ -67,15 +70,13 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			
 			 if(checkUserDocumentExistence == 1)
 			 {
-				 LOGGER.debug("In IF -- User Documents already exists");
-				 LOGGER.debug("Updating the path of the documents");
-				 LOGGER.debug("Calling method - updateDocumentPath for logged in User");
+				 LOGGER.debug("User Documents already exists");
 				 return updateDocumentPath(batchId,userEmail,fileType,path);
 			 }	
 			 	
 			 else 
 			 {
-				 LOGGER.debug("In ELSE -- When User documents does not exist");
+				 LOGGER.debug("User documents does not exist");
 				 LOGGER.debug("Inserting the batchId and userEmail in uploaded documents table");
 				 Integer insertStatus = getJdbcTemplate().update(uploadDocumentsConfig.getInsertUserDetails(), params);
 				 LOGGER.debug("Status of userEmail & batchId inserted in uploaded documents "+ insertStatus);
@@ -103,7 +104,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					LOGGER.error("In UploadDocumentsDao - uploadDocuments ");
 					LOGGER.error("Exception is : "+ e);
 					LOGGER.error("Returning string 'Document cannot be uploaded'");
-					return "Document cannot be uploaded";
+					return "Could not update path. Exception occured";
 				}
 		
 		
@@ -112,7 +113,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 
 	
 	/**
-	 * Update Document Method
+	 * Update path of documents in upload documents Method
 	 * @param batchId
 	 * @param userEmail
 	 * @param fileType
@@ -147,7 +148,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	
 					 if(updateStatus < 1)
 					 {
-						 LOGGER.debug("In IF -- When updating status of OC is <1");
+						 LOGGER.debug("Could not update path of occupation certificate");
 						 LOGGER.debug("Returning message 'File cannot be uplaoded, Please try again'");
 						 return "File cannot be uplaoded, Please try again"; 
 					 }
@@ -155,14 +156,13 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			 }
 			 catch(Exception e)
 			 {
-				 LOGGER.error("CATCHING -- Exception handled while updating OC filepath");
+				 LOGGER.error("CATCHING -- Exception handled while updating Occupation certificate filepath");
 				 LOGGER.error("In UploadDocumentsDao - updateDocumentPath");
-				 LOGGER.error("Exception is :"+ e);
+				 LOGGER.error(" An exception occured while updating path of occupation certificate Exception is :"+ e);
 				 LOGGER.error("Returning message 'Cannot upload the occupation certificate'");
 				 return "Cannot upload the occupation certificate";
 			 }
-			 
-			 					break;
+			break;
 		 			
 		 case "attendanceSheet":
 			 
@@ -194,7 +194,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				 return "File cannot be uplaoded";
 			 }
 			 			
-			 						break;
+			 break;
 		 
 		 case "NSKFDCSheet":
 			 
@@ -329,6 +329,11 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		 return "File Uploaded Successfully";
 	}
 	
+	/**
+	 * Method to insert batch Id and user email in Uploaded documents
+	 * @param recordToInsert
+	 * @return
+	 */
 	public int insertInUploadedDocument(Map<String , Object> recordToInsert)
 	{
 		LOGGER.debug("Request Received from Service");
@@ -341,7 +346,12 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	}
 	
 	
-	
+	/**
+	 * Method to search uploaded documents based on batchId and userEmail
+	 * @param batchId
+	 * @param userEmail
+	 * @return Collection of list of objects of Uploaded documents
+	 */
 	public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail) {
 		
 		LOGGER.debug("Request received from Service - UploadDocumentsDao ");
@@ -369,6 +379,11 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				
 				
 			}
+	/**
+	 * Method to get lis of BatchId based on user email
+	 * @param userEmail
+	 * @return list of batch Id
+	 */
 	public List<BatchDto> getBatchDetail(String userEmail){
 		LOGGER.debug("Request received from Service to UploadDocumentsDao");
 		LOGGER.debug("In UploadDocumentsDao - To get BatchId for logged in TP");
@@ -400,7 +415,11 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	}
 
 	
-
+/**
+ * Row mappper for batchId from batch details table
+ * @author Ruchi
+ *
+ */
 	private static class BATCHRowmapper implements RowMapper<BatchDto>{
 		
 		@Override
@@ -412,7 +431,12 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		}
 	}
 
-	
+	/**
+	 * Method to check if entered batch number exists corresponding to batchId inserted by Training Partner
+	 * @param batchId
+	 * @param scgjBatchNumber
+	 * @return
+	 */
 	public int scgjBatchIdField(String batchId,String scgjBatchNumber) {
 		
 		LOGGER.debug("Request received from service to UploadDocumentsDao");
@@ -438,6 +462,11 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			return -35;
 		}
 	}	
+	/**
+	 * Method to check existence of BatchId
+	 * @param batchId
+	 * @return
+	 */
 	public int BatchIdField(String batchId) {
 		
 		LOGGER.debug("Request received from service to UploadDocumentsDao");
@@ -464,6 +493,11 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 
 
 
+	/**
+	 * Row mapper for Uploaded documents table
+	 * @author Ruchi
+	 *
+	 */
 	static class UploadDocumentsRowMapper implements RowMapper<UploadDocumentsDto>{
 		@Override
 		public UploadDocumentsDto mapRow(ResultSet rs, int rowNum)
@@ -489,7 +523,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			  
 			  if(s2!=null){
 				  LOGGER.debug("In IF -- When STRING NOT NULL");
-				  LOGGER.debug("Stting string length to 0");
+				  LOGGER.debug("String string length to 0");
 				  s2.setLength(0);
 			  }else{
 				  LOGGER.debug("In ELSE -- When STRING NULL");

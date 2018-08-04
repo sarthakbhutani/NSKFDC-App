@@ -29,19 +29,25 @@ public class UploadDocumentService {
 	@Autowired
 	private ReadApplicationConstants readApplicationConstants;
 	
-	public String uploadFileService(MultipartFile file, String batchId,String fileType,String userEmail)
+	/**
+	 * Method to save file and update paths in database
+	 * @param file
+	 * @param batchId
+	 * @param fileType
+	 * @param userEmail
+	 * @return messages
+	 */
+	public String uploadFileService(MultipartFile file, String batchId, String fileType,String userEmail)
 	{	
 		LOGGER.debug("Request received from Controller to UploadDocumentService");
 		LOGGER.debug("In method - uploadFileService");
 		LOGGER.debug("To upload the documents");
 		
-		String filePath = "";
-		
 		try
 		{
 			LOGGER.debug("TRYING -- to upload the files");
 			LOGGER.debug("Saving the files at a physical location");
-			filePath = saveFile(batchId,file,readApplicationConstants.getSaveDocumentsAtLocation());
+			String filePath = saveFile(batchId,file,readApplicationConstants.getSaveDocumentsAtLocation(), userEmail,fileType);
 			LOGGER.debug("File saved at location : " + filePath);
 			LOGGER.debug("Sending request to UploadDocumentsDao - uploadDocuments");
 			return uploadDocumentsDao.uploadDocuments(batchId, userEmail, fileType, filePath);
@@ -147,7 +153,7 @@ public class UploadDocumentService {
 		}
 		
 		
-		private String saveFile(String batchId, MultipartFile file, String pathToFolder) throws IOException
+		private String saveFile(String batchId, MultipartFile file, String pathToFolder, String userEmail,String fileType) throws IOException
 		{
 			LOGGER.debug("Request received to save File");
 			LOGGER.debug("In UploadDocumentService - saveFile");
@@ -157,16 +163,18 @@ public class UploadDocumentService {
 			
 			if(!file.isEmpty())
 			{
-				LOGGER.debug("IN IF -- When file is received");
-				String fileName = file.getOriginalFilename();
-				pathTillBatchId = pathToFolder + batchId + "//";
+				LOGGER.debug("File is not empty");
+				String separator = "-";
+				String fileName = fileType+ file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+				pathTillBatchId = pathToFolder + userEmail + "//" +batchId + "//";
 				
 				LOGGER.debug("Creating a new Folder at"+ pathTillBatchId);
+				LOGGER.debug("File name to be saved is "+ fileName);
 				File folder = new File(pathTillBatchId);
 				
 				if(!folder.exists())
 				{
-					LOGGER.debug("In IF -- When folder exists");
+					LOGGER.debug("Folder already exists");
 					if(folder.mkdirs() || folder.canWrite())
 					{
 						LOGGER.debug("In IF -- When folder can be a directory OR folder has the write permissions");

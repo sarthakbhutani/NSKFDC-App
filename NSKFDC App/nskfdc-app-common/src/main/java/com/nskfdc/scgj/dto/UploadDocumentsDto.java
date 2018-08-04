@@ -31,6 +31,10 @@ public class UploadDocumentsDto extends BaseDto{
 	public void setDocumentsUploaded(StringBuilder documentsUploaded) {
 		this.documentsUploaded = documentsUploaded;
 	}
+	/**
+	 * Sting that hold link of zip file
+	 * @return
+	 */
 	public String getZipFileLink() {
 		return zipFileLink;
 	}
@@ -44,9 +48,11 @@ public class UploadDocumentsDto extends BaseDto{
 		this.documentsUploaded = documentsUploaded;
 		this.zipFileLink = zipFileLink;
 	}
+	/**
+	 * Default Constructor
+	 */
 	public UploadDocumentsDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

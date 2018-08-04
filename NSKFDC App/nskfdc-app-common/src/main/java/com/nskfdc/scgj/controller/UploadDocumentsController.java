@@ -44,7 +44,7 @@ public class UploadDocumentsController {
 	 * @param scgjBatchNumber
 	 * @param file
 	 * @param fileType
-	 * @Description this method checks if the batch ID and Batch Numbre matches and then uploads the file if the match is done 
+	 * @Description this method checks if the batch ID and Batch Number matches and then uploads the file if the match is done 
 	 */
 
 	 @RequestMapping(value="/uploadFile",method=RequestMethod.POST,consumes=MediaType.ALL_VALUE)
@@ -63,16 +63,19 @@ public class UploadDocumentsController {
 	 			if("finalBatchReport".equals(fileType))
 	 			{
 	 				LOGGER.debug("File Type is final batch report : " + fileType);
+	 				//To check batch number against the batch Id
 		 			int status = uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);
 		 			
 		 			if(status == 1)
 		 			{
+		 				//When search successful 
 		 				LOGGER.debug("The SCGJ batch number and batch id matched");
 		 				LOGGER.debug("Sending request to service to upload the folder");
 		 				return uploadDocumentService.uploadFileService(file, batchId, fileType, userEmail);
 		 			}
 		 			else
 		 			{
+		 				//when search failed
 		 				LOGGER.debug("The BatchId and SCGJBatchNumber does not match");
 		 				return "SCGJ Batch Number against the Batch ID does not match";
 		 			}
@@ -92,28 +95,16 @@ public class UploadDocumentsController {
 	 		}
 	 		
 	 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
-	
+	/**
+	 * Search Documents based on batch Id
+	 * @param batchId
+	 * @return Collection of object to type Upload documents table
+	 */
 	@RequestMapping("/searchDocument")
 	public Collection<UploadDocumentsDto> searchDocument(@RequestParam("batchId") String batchId){
-		
-	
-try {
-	String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+		try {
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
 			LOGGER.debug("In try block ");
 			LOGGER.debug("Sending request to service to get documents uploaded by id :" + batchId);	
 			return uploadDocumentService.getSearchedDocument(batchId,userEmail);
@@ -127,7 +118,11 @@ try {
 	
 	}
 	
-	//adding my own:
+	/**
+	 * Method to download zip file
+	 * @param id
+	 * @param response
+	 */
 	@RequestMapping("/downloadZipFileService")
 	public void DownloadDoc(@RequestParam("batchId") String id, HttpServletResponse response){
 		LOGGER.debug("In block DOWNLOAD");
@@ -170,6 +165,13 @@ try {
 			
 		}
 		}
+	
+	
+	
+	/**
+	 * List of batch for a training Partner
+	 * @return
+	 */
 	@RequestMapping("/getBatchIdDet")
 	public List<BatchDto> getBatchIdDetails(){
 		LOGGER.debug("Request received from frontend");
