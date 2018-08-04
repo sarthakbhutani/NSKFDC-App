@@ -151,17 +151,13 @@
          <div class="row" >
          <div class="col-sm-4"></div>
              <div class="col-sm-4 btn-wrapper">
-             <span style="margin-left:15%">
-                  <input type="text" name="file_name" id="file_name" class="form-control"></span>
-                 <span>
-                 <button style="margin-bottom:4%" type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button></span>
+                  <input type="text" name="file_name" id="file_name" class="form-control">
+                 <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button>
                  <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import" ng-disabled="batchDetails.value == undefined"/>
-
-
              </div>
              <div class="col-sm-4"></div>
-             <span ng-show="submitMsg" id="success">Batch data is successfully inserted</span>
-             <span ng-show="errorMsg" id="error">Data can't be inserted for the batch </span>
+             <span ng-show="submitMsg" id="success"></span>
+             <span ng-show="errorMsg" id="error"></span>
              </div>
 
             </div>
@@ -169,10 +165,10 @@
             <div class="row">
                <div class="col-sm-5"></div>
                <div class="col-sm-2">
-                  <div id="color" ng-disabled="batchDetails.value == undefined" class="fileUpload btn btn-primary">
-                     <div class="col-xs-4">  <span>Submit</span>
+                  <div  class="fileUpload ">
+                     <div class="col-xs-4"> 
+                     <button id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload btn btn-primary" >Submit</button>
                      </div>
-                     <input id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload" />
                   </div>
                </div>
                <div class="col-sm-5"></div>

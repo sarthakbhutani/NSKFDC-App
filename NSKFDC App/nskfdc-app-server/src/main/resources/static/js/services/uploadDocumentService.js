@@ -32,10 +32,13 @@ uploadDocument.service('uploadFile', ['$http', function ($http, $timeout) {
 			else{
         	document.getElementById("Error").innerHTML=thisIsResponse;
 			}
+			setTimeout(function(){
+				document.getElementById("Success").innerHTML="";
+				document.getElementById("Error").innerHTML
+			},3500);
+			
             return response.data;
-            $timeout(function() {
-            	document.getElementById("Success").innerHTML="";
-             }, 3000);
+            
         }, function errorCallback(response) {
         	alert('Unable to upload try again later');
          });

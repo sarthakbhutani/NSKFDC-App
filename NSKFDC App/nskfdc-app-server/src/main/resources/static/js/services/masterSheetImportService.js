@@ -24,12 +24,14 @@ app.service('fileUpload', ['$http', function ($http) {
 				{
 				document.getElementById("importExcelMessage").innerHTML=errorMessage;
 				document.getElementById("importExcelMessage").style.color = "green";
-				
 				}
 			else{
 	        	document.getElementById("importExcelMessage").innerHTML=errorMessage;
 	        	document.getElementById("importExcelMessage").style.color = "red";
 			}
+			setTimeout(function(){
+				document.getElementById("importExcelMessage").innerHTML=""
+					},4000);
             return response.data;
            
         
