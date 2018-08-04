@@ -102,15 +102,16 @@ public class DataImportDao extends AbstractTransactionalDao{
 					
 					try
 					{
-						
+						LOGGER.debug("TRYING -- Inserting candidate details");
+						LOGGER.debug("Executing query to insert candidate details");
 						candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(), parameters);
 					}
 					
 					catch(Exception e)
 					{
-						LOGGER.error("An exception occured while inserting new values in the database" + e);
-						LOGGER.error("Returning null");
-						return null;
+						LOGGER.error("An exception occured while inserting new candidates values in the database" + e);
+						LOGGER.error("Returning 114");
+						return 114;
 					}
 					
 					if(candidateInsertStatus > 0)
@@ -130,10 +131,10 @@ public class DataImportDao extends AbstractTransactionalDao{
 						catch(Exception e)
 						{
 							LOGGER.error("CATCHING -- Exception Handled while inserting bank details of candidate from sheet");
-							LOGGER.error("An Exception occured at line 120 while inserting new enteries in database");
+							LOGGER.error("An Exception occured while inserting new enteries in database");
 							LOGGER.error("Exception is"+ e);
-							LOGGER.error("Returning null");
-							return null;
+							LOGGER.error("Returning 137");
+							return 137;
 						}
 												
 					}
@@ -155,13 +156,21 @@ public class DataImportDao extends AbstractTransactionalDao{
 							updatedParams.put("bankName", candidateDetails.get(i).getBankName());
 							updatedParams.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 							LOGGER.debug("Executing update query for existing candidate while importing excel sheet");
-							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(), updatedParams);
+							int candidateUpdateSQL = getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(), updatedParams);
+							if(candidateUpdateSQL == 0) {
+								LOGGER.debug("In IF -- When candidate details update query returned 0");
+								LOGGER.debug("Returning status code 162");
+								return 162;
+							}
+							else
+								return candidateUpdateSQL;
 						}
 						catch(Exception e)
 						{
 							LOGGER.error("CATCHING -- Exception while updating import sheet details of candidate");
-							LOGGER.error("An exception occured at line 148 while updating the details of candidates" + e);
-							return null;
+							LOGGER.error("An exception occured  while updating the candidate details" + e);
+							LOGGER.error("Returning 165");
+							return 165;
 						}
 						
 					}
@@ -169,7 +178,7 @@ public class DataImportDao extends AbstractTransactionalDao{
 				i++;
 				
 			}
-     		LOGGER.debug("Returning insert status for Excel Sheet import");
+     		LOGGER.debug("Returning insert status for Excel Sheet import"+candidateInsertStatus);
 			return candidateInsertStatus;
 		}
 		catch(Exception e)

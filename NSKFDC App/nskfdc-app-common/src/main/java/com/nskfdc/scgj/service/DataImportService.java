@@ -153,7 +153,7 @@ public class DataImportService {
                         } else {
                         	LOGGER.debug("In ELSE -- When BatchId doesn't matched");
                         	LOGGER.debug("Returning message - 'batchId in excel sheet and batch Id entered does not match'");
-                            return "batchId in excel sheet and batch Id entered does not match";
+                            return "batchId in Excel Sheet and batch Id selected does not match";
                         }
 
                     }
@@ -177,7 +177,7 @@ public class DataImportService {
                     if (cell.getStringCellValue().isEmpty()) {
                         LOGGER.error("No enrollment number found");
                         flag = false;
-                        return "Enrollment Number of candidate cannot be null";
+                        return "Enrollment Number of candidate is mandatory";
                     } else {
 
                         LOGGER.debug("The cell value of enrollment number is : " + cell.getStringCellValue());
@@ -322,7 +322,7 @@ public class DataImportService {
                 	{
                 		LOGGER.error("Aadhar Card Number is not valid");
                 		flag = false;
-                		return "Please enter valid 12 digit adhar card number";
+                		return "Please enter valid 12 digit aadhar card number";
                 	}
                 	  else if(count>12)
                 	  {
@@ -418,9 +418,30 @@ public class DataImportService {
         
 		if(insertResult < 1)
 		{
-			LOGGER.debug("In IF -- When insertResult of Excel Sheet is <1");
+			LOGGER.debug("In IF -- When insertResult of Excel Sheet is <1 :"+insertResult);
 			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
 			return "File cannot be uplaoded";
+		}
+		if(insertResult == 162) {
+			LOGGER.debug("In IF -- When inserResult of Excel Sheet is 162");
+			LOGGER.debug("Returning message - 'Cnadidate details cannot be updated'");
+			return "Candidate details cannot be updated";
+		}
+		if(insertResult == 137)
+		{
+			LOGGER.debug("In IF -- When insertResult is 137");
+			LOGGER.debug("Returning message - 'Bank details are duplicate in Excel sheet'");
+			return "Bank details are duplicate in Excel sheet";
+		}
+		if(insertResult == 114) {
+			LOGGER.debug("In IF -- When insertResult is 114");
+			LOGGER.debug("Returning message - 'Candidate details cannot be inserted'");
+			return "New Candidate details cannot be inserted";
+		}
+		if(insertResult == 165) {
+			LOGGER.debug("In IF -- When insertResult is 165");
+			LOGGER.debug("Returning message - 'Candidate details cannot be updated'");
+			return "Candidate details cannot be updated";
 		}
 		else
 		{
