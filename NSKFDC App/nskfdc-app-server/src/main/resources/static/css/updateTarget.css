@@ -29,3 +29,10 @@
 	color:green;
 	font-weight: bold;
 }
+#warning
+{
+	color:Red; font-size:1.2rem
+}
+  input.ng-invalid {
+    border: 1px solid #ccc;
+}

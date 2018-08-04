@@ -1,8 +1,7 @@
 var scgj = angular.module("app");
 
 scgj.controller("updateTargetController" , function($scope, $http, $timeout){
-	
-	$scope.errorMessage=false;
+
 	
 	 $scope.updatedData = {
 		        enableGridMenus: false,
@@ -39,9 +38,21 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 		        ]
 		    };
 
-	 $scope.update=function()
+	 $scope.update=function(nsdcRegNumber,targets)
 	 {
-		
+		 if($scope.data.nsdcRegNumber==null && $scope.data.targets==null)
+			 {
+			 $scope.dataundefined='Please enter NSDC Reg. Number and New Target';
+			 }
+		 else if($scope.data.targets==undefined)
+			{
+			$scope.dataundefined='Please enter new target to be allocated';
+			}
+		 else if($scope.data.nsdcRegNumber==undefined)
+			{
+			$scope.dataundefined='Please enter NSDC Reg. Number';
+			}
+		else{
 		 $http.get("/updateTargets?nsdcRegNumber="+$scope.data.nsdcRegNumber+"&targets="+$scope.data.targets)
 			.then(function (response) {
 			if(response.data==1)
@@ -55,19 +66,24 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 			$scope.successMessage=false;
 			}
 			});
+		
+		}
+		 
 		 $timeout(function() {
              $scope.errorMessage="";
              $scope.successMessage="";
-             $scope.data.nsdcRegNumber="";
-    		 $scope.data.targets="";
-          }, 3000);
-		 
-
+            $scope.dataundefined="";
+          }, 4000);
 	 }
 	 
 	 $scope.search=function(nsdcRegNumber) {
+		 if($scope.nsdcRegNumber==undefined)
+			{
+			$scope.searchundefined='Please enter NSDC Reg. Number';
+			}
+	 else{
 		 $http.get("/getUpdatedTargets?nsdcRegNumber="+$scope.nsdcRegNumber)
-			.then(function (response) {	
+			.then(function (response) {
 				 
 				 if(response.data.length==0){
 					 $scope.searchError='No Data Found';
@@ -79,9 +95,12 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 				 
 				 }
 			});
+	 }
 		 $timeout(function() {
              $scope.searchError="";
-          }, 3000);
+             $scope.searchundefined="";
+             
+          }, 4000);
 	 }
 	
 	 /*----------- Grid Height -------------*/
