@@ -11,7 +11,7 @@ import com.nskfdc.scgj.dao.GenerateBatchReportDao;
 @ConfigurationProperties(prefix="batchIdQuery" , locations="classpath:sql/generateBatchReport.yml")
 public class GenerateBatchReportConfig {
 	
-	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateBatchReportDao.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportDao.class);
 	private String showBatchId;
 
 	/**

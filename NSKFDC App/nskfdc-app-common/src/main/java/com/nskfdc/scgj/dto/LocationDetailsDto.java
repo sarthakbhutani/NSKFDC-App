@@ -49,9 +49,9 @@ public class LocationDetailsDto extends BaseDto{
 	public void setUploadStatus(String uploadStatus) {
 		this.uploadStatus = uploadStatus;
 	}
-	public LocationDetailsDto(String state, String city,
-			String municipalCorporation, String ward, String scgjBatchNumber,
-			String uploadStatus) {
+	public LocationDetailsDto(String state, String city, String municipalCorporation, String ward,
+			String scgjBatchNumber, String uploadStatus) {
+		super();
 		this.state = state;
 		this.city = city;
 		this.municipalCorporation = municipalCorporation;
@@ -64,6 +64,36 @@ public class LocationDetailsDto extends BaseDto{
 		// TODO Auto-generated constructor stub
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public LocationDetailsDto(String state, String city,
+//			String municipalCorporation, String ward, String scgjBatchNumber,
+//			String uploadStatus) {
+//		this.state = state;
+//		this.city = city;
+//		this.municipalCorporation = municipalCorporation;
+//		this.ward = ward;
+//		this.scgjBatchNumber = scgjBatchNumber;
+//		this.uploadStatus = uploadStatus;
+//	}
+//	public LocationDetailsDto() {
+//		super();
+//		// TODO Auto-generated constructor stub
+//	}
+//	
 	
 	
 }

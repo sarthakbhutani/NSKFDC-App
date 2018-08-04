@@ -75,7 +75,7 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	{
 		LOGGER.debug("Request Received from GenerateBatchReportService");
 		LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Location Details for Final Batch Report");
-		Map<String,Object> parameters=new HashMap<>();
+		Map<String,Object> parameters = new HashMap<>();
 		LOGGER.debug("Inserting batchId in parameters");
 		parameters.put("batchId", batchId);
 		try{
@@ -167,22 +167,23 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	 *@description This is the Rowmapper getting Location Details for Entered Batch Id
 	 * 
 	 **/
-	private static class LocationDetailsRowmapper implements RowMapper<LocationDetailsDto>{
+	private static class LocationDetailsRowmapper implements RowMapper<LocationDetailsDto>
+	{
 		@Override
 		public LocationDetailsDto mapRow(ResultSet rs,int rowNum)throws SQLException{
 			String state=rs.getString("centreState");
-			LOGGER.debug("state"+state);
+			LOGGER.debug("state" + state);
 			String city=rs.getString("centreCity");
 			String municipalCorporation=rs.getString("municipality");
 			String ward=rs.getString("wardType");
 			String scgjBatchNumber=rs.getString("scgjBatchNumber");
 			String us=rs.getString("dataSheetForSDDMS");
 			String uploadStatus="NO";
-			if(us.equals("1"))
+			if("1".equals("us"))
 			{
 			uploadStatus="Yes";
 			}
-			return new LocationDetailsDto(state,city,municipalCorporation,ward,scgjBatchNumber,uploadStatus);
+			return new LocationDetailsDto(state, city, municipalCorporation, ward, scgjBatchNumber, uploadStatus);
 		}
 	}
 	
