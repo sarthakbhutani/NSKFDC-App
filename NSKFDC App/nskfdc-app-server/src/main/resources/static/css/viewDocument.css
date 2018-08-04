@@ -1,80 +1,56 @@
+.form-group {
+    margin-bottom: 0;
+}
 #or
 {
-	margin-top: 1%;
-    margin-bottom: 1%;
+	margin-top: 0.5;
+    margin-bottom: 1%; */
 	width: auto;
 	}
 
 #enterBatchId{
 	border: solid 1px grey;
-	width: 120%;
-	padding: 1%;
-	margin-left: -4%;
-     
 }
 
 #tpname{
 	border: solid 1px grey;
-	padding: 1%;
-	width: 107%;
-	margin-left: -4%;
-	    
 }
 #scgjbtno{
 	border: solid 1px grey;
-	padding: 1%;
-	margin-left: -4%;
-       	
 }
-.background{
-	    background-color: #FbFbFb;
-	    margin-left: 1%;
-}
- #errormessage{
-    margin-right: 41%;
-    color:red;
-    font-weight: bold;
-}
+
 #formcolor
 {
 	background-color: #ffffff;
-	padding-top: 1%;
-	margin-left: 1%;
-    margin-right: 5%;
-    padding: 1%;
-    margin-top: 2%;
+	padding:1.5%;
 }
 #searchdocuments{
-	color: #767171;
-	margin-left: 2%;
-	margin-top: 1%;
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
 }
 #upload{
-	color: #767171;
-	margin-top: 3%;
-    margin-bottom:0.5%;
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+	margin-top:2%;
 	
 }
 #button{
 	color:  #ffffff;
 	margin-left: -3%;
 }
-.table{
-	border-color:#ffffff;
-	
-}
-div.ui-grid-header-cell-primary-focus{
+
+.ui-grid-header-cell-primary-focus{
 	background-color: #0090af;
 	color: #ffffff;
-
 }
-div.ui-grid-canvas{
+.ui-grid-canvas{
 	 text-align: center;
 	 color: black;
-	 
 }
-#content{
-	    background-color: #FbFbFb;
+.ui-grid-cell-contents{
+    text-align: center;
 }
 #errorMessage{
 	color:red;
@@ -99,9 +75,13 @@ div.ui-grid-canvas{
 	color:green;
 	font-weight: bold;
 }
-.ui-grid-cell-contents{
-    text-align: center;
-}
 span{
-	padding: 1%;
+	padding: 0.2%;
 }
+/* extra */
+
+/*  #errormessage{
+    margin-right: 41%;
+    color:red;
+    font-weight: bold;
+} */
