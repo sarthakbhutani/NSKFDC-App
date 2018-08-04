@@ -85,7 +85,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		 $timeout(function() {
              $scope.credentialErrorMessage="";
              $scope.credentialSuccessMessage="";
-          }, 3000);
+          }, 4000);
 
 	 }
 	 
@@ -103,7 +103,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 			});
 		 $timeout(function() {
              $scope.searchError="";
-          }, 3000);
+          }, 4000);
 	 }
 	 
 	
