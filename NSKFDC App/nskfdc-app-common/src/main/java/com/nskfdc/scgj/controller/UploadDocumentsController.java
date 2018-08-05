@@ -147,7 +147,7 @@ public class UploadDocumentsController {
 				LOGGER.debug("After try" + zipFileLink + id);
 				}
 				
-				System.out.print(zipFileLink);
+				//System.out.print(zipFileLink);
 				LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:" +id);
 				File file = new File(zipFileLink);
 			    response.setContentType("application/zip");
@@ -162,6 +162,7 @@ public class UploadDocumentsController {
 			    }
 			    outStream.flush();
 			    inStrem.close();
+			    file.delete();
 		}catch(Exception e) {
 			
 			LOGGER.debug("An error occurred" + e);

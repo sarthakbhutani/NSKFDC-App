@@ -258,6 +258,15 @@ public class DataImportController {
 
 				outStream.flush();
 				inStrem.close();
+				boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 			} else {
 				LOGGER.debug("Path not found");
 			}

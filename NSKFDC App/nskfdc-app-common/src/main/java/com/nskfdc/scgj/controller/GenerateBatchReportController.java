@@ -231,6 +231,16 @@ public class GenerateBatchReportController {
 		    	outStream.flush();
 		    	inStrem.close();
 		    	
+		    	//Delete file
+		    	boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 		    	
 			} else {
 				LOGGER.debug("Path not found");

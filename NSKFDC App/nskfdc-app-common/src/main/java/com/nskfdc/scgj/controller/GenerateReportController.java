@@ -84,6 +84,17 @@ public class GenerateReportController {
 		    
 		    	outStream.flush();
 		    	inStrem.close();
+		    	
+		    	//Delete file
+		    	boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 			} else {
 				LOGGER.error("Report not generated");
 			}
@@ -120,6 +131,17 @@ public class GenerateReportController {
 				}
 				outStream.flush();
 		    	inStrem.close();
+		    	
+		    	//Delete file
+		    	boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 			} else {
 				LOGGER.error("Report not generated");
 			}
@@ -157,6 +179,16 @@ public class GenerateReportController {
 				}
 				outStream.flush();
 				inStrem.close();
+				//Deleting file
+				boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 			} else {
 				LOGGER.error("Report not generated");
 			}
@@ -194,6 +226,16 @@ public class GenerateReportController {
 				}
 				outStream.flush();
 				inStrem.close();
+				boolean deleteFile = file.delete();
+				//Deleting file
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 				
 			} else {
 				LOGGER.error("Report not generated");
@@ -234,6 +276,16 @@ public class GenerateReportController {
 				outStream.flush();
 				inStrem.close();
 				
+				//Delete file
+				boolean deleteFile = file.delete();
+		    	if(deleteFile)
+		    	{
+		    		LOGGER.debug("Deleting temp file"+ deleteFile);
+		    	}
+		    	else
+		    	{
+		    		LOGGER.debug("Could not delete file" + deleteFile);
+		    	}
 			} else {
 			LOGGER.error("Report not generated for minutes of selection bcz report is null");
 			}
