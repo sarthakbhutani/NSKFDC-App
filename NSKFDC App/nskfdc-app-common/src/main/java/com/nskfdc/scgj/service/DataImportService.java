@@ -228,17 +228,25 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 6)
                 {
 	                	LOGGER.debug("Capturing value of header : DateOfBirth ");
-	                	if(cell.getDateCellValue().toString().isEmpty())
-	                	{
-	                		LOGGER.debug("Date of Birth column empty");
-	                		flag = false;
-	                		return "Date of Birth cannot be empty";
-	                	}
-	                	else if(DateUtil.isCellDateFormatted(cell)) {
-	                			LOGGER.debug("Date is in date format");
-	                			LOGGER.debug("The date of birth is " + cell.getDateCellValue());
-	            				masterSheetImportDto.setDob(cell.getDateCellValue());
-	                		}
+	                	try {
+							if(!cell.getDateCellValue().toString().equals(null))
+							{
+								LOGGER.debug("Date of Birth column is not empty");
+								flag = false;
+								masterSheetImportDto.setDob(cell.getDateCellValue());
+								
+								
+							}
+							else {
+									LOGGER.debug("Date is in date format");
+									LOGGER.debug("The date of birth is " + cell.getDateCellValue());
+									return "Date of Birth is not be empty";
+								}
+						} catch (Exception e) {
+							LOGGER.error("CATCHING -- Null pointer Exception while entering date");
+							LOGGER.error("Returning 'Date of birth cannot be empty'");
+							return "Date of birth cannot be empty";
+						}
 	                	
                 }
                 else if(cell.getColumnIndex() == 7)
