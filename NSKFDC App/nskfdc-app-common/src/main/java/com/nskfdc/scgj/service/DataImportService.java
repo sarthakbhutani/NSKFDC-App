@@ -235,7 +235,6 @@ public class DataImportService {
 								flag = false;
 								masterSheetImportDto.setDob(cell.getDateCellValue());
 								
-								
 							}
 							else {
 									LOGGER.debug("Date is in date format");
@@ -245,7 +244,7 @@ public class DataImportService {
 						} catch (Exception e) {
 							LOGGER.error("CATCHING -- Null pointer Exception while entering date");
 							LOGGER.error("Returning 'Date of birth cannot be empty'");
-							return "Date of birth cannot be empty";
+							return "DOB is mandatory with date format";
 						}
 	                	
                 }
@@ -433,26 +432,22 @@ public class DataImportService {
 			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
 			return "File cannot be uplaoded";
 		}
-		if(insertResult == 162) {
-			LOGGER.debug("In IF -- When inserResult of Excel Sheet is 162");
-			LOGGER.debug("Returning message - 'Cnadidate details cannot be updated'");
-			return "Candidate details cannot be updated";
-		}
+
 		if(insertResult == 137)
 		{
 			LOGGER.debug("In IF -- When insertResult is 137");
-			LOGGER.debug("Returning message - 'Bank details are duplicate in Excel sheet'");
-			return "Bank details are duplicate in Excel sheet";
+			LOGGER.debug("Returning message - 'Bank details are not updated'");
+			return "Bank details are not updated";
 		}
 		if(insertResult == 114) {
 			LOGGER.debug("In IF -- When insertResult is 114");
 			LOGGER.debug("Returning message - 'Candidate details cannot be inserted'");
-			return "New Candidate details cannot be inserted";
+			return "New Candidate details cannot be inserted, Please try again";
 		}
 		if(insertResult == 165) {
 			LOGGER.debug("In IF -- When insertResult is 165");
 			LOGGER.debug("Returning message - 'Candidate details cannot be updated'");
-			return "Candidate details cannot be updated";
+			return "Candidate bank details cannot be updated";
 		}
 		else
 		{

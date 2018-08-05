@@ -153,7 +153,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 									.getBankName());
 							params.put("enrollmentNumber", candidateDetails
 									.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing query to uplate bank details of candidate");
+							LOGGER.debug("Executing query to insert bank details of candidate");
 							return getJdbcTemplate().update(
 									dataImportConfig.getImportBankDetails(),
 									params);
@@ -177,8 +177,9 @@ public class DataImportDao extends AbstractTransactionalDao {
 							parameters);
 					if (candidateInsertStatus > 0) {
 						try {
-							LOGGER.debug("TRYING -- To update the existing candidate from the sheet");
+							LOGGER.debug("TRYING -- To update the existing candidate bank details  from the sheet");
 							Map<String, Object> updatedParams = new HashMap<>();
+				
 							updatedParams.put("accountNumber", candidateDetails
 									.get(i).getAccountNumber());
 							updatedParams.put("ifscCode",
@@ -189,16 +190,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 									candidateDetails.get(i)
 											.getEnrollmentNumber());
 							LOGGER.debug("Executing update query for existing candidate while importing excel sheet");
-							int candidateUpdateSQL = getJdbcTemplate()
+							return getJdbcTemplate()
 									.update(dataImportConfig
 											.getUpdateExistingBankDetails(),
 											updatedParams);
-							if (candidateUpdateSQL == 0) {
-								LOGGER.debug("In IF -- When candidate details update query returned 0");
-								LOGGER.debug("Returning status code 162");
-								return 162;
-							} else
-								return candidateUpdateSQL;
+							
 						} catch (Exception e) {
 							LOGGER.error("CATCHING -- Exception while updating import sheet details of candidate");
 							LOGGER.error("An exception occured  while updating the candidate details"
