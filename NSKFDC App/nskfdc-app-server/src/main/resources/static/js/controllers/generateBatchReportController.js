@@ -14,7 +14,7 @@ tp .directive('ngFiles', ['$parse', function ($parse) {
     }
 } ]);
 
-tp.controller("generateBatchReportController" , function($scope, $http){
+tp.controller("generateBatchReportController" , function($scope, $http,$timeout){
 	
 	
 	 var formdata = new FormData();
@@ -25,6 +25,8 @@ tp.controller("generateBatchReportController" , function($scope, $http){
      };
      
      $scope.generateBatchReportwithFile = function(){
+    	 $scope.rolling = true;
+    	    $scope.generating = "Please wait, while we generate your final batch report"
     	 formdata.append("batchId",$scope.batchId);
     	 formdata.append("batchnumber",$scope.batchnumber);
     	$http({
@@ -38,6 +40,8 @@ tp.controller("generateBatchReportController" , function($scope, $http){
     	}).then(function(response){
     		if(response.data.byteLength!=0)
     		{
+    			$scope.rolling=false;
+    			$scope.generating = "";
     			document.getElementById("Success").innerHTML="<center> Batch Report Successfully generated ! </center>";
     			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
     			var downloadURL = URL.createObjectURL(pdfFile);
@@ -48,10 +52,16 @@ tp.controller("generateBatchReportController" , function($scope, $http){
     			link.click();
     		}
     		else{
+    			$scope.rolling=false;
+    			$scope.generating = "";
     			document.getElementById("Error").innerHTML="<center> Batch Report cannot be generated ! </center>";
     		}
     		
-    		
+    		$timeout(function() {
+    			document.getElementById("Success").innerHTML="";
+    			$scope.generating = "";
+    			document.getElementById("Error").innerHTML="";
+             }, 4000);
     	});
     	 
      }	    

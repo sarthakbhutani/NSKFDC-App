@@ -167,39 +167,19 @@
         </div>
         </div>       
         <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReportwithFile()" >Generate Report</button>
+        
+        <div>
         <span id="Error"></span>
         <span id="Success"></span>
         </div>
-
+        </div>
+<div ng-show="rollingOne">
+                    <img src="gif/Facebook.gif"/>
+                    {{generating}}
+                </div>
     </div>
 
 
 </form>
 </div>
-<script>
-	var selDiv = "";
-		
-	document.addEventListener("DOMContentLoaded", init, false);
-	
-	function init() {
-		document.querySelector('#files').addEventListener('change', handleFileSelect, false);
-		selDiv = document.querySelector("#selectedFiles");
-	}
-		
-	function handleFileSelect(e) {
-		console.dir(e);
-		
-		if(!e.target.files) return;
-		
-		selDiv.innerHTML = "";
-		
-		var files = e.target.files;
-		for(var i=0; i<files.length; i++) {
-			var f = files[i];
-			
-			selDiv.innerHTML += f.name + "<br/>";
 
-		}
-		
-	}
-	</script>
