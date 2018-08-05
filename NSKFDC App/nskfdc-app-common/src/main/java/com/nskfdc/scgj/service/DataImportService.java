@@ -136,6 +136,14 @@ public class DataImportService {
         ArrayList<MasterSheetImportDto> candidateDetails = new ArrayList<MasterSheetImportDto>();
 
         Iterator < Row > rowIterator = sheet.rowIterator();
+        int numberOfRows = sheet.getPhysicalNumberOfRows();
+        
+        if(numberOfRows>56)
+        {
+        	LOGGER.debug("A batch cannot have more than 50 candidates in a batch");
+        	return "A batch cannot have more than 50 Candidates";
+        }
+        LOGGER.debug("The number of physical rows are : " + numberOfRows);
 
         while (rowIterator.hasNext()) {
 
