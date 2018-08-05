@@ -6,7 +6,7 @@ dataImport:
   select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
   
  ShowTargetAchieved: >
-  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate())  and (batchdetails.assessmentDate between :date1 and :date2);
+  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
  
  
  ShowFinancialYear: >
@@ -16,7 +16,7 @@ dataImport:
    ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
 
  BatchDetails: >
-  SELECT DISTINCT c.centreId, c.centreState, c.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber, e.employerName, e.employerContactNumber from batchdetails  b ,centredetails  c , employerdetails e where  b.batchId= :batchId and b.userEmail= :userEmail and (b.userEmail = c.userEmail and b.centreId = c.centreId) and (e.batch_id=:batchId and e.batch_id = b.batchId);
+  SELECT c.centreId, c.centreState, c.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber, e.employerName, e.employerContactNumber from batchdetails  b INNER JOIN centredetails  c INNER JOIN employerdetails e ON b.userEmail = c.userEmail and b.centreId = c.centreId and b.userEmail=e.user_email and b.batchId = e.batch_id and b.batchId= :batchId and b.userEmail= :userEmail;
 
  generateBatch: >
   insert into batchdetails(userEmail) values (:userEmail);
