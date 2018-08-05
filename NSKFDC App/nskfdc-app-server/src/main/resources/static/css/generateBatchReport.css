@@ -9,12 +9,23 @@
 	height:inherit;
 	margin-left:-1%
 }
+
+.div-center
+{
+	 border:1px solid #ddd;
+	 border-radius:1em;
+	 margin-bottom:1em;
+	 padding : 1em;
+}
+.div-center h5{
+	color:#8c8c8c;
+}
 .innerline{
 	background-color:#FFF;
 	margin:1%;
 	width:95%;
 	height:100%;
-	padding-top:2%;
+	padding:2%;
 }
 .txt{
 	padding-top:1%;

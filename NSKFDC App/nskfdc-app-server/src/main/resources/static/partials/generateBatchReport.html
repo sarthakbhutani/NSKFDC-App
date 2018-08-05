@@ -25,7 +25,8 @@
             </div>
         </div>
     <div class="container innerline">
-        
+        <div class="div-center">
+        <h5>Inaugral Day Images</h5>
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -33,9 +34,8 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day1image" placeholder="Upload 2 Images of Day 1" >
                     </div>
                   <div class="col-md-4">
-	                        <span class="btncolor btn btn-default btn-file" >
-	                        
-	        					   Browse <input type="file"  file-model="myFile1" accept="image/jpeg,image/jpg" multiple onchange="document.getElementById('day1image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)">
+	                        <span class="btncolor btn btn-default btn-file" >	                        
+	        					   Browse <input type="file"  file-model="myFile1" accept="image/jpeg,image/jpg" multiple onchange="document.getElementById('day1image').value = this.value.split('\\').pop().split('/').pop()" ng-files="getTheFiles($files)" id="files">
 	       				  </span>
 	       				  
             			       				  
@@ -43,9 +43,10 @@
                     
              </div>
         </div>
+        </div>
         
-        
-      
+        <div class="div-center">
+        <h5>Mechanized Cleaning : Vacuum cleaner Training</h5>
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -63,7 +64,10 @@
                     
              </div>
         </div>
-        <div class="row boxes">
+        </div>
+      <div class="div-center">
+      <h5>Mopping Technique</h5>
+       <div class="row boxes">
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
@@ -80,6 +84,9 @@
                    
              </div>
         </div>
+      </div>
+        <div class="div-center">
+        <h5>Mechanization training on sweeper machine</h5>
         <div class="row boxes" >
         	<div class="col-md-10">
             		
@@ -97,7 +104,10 @@
                     
              </div>
         </div>
-         <div class="row boxes">
+        </div>
+       <div class="div-center">
+       <h5>Activity on communication skills</h5>
+       <div class="row boxes">
         	<div class="col-md-10">
             		
                 	<div class="col-md-5">
@@ -114,6 +124,9 @@
                     
              </div>
         </div>
+       </div>
+        <div class="div-center">
+        <h5>Medical Examination</h5>
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -131,6 +144,10 @@
                     
              </div>
         </div>
+        </div>
+         
+        <div class="div-center">
+        <h5>Assessment of candidates</h5>
         <div class="row boxes">
         	<div class="col-md-10">
             		
@@ -148,7 +165,7 @@
                     
              </div>
         </div>
-        
+        </div>       
         <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReportwithFile()" >Generate Report</button>
         <span id="Error"></span>
         <span id="Success"></span>
@@ -159,3 +176,30 @@
 
 </form>
 </div>
+<script>
+	var selDiv = "";
+		
+	document.addEventListener("DOMContentLoaded", init, false);
+	
+	function init() {
+		document.querySelector('#files').addEventListener('change', handleFileSelect, false);
+		selDiv = document.querySelector("#selectedFiles");
+	}
+		
+	function handleFileSelect(e) {
+		console.dir(e);
+		
+		if(!e.target.files) return;
+		
+		selDiv.innerHTML = "";
+		
+		var files = e.target.files;
+		for(var i=0; i<files.length; i++) {
+			var f = files[i];
+			
+			selDiv.innerHTML += f.name + "<br/>";
+
+		}
+		
+	}
+	</script>
