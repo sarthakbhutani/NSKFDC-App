@@ -228,24 +228,17 @@ public class DataImportService {
                 else if(cell.getColumnIndex() == 6)
                 {
 	                	LOGGER.debug("Capturing value of header : DateOfBirth ");
-	                	try {
-							if(!cell.getDateCellValue().toString().equals(null))
-							{
-								LOGGER.debug("Date of Birth column is not empty");
-								flag = false;
-								masterSheetImportDto.setDob(cell.getDateCellValue());
-								
-							}
-							else {
-									LOGGER.debug("Date is in date format");
-									LOGGER.debug("The date of birth is " + cell.getDateCellValue());
-									return "Date of Birth is not be empty";
-								}
-						} catch (Exception e) {
-							LOGGER.error("CATCHING -- Null pointer Exception while entering date");
-							LOGGER.error("Returning 'Date of birth cannot be empty'");
-							return "DOB is mandatory with date format";
-						}
+	                	if(cell.getDateCellValue().toString().isEmpty())
+	                	{
+	                		LOGGER.debug("Date of Birth column empty");
+	                		flag = false;
+	                		return "Date of Birth cannot be empty";
+	                	}
+	                	else if(DateUtil.isCellDateFormatted(cell)) {
+	                			LOGGER.debug("Date is in date format");
+	                			LOGGER.debug("The date of birth is " + cell.getDateCellValue());
+	            				masterSheetImportDto.setDob(cell.getDateCellValue());
+	                		}
 	                	
                 }
                 else if(cell.getColumnIndex() == 7)
@@ -425,29 +418,27 @@ public class DataImportService {
         }
 
         fileStream.close();
-        
-		if(insertResult < 1)
+    	if(insertResult < 1)
 		{
 			LOGGER.debug("In IF -- When insertResult of Excel Sheet is <1 :"+insertResult);
 			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
 			return "File cannot be uplaoded";
 		}
-
 		if(insertResult == 137)
 		{
 			LOGGER.debug("In IF -- When insertResult is 137");
-			LOGGER.debug("Returning message - 'Bank details are not updated'");
-			return "Bank details are not updated";
+			LOGGER.debug("Returning message - 'Bank details cannot be updated'");
+			return "Bank details cannot be updated";
 		}
 		if(insertResult == 114) {
 			LOGGER.debug("In IF -- When insertResult is 114");
-			LOGGER.debug("Returning message - 'Candidate details cannot be inserted'");
-			return "New Candidate details cannot be inserted, Please try again";
+			LOGGER.debug("Returning message - 'Candidate details cannot be inserted, Please try again'");
+			return "New Candidate details cannot be inserted";
 		}
 		if(insertResult == 165) {
 			LOGGER.debug("In IF -- When insertResult is 165");
-			LOGGER.debug("Returning message - 'Candidate details cannot be updated'");
-			return "Candidate bank details cannot be updated";
+			LOGGER.debug("Returning message - 'Candidate bank details cannot be updated'");
+			return "Candidate details cannot be updated";
 		}
 		else
 		{
