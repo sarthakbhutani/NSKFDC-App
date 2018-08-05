@@ -142,6 +142,8 @@ var url = '/getBatchIdfortrainer';
 	    $scope.generating = "Please wait while we generate batch sheet for you.";
         $http.get("/generateBatch")
             .then(function(response) {
+            	$scope.success = true;
+            	$scope.successMessage = "Batch sheet generated successfully!";
                 $scope.data = response.data;
                 $scope.ids = [];
                 $http.get('/getBatchIdfortrainer')
@@ -152,6 +154,12 @@ var url = '/getBatchIdfortrainer';
             	        for (i in dt) {
             	            $scope.ids.push(response.data[i].batchId);
             	        }
+            	        
+            	        $timeout(function() {
+            	        	$scope.rolling = false;
+            	            $scope.success = false;
+            	            $scope.successMessage = false;
+            	         }, 3000);
             	    });
          });
     
@@ -256,6 +264,8 @@ var url = '/getBatchIdfortrainer';
     	$timeout(function() {
             $scope.submitMsg="";
             $scope.errorMsg="";
+            $scope.success = false;
+            $scope.successMessage = false;
          }, 3000);
     }
     

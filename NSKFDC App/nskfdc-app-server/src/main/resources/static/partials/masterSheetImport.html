@@ -14,14 +14,19 @@
          <div class="col-sm-6" >
             <div><button id="button" type="button" class="btn btn-info" ng-click="generateBatchId(); downloadMasterSheet()">Generate Batch ID</button>
             </div>
-            <div ng-show="rolling">
+            
+         </div>
+
+                    
+                    
+                    
+      </div>
+   </div>
+<div ng-show="rolling">
                     <img src="gif/Progress.gif"/>
                     {{generating}}
                 </div>
-         </div>
-      </div>
-   </div>
-
+                <div ng-show="success" id="success">{{successMessage}}</div>
    <div class="row" id="panel" >
       <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-1">
@@ -155,10 +160,16 @@
          <div class="row" >
          <div class="col-sm-4"></div>
              <div class="col-sm-4 btn-wrapper">
-                  <input type="text" name="file_name" id="file_name" class="form-control">
-                 <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button>
-                 <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import" ng-disabled="batchDetails.value == undefined"/>
+             <div class="form-group">
+             <span>
+             	<input type="text" name="file_name" id="file_name" class="form-control">
+             </span>
+             <span>
+             <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button>
+             </span>
+             <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import" ng-disabled="batchDetails.value == undefined"/>
              </div>
+             </div>             
              <div class="col-sm-4"></div>
              <span ng-show="submitMsg" id="success"></span>
              <span ng-show="errorMsg" id="error"></span>
