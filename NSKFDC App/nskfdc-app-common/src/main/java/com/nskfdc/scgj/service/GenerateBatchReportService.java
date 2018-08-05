@@ -200,10 +200,11 @@ public class GenerateBatchReportService {
 			param.put("Day4Pic2",i10);
 			param.put("Day5Pic1",i11);
 			param.put("Day5Pic2",i12);
-			param.put("MedExamPic1",i13);
-			param.put("MedExamPic2",i14);
-			param.put("Assessment",i15);
-			param.put("Viva",i16);
+            param.put("MedExamPic1",i13);
+            param.put("AssessPic1",i14);
+            param.put("AssessPic2",i15);
+            param.put("Viva",i16);
+
 			
 			LOGGER.debug("Create object of Class Path Resource ");
 		    ClassPathResource resource=new ClassPathResource("/static/FinalBatchReport.jasper");
