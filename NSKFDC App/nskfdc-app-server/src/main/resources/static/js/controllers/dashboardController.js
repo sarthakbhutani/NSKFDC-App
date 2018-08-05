@@ -171,7 +171,7 @@ scgj.controller("dashboardController" , function($scope, $http){
                             processed_json2.push(['in-mp', data[i].centers]);
                         }
                         if(data[i].states=='Gujarat'.toLowerCase()||data[i].states=='Gujarat'){
-                            processed_json2.push(['in-2984', data[i].centers]);
+                            processed_json2.push(['in-gj', data[i].centers]);
                         }
                         if(data[i].states=='Goa'.toLowerCase()||data[i].states=='Goa'){
                             processed_json2.push(['in-ga', data[i].centers]);
@@ -192,7 +192,7 @@ scgj.controller("dashboardController" , function($scope, $http){
                             processed_json2.push(['in-tr', data[i].centers]);
                         }
                         if(data[i].states=='Daman and Diu'.toLowerCase()||data[i].states=='Daman and Diu'){
-                            processed_json2.push(['in-3464', data[i].centers]);
+                            processed_json2.push(['in-dd', data[i].centers]);
                         }
                         if(data[i].states=='Delhi'.toLowerCase()||data[i].states=='Delhi'){
                             processed_json2.push(['in-dl', data[i].centers]);
@@ -240,7 +240,7 @@ scgj.controller("dashboardController" , function($scope, $http){
                         if(data[i].states=='Jharkhand'.toLowerCase()||data[i].states=='Jharkhand'){
                             processed_json2.push(['in-jh', data[i].centers]);
                         }
-                        if(data[i].states=='Chandigarh'.toLowerCase()||data[i].states=='Chandigarh'){
+                       if(data[i].states=='Chandigarh'.toLowerCase()||data[i].states=='Chandigarh'){
                             processed_json2.push(['in-ch', data[i].centers]);
                         }
                         if(data[i].states=='Dadra and Nagar Haveli'.toLowerCase()||data[i].states=='Dadra and Nagar Haveli'){
@@ -270,6 +270,9 @@ scgj.controller("dashboardController" , function($scope, $http){
                         text: 'Number of Training Centers in Each State'
                     },
 
+                    mapNavigation: {
+                        enabled: true
+                    },
                         legend: {
                         enabled: true,
                          
