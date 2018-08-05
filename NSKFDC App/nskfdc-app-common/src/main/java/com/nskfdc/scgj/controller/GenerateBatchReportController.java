@@ -201,10 +201,14 @@ public class GenerateBatchReportController {
 							LOGGER.debug("Server File Location is="+ serverFile.getAbsolutePath());
 
 							message = message + "You successfully uploaded file=" ;
+							//Delete files once done
+							new File(file.getOriginalFilename()).delete();
 						} catch (Exception e) {
 							LOGGER.error("CATCHING Exception while executing For Loop");
 							LOGGER.error("Error in Saving File" + e);
 						}
+						
+						
 					}
 				
 				report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
