@@ -138,12 +138,16 @@ var url = '/getBatchIdfortrainer';
     
     
     $scope.generateBatchId = function() {
+    	$scope.rolling = true;
+	    $scope.generating = "Please wait while we generate batch sheet for you.";
         $http.get("/generateBatch")
             .then(function(response) {
                 $scope.data = response.data;
                 $scope.ids = [];
                 $http.get('/getBatchIdfortrainer')
             	    .then(function(response) {
+            	    	$scope.rolling = false;
+            		    $scope.generating = "";
             	        let dt = response.data;
             	        for (i in dt) {
             	            $scope.ids.push(response.data[i].batchId);

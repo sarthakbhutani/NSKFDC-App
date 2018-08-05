@@ -14,6 +14,10 @@
          <div class="col-sm-6" >
             <div><button id="button" type="button" class="btn btn-info" ng-click="generateBatchId(); downloadMasterSheet()">Generate Batch ID</button>
             </div>
+            <div ng-show="rolling">
+                    <img src="gif/Progress.gif"/>
+                    {{generating}}
+                </div>
          </div>
       </div>
    </div>

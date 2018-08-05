@@ -166,17 +166,21 @@
              </div>
         </div>
         </div>       
-        <br><button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReportwithFile()" >Generate Report</button>
-        
         <div>
+        <div ng-show="rolling">
+                    <img src="gif/Progress.gif"/>
+                    {{generating}}
+                </div>
         <span id="Error"></span>
         <span id="Success"></span>
         </div>
+        <div>
+        <button ng-disabled="generateBatchReportForm.$invalid" class="btn btn-primary boxes1" ng-click="generateBatchReportwithFile()" >Generate Report</button>
         </div>
-<div ng-show="rollingOne">
-                    <img src="gif/Facebook.gif"/>
-                    {{generating}}
-                </div>
+        
+        
+        </div>
+
     </div>
 
 
