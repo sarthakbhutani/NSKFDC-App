@@ -54,10 +54,19 @@
 	<script src="http://code.highcharts.com/maps/modules/map.js"></script>
 	<script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
     
+     <style type="text/css">
+
+         [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-    ng-cloak {
+        display: none !important;
+    } {
+	    display: none !important;
+       }
+    </style>
+    
   </head>
   
   
-  <body ng-app="app">
+  <body ng-app="app" ng-cloak class="ng-cloak">
   
   <div id="google_translate_element"></div><script type="text/javascript">
 	function googleTranslateElementInit() {
