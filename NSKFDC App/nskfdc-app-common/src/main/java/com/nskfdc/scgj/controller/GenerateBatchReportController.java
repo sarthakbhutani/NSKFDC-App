@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
@@ -54,6 +55,7 @@ public class GenerateBatchReportController {
 	 
 	 **/
 	
+	@Privilege(value={"TP"})
 	@RequestMapping("/getBatchIdDetails")
 	public Collection<GetBatchIdDto> getBatchIdDetails(){
 		
@@ -76,6 +78,7 @@ public class GenerateBatchReportController {
 			return null;
 		}
 	}
+	@Privilege(value={"TP"})
 	@RequestMapping("/getLocationDetails")
 	public Collection<LocationDetailsDto> locationDetails(@RequestParam ("batchId") String batchId){
 		
@@ -98,7 +101,7 @@ public class GenerateBatchReportController {
 	
 	
 	
-	
+	@Privilege(value={"TP"})
 	@RequestMapping("/getTrainingDetails")
 	public Collection<TrainingDetailsDto> trainingDetails(@RequestParam ("batchId") String batchId){
 		
@@ -121,7 +124,7 @@ public class GenerateBatchReportController {
 	}
 	
 	
-	
+	@Privilege(value={"TP"})
 	@RequestMapping("/getCandidateDetails")
 	public Collection<CandidateDetailsDto> candidateDetails(@RequestParam ("batchId") String batchId){
 		try{
@@ -131,6 +134,8 @@ public class GenerateBatchReportController {
 			return null;
 		}
 	}
+	
+	@Privilege(value={"TP"})
 	@RequestMapping("/embedimages")
 	public int embeddimages(@RequestParam ("file") MultipartFile file){
 		
@@ -150,6 +155,7 @@ public class GenerateBatchReportController {
 		}
 	}
 	
+	@Privilege(value={"TP"})
 	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
 		
