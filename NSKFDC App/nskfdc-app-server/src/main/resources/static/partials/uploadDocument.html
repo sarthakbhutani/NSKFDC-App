@@ -25,21 +25,21 @@
           </select>
         
       </div>
-      <div id="r2t1" class="col-md-2" >
+      <div id="r2t1" class="col-md-1" >
        <select ng-click="getBatchId()"   ng-model="batchId"  class="form-control form-rounded placeholderfont"  ng-options="x for x in ids" required >
        <option value=""disabled selected>BatchID</option>
        </select>
        
        
       </div>
-       <div id="r2t2" class="col-md-2" ng-switch="fileType" >
+       <div id="r2t2" class="col-md-1" ng-switch="fileType" >
         <div ng-show="fileType=='finalBatchReport'" ng-model="fileType"> 
         
           <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="scgjBatchNumber" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch Number">
        
         </div>
       </div>
-                  <div class="col-md-4 btn-wrapper" id="uploadFileDiv">
+                  <div class="col-md-5 btn-wrapper" id="uploadFileDiv">
                     <div class="form-group">
              <span >
                   <input type="text" name="file_name" id="file_name" class="form-control" required></span>
@@ -51,7 +51,7 @@
                     </div>
                     </div>
     
-      <div class="col-md-1" id="uploadButtonDiv">
+      <div class="col-md-2" id="uploadButtonDiv">
                     <button type="submit" class="form-control btn btn-info btn data-disable" id="uploadButton" ng-click="uploadFile()">Upload</button>
                 </div>
                 <span id="Error"></span>
