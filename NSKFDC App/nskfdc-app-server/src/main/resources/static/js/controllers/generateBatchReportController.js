@@ -79,7 +79,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
              }]
     	}).then(function(response){
     	   		
-    		/*if(response.data.byteLength!=0)
+    		if(response.data.byteLength!=0)
     		{
     			$scope.rolling=false;
     			$scope.generating = "";
@@ -91,8 +91,8 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     			link.download = "Final Batch Report.pdf"
     			document.body.appendChild(link);
     			link.click();
-    		}*/
-    		if(response.data.length > 0)
+    		}
+    		/*if(response.data.length > 0)
     			{
     			$scope.rolling=false;
     			$scope.generating = "";
@@ -104,7 +104,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     			link.download = "Final Batch Report.pdf"
     			document.body.appendChild(link);
     			link.click();
-    			}
+    			}*/
     		else{
     			$scope.rolling=false;
     			$scope.generating = "";
