@@ -46,7 +46,7 @@ scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 		}
 	    $timeout(function() {
 	        $scope.searchError="";
-	        $scope.errorMessageBatch=";"
+	        $scope.errorMessageBatch="";
 	     }, 3000);
 	}
 	
