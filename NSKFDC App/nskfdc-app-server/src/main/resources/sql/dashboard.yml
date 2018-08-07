@@ -14,11 +14,10 @@ DashboardStatistics:
   Select Count(*) from batchdetails WHERE assessmentDate>Curdate();
   
  showTotalNumberOfCandidatesTrainedInLast6Months: >
-  SELECT monthname(batchEndDate) as month,count(enrollmentNumber) as count from batchDetails 
-   inner join candidate on batchDetails.batchId = candidate.batchID
-    where assessmentResult = "Pass" OR assessmentResult = "Fail" and year(batchEndDate)=year(curdate())
-     and month(batchEndDate) < month(curdate()) group by month order by month(batchEndDate)  limit 6;
-  
+  select monthname(batchEndDate) as month, count(EnrollmentNumber) as count from candidate inner join batchdetails on 
+     candidate.batchId = batchDetails.batchId where assessmentResult="pass" or assessmentResult="fail" and (batchEndDate) = year(curdate()) and month(batchEndDate) < month(curdate())
+        group by month(batchEndDate) limit 6;
+        
  showStateDetails: >
   SELECT centreState, COUNT(centreState) as centers FROM centredetails GROUP BY centreState ORDER BY COUNT(centreState) DESC limit 5;
   
