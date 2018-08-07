@@ -171,10 +171,15 @@
              </div>
              </div>             
              <div class="col-sm-4"></div>
-             <span ng-show="submitMsg" id="success"></span>
-             <span ng-show="errorMsg" id="error"></span>
+             <span ng-show="submitMsg" id="success">{{SuccessMessage}}</span>
+             <span ng-show="errorMsg" id="error">{{errorMessage}}</span>
              </div>
-
+<!-- <!-- <div ng-show="excel-success">
+<span id="success-upload"></span>
+</div>
+<div ng-show="excel-success">
+<span id="error"></span>
+</div> -->
             </div>
              <p id="importExcelMessage" class="importExcelMessageStyle"></p>
             <div class="row">

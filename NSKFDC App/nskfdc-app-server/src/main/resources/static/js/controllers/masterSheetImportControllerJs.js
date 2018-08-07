@@ -243,6 +243,7 @@ var url = '/getBatchIdfortrainer';
 			if($scope.status==1){
 				$scope.submitMsg=true;
 				$scope.errorMsg=false;
+				$scope.SuccessMessage="Batch details inserted successfully";
 			 	var file = $scope.masterSheet.import;
 		      	/*console.log('File selected is :'+file);*/
 		      	var batchId = $scope.batchDetails.value;
@@ -257,8 +258,13 @@ var url = '/getBatchIdfortrainer';
 			else{
 				
 				$scope.submitMsg=false;
+				$scope.errorMessage="Could not insert details of batch";
 				$scope.errorMsg=true;
 			}          
+    	},function(errorResponse){
+    		$scope.submitMsg=false;
+			$scope.errorMessage="Could not insert details of batch";
+			$scope.errorMsg=true;
     	});
     	
     	$timeout(function() {

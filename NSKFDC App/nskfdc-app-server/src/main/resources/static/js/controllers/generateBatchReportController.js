@@ -69,14 +69,14 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     		url: '/generateBatchReport',
 			 method: "POST",
 			 data: fd,
-/*			 responseType : 'arraybuffer',*/
+			 responseType : 'arraybuffer',
 			 headers: {'Content-Type': undefined},
-			 transformRequest: angular.identity,
-             transformResponse: [function (data) {
+			 transformRequest: angular.identity
+            /* transformResponse: [function (data) {
              	thisIsResponse=data;
              	return data;
            
-             }]
+             }]*/
     	}).then(function(response){
     	   		
     		if(response.data.byteLength!=0)
