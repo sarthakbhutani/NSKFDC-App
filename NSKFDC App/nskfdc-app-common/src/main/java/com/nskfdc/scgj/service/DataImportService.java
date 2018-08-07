@@ -67,6 +67,14 @@ public class DataImportService {
     private ReadApplicationConstants readApplicationConstants;
 
 
+    /**
+     * Method to import master sheet, check if batch size is greater than 50 and greater than remaining targets
+     * @param file
+     * @param batchId
+     * @param userEmail
+     * @return
+     * @throws IOException
+     */
     public String masterSheetImport(MultipartFile file, int batchId,String userEmail) throws IOException {
     	LOGGER.debug("Request received from Controller to DataImportService");
         LOGGER.debug("In masterSheetImport - to read Excel sheet ");
@@ -141,8 +149,17 @@ public class DataImportService {
         if(numberOfRows>56)
         {
         	LOGGER.debug("A batch cannot have more than 50 candidates in a batch");
+        	
         	return "A batch cannot have more than 50 Candidates";
+        	
         }
+        Integer remaningTargets = getRemainingTargets(userEmail)+6;
+    	if(numberOfRows > remaningTargets)
+    	{
+    		int sizeOfBatch = numberOfRows-6;
+    		int remainder = remaningTargets-6;
+    		return "Batch can not be created for size "+sizeOfBatch+ "Your remaining targets are "+remainder; 
+    	}
         LOGGER.debug("The number of physical rows are : " + numberOfRows);
 
         while (rowIterator.hasNext()) {
@@ -491,6 +508,11 @@ public class DataImportService {
         }
     }
 
+    /**
+     * Method to get total targets
+     * @param userEmail
+     * @return
+     */
     public Integer getTotalTargets(String userEmail) {
 
         LOGGER.debug("Request received from Controller - to get Total Targets");
@@ -511,6 +533,11 @@ public class DataImportService {
         }
     }
 
+    /**
+     * Get targets achieved
+     * @param userEmail
+     * @return integer
+     */
     public Integer getTargetAchieved(String userEmail) {
 
         LOGGER.debug("Request received from Controller - to get Targets Achieved");
@@ -530,6 +557,11 @@ public class DataImportService {
             return null;
         }
     }
+    /**
+     * Method to get remaining tragets
+     * @param userEmail
+     * @return
+     */
     public Integer getRemainingTargets(String userEmail) {
 
         LOGGER.debug("Request received from Controller - To get Remaining Targets");
