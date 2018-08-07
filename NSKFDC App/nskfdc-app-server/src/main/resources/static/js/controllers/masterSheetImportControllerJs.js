@@ -140,8 +140,40 @@ var url = '/getBatchIdfortrainer';
     $scope.generateBatchId = function() {
     	$scope.rolling = true;
 	    $scope.generating = "Please wait while we generate batch sheet for you.";
-        $http.get("/generateBatch")
+	    //To check if remaining targets is zero or negative	    
+	    $http.get('/getRemainingTargets').then(
+	    function(response)
+	    {
+	    	if(response.data <= 0 )
+			{
+	    		$scope.errorMsg = true;
+	    		$scope.errorMessage="Please contact SCGJ for more targets";
+	    		$scope.rolling = false;
+	    		$timeout(function() {
+    	        	$scope.rolling = false;
+    	            $scope.success = false;
+    	            $scope.successMessage = "";
+    	            $scope.errorMessage="";
+    	            $scope.errorMsg=false;
+    	         }, 3000);
+			}
+		else
+		{
+			$http.get("/generateBatch")
             .then(function(response) {
+            	var url='/downloadFinalMasterSheet';  	  
+            	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+            	{	
+            		
+            			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+            			var downloadURL = URL.createObjectURL(excelFile);
+            			var link = document.createElement('a');
+            			link.href = downloadURL;
+            			link.download = "Batch Master Sheet.xlsx"
+            			document.body.appendChild(link);
+            			link.click();
+            			
+            	}); 
             	$scope.success = true;
             	$scope.successMessage = "Batch sheet generated successfully!";
                 $scope.data = response.data;
@@ -158,28 +190,28 @@ var url = '/getBatchIdfortrainer';
             	        $timeout(function() {
             	        	$scope.rolling = false;
             	            $scope.success = false;
-            	            $scope.successMessage = false;
+            	            $scope.successMessage = "";
+            	            $scope.errorMessage="";
+            	            $scope.errorMsg=false;
             	         }, 3000);
             	    });
+         }, function(errorResponse){
+        	 $scope.$scope.errorMessage="";
+        	 $timeout(function() {
+ 	        	$scope.rolling = false;
+ 	            $scope.success = false;
+ 	            $scope.successMessage = "";
+ 	           $scope.errorMessage="";
+ 	            $scope.errorMsg=false;
+ 	         }, 3000);
          });
-    
+		}	    	
+	    });   
     };
     
     
     $scope.downloadMasterSheet = function(){
-    	var url='/downloadFinalMasterSheet';  	  
-    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
-    	{	
-    		
-    			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
-    			var downloadURL = URL.createObjectURL(excelFile);
-    			var link = document.createElement('a');
-    			link.href = downloadURL;
-    			link.download = "Batch Master Sheet.xlsx"
-    			document.body.appendChild(link);
-    			link.click();
-    			
-    	}); 
+    	
     };
     
     
@@ -260,6 +292,7 @@ var url = '/getBatchIdfortrainer';
 				$scope.submitMsg=false;
 				$scope.errorMessage="Could not insert details of batch";
 				$scope.errorMsg=true;
+				
 			}          
     	},function(errorResponse){
     		$scope.submitMsg=false;
@@ -272,6 +305,7 @@ var url = '/getBatchIdfortrainer';
             $scope.errorMsg="";
             $scope.success = false;
             $scope.successMessage = false;
+            $scope.errorMsg=false;
          }, 3000);
     }
     
