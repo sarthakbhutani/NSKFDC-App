@@ -253,31 +253,71 @@ public class GenerateBatchReportService {
 		    	            OutputStream outputStream = finalReportOut;
 		    	            LOGGER.debug("Output stream created successfully in Batch Report service");
 		    	            
-		    	            JasperPrint printFileName = JasperFillManager.fillReport(inputStream,param, new JREmptyDataSource());
-		    	            LOGGER.debug("Output received from Jasper fill manager is " + printFileName);
+		    	            
+		    	            
 		    	            
 		    	            LOGGER.debug("Values of Locations DTO : "+locationDetails);
 		    	            LOGGER.debug("Values of training Details Dto : "+ trainingDetails);
 		    	            LOGGER.debug("Values of candidates details : "+ candidateDetails);
 		    	            
 		    	            //If not null then export file to PDf using template
-		    	            if (printFileName != null && CollectionUtils.isNotEmpty(locationDetails)&& CollectionUtils.isNotEmpty(trainingDetails) && CollectionUtils.isNotEmpty(candidateDetails)) {
-		    	            	
-		    	            	LOGGER.debug("IN IF -- to export the Final Batch Report -- jrprint file..");
-		    	                JasperExportManager.exportReportToPdfStream(printFileName, outputStream);
-		    	                LOGGER.debug("Successfully created the jrprint file for Final Batch Report " );
-		    	                success = 1;       
-		    	                LOGGER.debug("PDF of Final Batch Report is generated successfully..!!");
-		    	                
+		    	            if (CollectionUtils.isNotEmpty(candidateDetails)) 
+		    	            {
+		    	            	LOGGER.debug("Candidates details are present");
+		    	            	if(CollectionUtils.isNotEmpty(locationDetails))
+		    	            	{
+		    	            		LOGGER.debug("Location Details are present");
+		    	            		if(CollectionUtils.isNotEmpty(trainingDetails) )
+		    	            		{
+		    	            			LOGGER.debug("Training details are present");
+		    	            			LOGGER.debug("Trying to fill Report using JasperFillManager");
+		    	            			JasperPrint printFileName = JasperFillManager.fillReport(inputStream,param, new JREmptyDataSource());
+		    	            			LOGGER.debug("Output received from Jasper fill manager is " + printFileName);
+		    	            			if(printFileName != null)
+		    	            			{
+		    		    	            	LOGGER.debug("IN IF -- to export the Final Batch Report -- jrprint file..");
+		    		    	                JasperExportManager.exportReportToPdfStream(printFileName, outputStream);
+		    		    	                LOGGER.debug("Successfully created the jrprint file for Final Batch Report " );
+		    		    	                success = 1;       
+		    		    	                LOGGER.debug("PDF of Final Batch Report is generated successfully..!!");
+		    	            			}
+		    	            			else
+		    	            			{
+		    	            				LOGGER.debug("Candiadtes Details are empty");
+		    	            				success = -1;
+		    		    	                LOGGER.debug("IN ELSE -- When PDF file is empty");
+		    		    	                LOGGER.debug("Final batch Report -- jrprint file is empty..");
+		    	            			}
+		    	            		}
+		    	            		else
+		    	            		{
+		    	            			LOGGER.debug("Training Details are empty");
+		    	            		}
+		    	            	}
+		    	            	else
+		    	            	{
+		    	            		LOGGER.debug("Location Details are null, can not create Final batch report");
+		    	            	}
+		    	            			    	                
 		    	            } 
 		    	            else 
 		    	            {
-		    	                success = -1;
-		    	                LOGGER.debug("IN ELSE -- When PDF file is empty");
-		    	                LOGGER.debug("Final batch Report -- jrprint file is empty..");
+		    	                LOGGER.debug("Candidates Details are empty");
 		    	            }
 		    	            outputStream.close();
 			            }
+			
+			//To add a row in generated reports for Audit table
+			String reportType="Final Batch Report";
+			String generateReportsId="FBR"+batchId+userEmail;
+			if(success==1) 
+			{
+	        	LOGGER.debug("IN IF -- When PDF generated successfully.");
+	        	LOGGER.debug("Updating Database table records having details regarding printing PDF");
+	        	LOGGER.debug("Sending Request to DAO - updateTableGenerateReports");
+	        	generateBatchReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
+	        }
+			
 		}
 		
 		catch (JRException e)
@@ -292,16 +332,7 @@ public class GenerateBatchReportService {
     		LOGGER.error("Exception is in generateBatchReport"+e);
     		outputFile = null;
     	}
-		//To add a row in generated reports for Audit table
-		String reportType="Final Batch Report";
-		String generateReportsId="FBR"+batchId+userEmail;
-		if(success==1) 
-		{
-        	LOGGER.debug("IN IF -- When PDF generated successfully.");
-        	LOGGER.debug("Updating Database table records having details regarding printing PDF");
-        	LOGGER.debug("Sending Request to DAO - updateTableGenerateReports");
-        	generateBatchReportDao.updateTableGenerateReports(generateReportsId,date,reportType,batchId,userEmail);		            		            	
-        }
+		
 		return outputFile;
 	}
 
