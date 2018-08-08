@@ -32,6 +32,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.util.FileResolver;
 
 ;
 
@@ -189,7 +190,13 @@ public class GenerateBatchReportService {
 			
 			LOGGER.debug("Create object of JRBean Collection Data Source -- candidateDetails");
 			JRBeanCollectionDataSource candidateDetailsBeans = new JRBeanCollectionDataSource(candidateDetails);
-			
+			FileResolver fileResolver = new FileResolver() {
+
+				 @Override
+				 public File resolveFile(String fileName) {
+				  return new File(fileName);
+				 }
+				};
 			LOGGER.debug("Inserting Paths of Images in Objects");
 			Object i1=sourceCodeDir+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"SCGJ logo.png";
 			Object i2=sourceCodeDir+File.separatorChar+"src"+File.separatorChar+"main"+File.separatorChar+"resources"+File.separatorChar+"static"+File.separatorChar+"images"+File.separatorChar+"nskfdc-logo.png";
@@ -232,7 +239,7 @@ public class GenerateBatchReportService {
 			param.put("MedExamPic2",i14);
 			param.put("Assessment",i15);
 			param.put("Viva",i16);
-			
+			param.put("REPORT_FILE_RESOLVER", fileResolver);
 			LOGGER.debug("Create object of Class Path Resource ");
 		    ClassPathResource resource=new ClassPathResource("/static/FinalBatchReport.jasper");
 		    
