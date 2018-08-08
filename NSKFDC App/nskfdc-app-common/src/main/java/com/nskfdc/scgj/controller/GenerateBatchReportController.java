@@ -38,244 +38,251 @@ public class GenerateBatchReportController {
 
 	@Autowired
 	public GenerateBatchReportService generateBatchReportService;
-	
+
 	@Autowired
 	private SessionUserUtility sessionUserUtility;
-	
+
 	private String userEmail;
 	private String Paths[] = new String[20];
-	private static final Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportController.class);
-	
-	
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(GenerateBatchReportController.class);
+
 	/**
-	 
-	 *@author Samridhi Srivastava
-	 *@description This method is a Controller Method that maps the request for getting batch Ids of the particular SCGJ Batch Number. 
-	 *@return A Collection of the Batch Ids corresponding to the particular SCGJ Batch Number.
-	 
+	 * 
+	 * @author Samridhi Srivastava
+	 * @description This method is a Controller Method that maps the request for
+	 *              getting batch Ids of the particular SCGJ Batch Number.
+	 * @return A Collection of the Batch Ids corresponding to the particular
+	 *         SCGJ Batch Number.
 	 **/
-	
-	@Privilege(value={"TP"})
+
+	@Privilege(value = { "TP" })
 	@RequestMapping("/getBatchIdDetails")
-	public Collection<GetBatchIdDto> getBatchIdDetails(){
-		
+	public Collection<GetBatchIdDto> getBatchIdDetails() {
+
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In GenerateBatchReportController");
 		LOGGER.debug("To get batch Id for logged in user - getBatchIdDetails");
-		
+
 		try {
 			LOGGER.debug("Getting User Email from Session");
-			userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
+			userEmail = sessionUserUtility.getSessionMangementfromSession()
+					.getUsername();
 			LOGGER.debug("TRYING -- getBatchIdDetails");
 			LOGGER.debug("Sending request to GENERATE_BATCH_REPORT_SERVICE");
 			LOGGER.debug("Method - getBatchDetails");
 			return generateBatchReportService.getBatchDetails(userEmail);
-			
+
 		} catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
 			LOGGER.error("In method getBatchIdDetails");
-			LOGGER.error("An exception is "+e);
+			LOGGER.error("An exception is " + e);
 			return null;
 		}
 	}
-	@Privilege(value={"TP"})
+
+	@Privilege(value = { "TP" })
 	@RequestMapping("/getLocationDetails")
-	public Collection<LocationDetailsDto> locationDetails(@RequestParam ("batchId") String batchId){
-		
+	public Collection<LocationDetailsDto> locationDetails(
+			@RequestParam("batchId") String batchId) {
+
 		LOGGER.debug("In GenerateBatchReportController");
 		LOGGER.debug("To get Location Details");
-		
-		try{ 
+
+		try {
 			LOGGER.debug("TRYING -- locationDetails");
 			LOGGER.debug("Sending request to GENERATE_BATCH_REPORT_SERVICE");
 			LOGGER.debug("Method - locationDetails");
 			return generateBatchReportService.locationDetails(batchId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
 			LOGGER.error("In method locationDetails");
-			LOGGER.error("An exception is "+e);
+			LOGGER.error("An exception is " + e);
 			return null;
 		}
 	}
-	
-	
-	
-	@Privilege(value={"TP"})
+
+	@Privilege(value = { "TP" })
 	@RequestMapping("/getTrainingDetails")
-	public Collection<TrainingDetailsDto> trainingDetails(@RequestParam ("batchId") String batchId){
-		
-			LOGGER.debug("In Generate Batch Report Controller");
-			LOGGER.debug("To get Training Details respective to Batch Id entered");
-		
-		try{
+	public Collection<TrainingDetailsDto> trainingDetails(
+			@RequestParam("batchId") String batchId) {
+
+		LOGGER.debug("In Generate Batch Report Controller");
+		LOGGER.debug("To get Training Details respective to Batch Id entered");
+
+		try {
 			LOGGER.debug("TRYING -- method trainingDetails");
 			LOGGER.debug("Sending request to generateBatchReportService");
 			LOGGER.debug("Method - trainingDetails");
 			return generateBatchReportService.trainingDetails(batchId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
 			LOGGER.error("In method trainingDetails");
-			LOGGER.error("An exception is "+e);
+			LOGGER.error("An exception is " + e);
 			return null;
 		}
-		
+
 	}
-	
-	
-	@Privilege(value={"TP"})
+
+	@Privilege(value = { "TP" })
 	@RequestMapping("/getCandidateDetails")
-	public Collection<CandidateDetailsDto> candidateDetails(@RequestParam ("batchId") String batchId){
-		try{
+	public Collection<CandidateDetailsDto> candidateDetails(
+			@RequestParam("batchId") String batchId) {
+		try {
 			return generateBatchReportService.candidateDetails(batchId);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	@Privilege(value={"TP"})
+
+	@Privilege(value = { "TP" })
 	@RequestMapping("/embedimages")
-	public int embeddimages(@RequestParam ("file") MultipartFile file){
-		
+	public int embeddimages(@RequestParam("file") MultipartFile file) {
+
 		LOGGER.debug("In GenerateBatchReportController");
 		LOGGER.debug("In the controller -- embeddimages");
-		
-		try{
+
+		try {
 			LOGGER.debug("TRYING -- to embed images");
 			LOGGER.debug("Sending request to service - embeddimages");
 			return generateBatchReportService.embeddimages(file);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception Handled in GenerateBatchReportController");
 			LOGGER.error("In method embeddimages");
-			LOGGER.error("An exception is "+e);
+			LOGGER.error("An exception is " + e);
 			return -1;
 		}
 	}
-	
-	@Privilege(value={"TP"})
-	@RequestMapping(value="/generateBatchReport" ,method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
-	public void batchReport(@RequestParam ("batchId") String batchId,@RequestParam ("batchnumber") String batchnumber,@RequestParam("file") MultipartFile[] files,HttpServletResponse response){
-		
+
+	@Privilege(value = { "TP" })
+	@RequestMapping(value = "/generateBatchReport", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public void batchReport(@RequestParam("batchId") String batchId,
+			@RequestParam("batchnumber") String batchnumber,
+			@RequestParam("file") MultipartFile[] files,
+			HttpServletResponse response) {
+
 		LOGGER.debug("In BATCH REPORT GENERATE CONTROLLER");
 		LOGGER.debug("In the method - batchReport");
 		LOGGER.debug("To generate the final batch report based on BatchId & batchNumber");
 		String report;
 		File dir = null;
-		userEmail=sessionUserUtility.getSessionMangementfromSession().getUsername();
-		try{
-			
-					LOGGER.debug("TRYING -- to get final batch Report");
-					LOGGER.debug("Checkin if the files are receieved from the frontend");
-					if (files.length ==0)
-						return ;
-					
-					LOGGER.debug("Calling a FOR loop");
-					String message = "";
-					for (int i = 0; i <files.length; i++) {
-						MultipartFile file =  files[i];
-						try {
-							LOGGER.debug("Try Block -- In For Loop");
-							LOGGER.debug("Read the Files and Write the file ina temporary Location\"");
-							File convFile = new File(file.getOriginalFilename());
-						    convFile.createNewFile();
-						    FileOutputStream fos = new FileOutputStream(convFile);
-						    fos.write(file.getBytes());
-						    fos.close();
-						    
-							
-							// Creating the directory to store file
-							String rootPath = System.getProperty("user.home");
-							dir = new File(rootPath +File.separator +"Documents"+File.separator + "tmpFiles"+batchId);
-							if (!dir.exists())
-								dir.mkdirs();
-							
-							
-							// Create the file on server
-							File serverFile = new File(dir.getAbsolutePath()
-									+ File.separator + "p"+i+".jpg");
-							
-							BufferedImage img=ImageIO.read(convFile);
-							
-					        ImageIO.write(img, "jpg", serverFile);
-					        
-							
-							Paths[i]=serverFile.getAbsolutePath();
+		userEmail = sessionUserUtility.getSessionMangementfromSession()
+				.getUsername();
+		try {
 
-							LOGGER.debug("Server File Location is="+ serverFile.getAbsolutePath());
+			LOGGER.debug("TRYING -- to get final batch Report");
+			LOGGER.debug("Checkin if the files are receieved from the frontend");
+			if (files.length == 0)
+				return;
 
-							message = message + "You successfully uploaded file=" ;
-							//Delete files once done
-							new File(file.getOriginalFilename()).delete();
-						} catch (Exception e) {
-							LOGGER.error("CATCHING Exception while executing For Loop");
-							LOGGER.error("Error in Saving File" + e);
-						}
-						
-						
-					}
-				
-				report= generateBatchReportService.generateBatchReport(batchId,batchnumber,userEmail,Paths);
-				if(report!=null) {
-					
-				
+			LOGGER.debug("Calling a FOR loop");
+			String message = "";
+			for (int i = 0; i < files.length; i++) {
+				MultipartFile file = files[i];
+
+				LOGGER.debug("Try Block -- In For Loop");
+				LOGGER.debug("Read the Files and Write the file ina temporary Location\"");
+				File convFile = new File(file.getOriginalFilename());
+				convFile.createNewFile();
+				FileOutputStream fos = new FileOutputStream(convFile);
+				fos.write(file.getBytes());
+				fos.close();
+
+				// Creating the directory to store file
+				String rootPath = System.getProperty("user.home");
+				dir = new File(rootPath + File.separator + "Documents"
+						+ File.separator + "tmpFiles" + batchId);
+				if (!dir.exists())
+					dir.mkdirs();
+
+				// Create the file on server
+				File serverFile = new File(dir.getAbsolutePath()
+						+ File.separator + "p" + i + ".jpg");
+
+				BufferedImage img = ImageIO.read(convFile);
+
+				ImageIO.write(img, "jpg", serverFile);
+
+				Paths[i] = serverFile.getAbsolutePath();
+
+				LOGGER.debug("Server File Location is="
+						+ serverFile.getAbsolutePath());
+
+				message = message + "You successfully uploaded file=";
+				// Delete files once done
+				 new File(file.getOriginalFilename()).delete();
+
+			}
+
+			report = generateBatchReportService.generateBatchReport(batchId,batchnumber, userEmail, Paths);
+			if (report != null)
+			{
 				LOGGER.debug("Creating object of File");
-				File file = new File(report);
-			
+				File file = new File(report);	
+
 				LOGGER.debug("Setting Content Type and Header");
 				response.setContentType("application/pdf");
-				response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
-		    
+
+				response.setHeader("Content-Disposition","attachment;filename=" + file.getName());
 				LOGGER.debug("Creating object of BufferedInputStream, BufferedOutputStream");
-		    	BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
-		    	BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
-		    	byte[] buffer = new byte[1024];
-		    	int bytesRead = 0;
-		    	while ((bytesRead = inStrem.read(buffer)) != -1) {
-		    		outStream.write(buffer, 0, bytesRead);
-		    	}
-		    
-		    	LOGGER.debug("Pdf of Final Batch Report is Generated successfully");
-		    	outStream.flush();
-		    	inStrem.close();
-		    	
-		    	//Delete file
-		    	boolean deleteFile = file.delete();
-		    	if(deleteFile)
-		    	{
-		    		LOGGER.debug("Deleting temp file"+ deleteFile);
-		    	}
-		    	else
-		    	{
-		    		LOGGER.debug("Could not delete file" + deleteFile);
-		    	}
-		    	
+
+				if (file.exists())
+				{
+					LOGGER.debug("File does exists - "+ file.exists());
+				}
+				if (file.canRead()) 
+				{
+					LOGGER.debug("File can read - "+ file.canRead());
+				}
+				if (file.canWrite())
+				{
+					LOGGER.debug("File can write - "+ file.canWrite());
+				}
+				FileInputStream fileInput = new FileInputStream(file);
+				LOGGER.debug("Created file input stream successfully");
+				
+				BufferedInputStream inStrem = new BufferedInputStream(fileInput);
+				LOGGER.debug("bUFFERED input stream created successfully");
+				
+				BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());
+				LOGGER.debug("Created Outstream successfully");
+
+				byte[] buffer = new byte[1024];
+				int bytesRead = 0;
+
+				LOGGER.debug("Bytes buffer created successfully");
+				while ((bytesRead = inStrem.read(buffer)) != -1) {
+
+					LOGGER.debug("Will work till finds end");
+					outStream.write(buffer, 0, bytesRead);
+				}
+
+				LOGGER.debug("Pdf of Final Batch Report is Generated successfully");
+				outStream.flush();
+				inStrem.close();
+
+				// Delete file
+				boolean deleteFile = file.delete();
+				if (deleteFile) {
+					LOGGER.debug("Deleting temp file" + deleteFile);
+				} else {
+					LOGGER.debug("Could not delete file" + deleteFile);
+				}
+
 			} else {
 				LOGGER.debug("Path not found");
 			}
-					
-		}
-		
-		catch (Exception e) {
-			
-			LOGGER.debug("Error Occurred"+e);
-			
-		}
-		
-		try {
 			LOGGER.debug("Deleting the Directory where Temporary Files were stored");
 			FileUtils.deleteDirectory(dir);
 		} catch (IOException e) {
-			LOGGER.debug("Exception occured while deleting the Temporary Files directory of Final Batch Report" + e);
+
+		}
+
+		catch (Exception e) {
+
+			LOGGER.error("Error Occurred " + e);
+
 		}
 	}
-	
-	 
-	
-	
-	
-	
-	
+
 }
