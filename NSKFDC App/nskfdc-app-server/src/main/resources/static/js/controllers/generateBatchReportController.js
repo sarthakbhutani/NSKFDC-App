@@ -108,14 +108,14 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     		else{
     			$scope.rolling=false;
     			$scope.generating = "";
-    			document.getElementById("Error").innerHTML="<center>Please insert valid data to generate Batch Report </center>";
+    			document.getElementById("Error").innerHTML="<center>Either candidate's or training center's information is not present</center>";
     		}
     		
     		$timeout(function() {
     			document.getElementById("Success").innerHTML="";
     			$scope.generating = "";
     			document.getElementById("Error").innerHTML="";
-             }, 4000);
+             }, 6000);
     	}, function(errorResponse){
     		$scope.rolling=false;
 			$scope.generating = "";
@@ -126,7 +126,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     			document.getElementById("Success").innerHTML="";
     			$scope.generating = "";
     			document.getElementById("Error").innerHTML="";
-             }, 4000);
+             }, 6000);
     	});
     	 
      }	    
