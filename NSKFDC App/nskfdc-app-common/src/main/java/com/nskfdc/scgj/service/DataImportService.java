@@ -449,22 +449,7 @@ public class DataImportService {
 			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
 			return "File cannot be uplaoded";
 		}
-		if(insertResult == 137)
-		{
-			LOGGER.debug("In IF -- When insertResult is 137");
-			LOGGER.debug("Returning message - 'Bank details cannot be updated'");
-			return "Bank details cannot be updated";
-		}
-		if(insertResult == 114) {
-			LOGGER.debug("In IF -- When insertResult is 114");
-			LOGGER.debug("Returning message - 'Candidate details cannot be inserted, Please try again'");
-			return "New Candidate details cannot be inserted";
-		}
-		if(insertResult == 165) {
-			LOGGER.debug("In IF -- When insertResult is 165");
-			LOGGER.debug("Returning message - 'Candidate bank details cannot be updated'");
-			return "Candidate details cannot be updated";
-		}
+		
 		else
 		{
 			LOGGER.debug("In ELSE -- When insertResult of Excel Sheet is not <1");

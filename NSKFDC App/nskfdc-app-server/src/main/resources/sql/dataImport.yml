@@ -45,9 +45,12 @@ dataImport:
  checkCandidateExistance: >
   SELECT EXISTS(SELECT 1 FROM candidate WHERE candidate.enrollmentNumber = :enrollmentNumber);  
   
+ checkBankExistence: >
+  SELECT EXISTS(SELECT 1 FROM bankdetails WHERE bankdetails.accountNumber = :accountNumber);
+  
  updateExistingDetails: >
   UPDATE nskfdc.candidate set salutation =:salutation,firstName =:firstName,lastName =:lastName,gender =:gender,mobileNumber=:mobileNumber,educationLevel=:educationLevel,state=:state,district=:district,aadharCardNumber=:aadharCardNumber,idProofType=:idProofType,idProofNumber=:idProofNumber,disabilityType=:disabilityType,age=:age,dob=:dob,guardianType=:guardianType,firstNameFather=:firstNameFather,lastNameFather=:lastNameFather,motherName=:motherName,residentialAddress=:residentialAddress,msId=:msId,occupationType=:occupationType,employmentType=:employmentType,workplaceAddress=:workplaceAddress,assessmentResult=:assessmentResult,medicalExamConducted=:medicalExaminationConducted,relationWithSKMS=:relationWithSKMS,batchId=:batchId where enrollmentNumber =:enrollmentNumber;
   
  updateExistingBankDetails: >
-  UPDATE nskfdc.bankdetails set accountNumber=:accountNumber,ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where enrollmentNumber =:enrollmentNumber;
+  UPDATE nskfdc.bankdetails set ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where accountNumber=:accountNumber;
   

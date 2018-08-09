@@ -58,158 +58,145 @@ public class DataImportDao extends AbstractTransactionalDao {
 			Map<String, Object> parameters = new HashMap<>();
 			Integer checkCandidateExistence = -50;
 			Integer candidateInsertStatus = -25;
+			Integer bankExistence = -1;
 
 			LOGGER.debug("Inserting candidate details from Excel sheet imported");
 			while (itr.hasNext()) {
 				// Checking existence of candidate in database using enrollment
 				// number
-				parameters.put("enrollmentNumber", candidateDetails.get(i)
-						.getEnrollmentNumber());
+				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 				LOGGER.debug("Inserting batchId into hashmap to check existence of the user");
-				checkCandidateExistence = getJdbcTemplate().queryForObject(
-						dataImportConfig.getCheckCandidateExistance(),
-						parameters, Integer.class);
+				checkCandidateExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckCandidateExistance(), parameters, Integer.class);
 
-				// Put inside if and else block
-				parameters.put("enrollmentNumber", candidateDetails.get(i)
-						.getEnrollmentNumber());
-				parameters.put("salutation", candidateDetails.get(i)
-						.getSalutation());
-				parameters.put("firstName", candidateDetails.get(i)
-						.getFirstName());
-				parameters.put("lastName", candidateDetails.get(i)
-						.getLastName());
+				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
+				parameters.put("salutation", candidateDetails.get(i).getSalutation());
+				parameters.put("firstName", candidateDetails.get(i).getFirstName());
+				parameters.put("lastName", candidateDetails.get(i).getLastName());
 				parameters.put("gender", candidateDetails.get(i).getGender());
-				parameters.put("mobileNumber", candidateDetails.get(i)
-						.getMobileNumber());
-				parameters.put("educationLevel", candidateDetails.get(i)
-						.getEducationQualification());
+				parameters.put("mobileNumber", candidateDetails.get(i).getMobileNumber());
+				parameters.put("educationLevel", candidateDetails.get(i).getEducationQualification());
 				parameters.put("state", candidateDetails.get(i).getState());
-				parameters.put("district", candidateDetails.get(i)
-						.getDistrict());
-				parameters.put("aadharCardNumber", candidateDetails.get(i)
-						.getAdhaarCardNumber());
-				parameters.put("idProofType", candidateDetails.get(i)
-						.getIdProofType());
-				parameters.put("idProofNumber", candidateDetails.get(i)
-						.getIdProofNumber());
-				parameters.put("disabilityType", candidateDetails.get(i)
-						.getDisabilityType());
+				parameters.put("district", candidateDetails.get(i).getDistrict());
+				parameters.put("aadharCardNumber", candidateDetails.get(i).getAdhaarCardNumber());
+				parameters.put("idProofType", candidateDetails.get(i).getIdProofType());
+				parameters.put("idProofNumber", candidateDetails.get(i).getIdProofNumber());
+				parameters.put("disabilityType", candidateDetails.get(i).getDisabilityType());
 				parameters.put("age", candidateDetails.get(i).getAge());
 				parameters.put("dob", candidateDetails.get(i).getDob());
-				parameters.put("guardianType", candidateDetails.get(i)
-						.getGuardianType());
-				parameters.put("firstNameFather", candidateDetails.get(i)
-						.getFirstNameFather());
-				parameters.put("lastNameFather", candidateDetails.get(i)
-						.getLastNameFather());
-				parameters.put("motherName", candidateDetails.get(i)
-						.getMotherName());
-				parameters.put("residentialAddress", candidateDetails.get(i)
-						.getResidentialAddress());
+				parameters.put("guardianType", candidateDetails.get(i).getGuardianType());
+				parameters.put("firstNameFather", candidateDetails.get(i).getFirstNameFather());
+				parameters.put("lastNameFather", candidateDetails.get(i).getLastNameFather());
+				parameters.put("motherName", candidateDetails.get(i).getMotherName());
+				parameters.put("residentialAddress", candidateDetails.get(i).getResidentialAddress());
 				parameters.put("msId", candidateDetails.get(i).getMsId());
-				parameters.put("occupationType", candidateDetails.get(i)
-						.getOccupationType());
-				parameters.put("employmentType", candidateDetails.get(i)
-						.getEmploymentType());
-				parameters.put("workplaceAddress", candidateDetails.get(i)
-						.getWorkplaceAddress());
-				parameters.put("assessmentResult", candidateDetails.get(i)
-						.getAssessmentResult());
-				parameters.put("medicalExaminationConducted", candidateDetails
-						.get(i).getMedicalExaminationConducted());
-				parameters.put("relationWithSKMS", candidateDetails.get(i)
-						.getRelationWithSKMS());
+				parameters.put("occupationType", candidateDetails.get(i).getOccupationType());
+				parameters.put("employmentType", candidateDetails.get(i).getEmploymentType());
+				parameters.put("workplaceAddress", candidateDetails.get(i).getWorkplaceAddress());
+				parameters.put("assessmentResult", candidateDetails.get(i).getAssessmentResult());
+				parameters.put("medicalExaminationConducted", candidateDetails.get(i).getMedicalExaminationConducted());
+				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
 				parameters.put("batchId", batchId);
 
 				if (checkCandidateExistence == 0) {
-					// if the details of the candidate are not present in the
-					// database
-
-					try {
-						LOGGER.debug("TRYING -- Inserting candidate details");
-						LOGGER.debug("Executing query to insert candidate details");
-						candidateInsertStatus = getJdbcTemplate().update(
-								dataImportConfig.getImportCandidate(),
-								parameters);
-					}
-
-					catch (Exception e) {
-						LOGGER.error("An exception occured while inserting new candidates values in the database"
-								+ e);
-						LOGGER.error("Returning 114");
-						return 114;
-					}
-
-					if (candidateInsertStatus > 0) {
-
-						try {
-							Map<String, Object> params = new HashMap<>();
-							params.put("accountNumber", candidateDetails.get(i)
-									.getAccountNumber());
-							params.put("ifscCode", candidateDetails.get(i)
-									.getIfscCode());
-							params.put("bankName", candidateDetails.get(i)
-									.getBankName());
-							params.put("enrollmentNumber", candidateDetails
-									.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing query to insert bank details of candidate");
-							return getJdbcTemplate().update(
-									dataImportConfig.getImportBankDetails(),
-									params);
-
-						} catch (Exception e) {
-							LOGGER.error("CATCHING -- Exception Handled while inserting bank details of candidate from sheet");
-							LOGGER.error("An Exception occured while inserting new enteries in database");
-							LOGGER.error("Exception is" + e);
-							LOGGER.error("Returning 137");
-							return 137;
+					LOGGER.debug("TRYING -- Inserting candidate details");
+					LOGGER.debug("Executing query to insert candidate details");
+					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(),parameters);
+					Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
+					if(bankaccountNumber!=null && bankaccountNumber!=0) {
+						Map<String, Object> bankparams = new HashMap<>();
+						LOGGER.debug("In IF -- When bank account number is received from frontend");
+						bankparams.put("accountNumber", bankaccountNumber);
+						LOGGER.debug("Executing query to check if bank account number exists");
+						bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
+						
+						if(bankExistence == 0) {
+							LOGGER.debug("In IF -- When bank Account number does not exists");
+							Map<String, Object> updatedParams = new HashMap<>();
+							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+							LOGGER.debug("Executing insert query for new candidate bank detail while importing excel sheet");
+							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
+							
 						}
-
+						else if(bankExistence == 1) {
+							LOGGER.debug("In ELSE -- When bank Account number does exist");
+							Map<String, Object> updatedParams = new HashMap<>();
+							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+							LOGGER.debug("Executing update query for existing candidate bank detail while importing excel sheet");
+							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
+						}
+						else {
+							LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
+							return -1;
+						}
+						
+						
 					}
-
+					else {
+						return 1;
+					}
+					
+					
 				}
 
 				else if (checkCandidateExistence == 1) {
 
-					candidateInsertStatus = getJdbcTemplate().update(
-							dataImportConfig.getUpdateExistingDetails(),
-							parameters);
-					if (candidateInsertStatus > 0) {
-						try {
-							LOGGER.debug("TRYING -- To update the existing candidate bank details  from the sheet");
+					LOGGER.debug("TRYING -- Updating candidate details");
+					LOGGER.debug("Executing query to update candidate details");
+					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(),parameters);
+					Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
+					if(bankaccountNumber!=null && bankaccountNumber!=0) {
+						Map<String, Object> bankparams = new HashMap<>();
+						LOGGER.debug("In IF -- When bank account number is received from frontend");
+						bankparams.put("accountNumber", bankaccountNumber);
+						LOGGER.debug("Executing query to check if bank account number exists");
+						bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
+						
+						if(bankExistence == 0) {
+							LOGGER.debug("In IF -- When bank Account number does not exists");
 							Map<String, Object> updatedParams = new HashMap<>();
-				
-							updatedParams.put("accountNumber", candidateDetails
-									.get(i).getAccountNumber());
-							updatedParams.put("ifscCode",
-									candidateDetails.get(i).getIfscCode());
-							updatedParams.put("bankName",
-									candidateDetails.get(i).getBankName());
-							updatedParams.put("enrollmentNumber",
-									candidateDetails.get(i)
-											.getEnrollmentNumber());
-							LOGGER.debug("Executing update query for existing candidate while importing excel sheet");
-							return getJdbcTemplate()
-									.update(dataImportConfig
-											.getUpdateExistingBankDetails(),
-											updatedParams);
+							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+							LOGGER.debug("Executing insert query for new candidate bank while importing excel sheet");
+							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
 							
-						} catch (Exception e) {
-							LOGGER.error("CATCHING -- Exception while updating import sheet details of candidate");
-							LOGGER.error("An exception occured  while updating the candidate details"
-									+ e);
-							LOGGER.error("Returning 165");
-							return 165;
 						}
-
+						else if(bankExistence == 1) {
+							LOGGER.debug("In ELSE -- When bank Account number does exist");
+							Map<String, Object> updatedParams = new HashMap<>();
+							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+							LOGGER.debug("Executing update query for existing candidate bank while importing excel sheet");
+							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
+						}
+						else {
+							LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
+							return -1;
+						}
+						
+						
 					}
+					
+					else {
+						return 1;
+					}
+					
+					
+				
 				}
 				i++;
 
 			}
-			LOGGER.debug("Returning insert status for Excel Sheet import"
-					+ candidateInsertStatus);
+			LOGGER.debug("Returning insert status for Excel Sheet import"+ candidateInsertStatus);
 			return candidateInsertStatus;
 		} catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception while inserting the Excel sheet");
@@ -219,6 +206,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 
 	}
+	
+	
+	
+	
+	
+	
 
 	/*--------------- Download Master Sheet Code -------------------- */
 

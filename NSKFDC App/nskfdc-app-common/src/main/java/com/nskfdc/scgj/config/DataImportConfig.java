@@ -11,11 +11,18 @@ public class DataImportConfig {
 	private String importCandidate;
 	private String importBankDetails;
 	private String checkCandidateExistance;
+	private String checkBankExistence;
 	private String updateExistingDetails;
 	private String updateExistingBankDetails;
 	
 	
-
+	
+	public String getCheckBankExistence() {
+		return checkBankExistence;
+	}
+	public void setCheckBankExistence(String checkBankExistence) {
+		this.checkBankExistence = checkBankExistence;
+	}
 	public String getUpdateExistingDetails() {
 		return updateExistingDetails;
 	}
