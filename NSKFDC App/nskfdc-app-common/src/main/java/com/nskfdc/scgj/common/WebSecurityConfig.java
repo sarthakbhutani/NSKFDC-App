@@ -23,7 +23,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 				http
 						.httpBasic().and()
 						.authorizeRequests()
-						.antMatchers("/index.html","/","/SCGJ_admin.html","/trainingPartner.html","/css/**","/js/**","/images/**","/favicon.ico").permitAll()
+						.antMatchers("/index.html","/","/SCGJ_admin.html","/trainingPartner.html","/css/**","/js/**","/images/**","/favicon.ico","/static","/images").permitAll()
 						.anyRequest().authenticated()
 						.and()
 						.csrf()

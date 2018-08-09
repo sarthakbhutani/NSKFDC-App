@@ -3,7 +3,6 @@ package com.nskfdc.scgj.controller;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-//import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -29,7 +28,6 @@ import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
-//import com.nskfdc.scgj.dto.SearchReportDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 import com.nskfdc.scgj.service.GenerateBatchReportService;
 
@@ -44,8 +42,7 @@ public class GenerateBatchReportController {
 
 	private String userEmail;
 	private String Paths[] = new String[20];
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(GenerateBatchReportController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GenerateBatchReportController.class);
 
 	/**
 	 * 
@@ -252,8 +249,6 @@ public class GenerateBatchReportController {
 
 				LOGGER.debug("Bytes buffer created successfully");
 				while ((bytesRead = inStrem.read(buffer)) != -1) {
-
-					LOGGER.debug("Will work till finds end");
 					outStream.write(buffer, 0, bytesRead);
 				}
 

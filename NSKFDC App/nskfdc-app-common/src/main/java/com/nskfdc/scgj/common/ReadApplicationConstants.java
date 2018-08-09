@@ -11,8 +11,16 @@ public class ReadApplicationConstants {
 
     private String saveExcelSheetAtLocation;
     private String saveDocumentsAtLocation;
+    private String serverPathImages;
+    public String getServerPathImages() {
+		return serverPathImages;
+	}
 
-    public String getSaveDocumentsAtLocation() {
+	public void setServerPathImages(String serverPathImages) {
+		this.serverPathImages = serverPathImages;
+	}
+
+	public String getSaveDocumentsAtLocation() {
 		return saveDocumentsAtLocation;
 	}
 
