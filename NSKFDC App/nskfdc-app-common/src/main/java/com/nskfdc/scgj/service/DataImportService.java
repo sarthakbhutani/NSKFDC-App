@@ -252,7 +252,14 @@ public class DataImportService {
                 }
                 else if(cell.getColumnIndex() == 6)
                 {
-	                	LOGGER.debug("Capturing value of header : DateOfBirth ");
+                	if(cell.getDateCellValue() == null)
+                	{
+                		LOGGER.debug("Date value not present");
+                		return "Date of Birth cannot be empty";
+                	}
+                	else
+                	{
+                		LOGGER.debug("Capturing value of header : DateOfBirth ");
 	                	if(cell.getDateCellValue().toString().isEmpty())
 	                	{
 	                		LOGGER.debug("Date of Birth column empty");
@@ -264,6 +271,8 @@ public class DataImportService {
 	                			LOGGER.debug("The date of birth is " + cell.getDateCellValue());
 	            				masterSheetImportDto.setDob(cell.getDateCellValue());
 	                		}
+                	}
+	                	
 	                	
                 }
                 else if(cell.getColumnIndex() == 7)
