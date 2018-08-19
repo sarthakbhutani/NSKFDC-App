@@ -88,7 +88,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "Final Batch Report.pdf"
+    			link.download = "Final Batch Report" + "-" + $scope.batchId + ".pdf"
     			document.body.appendChild(link);
     			link.click();
     		}
