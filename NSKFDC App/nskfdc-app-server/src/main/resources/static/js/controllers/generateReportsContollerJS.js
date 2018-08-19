@@ -19,7 +19,7 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "Occupation Certificate.pdf"
+    			link.download = "Occupation Certificate"+ "-" + $scope.batchId + ".pdf"
     			document.body.appendChild(link);
     			link.click();
     		}
@@ -53,7 +53,7 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "Attendance Sheet.pdf"
+    			link.download = "Attendance Sheet" + "-" + $scope.batchId + ".pdf"
     			document.body.appendChild(link);
     			link.click();
     		}
@@ -87,7 +87,7 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "NSKFDC Sheet.xls"
+    			link.download = "NSKFDC Sheet" + "-" + $scope.batchId + ".xls"
     			document.body.appendChild(link);
     			link.click();
     		}
@@ -121,7 +121,7 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "SDMS Sheet.xls"
+    			link.download = "SDMS Sheet" + "-" + $scope.batchId + ".xls"
     			document.body.appendChild(link);
     			link.click();
     		}
@@ -156,7 +156,7 @@ report.controller('reportController',function($scope, $http, $timeout) {
     			var downloadURL = URL.createObjectURL(pdfFile);
     			var link = document.createElement('a');
     			link.href = downloadURL;
-    			link.download = "Minutes of Selection Committee.pdf"
+    			link.download = "Minutes of Selection Committee" + "-" + $scope.batchId + ".pdf"
     			document.body.appendChild(link);
     			link.click();
     		}
