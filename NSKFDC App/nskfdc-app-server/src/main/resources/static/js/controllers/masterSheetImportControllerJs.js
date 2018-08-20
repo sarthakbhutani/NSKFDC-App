@@ -28,9 +28,13 @@ function checkforstate() {
 
 
 
+
+
 var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
 	$scope.submitMsg=false;
+	$scope.dateError="";
+    $scope.dateErrorFlag =false;
 	$scope.batch = {};
 	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
@@ -234,82 +238,107 @@ var url = '/getBatchIdfortrainer';
     };
     
     
-    
+    $scope.checkEndDate=function(){
+    	$scope.dateErrorFlag = false;
+    	if( $scope.batch.batchStartDate == null || $scope.batch.batchStartDate == undefined){
+    		$scope.dateErrorFlag = true;
+    		$scope.dateError = "Please fill Batch Start date first";
+    	}
+    	if($scope.batch.batchEndDate< $scope.batch.batchStartDate)
+    	{
+    		$scope.dateErrorFlag =true;
+    		$scope.dateError = "Batch End Date can not be less than Batch Start Date";
+    	}
+    	$timeout(function() {
+            $scope.dateError="";
+            $scope.dateErrorFlag =false;
+            $scope.errorMsg="";
+            $scope.success = false;
+            $scope.successMessage = false;
+            $scope.errorMsg=false;
+         }, 6000);
+    	return $scope.dateErrorFlag ;
+     };
     
 
     /*------------Submit the Data in Database------------*/
     
     $scope.submitMasterSheet=function(){
-    	
-    	$scope.sumbitBatchDetails={
-    			batchId : $scope.batchDetails.value,
-    			wardType : $scope.batch.wardType,
-    			wardNumber : $scope.batch.wardNumber,
-    			centreId : $scope.batch.centreId,
-    			state : $scope.batch.state,
-    			city : $scope.batch.centreCity,
-    			municipality : $scope.batch.municipality,
-    			selectionCommitteeDate : $scope.batch.selectionCommitteeDate,
-    			trainerName : $scope.batch.principalTrainerName,
-    			batchStartDate : $scope.batch.batchStartDate,
-    			batchEndDate : $scope.batch.batchEndDate,
-    			assessmentDate : $scope.batch.assessmentDate,
-    			medicalExamDate : $scope.batch.medicalExamDate,
-    			employerName : $scope.batch.employerName,
-    			employerNumber : $scope.batch.employerContactNumber
-    			
-    			
-    	};
-    	
-    	
-    	
-    	$http({
-    		url : '/submitBatchDetails',
-    		method :"POST",
-    		data : angular.toJson($scope.sumbitBatchDetails),
-    		headers : {
-    			'Content-type' : 'application/json'
-    		}
-    	}).then(function(response){
-    		$scope.status= response.data;
-			if($scope.status==1){
-				$scope.submitMsg=true;
-				$scope.errorMsg=false;
-				$scope.SuccessMessage="Batch details inserted successfully";
-			 	var file = $scope.masterSheet.import;
-		      	/*console.log('File selected is :'+file);*/
-		      	var batchId = $scope.batchDetails.value;
-		      	/*console.log('batch  is :'+batchId)*/
-		          var importUrl = "/importMasterSheet";
-		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
-		    
-				
-			}
-		
-		
-			else{
-				
-				$scope.submitMsg=false;
-				$scope.errorMessage="Could not insert details of batch";
-				$scope.errorMsg=true;
-				
-			}          
-    	},function(errorResponse){
-    		$scope.submitMsg=false;
-			$scope.errorMessage="Could not insert details of batch";
-			$scope.errorMsg=true;
-    	});
-    	
-    	$timeout(function() {
-            $scope.submitMsg="";
-            $scope.errorMsg="";
-            $scope.success = false;
-            $scope.successMessage = false;
-            $scope.errorMsg=false;
-         }, 3000);
+    	//Check if end start date is not null
+    	if($scope.checkEndDate())
+    	{
+    		$scope.batch.batchEndDate = null;
+    	}
+    	else
+    	{
+    		$scope.sumbitBatchDetails={
+        			batchId : $scope.batchDetails.value,
+        			wardType : $scope.batch.wardType,
+        			wardNumber : $scope.batch.wardNumber,
+        			centreId : $scope.batch.centreId,
+        			state : $scope.batch.state,
+        			city : $scope.batch.centreCity,
+        			municipality : $scope.batch.municipality,
+        			selectionCommitteeDate : $scope.batch.selectionCommitteeDate,
+        			trainerName : $scope.batch.principalTrainerName,
+        			batchStartDate : $scope.batch.batchStartDate,
+        			batchEndDate : $scope.batch.batchEndDate,
+        			assessmentDate : $scope.batch.assessmentDate,
+        			medicalExamDate : $scope.batch.medicalExamDate,
+        			employerName : $scope.batch.employerName,
+        			employerNumber : $scope.batch.employerContactNumber
+        			$http({
+        	    		url : '/submitBatchDetails',
+        	    		method :"POST",
+        	    		data : angular.toJson($scope.sumbitBatchDetails),
+        	    		headers : {
+        	    			'Content-type' : 'application/json'
+        	    		}
+        	    	}).then(function(response){
+        	    		$scope.status= response.data;
+        				if($scope.status==1){
+        					$scope.submitMsg=true;
+        					$scope.errorMsg=false;
+        					$scope.SuccessMessage="Batch details inserted successfully";
+        				 	var file = $scope.masterSheet.import;
+        			      	/*console.log('File selected is :'+file);*/
+        			      	var batchId = $scope.batchDetails.value;
+        			      	/*console.log('batch  is :'+batchId)*/
+        			          var importUrl = "/importMasterSheet";
+        			        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
+        			    
+        					
+        				}
+        			
+        			
+        				else{
+        					
+        					$scope.submitMsg=false;
+        					$scope.errorMessage="Could not insert details of batch";
+        					$scope.errorMsg=true;
+        					
+        				}          
+        	    	},function(errorResponse){
+        	    		$scope.submitMsg=false;
+        				$scope.errorMessage="Could not insert details of batch";
+        				$scope.errorMsg=true;
+        	    	});
+        	    	
+        	    	$timeout(function() {
+        	            $scope.submitMsg="";
+        	            $scope.errorMsg="";
+        	            $scope.success = false;
+        	            $scope.successMessage = false;
+        	            $scope.errorMsg=false;
+        	         }, 3000);
+        			
+        	};
+    	}
+    	    	
     }
     
     
- 
+     
+     
     
 });
