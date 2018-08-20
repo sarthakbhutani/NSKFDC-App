@@ -23,18 +23,12 @@ function checkforstate() {
 }
 
 
-
-
-
-
-
-
-
 var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
 	$scope.submitMsg=false;
 	$scope.dateError="";
     $scope.dateErrorFlag =false;
+    $scope.confirmbox = false;
 	$scope.batch = {};
 	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
@@ -143,6 +137,7 @@ var url = '/getBatchIdfortrainer';
     
     $scope.generateBatchId = function() {
     	$scope.rolling = true;
+    	$scope.confirmbox = false;
 	    $scope.generating = "Please wait while we generate batch sheet for you.";
 	    //To check if remaining targets is zero or negative	    
 	    $http.get('/getRemainingTargets').then(
@@ -165,21 +160,8 @@ var url = '/getBatchIdfortrainer';
 		{
 			$http.get("/generateBatch")
             .then(function(response) {
-            	var url='/downloadFinalMasterSheet';  	  
-            	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
-            	{	
-            		
-            			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
-            			var downloadURL = URL.createObjectURL(excelFile);
-            			var link = document.createElement('a');
-            			link.href = downloadURL;
-            			link.download = "Batch Master Sheet.xlsx"
-            			document.body.appendChild(link);
-            			link.click();
-            			
-            	}); 
             	$scope.success = true;
-            	$scope.successMessage = "Batch sheet generated successfully!";
+            	$scope.successMessage = "Batch " + response.data +" generated successfully!";
                 $scope.data = response.data;
                 $scope.ids = [];
                 $http.get('/getBatchIdfortrainer')
@@ -200,7 +182,7 @@ var url = '/getBatchIdfortrainer';
             	         }, 3000);
             	    });
          }, function(errorResponse){
-        	 $scope.$scope.errorMessage="";
+        	 $scope.$scope.errorMessage="Batch cannot be generated";
         	 $timeout(function() {
  	        	$scope.rolling = false;
  	            $scope.success = false;
@@ -214,9 +196,7 @@ var url = '/getBatchIdfortrainer';
     };
     
     
-    $scope.downloadMasterSheet = function(){
-    	
-    };
+ 
     
     
         
@@ -247,7 +227,7 @@ var url = '/getBatchIdfortrainer';
     	if($scope.batch.batchEndDate< $scope.batch.batchStartDate)
     	{
     		$scope.dateErrorFlag =true;
-    		$scope.dateError = "Batch End Date can not be less than Batch Start Date";
+    		$scope.dateError = "Batch End Date cannot be less than Batch Start Date";
     	}
     	$timeout(function() {
             $scope.dateError="";
@@ -286,7 +266,7 @@ var url = '/getBatchIdfortrainer';
         			assessmentDate : $scope.batch.assessmentDate,
         			medicalExamDate : $scope.batch.medicalExamDate,
         			employerName : $scope.batch.employerName,
-        			employerNumber : $scope.batch.employerContactNumber
+        			employerNumber : $scope.batch.employerContactNumber}
         			$http({
         	    		url : '/submitBatchDetails',
         	    		method :"POST",
@@ -332,13 +312,17 @@ var url = '/getBatchIdfortrainer';
         	            $scope.errorMsg=false;
         	         }, 3000);
         			
-        	};
-    	}
+        	}
+    	};
     	    	
-    }
     
     
      
-     
+    	 $scope.genarateBatchConfirmation = function(){
+    	    	if($scope.confirmbox== true)
+    	    	$scope.confirmbox= false;
+    	    	else
+    	    		$scope.confirmbox= true;
+    	    }
     
 });
