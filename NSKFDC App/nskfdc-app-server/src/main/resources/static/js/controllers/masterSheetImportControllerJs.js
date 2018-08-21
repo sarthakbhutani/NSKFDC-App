@@ -30,6 +30,7 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
     $scope.dateErrorFlag =false;
     $scope.confirmbox = false;
 	$scope.batch = {};
+	$scope.generateCandidateSheetError=false;
 	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
@@ -220,7 +221,7 @@ var url = '/getBatchIdfortrainer';
     
     $scope.checkEndDate=function(){
     	$scope.dateErrorFlag = false;
-    	if( $scope.batch.batchStartDate == null || $scope.batch.batchStartDate == undefined){
+    	if( ($scope.batch.batchStartDate == null || $scope.batch.batchStartDate == undefined) && $scope.batch.batchEndDate != null){
     		$scope.dateErrorFlag = true;
     		$scope.dateError = "Please fill Batch Start date first";
     	}
@@ -280,12 +281,7 @@ var url = '/getBatchIdfortrainer';
         					$scope.submitMsg=true;
         					$scope.errorMsg=false;
         					$scope.SuccessMessage="Batch details inserted successfully";
-        				 	var file = $scope.masterSheet.import;
-        			      	/*console.log('File selected is :'+file);*/
-        			      	var batchId = $scope.batchDetails.value;
-        			      	/*console.log('batch  is :'+batchId)*/
-        			          var importUrl = "/importMasterSheet";
-        			        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
+        				 	
         			    
         					
         				}
@@ -317,12 +313,45 @@ var url = '/getBatchIdfortrainer';
     	    	
     
     
-     
+     /* for Confirmation box */
     	 $scope.genarateBatchConfirmation = function(){
     	    	if($scope.confirmbox== true)
     	    	$scope.confirmbox= false;
     	    	else
     	    		$scope.confirmbox= true;
-    	    }
+    	  }
     
+    	 $scope.uploadCandidateSheet= function(){
+    		 
+    		 var file = $scope.masterSheet.import;
+		      	/*console.log('File selected is :'+file);*/
+		      	var batchId = $scope.batchDetails.value;
+		      	/*console.log('batch  is :'+batchId)*/
+		          var importUrl = "/importMasterSheet";
+		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
+    	 }
+    	 
+    	 $scope.generateCandidateSheet= function(){
+    		 var url='/downloadFinalMasterSheet?batchId='+$scope.batchDetails.value;  	  
+         	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+         	{	
+         		
+         			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+         			var downloadURL = URL.createObjectURL(excelFile);
+         			var link = document.createElement('a');
+         			link.href = downloadURL;
+         			link.download = "Batch Master Sheet"+$scope.batchDetails.value+".xlsx"
+         			document.body.appendChild(link);
+         			link.click();
+         			
+         	}); 
+         	$scope.generateCandidateSheetError = true;
+        	$scope.generateCandidateSheetMessage = "Batch sheet generated successfully!";
+        	
+        	$timeout(function() {
+	            $scope.generateCandidateSheetMessage="";
+	            $scope.generateCandidateSheetError = false;
+	         }, 3000);
+      
+    	 }
 });

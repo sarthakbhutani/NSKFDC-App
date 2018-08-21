@@ -94,9 +94,10 @@
    </div>
    <!--       text feild section-->
    <div class="heading">
-  <span> <h3>Update Existing Batch</h3></span>
+  <span> <h3>Batch Details</h3></span>
    <span class="pull-right"><button id="button" type="button" class="btn btn-info" ng-click="genarateBatchConfirmation()">Generate Batch ID</button></span>
    </div>
+   <div class="importContainers">
    <form class="info" name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()">
       <div class="row" id="style">
          <div class="col-sm-3" >
@@ -188,43 +189,79 @@
          </div>
       </div>
       
-      <div id="padding">
-         <div class="row" >
-         <div class="col-sm-4"></div>
-             <div class="col-sm-4 btn-wrapper">
-             <div class="form-group">
-             <span>
-             	<input type="text" name="file_name" id="file_name" class="form-control">
-             </span>
-             <span>
-             <button type="button" class="btn btn-primary" ng-disabled="batchDetails.value == undefined">Browse</button>
-             </span>
-             <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import" ng-disabled="batchDetails.value == undefined"/>
-             </div>
-             </div>             
-             <div class="col-sm-4"></div>
-             <span ng-show="submitMsg" id="success">{{SuccessMessage}}</span>
-             <span ng-show="errorMsg" id="error">{{errorMessage}}</span>
-             </div>
-<!-- <!-- <div ng-show="excel-success">
-<span id="success-upload"></span>
-</div>
-<div ng-show="excel-success">
-<span id="error"></span>
-</div> -->
-            </div>
-             <p id="importExcelMessage" class="importExcelMessageStyle"></p>
+
+             
             <div class="row">
                <div class="col-sm-5"></div>
-               <div class="col-sm-2">
+               <div class="col-sm-7">
                   <div  class="fileUpload ">
-                     <div class="col-xs-4"> 
+                     <div class="col-sm-12"> 
                      <button id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload btn btn-primary" >Submit</button>
+                      <span ng-show="submitMsg" id="success">{{SuccessMessage}}</span>
+             		<span ng-show="errorMsg" id="error">{{errorMessage}}</span>
                      </div>
                   </div>
                </div>
+              
                <div class="col-sm-5"></div>
             </div>
    </form>
+   </div>
+   
+   
+   
+   
+   
+    <div class="heading">
+	 <h3>Candidate Details</h3>
+	 </div>
+	 <div class="secondContainer">
+	 <div class="subheading">
+	 <h4>Generate Candidate Sheet</h4>
+	 </div>
+	 <form name="candidateSheetForm" ng-submit="generateCandidateSheet()">
+	  <div class="col-md-3">
+            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <option selected disabled value="">Enter Batch ID</option>
+                <span id="Error"></span>
+            </select>
+            
+         </div>
+         <div class="">
+         	<button type="submit" class="btn btn-primary" id="candidateSheetButton">Generate</button>
+         <span><p id="success" ng-show="generateCandidateSheetError">{{generateCandidateSheetMessage}}</p></span>
+         </div>
+        </form>
+     <div class="subheading">
+	 	<h4>Upload Candidate Details</h4>
+	 </div>
+	 <form name="uploadFile" ng-submit="uploadCandidateSheet()">
+	 <div class="col-md-3">
+            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <option selected disabled value="">Enter Batch ID</option>
+                <span id="Error"></span>
+            </select>
+            
+         </div>
+             <div class="col-md-4 btn-wrapper">
+             <div class="form-group">
+             <span>
+             	<input type="text" name="file_name" id="file_name" class="form-control" required>
+             </span>
+             <span>
+             <button type="button" class="btn btn-primary">Browse</button>
+             </span>
+             <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import"/>
+             </div>
+             </div>             
+             <div class="col-md-2">
+             <button type="submit" class="btn btn-primary" >Upload</button>
+             </div>
+             <div class="col-md-3">
+             <p id="importExcelMessage" class="importExcelMessageStyle"></p>
+             </div>
+           </form>
+	 </div>
+	 
    </div>
 </div>

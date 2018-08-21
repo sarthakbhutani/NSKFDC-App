@@ -11,6 +11,11 @@
 	font-size: 2.4rem;
 	padding:1%;
 }
+.subheading h4
+{
+    color: #999 !important;
+	padding: 2rem 0 0.5rem 0.5rem;
+}
 .info{
 	margin:1%;
 }
@@ -64,14 +69,13 @@
 }
 #button
 {
-            margin-top: 1rem;
-     margin-top: 2rem; 
+    margin-top: 0;
+    margin-bottom: 0.5rem; 
     float: right;
     background-color: dodgerblue;
     color: white;
     border-radius: .7rem;
-     height: 2.5rem;
-   
+    height: 2.5rem;
     padding: 0rem;
     width: 16rem;
 }
@@ -245,4 +249,31 @@ display:block;
 }
 .confirmButton{
 	margin-right: 1rem;
+}
+
+
+/*   Candidate Container  */
+
+.importContainers{
+	    background-color: white;
+	    padding: 1rem;
+}
+.candidateContainer{
+	height: 35vh;
+	background-color: #ffffff;
+}
+#candidateSheetButton{
+	margin-top: 5pt;
+}
+#browseButton{
+	background-color: #19b2cc;
+	border-color: #19b2cc;
+}
+
+.submitBatchError{
+	float: center;
+}
+.secondContainer{
+	background-color: #ffffff;
+	height: 30vh;
 }
