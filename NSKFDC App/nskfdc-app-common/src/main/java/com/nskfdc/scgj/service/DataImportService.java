@@ -569,7 +569,7 @@ public class DataImportService {
 
 	String outputFile;
 
-	public String downloadMasterSheetService(String userEmail) {
+	public String downloadMasterSheetService(String userEmail, int batchId) {
 
 		LOGGER.debug("Request received from controller - DataImportService");
 		LOGGER.debug("To Download Final Master Sheet while generating batch");
@@ -578,18 +578,27 @@ public class DataImportService {
 
 			LOGGER.debug("TRYING -- To Generate Master Sheet");
 			Collection<DownloadFinalMasterSheetDto> downloadMasterSheetInformation = dataImportDao
-					.downloadMasterSheetDao(userEmail);
+					.downloadMasterSheetDao(userEmail, batchId);
+			
+			Collection<MasterSheetImportDto> candidateSheetInformation = dataImportDao.candidateSheetDetails(batchId);
+			
 			if (CollectionUtils.isNotEmpty(downloadMasterSheetInformation)) {
-
-				LOGGER.debug("Creating object of JRBean Collection Data Source ");
+				
+				if(CollectionUtils.isEmpty(candidateSheetInformation))
+					LOGGER.debug("No Candidate Details available");
+				
+				LOGGER.debug("Creating object of JRBean Collection Data Source " );
 				JRBeanCollectionDataSource masterSheetBeans = new JRBeanCollectionDataSource(
 						downloadMasterSheetInformation);
+				JRBeanCollectionDataSource candidateBeans = new JRBeanCollectionDataSource(
+						candidateSheetInformation);
 
 				/* Map to hold Jasper Report Parameters */
 
 				LOGGER.debug("Creating Map to hold Jasper Report Parameters ");
 				Map<String, Object> parameters = new HashMap<String, Object>();
 				parameters.put("DataSource", masterSheetBeans);
+				parameters.put("CandidateSheetDataSource", candidateBeans);
 
 				LOGGER.debug("Creating object of Class Path Resource - With FinalMasterSheet Template");
 				ClassPathResource resource = new ClassPathResource("/static/FinalMasterSheet.jasper");

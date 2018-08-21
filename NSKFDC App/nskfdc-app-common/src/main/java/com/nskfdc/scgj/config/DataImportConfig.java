@@ -14,9 +14,16 @@ public class DataImportConfig {
 	private String checkBankExistence;
 	private String updateExistingDetails;
 	private String updateExistingBankDetails;
+	private String candidateSheet;	
 	
 	
 	
+	public String getCandidateSheet() {
+		return candidateSheet;
+	}
+	public void setCandidateSheet(String candidateSheet) {
+		this.candidateSheet = candidateSheet;
+	}
 	public String getCheckBankExistence() {
 		return checkBankExistence;
 	}

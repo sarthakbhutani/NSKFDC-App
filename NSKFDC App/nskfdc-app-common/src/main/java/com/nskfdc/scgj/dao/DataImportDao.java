@@ -33,6 +33,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	/* Object of Master Sheet RowMapper */
 	private static final GenerateMasterSheetRowmapper generateMasterSheetRowMapper = new GenerateMasterSheetRowmapper();
+	private static final GenerateCandidateSheetRowmapper generateCandidateSheetRowMapper = new GenerateCandidateSheetRowmapper();
 
 	@Autowired
 	private DataImportConfig dataImportConfig;
@@ -216,13 +217,14 @@ public class DataImportDao extends AbstractTransactionalDao {
 	/*--------------- Download Master Sheet Code -------------------- */
 
 	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(
-			String userEmail) {
+			String userEmail, int batchId) {
 
 		LOGGER.debug("Request received from service");
 		LOGGER.debug("In downloadMasterSheetDao - to get masterSheet details");
 
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("userEmail", userEmail);
+		parameters.put("batchId", batchId);
 
 		try {
 
@@ -240,8 +242,31 @@ public class DataImportDao extends AbstractTransactionalDao {
 			return null;
 		}
 	}
+	
+	public Collection<MasterSheetImportDto> candidateSheetDetails(int batchId){
+		LOGGER.debug("Request received from Service");
+		LOGGER.debug("In candidateSheetDetails Dao - to get details of candidate of selected batchId");
+		
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("batchId", batchId);
 
-	/*------------------------------RowMapper to download Master Sheet-----------------------------*/
+		try {
+
+			LOGGER.debug("TRYING -- to get details for Candidate Sheet");
+			LOGGER.debug("Executing query to get details for Candidate Sheet");
+			return getJdbcTemplate().query(
+					dataImportConfig.getCandidateSheet(), parameters, generateCandidateSheetRowMapper);
+		} catch (Exception e) {
+
+			LOGGER.error("CATCHING -- Exception while getting details for Candidate Sheet");
+			LOGGER.error("In Dao, candidateSheetDetails" + e);
+			LOGGER.error("Returning NULL");
+
+			return null;
+		}
+	}
+
+	/*------------------------------RowMapper to download Master/Candidate Sheet-----------------------------*/
 	private static class GenerateMasterSheetRowmapper implements
 			RowMapper<DownloadFinalMasterSheetDto> {
 
@@ -259,6 +284,56 @@ public class DataImportDao extends AbstractTransactionalDao {
 					sectorSkillCouncil, jobRole, nsdcRegNumber, batchId);
 		}
 	}
+	
+	private static class GenerateCandidateSheetRowmapper implements
+	RowMapper<MasterSheetImportDto> {
+
+		@Override
+		public MasterSheetImportDto mapRow(ResultSet rs, int rowNum)
+				throws SQLException {
+		
+			String enrollmentNumber = rs.getString("enrollmentNumber");
+			 String salutation = rs.getString("salutation");
+			 String firstName = rs.getString("firstName");
+			 String lastName = rs.getString("lastName");
+			 String gender = rs.getString("gender");
+			 long   mobileNumber = rs.getLong("mobileNumber");
+			 String educationQualification = rs.getString("educationLevel");
+			 String state = rs.getString("state");
+			 String district = rs.getString("district");
+			 long  adhaarCardNumber = rs.getLong("aadharCardNumber");
+			 String idProofType = rs.getString("idProofType");
+			 String idProofNumber= rs.getString("idProofNumber");
+			 String disabilityType = rs.getString("disabilityType");
+			 int age = rs.getInt("age");
+			 String bankName = rs.getString("bankName");
+			 String ifscCode = rs.getString("ifscCode");
+			 String workplaceAddress = rs.getString("workplaceAddress");
+			 long accountNumber = rs.getLong("accountNumber");
+			 String relationWithSKMS = rs.getString("relationWithSKMS");
+			 Date dob = rs.getDate("dob");
+			 String guardianType = rs.getString("guardianType");
+			 String firstNameFather = rs.getString("firstNameFather");
+			 String lastNameFather = rs.getString("lastNameFather");
+			 String motherName = rs.getString("motherName");
+			 String residentialAddress = rs.getString("residentialAddress");
+			 String msId = rs.getString("msId");
+			 String occupationType = rs.getString("occupationType");
+			 String employmentType = rs.getString("employmentType");
+			 String assessmentResult = rs.getString("assessmentResult");
+			 String medicalExaminationConducted = rs.getString("medicalExamConducted");
+			 
+			 return new MasterSheetImportDto(	 enrollmentNumber,  salutation,  firstName,  lastName,
+					 gender,  mobileNumber,  educationQualification,  state,  district,
+					 adhaarCardNumber,  idProofType,  idProofNumber,  disabilityType,  age,
+					 bankName,  ifscCode,  workplaceAddress,  accountNumber,  relationWithSKMS,
+					 dob,  guardianType,  firstNameFather,  lastNameFather,  motherName,
+					 residentialAddress,  msId,  occupationType,  employmentType,
+					 assessmentResult,  medicalExaminationConducted);
+			
+		}
+		}
+	
 
 	public Integer getTotalTargets(String userEmail) {
 

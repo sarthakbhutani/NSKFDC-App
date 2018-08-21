@@ -1,12 +1,16 @@
 dataImport:
  downloadMasterSheet: >
-  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= (SELECT MAX(batchId) FROM batchdetails WHERE userEmail= :userEmail);
-
+  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= :batchId;
+ 
+ candidateSheet: >
+  select candidate.enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber, idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType, employmentType, workplaceAddress, assessmentResult, medicalExamConducted, relationWithSKMS, accountNumber, ifscCode, bankName from candidate join bankdetails on candidate.enrollmentNumber=bankdetails.enrollmentNumber where batchId= :batchId;
+ 
  ShowTotalTargets: >
   select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
   
  ShowTargetAchieved: >
   select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
+
  
  
  ShowFinancialYear: >

@@ -219,7 +219,7 @@ public class DataImportController {
 	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping("/downloadFinalMasterSheet")
-	public void downloadMasterSheetController(HttpServletResponse response) {
+	public void downloadMasterSheetController(@RequestParam("batchId") int batchId,HttpServletResponse response) {
 
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In downloadMasterSheetController");
@@ -228,10 +228,8 @@ public class DataImportController {
 
 			LOGGER.debug("In try block of generate Master Sheet Controller");
 
-			String userEmail = sessionUserUtility
-					.getSessionMangementfromSession().getUsername();
-			String report = dataImportService
-					.downloadMasterSheetService(userEmail);
+			String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
+			String report = dataImportService.downloadMasterSheetService(userEmail,batchId);
 
 			if (report != null) {
 

@@ -340,7 +340,7 @@ var url = '/getBatchIdfortrainer';
          			var downloadURL = URL.createObjectURL(excelFile);
          			var link = document.createElement('a');
          			link.href = downloadURL;
-         			link.download = "Batch Master Sheet"+$scope.batchDetails.value+".xlsx"
+         			link.download = "Candidate Sheet_"+$rootScope.nameOfuser+"_"+$scope.batchDetails.value+".xlsx"
          			document.body.appendChild(link);
          			link.click();
          			
