@@ -344,9 +344,11 @@ var url = '/getBatchIdfortrainer';
          			document.body.appendChild(link);
          			link.click();
          			
+         			$scope.generateCandidateSheetError = true;
+                	$scope.generateCandidateSheetMessage = "Batch sheet generated successfully!";
+         			
          	}); 
-         	$scope.generateCandidateSheetError = true;
-        	$scope.generateCandidateSheetMessage = "Batch sheet generated successfully!";
+         	
         	
         	$timeout(function() {
 	            $scope.generateCandidateSheetMessage="";

@@ -265,9 +265,10 @@ display:block;
 #candidateSheetButton{
 	margin-top: 5pt;
 }
-#browseButton{
+.browseButton{
 	background-color: #19b2cc;
 	border-color: #19b2cc;
+	color: #ffffff;
 }
 
 .submitBatchError{
