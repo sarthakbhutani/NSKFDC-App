@@ -35,6 +35,7 @@ CREATE TABLE `centredetails` (
   KEY `traningPartnerEmail_idx` (`userEmail`),
   CONSTRAINT `traningPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
+
 CREATE TABLE `batchdetails` (
   `batchId` int(11) NOT NULL AUTO_INCREMENT,
   `batchStartDate` date DEFAULT NULL,
@@ -49,12 +50,14 @@ CREATE TABLE `batchdetails` (
   `principalTrainerName` varchar(50) DEFAULT NULL,
   `userEmail` varchar(100) NOT NULL,
   `centreId` bigint(20) DEFAULT NULL,
+  `updatedOn` date DEFAULT NULL,
   PRIMARY KEY (`batchId`),
   KEY `tpEmail_idx` (`userEmail`),
   KEY `centreId_idx` (`centreId`),
   CONSTRAINT `centreId` FOREIGN KEY (`centreId`) REFERENCES `centredetails` (`centreId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tpEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-);
+)
+
 
 
 CREATE TABLE `candidate` (
