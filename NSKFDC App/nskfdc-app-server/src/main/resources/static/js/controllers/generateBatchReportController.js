@@ -38,9 +38,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     	 $scope.rolling = true;
     	 $scope.generating = "Please wait, while we generate your final batch report";
     	 fd.append("batchId",$scope.batchId);
-    	 fd.append("batchnumber",$scope.batchnumber);
-    	
-    	
+    	 	
 
     	
     	 
