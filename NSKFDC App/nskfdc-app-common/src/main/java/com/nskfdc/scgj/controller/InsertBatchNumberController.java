@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.dto.InsertBatchNumberDto;
 import com.nskfdc.scgj.service.InsertBatchNumberService;
 
@@ -25,7 +26,7 @@ public class InsertBatchNumberController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(InsertBatchNumberController.class);
 
-	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/insertBatchNumber")
 	public Integer insertScgjBatchNumber(@RequestParam("batchId")String batchId,@RequestParam("scgjBatchNumber")String scgjBatchNumber)
 	{
@@ -35,6 +36,7 @@ public class InsertBatchNumberController {
 	
 	}
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/updateBatchNumber")
 	public Integer updateExistingScgjBatchNumber(@RequestParam("batchId")String batchId,@RequestParam("scgjBatchNumber")String scgjBatchNumber)
 	{
@@ -44,6 +46,7 @@ public class InsertBatchNumberController {
 	
 	}
 	
+	@Privilege(value= {"TP"})
 	@RequestMapping("/showDetails")
 	public Collection<InsertBatchNumberDto> showBatchNumberDetails(@RequestParam("batchId")String batchId)
 	{
