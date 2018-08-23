@@ -234,31 +234,60 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	}
 	
 	
-	public int insertSCGJBatchNumber(String batchId,String batchnumber,String userEmail) {
-		
-		LOGGER.debug("Request Received for GenerateBatchReportService");
-		LOGGER.debug("To Insert the SCGJ BAtch Number in BatchDetails table");
-		
-		Map<String,Object> param=new HashMap<>();
-		LOGGER.debug("Inserting batchId, SCGJ batchNumber, userEmail in parameters");
-		param.put("batchId",batchId );
-		param.put("batchNumber", batchnumber);
-		param.put("userEmail",userEmail );
-		
-		try{
-			LOGGER.debug("TRYING -- insertSCGJBatchNumber");
-			LOGGER.debug("Executing insert query for storing SCGJ Batch Number");
-			Integer result = getJdbcTemplate().update(generateBatchReportConfig.getShowUpdateBatchNumber(),param);
-			return result;
-		}
-		catch(Exception e){
-			LOGGER.error("CATCHING -- Exception handled while inserting Batch number");
-			LOGGER.error("In method - insertSCGJBatchNumber");
-			LOGGER.error("Exception is" + e);
-			return -1;
-		}
-	}
+//	public int insertSCGJBatchNumber(String batchId,String batchnumber,String userEmail) {
+//		
+//		LOGGER.debug("Request Received for GenerateBatchReportService");
+//		LOGGER.debug("To Insert the SCGJ BAtch Number in BatchDetails table");
+//		
+//		Map<String,Object> param=new HashMap<>();
+//		LOGGER.debug("Inserting batchId, SCGJ batchNumber, userEmail in parameters");
+//		param.put("batchId",batchId );
+//		param.put("batchNumber", batchnumber);
+//		param.put("userEmail",userEmail );
+//		
+//		try{
+//			LOGGER.debug("TRYING -- insertSCGJBatchNumber");
+//			LOGGER.debug("Executing insert query for storing SCGJ Batch Number");
+//			Integer result = getJdbcTemplate().update(generateBatchReportConfig.getShowUpdateBatchNumber(),param);
+//			return result;
+//		}
+//		catch(Exception e){
+//			LOGGER.error("CATCHING -- Exception handled while inserting Batch number");
+//			LOGGER.error("In method - insertSCGJBatchNumber");
+//			LOGGER.error("Exception is" + e);
+//			return -1;
+//		}
+//	}
 	
+	public String showScgjbatchNumber(String batchId) {
+		
+		LOGGER.debug("Request recieved from service to get scgj batch number for batch id : " + batchId);
+		try {
+		
+			LOGGER.debug("In Try block of SCGJ Batch Number method to get batch Number ");
+			LOGGER.debug("Creating Hashmap of objects");
+			Map<String,Object> batchParams = new HashMap<>();
+			batchParams.put("batchId", batchId);
+			if(batchParams.isEmpty())
+			{
+				LOGGER.error("The parameters in hashmap at line 270 are null");
+				LOGGER.error("Returning null");
+				
+			}
+			LOGGER.debug("Executing query to get batch number for batch id : " + batchId);
+			String batchNumber = getJdbcTemplate().queryForObject(generateBatchReportConfig.getShowUpdateBatchNumber(), batchParams, String.class);
+			LOGGER.debug("The value of batch number is : " + batchNumber);
+			return batchNumber;
+		} 
+		catch (Exception e)
+		{
+		
+			LOGGER.error("An error occured while fetching the batch number for batch id : " + batchId);
+			LOGGER.error("Returning NULL");
+			return null;
+		}
+		
+	}
 	
 
 	public void updateTableGenerateReports(String generateReportsId, Date date, String reportType, String batchId, String userEmail) {

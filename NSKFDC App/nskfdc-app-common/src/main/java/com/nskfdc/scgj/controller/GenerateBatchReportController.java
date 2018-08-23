@@ -77,7 +77,18 @@ public class GenerateBatchReportController {
 			return null;
 		}
 	}
+	
+	@Privilege(value= {"TP"})
+	@RequestMapping("/showBatchNumber")
+	public String showScgjbatchNumber(@RequestParam("batchId")String batchId)
+	{
+		LOGGER.debug("Request recieved from front end to fetch batch number for batch id : " + batchId);
+		LOGGER.debug("Sending request to service with parameters : batch Id : " + batchId );
+		return generateBatchReportService.showScgjbatchNumber(batchId);
+	}
 
+	
+	
 	@Privilege(value = { "TP" })
 	@RequestMapping("/getLocationDetails")
 	public Collection<LocationDetailsDto> locationDetails(

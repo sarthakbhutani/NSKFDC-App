@@ -174,10 +174,6 @@ public class GenerateBatchReportService {
 			LOGGER.debug("TRYING -- Final Batch Report PDF Generation");
 			LOGGER.debug("1. Insert SCGJ Batch Number in the Database");
 			LOGGER.debug("Sending request to Generate Batch Report DAO - insertSCGJBatchNumber");
-			int insert=generateBatchReportDao.insertSCGJBatchNumber(batchId,batchnumber,userEmail);
-			LOGGER.debug("Response after Inserting the SCGJ BAtch Number"+insert);
-			if(insert!=-1)
-			{
 			LOGGER.debug("SCGJ Batch Number Inserted Successfully");
 			String sourceCodeDir =System.getProperty("user.dir");
 			String userHomeDir = System.getProperty("user.home");
@@ -324,7 +320,7 @@ public class GenerateBatchReportService {
 		    	                LOGGER.debug("Candidates Details are empty");
 		    	            }
 		    	            outputStream.close();
-			            }
+			           // }
 			
 			//To add a row in generated reports for Audit table
 			String reportType="Final Batch Report";
@@ -358,5 +354,17 @@ public class GenerateBatchReportService {
 	public int embeddimages(MultipartFile file) {
 		LOGGER.debug("In embeddimages method - in Generate Batch Report Service");
 		return 0;
+	}
+	
+	/**
+	 * This method fetches the batch number for the batch id
+	 * @param batchId
+	 * @return batch Number
+	 */
+	public String showScgjbatchNumber(String batchId)
+	{
+		LOGGER.debug("Request recieved from controller to get batch number for batch Id : " + batchId);
+		LOGGER.debug("Sending request to DAO with parameters : " + batchId);
+		return generateBatchReportDao.showScgjbatchNumber(batchId);
 	}
 }
