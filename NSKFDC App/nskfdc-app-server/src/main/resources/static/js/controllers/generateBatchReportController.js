@@ -21,14 +21,15 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
 	var fd = new FormData();
 	var numberPic;
 	
-  
+	$scope.day = "";
      
      
    /*-----Method to upload pictures -----*/  
    $scope.uploadFile = function($files) {
 	   
 	   angular.forEach($files, function (value, key) {
-		   fd.append("file", value);
+		   console.log("This is the day"+$scope.day);
+		   fd.set("file"+$scope.day, value);
        }); 
      }
      
@@ -39,31 +40,10 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     	 $scope.generating = "Please wait, while we generate your final batch report";
     	 fd.append("batchId",$scope.batchId);
     	 fd.append("batchnumber",$scope.batchnumber);
-    	 /* fd.append("file11",$scope.generateReport.day1Pic1);
-    	 fd.append("file12",$scope.generateReport.day1Pic2);
-    	 fd.append("file13",$scope.generateReport.day2Pic1);
-    	 fd.append("file14",$scope.generateReport.day2Pic2);
-    	 fd.append("file15",$scope.generateReport.day3Pic1);
-    	 fd.append("file16",$scope.generateReport.day3Pic2);
-    	 fd.append("file17",$scope.generateReport.day4Pic1);
-    	 fd.append("file18",$scope.generateReport.day4Pic2);
-    	 fd.append("file19",$scope.generateReport.day5Pic1);
-    	 fd.append("file20",$scope.generateReport.day5Pic2);
-    	 fd.append("file21",$scope.generateReport.day6Pic1);
-    	 fd.append("file22",$scope.generateReport.day6Pic2);
-    	 fd.append("file23",$scope.generateReport.day7Pic1);
-    	 fd.append("file24",$scope.generateReport.day7Pic2);*/
-    	 //Remove before committing
-    	/* var res = Array.from(fd.entries(), ([key, prop]) => (
-    	            {[key]: {
-    	              "ContentLength": 
-    	              typeof prop === "string" 
-    	              ? prop.length 
-    	              : prop.size
-    	            }
-    	          }));*/
+    	
+    	
 
-    	//console.log(res);
+    	console.log(res);
     	 
     	$http({
     		url: '/generateBatchReport',

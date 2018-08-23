@@ -34,7 +34,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day1Pic1" placeholder="Upload image 1 of Day 1" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='11'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files11" file-model="generateReport.day1Pic1" ng-files="uploadFile($files)">
 	       				  </span>
                     </div>
@@ -46,7 +46,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day1Pic2" placeholder="Upload image 2 of Day 1" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='12'">	                        
 	        					   Browse <input type="file"  accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files12" file-model="generateReport.day1Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
@@ -66,7 +66,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day2Pic1" placeholder="Upload image 1 of Day 2" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='21'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day2Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files21" file-model="generateReport.day2Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -82,7 +82,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day2Pic2" placeholder="Upload image 2 of Day 2" required>
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='22'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day2Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files22" file-model="generateReport.day2Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
@@ -102,7 +102,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day3Pic1" placeholder="Upload image 1 of Day 3" required/>
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='31'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files31" file-model="generateReport.day3Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -117,7 +117,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day3Pic2" placeholder="Upload image 2 of Day 3" required/>
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='32'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files32" file-model="generateReport.day3Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
@@ -136,7 +136,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day4Pic1" placeholder="Upload image 1 of Day 4" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='41'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day4Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files41" file-model="generateReport.day4Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -151,7 +151,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day4Pic2" placeholder="Upload image 2 of Day 4" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='42'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day4Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files42" file-model="generateReport.day4Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
@@ -170,7 +170,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day5Pic1" placeholder="Upload image 1 of Day 5" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='51'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files51" file-model="generateReport.day5Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -185,7 +185,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="day5Pic2" placeholder="Upload image 2 of Day 5" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='52'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files52" file-model="generateReport.day5Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
@@ -204,7 +204,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="medExamPic1" placeholder="Upload image of Medical Examination" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='61'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('medExamPic1').value = this.value.split('\\').pop().split('/').pop()" id="files61" required file-model="generateReport.day6Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -220,7 +220,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="viva" placeholder="Upload image of Viva Examination" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='62'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('viva').value = this.value.split('\\').pop().split('/').pop()" id="files62" file-model="generateReport.day6Pic2" ng-files="uploadFile($files)">
 	       				  </span>
@@ -241,7 +241,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="assessPic1" placeholder="Upload image 1 of Assessment" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='71'">
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('assessPic1').value = this.value.split('\\').pop().split('/').pop()" id="files71" file-model="generateReport.day7Pic1" ng-files="uploadFile($files)">
 	       				  </span>
@@ -257,7 +257,7 @@
                     	<input type="text" class="form-control form-rounded placeholderfont"  id="assessPic2" placeholder="Upload image 2 of Assessment" required />
                     </div>
                   <div class="col-md-6">
-	                        <span class="btncolor btn btn-default btn-file" >	                        
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='72'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('assessPic2').value = this.value.split('\\').pop().split('/').pop()" id="files72" file-model="generateReport.day7Pic2" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
