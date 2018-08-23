@@ -34,13 +34,10 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
      
      
      
-     $scope.generateBatchReportwithFile = function(){
+     $scope.generateBatchReportafterDateCheck = function(){
     	 $scope.rolling = true;
     	 $scope.generating = "Please wait, while we generate your final batch report";
     	 fd.append("batchId",$scope.batchId);
-    	 	
-
-    	
     	 
     	$http({
     		url: '/generateBatchReport',
@@ -127,6 +124,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
               
                  
                   $scope.getSCGJBatchNumber = function(){
+                	  console.log("SCGJ batchNumber");
                 	 
                   var url1 = '/showBatchNumber?batchId='+$scope.batchId;
                   $http.get(url1)
@@ -141,7 +139,38 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
                 	  }
                   })
                   }
-                  $
-          
+              
+                  
+                  /*   Method to Generate report  */
+          $scope.generateBatchReportwithFile = function(){
+        	  var checkDateUrl='/checkBatchEndDate?batchId='+$scope.batchId;
+        	  if($scope.batchnumber == null || $scope.batchnumber== undefined || $scope.batchnumber== ""){
+        		  $scope.batchNumberError= true; 
+        		  document.getElementById("Success").innerHTML="";
+      			  document.getElementById("Error").innerHTML="<center>SCGJ Batch Number is mandatory</center>";
+        	  }
+        	  else{
+        	  $scope.batchNumberError= false; 
+        	  $http.get(checkDateUrl)
+        	  .then(function(response){
+        		  
+        		  if(response.data == 1){
+        			  document.getElementById("Error").innerHTML="";
+        			 $scope.generateBatchReportafterDateCheck();
+        		  }
+	        	  else{
+	        		  document.getElementById("Success").innerHTML="";
+	      			  document.getElementById("Error").innerHTML="<center>Batch has not ended</center>";
+	        	  }
+        		  
+        	  }
+        	  );
+        	  }
+        	  
+        	  $timeout(function() {
+      			document.getElementById("Success").innerHTML="";
+      			document.getElementById("Error").innerHTML="";
+               }, 6000);
+          }
           
 });
