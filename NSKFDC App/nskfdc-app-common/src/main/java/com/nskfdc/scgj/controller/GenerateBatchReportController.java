@@ -155,7 +155,7 @@ public class GenerateBatchReportController {
 	@RequestMapping(value = "/generateBatchReport", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void batchReport(@RequestParam("batchId") String batchId,
 			@RequestParam("batchnumber") String batchnumber,
-			@RequestParam("file") MultipartFile[] files,
+			@RequestParam("file11") MultipartFile file11, @RequestParam("file12") MultipartFile file12,@RequestParam("file21") MultipartFile file21,@RequestParam("file22") MultipartFile file22,@RequestParam("file31") MultipartFile file31,@RequestParam("file32") MultipartFile file32,@RequestParam("file41") MultipartFile file41,@RequestParam("file42") MultipartFile file42,@RequestParam("file51") MultipartFile file51,@RequestParam("file52") MultipartFile file52,@RequestParam("file61") MultipartFile file61,@RequestParam("file62") MultipartFile file62,@RequestParam("file71") MultipartFile file71,@RequestParam("file72") MultipartFile file72,
 			HttpServletResponse response) {
 
 		LOGGER.debug("In BATCH REPORT GENERATE CONTROLLER");
@@ -163,6 +163,7 @@ public class GenerateBatchReportController {
 		LOGGER.debug("To generate the final batch report based on BatchId & batchNumber");
 		String report;
 		File dir = null;
+		MultipartFile[] files = {file11, file12, file21, file22, file31, file32, file41, file42, file51, file52, file61, file62, file71, file72};
 		userEmail = sessionUserUtility.getSessionMangementfromSession()
 				.getUsername();
 		try {
