@@ -126,15 +126,17 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
                   var url1 = '/showBatchNumber?batchId='+$scope.batchId;
                   $http.get(url1)
                   .then(function(response){
-                   	  if(response.data == null || response.data == ""){
+                	  var scgjBatchNumber = JSON.stringify(response.data.scgjBatchNumber);
+                	//console.log(test);
+                   	  if(JSON.parse(scgjBatchNumber) == null || JSON.parse(scgjBatchNumber) == ""){
                 		 $scope.batchNumberError= true;
                 		 $scope.batchnumber= "";
                 	  }
                 	  else{
                 		  $scope.batchNumberError= false; 
-                		  $scope.batchnumber=response.data;
+                		  $scope.batchnumber = JSON.parse(scgjBatchNumber);
                 	  }
-                  })
+                  });
                   }
               
                   
