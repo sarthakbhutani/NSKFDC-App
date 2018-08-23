@@ -621,6 +621,7 @@ public class DataImportService {
 					outputFile = userHomeDirectory + File.separatorChar + "FinalMasterSheet.xlsx";
 					exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(outputFile));
 					SimpleXlsxReportConfiguration configuration = new SimpleXlsxReportConfiguration();
+					configuration.setRemoveEmptySpaceBetweenRows(true);
 					configuration.setDetectCellType(true);
 					configuration.setCollapseRowSpan(false);
 					exporter.setConfiguration(configuration);
