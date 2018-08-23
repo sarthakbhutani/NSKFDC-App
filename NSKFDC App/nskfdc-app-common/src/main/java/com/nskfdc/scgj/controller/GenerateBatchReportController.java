@@ -28,6 +28,7 @@ import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.CandidateDetailsDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.LocationDetailsDto;
+import com.nskfdc.scgj.dto.ScgjBatchNumberDto;
 import com.nskfdc.scgj.dto.TrainingDetailsDto;
 import com.nskfdc.scgj.service.GenerateBatchReportService;
 
@@ -80,11 +81,13 @@ public class GenerateBatchReportController {
 	
 	@Privilege(value= {"TP"})
 	@RequestMapping("/showBatchNumber")
-	public String showScgjbatchNumber(@RequestParam("batchId")String batchId)
+	public ScgjBatchNumberDto showScgjbatchNumber(@RequestParam("batchId")String batchId)
 	{
 		LOGGER.debug("Request recieved from front end to fetch batch number for batch id : " + batchId);
 		LOGGER.debug("Sending request to service with parameters : batch Id : " + batchId );
-		return generateBatchReportService.showScgjbatchNumber(batchId);
+		String scgjBatchNumber =  generateBatchReportService.showScgjbatchNumber(batchId);
+		ScgjBatchNumberDto scgjBatchNumberDto = new ScgjBatchNumberDto(scgjBatchNumber);
+		return scgjBatchNumberDto;
 	}
 
 	
