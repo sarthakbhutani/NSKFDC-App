@@ -20,7 +20,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
 	var formdata = new FormData();
 	var fd = new FormData();
 	var numberPic;
-	
+	$scope.batchNumberError= false; 
 	$scope.day = "";
      
      
@@ -28,7 +28,6 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
    $scope.uploadFile = function($files) {
 	   
 	   angular.forEach($files, function (value, key) {
-		   console.log("This is the day"+$scope.day);
 		   fd.set("file"+$scope.day, value);
        }); 
      }
@@ -128,6 +127,23 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
                   	console.log(length);*/
               	});
               
+                 
+                  $scope.getSCGJBatchNumber = function(){
+                	 
+                  var url1 = '/showBatchNumber?batchId='+$scope.batchId;
+                  $http.get(url1)
+                  .then(function(response){
+                   	  if(response.data == null || response.data == ""){
+                		 $scope.batchNumberError= true; 
+                		 $scope.batchnumber= response.data;
+                	  }
+                	  else{
+                		  $scope.batchNumberError= false; 
+                		  $scope.batchnumber= response.data;
+                	  }
+                  })
+                  }
+                  $
           
           
 });

@@ -10,17 +10,17 @@
         	<div class="col-md-12">
             	
                 <div class="col-md-4">
-                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" required>
-                	<option value=""disabled selected>Batch Id</option>
+                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids"  ng-change="getSCGJBatchNumber()" required>
+                	<option value="" disabled selected>Batch Id</option>
                 	<span id="error_msg"></span>
                 	</select>
                 </div>
                 <div class="col-md-4">
-                	<input class="form-control txt" type="text" placeholder="Enter SCGJ Number" name="batchnumber" ng-model="batchnumber" required>
+                	<input class="form-control txt" type="text" name="batchnumber" ng-model="batchnumber" required readonly>
                  	
                  </div>
                  <div class="col-md-4">
-                	
+                	<span id="error_msg" ng-show="batchNumberError">Please insert SCGJ Batch Number</span>
                 </div>
             </div>
         </div>

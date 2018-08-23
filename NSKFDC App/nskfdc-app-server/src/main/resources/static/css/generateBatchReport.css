@@ -117,3 +117,8 @@ input[type="text"] {
 	font-size: 1.75rem;
 	font-weight: bold;
 }
+#error_msg
+{
+	color: red;
+	margin-top:2rem;
+}
