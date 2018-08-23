@@ -43,7 +43,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     	
     	
 
-    	console.log(res);
+    	
     	 
     	$http({
     		url: '/generateBatchReport',
