@@ -118,30 +118,27 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
                   	for(i in dt){
                   		$scope.ids.push(response.data[i].batchId); 
                   	}
-                  	let length=$scope.ids.length;/*
-                  	console.log(length);*/
+                  	let length=$scope.ids.length;
               	});
               
                  
-                  $scope.getSCGJBatchNumber = function(){
-                	  console.log("SCGJ batchNumber");
-                	 
+                  $scope.getSCGJBatchNumber = function(){                	 
                   var url1 = '/showBatchNumber?batchId='+$scope.batchId;
                   $http.get(url1)
                   .then(function(response){
                    	  if(response.data == null || response.data == ""){
-                		 $scope.batchNumberError= true; 
-                		 $scope.batchnumber= response.data;
+                		 $scope.batchNumberError= true;
+                		 $scope.batchnumber= "";
                 	  }
                 	  else{
                 		  $scope.batchNumberError= false; 
-                		  $scope.batchnumber= response.data;
+                		  $scope.batchnumber=response.data;
                 	  }
                   })
                   }
               
                   
-                  /*   Method to Generate report  */
+/*   Method to Generate report  */
           $scope.generateBatchReportwithFile = function(){
         	  var checkDateUrl='/checkBatchEndDate?batchId='+$scope.batchId;
         	  if($scope.batchnumber == null || $scope.batchnumber== undefined || $scope.batchnumber== ""){
