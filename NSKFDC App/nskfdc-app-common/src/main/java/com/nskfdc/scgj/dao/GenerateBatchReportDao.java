@@ -234,31 +234,6 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	}
 	
 	
-//	public int insertSCGJBatchNumber(String batchId,String batchnumber,String userEmail) {
-//		
-//		LOGGER.debug("Request Received for GenerateBatchReportService");
-//		LOGGER.debug("To Insert the SCGJ BAtch Number in BatchDetails table");
-//		
-//		Map<String,Object> param=new HashMap<>();
-//		LOGGER.debug("Inserting batchId, SCGJ batchNumber, userEmail in parameters");
-//		param.put("batchId",batchId );
-//		param.put("batchNumber", batchnumber);
-//		param.put("userEmail",userEmail );
-//		
-//		try{
-//			LOGGER.debug("TRYING -- insertSCGJBatchNumber");
-//			LOGGER.debug("Executing insert query for storing SCGJ Batch Number");
-//			Integer result = getJdbcTemplate().update(generateBatchReportConfig.getShowUpdateBatchNumber(),param);
-//			return result;
-//		}
-//		catch(Exception e){
-//			LOGGER.error("CATCHING -- Exception handled while inserting Batch number");
-//			LOGGER.error("In method - insertSCGJBatchNumber");
-//			LOGGER.error("Exception is" + e);
-//			return -1;
-//		}
-//	}
-	
 	public String showScgjbatchNumber(String batchId) {
 		
 		LOGGER.debug("Request recieved from service to get scgj batch number for batch id : " + batchId);

@@ -165,7 +165,6 @@ public class GenerateBatchReportController {
 	@Privilege(value = { "TP" })
 	@RequestMapping(value = "/generateBatchReport", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public void batchReport(@RequestParam("batchId") String batchId,
-			@RequestParam("batchnumber") String batchnumber,
 			@RequestParam("file11") MultipartFile file11, @RequestParam("file12") MultipartFile file12,@RequestParam("file21") MultipartFile file21,@RequestParam("file22") MultipartFile file22,@RequestParam("file31") MultipartFile file31,@RequestParam("file32") MultipartFile file32,@RequestParam("file41") MultipartFile file41,@RequestParam("file42") MultipartFile file42,@RequestParam("file51") MultipartFile file51,@RequestParam("file52") MultipartFile file52,@RequestParam("file61") MultipartFile file61,@RequestParam("file62") MultipartFile file62,@RequestParam("file71") MultipartFile file71,@RequestParam("file72") MultipartFile file72,
 			HttpServletResponse response) {
 
@@ -223,7 +222,7 @@ public class GenerateBatchReportController {
 
 			}
 
-			report = generateBatchReportService.generateBatchReport(batchId,batchnumber, userEmail, Paths);
+			report = generateBatchReportService.generateBatchReport(batchId,userEmail, Paths);
 			if (report != null)
 			{
 				LOGGER.debug("Creating object of File");
