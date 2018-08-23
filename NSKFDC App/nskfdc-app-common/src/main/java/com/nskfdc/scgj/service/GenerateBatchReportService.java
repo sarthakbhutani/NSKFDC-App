@@ -205,8 +205,8 @@ public class GenerateBatchReportService {
 			LOGGER.debug("Inserting Paths of Images in Objects");
 			LOGGER.debug(sourceCodeDir);
 			String imagesPath = systemVariableReader.readSystemVariable(readApplicationConstants.getServerPathImages());
-          //  String i1 = imagesPath+ File.separatorChar+"SCGJ logo.png";
-//            String i2 = imagesPath +File.separatorChar +"nskfdc-logo.png";
+            String i1 = imagesPath+ File.separatorChar+"SCGJ logo.png";
+            String i2 = imagesPath +File.separatorChar +"nskfdc-logo.png";
 			Object i3=paths[0];
 			Object i4=paths[1];
 			Object i5=paths[2];
@@ -230,8 +230,8 @@ public class GenerateBatchReportService {
 			param.put("TrainingDataSource", trainingDetailsBeans);
 			param.put("CandidateDataSource",candidateDetailsBeans);
 			LOGGER.debug("Inserting Image objects in a param - HashMap");
-			//param.put("ImageSource",i1);
-			//param.put("ImageSource2",i2);
+			param.put("ImageSource",i1);
+			param.put("ImageSource2",i2);
 			param.put("Day1Pic1",i3);
 			param.put("Day1Pic2",i4);
 			param.put("Day2Pic1",i5);
