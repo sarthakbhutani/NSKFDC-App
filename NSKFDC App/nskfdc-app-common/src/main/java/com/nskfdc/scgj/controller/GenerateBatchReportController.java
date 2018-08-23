@@ -290,5 +290,13 @@ public class GenerateBatchReportController {
 
 		}
 	}
+	
+	@Privilege(value = { "TP" })
+	@RequestMapping(value = "/checkBatchEndDate")
+	public int checkBatchEndDate(@RequestParam("batchId") String batchId) {
+		LOGGER.debug("Request received from frontend");
+		LOGGER.debug("To check if BatcH End date is less than current date");
+		return generateBatchReportService.checkBatchEndDate(batchId);
+	}
 
 }

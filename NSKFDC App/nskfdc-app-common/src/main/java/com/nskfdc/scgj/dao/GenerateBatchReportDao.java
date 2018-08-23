@@ -296,4 +296,23 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		
 	}
 	
+	public int checkBatchEndDate(String batchId) {
+		LOGGER.debug("Request received at DAO to check if batchEndDate is less than current date");
+		LOGGER.debug("In method - checkbatchEndDate");
+		Map<String, Object> parameter = new HashMap<>();
+		parameter.put("batchId", batchId);
+		try {
+			
+			LOGGER.debug("TRYING --Execute query to check batch End date");
+			return getJdbcTemplate().queryForObject(generateBatchReportConfig.getBatchEndDateCheck(), parameter, Integer.class);
+		}
+		catch(Exception e) {
+			LOGGER.debug("CATCHING -- Exception handled in checkBatchEndDate");
+			LOGGER.error("Returning status code -297");
+			return -297;
+			
+		}
+		
+	}
+	
 }

@@ -100,6 +100,15 @@ public class GenerateBatchReportConfig {
 		this.updateGenerateReportsTable = updateGenerateReportsTable;
 	}
 
+	private String batchEndDateCheck;
+
+	public String getBatchEndDateCheck() {
+		return batchEndDateCheck;
+	}
+
+	public void setBatchEndDateCheck(String batchEndDateCheck) {
+		this.batchEndDateCheck = batchEndDateCheck;
+	}
 	
 	
 	

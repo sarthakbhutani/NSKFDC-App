@@ -367,4 +367,20 @@ public class GenerateBatchReportService {
 		LOGGER.debug("Sending request to DAO with parameters : " + batchId);
 		return generateBatchReportDao.showScgjbatchNumber(batchId);
 	}
+	
+	
+	/*
+	 * This method is used to check 
+	 * if batchEnd date is less than current date
+	 */
+	public int checkBatchEndDate( String batchId) {
+		LOGGER.debug("Request received in service to check if batchnd date is less than current date");
+		LOGGER.debug("In the method - checkBatchEndDate");
+		LOGGER.debug("Sending request to DAO with batchId");
+		int resultCheck = generateBatchReportDao.checkBatchEndDate(batchId);
+		LOGGER.debug("The response of checking the batch End date is"+ resultCheck);
+		return resultCheck;
+		
+	}
+	
 }

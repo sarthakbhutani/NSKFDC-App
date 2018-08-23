@@ -19,3 +19,6 @@ batchIdQuery:
   
  updateGenerateReportsTable: >
   replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);
+ 
+ batchEndDateCheck: >
+  select exists(select * from batchdetails where batchId=:batchId and batchEndDate<curdate());
