@@ -425,7 +425,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		@Override
 		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
-			int batchId = rs.getInt("batchId");
+			String batchId = rs.getString("batchId");
 			return new BatchDto(batchId);
 			
 		}
