@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
-import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
 import com.nskfdc.scgj.service.GenerateReportService;

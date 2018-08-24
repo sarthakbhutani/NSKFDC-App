@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -19,15 +18,11 @@ import java.util.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.UploadDocumentConfig;
-import com.nskfdc.scgj.dto.BatchDto;
-
-//import com.nskfdc.scgj.config.UploadDocumentsConfig;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
 
 @Repository	
@@ -37,7 +32,6 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	
 	private static final UploadDocumentsRowMapper uploadDocumentsRowMapper = new UploadDocumentsRowMapper();
 	
-	private static final BATCHRowmapper getBatchIdRowMapper = new BATCHRowmapper();
 	
 	static StringBuilder s2 = new StringBuilder("");
 
@@ -379,40 +373,6 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 				
 				
 			}
-	/**
-	 * Method to get lis of BatchId based on user email
-	 * @param userEmail
-	 * @return list of batch Id
-	 */
-	public List<BatchDto> getBatchDetail(String userEmail){
-		LOGGER.debug("Request received from Service to UploadDocumentsDao");
-		LOGGER.debug("In UploadDocumentsDao - To get BatchId for logged in TP");
-		Map<String, Object> parameters = new HashMap<>();
-		LOGGER.debug("Inserting userEmail into hashmap");
-		parameters.put("userEmail",userEmail);
-		LOGGER.debug("The username put into hashmap is : " + parameters.get(userEmail));
-		if(parameters.isEmpty())
-		{
-			LOGGER.error("Null Parameter");
-		}
-		
-			try {
-						
-				LOGGER.debug("TRYING -- To get batch ID");
-				LOGGER.debug("Executing query to get batchId of logged in TP");
-				return getJdbcTemplate().query(uploadDocumentsConfig.getShowBatchIdDetails(),parameters,getBatchIdRowMapper );
-						
-				}		
-			catch(Exception e)
-			{
-	
-				 LOGGER.error("CATCHING -- Exception handled while getting BatchId for TP");
-				 LOGGER.error("In UploadDocumentsDao - getBatchDetail");
-				 LOGGER.error("Exception is :"+ e);
-				 LOGGER.error("Returning null");						
-				 return null;
-			}
-	}
 
 	
 /**
@@ -420,16 +380,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
  * @author Ruchi
  *
  */
-	private static class BATCHRowmapper implements RowMapper<BatchDto>{
-		
-		@Override
-		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-			
-			String batchId = rs.getString("batchId");
-			return new BatchDto(batchId);
-			
-		}
-	}
+
 
 	/**
 	 * Method to check if entered batch number exists corresponding to batchId inserted by Training Partner
@@ -502,7 +453,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		@Override
 		public UploadDocumentsDto mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
-			  int batchId = rs.getInt("batchId");
+			  String batchId = rs.getString("batchId");
 			  String dateUploaded = rs.getString("dateUploaded");
 			  int finalBatchReport = rs.getInt("finalBatchReport");
 			  int occupationCertificate = rs.getInt("occupationCertificate");

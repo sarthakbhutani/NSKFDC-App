@@ -87,30 +87,7 @@ public class UploadDocumentService {
 			}
 		}	
 		
-		public List<BatchDto> getBatchDetails(String userEmail){
-			
-			
-			LOGGER.debug("Request received from controller to UploadDocumentService");
-			LOGGER.debug("In getBatchDetails - To get batch Ids corresponding to logged in TP");
-			
-			
-			try {
-				LOGGER.debug("TRYING -- To get BatchId of logged in TP");
-				LOGGER.debug("Sending requests to uploadDocumentsDao - getBatchDetail");
-				return uploadDocumentsDao.getBatchDetail(userEmail);
-				
-			}
-			catch(Exception d) {
-				
-				LOGGER.error("CATCHING -- Exception handled while getting batch Id for Logged in TP");
-				LOGGER.error("In UploadDocumentService - getBatchDetails");
-				LOGGER.error("Exception is "+ d);
-				LOGGER.error("Returning NULL");				
-				return null;
-			}
 
-			
-		}
 		public int scgjBatchIdField(String batchId, String scgjBatchId) {
 			
 			LOGGER.debug("Request received from controller to UploadDocumentService");

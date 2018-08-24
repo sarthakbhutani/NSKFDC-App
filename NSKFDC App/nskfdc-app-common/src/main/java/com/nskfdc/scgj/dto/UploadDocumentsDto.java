@@ -9,14 +9,14 @@ public class UploadDocumentsDto extends BaseDto{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	int batchId;
+	String batchId;
 	String dateUploaded;
 	StringBuilder documentsUploaded;
 	String zipFileLink;
-	public int getBatchId() {
+	public String getBatchId() {
 		return batchId;
 	}
-	public void setBatchId(int batchId) {
+	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
 	public String getDateUploaded() {
@@ -41,7 +41,7 @@ public class UploadDocumentsDto extends BaseDto{
 	public void setZipFileLink(String zipFileLink) {
 		this.zipFileLink = zipFileLink;
 	}
-	public UploadDocumentsDto(int batchId, String dateUploaded, StringBuilder documentsUploaded, String zipFileLink) {
+	public UploadDocumentsDto(String batchId, String dateUploaded, StringBuilder documentsUploaded, String zipFileLink) {
 		super();
 		this.batchId = batchId;
 		this.dateUploaded = dateUploaded;
