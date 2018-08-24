@@ -84,7 +84,6 @@ CREATE TABLE `candidate` (
   `relationWithSKMS` varchar(45) DEFAULT NULL,
   `batchId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`enrollmentNumber`),
-  UNIQUE KEY `batchId_UNIQUE` (`batchId`),
   KEY `batchId_idx` (`batchId`),
   CONSTRAINT `batchId` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 );
