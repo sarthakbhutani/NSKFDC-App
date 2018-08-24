@@ -29,20 +29,20 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 	public Integer checkBatchNumberExistence(String batchId, String scgjBatchNumber) {
 		try {
 
-			int existenceStatus = -1;
+		    
 			LOGGER.debug("In method checkBatchNumberExistence to check the existence of batch number : " + scgjBatchNumber);			
-			LOGGER.debug("Creating hashmap of object to insert scgjBatchNumber into hashmap");
+			LOGGER.debug("Creating hashmap of object to insert batchId into hashmap");
 			Map<String,Object> params = new HashMap<>();
-			params.put("scgjBatchNumber",scgjBatchNumber);
+			params.put("batchId",batchId);
 			if(params.isEmpty())
 			{
 				LOGGER.debug("The parameters are empty");
 				return -299;
 			}
-			existenceStatus = getJdbcTemplate().queryForObject(insertBatchNumberConfig.getCheckBatchNumberExistence(), params, Integer.class);
+			String existenceStatus = getJdbcTemplate().queryForObject(insertBatchNumberConfig.getCheckBatchNumberExistence(), params, String.class);
 			LOGGER.debug("The value of user existence is : " + existenceStatus);
 
-			if (existenceStatus == 0) {
+			if (existenceStatus == null) {
 				LOGGER.debug("SCGJ Batch Number" + scgjBatchNumber + " " + "does not exists");
 				LOGGER.debug("Creating hashmap to insert scgj batch number for the batch Id " + batchId);
 				
@@ -80,16 +80,16 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 
 		try {
 
-			Integer checkExistenceStatus = -254;
+			
 			Integer updateStatus = -99;
 			LOGGER.debug("Checking existence of batch number for the update functionality");
 			LOGGER.debug("Creating hash map of objects");
 			Map<String,Object> parameters = new HashMap<>();
-			parameters.put("scgjBatchNumber", scgjBatchNumber);
-			checkExistenceStatus = getJdbcTemplate()
-					.queryForObject(insertBatchNumberConfig.getCheckBatchNumberExistence(), parameters, Integer.class);
+			parameters.put("batchId", batchId);
+			String checkExistenceStatus = getJdbcTemplate()
+					.queryForObject(insertBatchNumberConfig.getCheckBatchNumberExistence(), parameters, String.class);
 		
-			if(checkExistenceStatus == 1)
+			if(checkExistenceStatus == null)
 			{
 				LOGGER.debug("SCGJ Batch Number : " + scgjBatchNumber + " " + "Already exists");
 				LOGGER.debug("Returning error code -699");
