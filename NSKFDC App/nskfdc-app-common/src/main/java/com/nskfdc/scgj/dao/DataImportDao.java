@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.FinancialDto;
-import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetImportDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
@@ -665,6 +666,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		Map<String, Object> parameters = new HashMap<>();
 		LOGGER.debug("Inserting parameters in hashMap");
 		parameters.put("userEmail", userEmail);
+	
 
 		if (parameters.isEmpty()) {
 			LOGGER.debug("In IF -- When HasMap parameters are empty");
@@ -706,33 +708,33 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 
-	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
-
-	public Collection<BatchDto> getBatchDetail(String userEmail) {
-
-		LOGGER.debug("Request receive to get Batch Ids of TP logged in");
-		LOGGER.debug("In DataImportDao - getBatchDetail");
-
-		try {
-			LOGGER.debug("TRYING -- To get batchId of TP");
-
-			Map<String, Object> parameters = new HashMap<>();
-			LOGGER.debug("Inserting userEmail into HashMap");
-			parameters.put("userEmail", userEmail);
-			LOGGER.debug("Executing query to get batchId of TP");
-			return getJdbcTemplate().query(dataImportConfig.getshowbatchId(),
-					parameters, BATCH_RowMapper);
-
-		} catch (Exception e) {
-
-			LOGGER.error("CATCHING -- Exception handled while getting batchId of Logged in TP");
-			LOGGER.error("In DataImportDao - getBatchDetail " + e);
-			LOGGER.error("Returning null");
-			return null;
-
-		}
-
-	}
+//	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
+//
+//	public List<BatchDto> getBatchDetail(String userEmail) {
+//
+//		LOGGER.debug("Request receive to get Batch Ids of TP logged in");
+//		LOGGER.debug("In DataImportDao - getBatchDetail");
+//
+//		try {
+//			LOGGER.debug("TRYING -- To get batchId of TP");
+//
+//			Map<String, Object> parameters = new HashMap<>();
+//			LOGGER.debug("Inserting userEmail into HashMap");
+//			parameters.put("userEmail", userEmail);
+//			LOGGER.debug("Executing query to get batchId of TP");
+//			return getJdbcTemplate().query(dataImportConfig.getShowbatchId(),
+//					parameters, BATCH_RowMapper);
+//
+//		} catch (Exception e) {
+//
+//			LOGGER.error("CATCHING -- Exception handled while getting batchId of Logged in TP");
+//			LOGGER.error("In DataImportDao - getBatchDetail " + e);
+//			LOGGER.error("Returning null");
+//			return null;
+//
+//		}
+//
+//	}
 
 	private static class BATCHRowmapper implements RowMapper<BatchDto> {
 
@@ -858,6 +860,103 @@ public class DataImportDao extends AbstractTransactionalDao {
 			return -1;
 		}
 
+	}
+
+
+
+
+
+
+     /**
+      * This method returns the name of the training partner with the userEmail in session
+      * @param userEmail
+      * @return
+      */
+	public String getTrainingPartnerName(String userEmail) {
+		// TODO Auto-generated method stub
+		LOGGER.debug("In DAO to get name of training partner with userEmail : " + userEmail);
+		try
+		{
+			LOGGER.debug("In try block to get name of training partner with userEmail : " + userEmail);
+			LOGGER.debug("Creating hash map to insert userEmail into the hashmap");
+			Map<String,Object> userParams = new HashMap<>();
+			userParams.put("userEmail", userEmail);
+			if(userParams.isEmpty())
+			{
+				LOGGER.error("userParams are null in method getTrainingPartnerName");
+				LOGGER.error("Returning NULL");
+				return null;
+			}
+			LOGGER.debug("Parameters inserted into hashmap ");
+			return getJdbcTemplate().queryForObject(dataImportConfig.getShowTpName(), userParams, String.class);
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An Exception occured while fetching the name of TP with userEmail : " + userEmail);
+			LOGGER.error("Exception is : " + e);
+			LOGGER.error("Returning NULL");
+			return null;
+		}
+		
+	}
+
+	/**
+	 * This method returns the number of batches for a training partner who is logged into the system
+	 * 
+	 * @param userEmail
+	 * @return
+	 */
+
+	public Integer getNumberOfBatches(String userEmail) {
+		// TODO Auto-generated method stub
+		
+		LOGGER.debug("In method getNumberOfBatches to get the number of batches for user with email : " + userEmail);
+		try {
+			
+			LOGGER.debug("In try block to get number of batches");
+			LOGGER.debug("Creating HASH Map of objects");
+			Map<String,Object> params = new HashMap<>();
+			params.put("userEmail", userEmail);
+			return getJdbcTemplate().queryForObject(dataImportConfig.getNumberOfBatches(), params, Integer.class); 
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An exception occured while getting the number of batches for training partner : " + e);
+			return null;
+		}
+		
+	}
+
+	/**
+	 * This method inserts the unique batchID
+	 * @param userEmail
+	 * @param uniqueBatchId
+	 * @return
+	 */
+
+	public Integer insertBatchId(String userEmail, String uniqueBatchId) {
+		// TODO Auto-generated method stub
+		LOGGER.debug("the unique batchId recieved from service is : " + uniqueBatchId);
+		try
+		{
+			if(uniqueBatchId==null)
+			{
+				LOGGER.error("Unique batch id is null");
+				return null;
+			}
+			LOGGER.debug("Inserting unique batch id into batch table");
+			LOGGER.debug("Creating hashmap of objects");
+			Map<String,Object> uniqueBatchIdParam = new HashMap<>();
+			uniqueBatchIdParam.put("userEmail", userEmail);
+			uniqueBatchIdParam.put("batchId", uniqueBatchId);
+			return getJdbcTemplate().update(dataImportConfig.getInsertBatchId(),uniqueBatchIdParam);
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An error occured while inserting unique batch id : " + e);
+			LOGGER.error("Returning NULL");
+			return null;
+		}
 	}
 
 }

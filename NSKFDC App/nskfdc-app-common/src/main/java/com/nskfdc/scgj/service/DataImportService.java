@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -36,6 +37,7 @@ import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.GetBatchDetailsDto;
+import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetImportDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
@@ -651,7 +653,8 @@ public class DataImportService {
 		return outputFile;
 	}
 
-	public Integer getGenerateBatchService(String userEmail) {
+	
+	public String getGenerateBatchService(String userEmail) {
 
 		LOGGER.debug("Request received from Controller to create batch for logged in TP ");
 		LOGGER.debug("In DataImportService  - getGenerateBatchService");
@@ -660,37 +663,49 @@ public class DataImportService {
 
 			LOGGER.debug("TRYING -- To get batchdetails of TP");
 			LOGGER.debug("Sending request to DataImportDao - generateBatchDao");
-			return dataImportDao.generateBatchDao(userEmail);
+			Integer generateStatus =  dataImportDao.generateBatchDao(userEmail);
+			if(generateStatus!=0)
+			{
+				LOGGER.debug("UserEmail inserted in batch table");
+				LOGGER.debug("Calling method to get trainingpartner name");
+				return getTrainingPartnerName(userEmail);
+				
+			}
+			else
+			{
+				LOGGER.error("Cannot insert user email in batch Table");
+				return null;
+			}
 
 		} catch (DataAccessException d) {
 
 			LOGGER.error("CATCHING -- DataAccessException in DataImportService to create Batch");
 			LOGGER.error("Exception is " + d);
-			LOGGER.error("Returning status code as -1");
-			return -1;
+			LOGGER.error("Returning null");
+			return null;
 		} catch (Exception e) {
 
 			LOGGER.error("CATCHING -- Exception in DataImportService while creating Batch");
 			LOGGER.error("Exception in getGenerateBatchService " + e);
-			LOGGER.error("Returning status code as -1");
-			return -1;
-		}
-	}
-
-	public Collection<BatchDto> getBatchDetail(String userEmail) {
-		LOGGER.debug("Request received to get batchId of TP logged in");
-		LOGGER.debug("In the method - getBatchDetail");
-		try {
-			LOGGER.debug("TRYING -- to get batchId for Logged in TP");
-			LOGGER.debug("Sending Request to DataImportDao - getBatchDetail");
-			return dataImportDao.getBatchDetail(userEmail);
-		} catch (Exception e) {
-			LOGGER.error("CATCHING -- Exception in DataImportService while getting BatchId");
-			LOGGER.error("In DataImportService - getBatchDetail " + e);
-			LOGGER.error("Returning null");
+			LOGGER.error("Returning status code as null");
 			return null;
 		}
 	}
+
+//	public List<BatchDto> getBatchDetail(String userEmail) {
+//		LOGGER.debug("Request received to get batchId of TP logged in");
+//		LOGGER.debug("In the method - getBatchDetail");
+//		try {
+//			LOGGER.debug("TRYING -- to get batchId for Logged in TP");
+//			LOGGER.debug("Sending Request to DataImportDao - getBatchDetail");
+//			return dataImportDao.getBatchDetail(userEmail);
+//		} catch (Exception e) {
+//			LOGGER.error("CATCHING -- Exception in DataImportService while getting BatchId");
+//			LOGGER.error("In DataImportService - getBatchDetail " + e);
+//			LOGGER.error("Returning null");
+//			return null;
+//		}
+//	}
 
 	/*-------------------- Submit data from MasterSheet Import into the database---------------*/
 
@@ -740,4 +755,66 @@ public class DataImportService {
 
 	}
 
+	/**
+	 * This method returns the name of the training partner for the given userEmail
+	 * @param userEmail 
+	 */
+	public String getTrainingPartnerName(String userEmail)
+	{
+		LOGGER.debug("Request recieved from controller to get training partner name for username :" + userEmail);
+		if(userEmail==null)
+		{
+			LOGGER.error("UserEmail in method getTrainingPartnerName is null");
+			LOGGER.error("Returning Null");
+			return null;
+		}
+		try
+		{
+			LOGGER.debug("In try block to get TP Name for user : " + userEmail);
+			LOGGER.debug("Calling method to get name of training partner with userName : " + userEmail);
+			String trainingPartnerName = dataImportDao.getTrainingPartnerName(userEmail);
+			LOGGER.debug("Sending request to getNumberOfBatches method in service to get Number of Batches");
+			return getNumberOfBatches(userEmail,trainingPartnerName);
+			
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An exception occured while fetching training partner name : "+ e);
+			return null;
+		}
+		
+	}
+
+	/**
+	 * This method generates number of batches and also generates the unique batchID
+	 * @param userEmail
+	 * @param trainingPartnerName
+	 * @return
+	 */
+	public String getNumberOfBatches(String userEmail, String trainingPartnerName) {
+		// TODO Auto-generated method stub
+		LOGGER.debug("Username recieved in method getNumberOfBatches is : " + userEmail + " trainingPartnerName " + trainingPartnerName);
+		LOGGER.debug("Sending params to dao to get the number of batches for email : " + userEmail);
+		Integer count = dataImportDao.getNumberOfBatches(userEmail) ;
+		LOGGER.debug("The number of batches are : " + count);
+		Integer latestBatch = count + 1; //the latest batch to be generated
+			LOGGER.debug("The number of batches for userEmail : " + userEmail + " are : " + count);
+			LOGGER.debug("Creating unique format for batch id ");
+			String uniqueBatchId = latestBatch.toString() + "-".concat(trainingPartnerName);
+			LOGGER.debug("The unique batchId for TP with username : " + userEmail + " is : " + uniqueBatchId);
+			LOGGER.debug("Sending unique batch id & user email to Tp to insert into batch table");
+			Integer batchIdInsertStatus = dataImportDao.insertBatchId(userEmail, uniqueBatchId);
+			
+			if(batchIdInsertStatus==1)
+			{
+				LOGGER.debug("Batch id inserted successfully");
+				return uniqueBatchId;
+			}
+			else
+			{
+				LOGGER.error("Cannot insert batch id" );
+				return null;
+			}
+	
+	}
 }

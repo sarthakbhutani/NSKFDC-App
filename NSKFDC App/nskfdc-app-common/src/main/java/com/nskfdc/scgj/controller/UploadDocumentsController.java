@@ -23,7 +23,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
+import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.UploadDocumentsDto;
+import com.nskfdc.scgj.service.GenerateReportService;
 import com.nskfdc.scgj.service.UploadDocumentService;
 
 @RestController
@@ -36,6 +38,8 @@ public class UploadDocumentsController {
 	@Autowired
 	private SessionUserUtility sessionUserUtility;
 	
+	@Autowired
+	private GenerateReportService generateReportService;
 	int status = -25;
 
 	
@@ -179,7 +183,7 @@ public class UploadDocumentsController {
 	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping("/getBatchIdDet")
-	public List<BatchDto> getBatchIdDetails(){
+	public Collection<GetBatchIdDto> getBatchIdDetails(){
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In upload Controller");
 		String userEmail = sessionUserUtility.getSessionMangementfromSession().getUsername();
@@ -189,7 +193,7 @@ public class UploadDocumentsController {
 			LOGGER.debug("In try block of upload documents" + userEmail);
 			LOGGER.debug("Sending request to uploadservice to fetch batch ID for user with username" + userEmail);
 			
-			return uploadDocumentService.getBatchDetails(userEmail);
+			return generateReportService.getBatchDetails(userEmail);
 		}
 		
 		 catch(Exception e) {

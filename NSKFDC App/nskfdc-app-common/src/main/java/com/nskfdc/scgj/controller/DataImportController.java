@@ -1,7 +1,12 @@
 package com.nskfdc.scgj.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Collection;
-import java.io.*;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,15 +20,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
+import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 import com.nskfdc.scgj.service.DataImportService;
-
-import org.springframework.web.multipart.MultipartFile;
+import com.nskfdc.scgj.service.GenerateReportService;
 
 @RestController
 public class DataImportController {
@@ -32,6 +38,8 @@ public class DataImportController {
 			.getLogger(DataImportController.class);
 	@Autowired
 	private SessionUserUtility sessionUserUtility;
+	@Autowired
+	private GenerateReportService generateReportService;
 
 	@Autowired
 	private DataImportService dataImportService;
@@ -61,29 +69,6 @@ public class DataImportController {
 		}
 	}
 
-	// @RequestMapping("/BatchDetails")
-	// public GetBatchDetailsDto getBatchDetails(@RequestParam("batchId") String
-	// batchId){
-	//
-	// try {
-	//
-	// String userEmail =
-	// sessionUserUtility.getSessionMangementfromSession().getUsername();
-	// LOGGER.debug("Email is " + userEmail);
-	// LOGGER.debug("Trying to get details for the corresponding batch id:"+
-	// batchId+ "to display on master import sheet tab");
-	// LOGGER.debug("Sending request to service to get batch details by id :" +
-	// userEmail);
-	// return dataImportService.BatchDetails(userEmail,batchId);
-	//
-	// }
-	// catch(Exception e) {
-	// LOGGER.debug("An error occurred while searching for batch details" + e);
-	// LOGGER.debug("Returning NULL!");
-	// return null;
-	//
-	// }
-	// }
 
 	/**
 	 * Method to get details of a batch
@@ -280,7 +265,7 @@ public class DataImportController {
 	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping("/generateBatch")
-	public Integer generateBatchController() {
+	public GetBatchIdDto generateBatchController() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
 				.getUsername();
 		LOGGER.debug("Request received from frontend to create batch for email id : "
@@ -290,7 +275,10 @@ public class DataImportController {
 				+ userEmail);
 		try {
 
-			return dataImportService.getGenerateBatchService(userEmail);
+			String batchId = dataImportService.getGenerateBatchService(userEmail);
+			LOGGER.debug("The batch id generated for training partner is : " + batchId);
+			GetBatchIdDto getBatchIdDto= new GetBatchIdDto (batchId);
+			return getBatchIdDto;
 
 		}
 
@@ -299,14 +287,14 @@ public class DataImportController {
 			LOGGER.error("DataAccessException in controller to create Batch"
 					+ d);
 
-			return -1;
+			return null;
 		}
 
 		catch (Exception e) {
 
 			LOGGER.error("An error occurred while creating Batch" + e);
 
-			return -1;
+			return null;
 		}
 
 	}
@@ -317,12 +305,12 @@ public class DataImportController {
 	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping("/getBatchIdfortrainer")
-	public Collection<BatchDto> getBatchDetail() {
+	public Collection<GetBatchIdDto> getBatchDetail() {
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
 				.getUsername();
 		LOGGER.debug("Request received from frontend to show batch ID");
 		try {
-			return dataImportService.getBatchDetail(userEmail);
+			return generateReportService.getBatchDetails(userEmail);
 
 		} catch (Exception e) {
 
