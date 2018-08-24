@@ -171,9 +171,11 @@ public class DataImportService {
 
 				while (cellIterator.hasNext()) {
 					Cell cell = cellIterator.next();
-					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-						LOGGER.debug("The value of batchId from ExcelSheet is : " + cell.getNumericCellValue());
-						if (cell.getStringCellValue() == batchId) {
+					
+					if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
+						String batchIdSheet=cell.getStringCellValue();
+						LOGGER.debug("The value of batchId from ExcelSheet is : " + cell.getStringCellValue());
+						if (batchId.equals(batchIdSheet)) {
 							LOGGER.debug("In IF -- When BatchId matched");
 						} else {
 							LOGGER.debug("In ELSE -- When BatchId doesn't matched");
