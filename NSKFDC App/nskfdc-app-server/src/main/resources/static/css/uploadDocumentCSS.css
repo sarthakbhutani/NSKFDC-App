@@ -53,7 +53,7 @@
 .btnbrws{
     font-size: 1.5rem;
     height: 3.5rem;
-        margin-bottom: 3pt;
+    margin-bottom: 3pt;
 }
 
 
@@ -280,3 +280,13 @@ h3{
 	margin-right:1%;
 }
 	
+.paddingUploadDoc{
+	padding-left:2pt !important;
+}
+.paddingRightUpload{
+	padding-right: 0;
+}
+.textBoxFile{
+	height:23pt;
+	font-size:8pt;
+}

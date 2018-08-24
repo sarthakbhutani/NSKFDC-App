@@ -45,7 +45,7 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
     	
     	$scope.financialyear = Math.floor(second) + " - " + first;
     })
-    /*.catch((response) => console.log("error in getting the value " + response + " " + response.status + " "  + response.data));*/
+   
 	
 	$http.get('/getTotalTargets')
     .then(function (response) {
@@ -96,7 +96,6 @@ var url = '/getBatchIdfortrainer';
 
     $scope.batch.myVar = 'none';
     $scope.enable = function() {
-        /*console.log("inside function " + $scope.batchDetails.value);*/
         $scope.isDisabled = false;
         $scope.isDisabled1 = false;
         $scope.isDisabled2 = false;
@@ -162,7 +161,7 @@ var url = '/getBatchIdfortrainer';
 			$http.get("/generateBatch")
             .then(function(response) {
             	$scope.success = true;
-            	$scope.successMessage = "Batch " + response.data +" generated successfully!";
+            	$scope.successMessage = "Batch " + response.data.batchId +" generated successfully!";
                 $scope.data = response.data;
                 $scope.ids = [];
                 $http.get('/getBatchIdfortrainer')
@@ -206,14 +205,12 @@ var url = '/getBatchIdfortrainer';
             $scope.theFile = element.files[0];
             $scope.FileMessage = '';
             var filename = $scope.theFile.name;
-            /*console.log(filename.length)*/
             var index = filename.lastIndexOf(".");
             var strsubstring = filename.substring(index, filename.length);
             if ( strsubstring == '.xlsx') {
-                /*console.log('File Uploaded sucessfully');*/
             } else {
                 $scope.theFile = '';
-                $scope.FileMessage = 'please upload correct File ,File extension should be .xlsx';
+                $scope.FileMessage = 'Please upload correct File ,File extension should be .xlsx';
             }
         });
     };
@@ -324,9 +321,9 @@ var url = '/getBatchIdfortrainer';
     	 $scope.uploadCandidateSheet= function(){
     		 
     		 var file = $scope.masterSheet.import;
-		      	/*console.log('File selected is :'+file);*/
+		      	
 		      	var batchId = $scope.batchDetails.value;
-		      	/*console.log('batch  is :'+batchId)*/
+		      	
 		          var importUrl = "/importMasterSheet";
 		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
     	 }
