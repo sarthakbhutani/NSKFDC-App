@@ -1,6 +1,6 @@
 insertBatchNumber: 
  checkBatchNumberExistence: >
-  SELECT EXISTS(SELECT scgjBatchNumber FROM nskfdc.batchdetails WHERE scgjBatchNumber= :scgjBatchNumber);
+  select scgjBatchNumber from batchDetails where exists(select (scgjBatchNumber) from batchDetails where batchId= :batchId);
  
  updateBatchNumber: >
   UPDATE nskfdc.batchDetails SET scgjBatchNumber= :scgjBatchNumber , updatedOn = curdate() WHERE batchId= :batchId;

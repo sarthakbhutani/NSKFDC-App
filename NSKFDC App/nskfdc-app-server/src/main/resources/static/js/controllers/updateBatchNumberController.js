@@ -32,9 +32,9 @@ app.controller('updateBatchNumberController', function($scope, $http, $timeout) 
             			 $scope.insertBNSuccessMessage="Batch Number inserted successfully";
             			 
             		 }
-            		 else if(response.data == 0){
+            		 else if(response.data==-299){
             			 $scope.insertBNSuccessMessage="";
-            			 $scope.insertBNErrorMessage="Batch Number could not be inserted";
+            			 $scope.insertBNErrorMessage="Batch Number already present , Please update your batch number";
             		 }
             	 });
              
@@ -59,9 +59,9 @@ app.controller('updateBatchNumberController', function($scope, $http, $timeout) 
             			 $scope.updateBNSuccessMessage="Batch Number updated successfully";
             			 
             		 }
-            		 else if(response.data == 0){
+            		 else if(response.data==-699){
             			 $scope.updateBNSuccessMessage="";
-            			 $scope.updateBNErrorMessage="Batch Number could not be updated";
+            			 $scope.updateBNErrorMessage="Batch Number not present, Please insert batch number";
             		 }
             	 });
              
