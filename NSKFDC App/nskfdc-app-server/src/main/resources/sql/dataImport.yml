@@ -11,8 +11,9 @@ dataImport:
  ShowTargetAchieved: >
   select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
 
- 
- 
+ insertBatchId: > 
+  UPDATE nskfdc.batchDetails SET batchId= :batchId WHERE userEmail =:userEmail order  by id desc LIMIT 1;
+   
  ShowFinancialYear: >
   SELECT
    CASE WHEN MONTH(curdate())>=4 THEN
@@ -24,6 +25,12 @@ dataImport:
 
  generateBatch: >
   insert into batchdetails(userEmail) values (:userEmail);
+  
+ showTpName: >
+  select distinct trainingPartnerName from trainingpartnerdetails where userEmail = :userEmail;
+  
+ numberOfBatches: > 
+  select COUNT(batchId) from batchDetails where batchDetails.userEmail= :userEmail;
 
  showbatchId: >
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
