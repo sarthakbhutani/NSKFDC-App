@@ -1,9 +1,9 @@
 employer:
  exists: >
-  SELECT EXISTS(SELECT 1 FROM employerdetails WHERE batch_id = :batchId and user_email = :userEmail);
+  SELECT EXISTS(SELECT 1 FROM employerdetails WHERE batchId = :batchId and userEmail = :userEmail);
  
  insert: >
-  INSERT INTO `nskfdc`.`employerdetails` (`employerName`, `employerContactNumber`, `batch_id`, `user_email`) VALUES (:employerName, :employerContactNumber, :batchId, :userEmail);
+  INSERT INTO `nskfdc`.`employerdetails` (`employerName`, `employerContactNumber`, `batchId`, `userEmail`) VALUES (:employerName, :employerContactNumber, :batchId, :userEmail);
   
  update: >
-  UPDATE `nskfdc`.`employerdetails` SET `employerName`= :employerName ,`employerContactNumber`= :employerContactNumber  WHERE `batch_id`= :batchId AND `user_email`= :userEmail;
+  UPDATE `nskfdc`.`employerdetails` SET `employerName`= :employerName ,`employerContactNumber`= :employerContactNumber  WHERE `batchId`= :batchId AND `userEmail`= :userEmail;
