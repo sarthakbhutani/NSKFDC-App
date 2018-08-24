@@ -32,7 +32,7 @@ a, a:hover, a:focus {
 a span{
    font-size: 10pt;
 }
-.alpha, .beta, .gamma, .delta{
+.alpha, .beta, .gamma, .delta, .epsilon{
 	background-color : #0a90a8;
 }
 .navbar-right{

@@ -127,7 +127,7 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 	{
 		LOGGER.debug("Request recieved from service to get details of scgj batch number against the batch id : " + batchId);
 		LOGGER.debug("Checking if batch number exists for batch id" + batchId);
-		Integer checkId = -58;
+		String checkId = null;
 		try
 		{
 		LOGGER.debug("Creating hashmap to insert batch id");
@@ -139,7 +139,7 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 				return null;
 			}
 		
-		checkId = getJdbcTemplate().queryForObject(insertBatchNumberConfig.getCheckBatchNumberForBatchId(), parameter, Integer.class);
+		checkId = getJdbcTemplate().queryForObject(insertBatchNumberConfig.getCheckBatchNumberForBatchId(), parameter, String.class);
 	    LOGGER.debug("The value of checkId variable is : " + checkId);
 	    
 	    if(checkId!=null)
