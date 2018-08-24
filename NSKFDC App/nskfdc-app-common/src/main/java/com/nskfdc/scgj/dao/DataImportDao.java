@@ -708,33 +708,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 
-//	private static final BATCHRowmapper BATCH_RowMapper = new BATCHRowmapper();
-//
-//	public List<BatchDto> getBatchDetail(String userEmail) {
-//
-//		LOGGER.debug("Request receive to get Batch Ids of TP logged in");
-//		LOGGER.debug("In DataImportDao - getBatchDetail");
-//
-//		try {
-//			LOGGER.debug("TRYING -- To get batchId of TP");
-//
-//			Map<String, Object> parameters = new HashMap<>();
-//			LOGGER.debug("Inserting userEmail into HashMap");
-//			parameters.put("userEmail", userEmail);
-//			LOGGER.debug("Executing query to get batchId of TP");
-//			return getJdbcTemplate().query(dataImportConfig.getShowbatchId(),
-//					parameters, BATCH_RowMapper);
-//
-//		} catch (Exception e) {
-//
-//			LOGGER.error("CATCHING -- Exception handled while getting batchId of Logged in TP");
-//			LOGGER.error("In DataImportDao - getBatchDetail " + e);
-//			LOGGER.error("Returning null");
-//			return null;
-//
-//		}
-//
-//	}
+
 
 	private static class BATCHRowmapper implements RowMapper<BatchDto> {
 

@@ -692,20 +692,6 @@ public class DataImportService {
 		}
 	}
 
-//	public List<BatchDto> getBatchDetail(String userEmail) {
-//		LOGGER.debug("Request received to get batchId of TP logged in");
-//		LOGGER.debug("In the method - getBatchDetail");
-//		try {
-//			LOGGER.debug("TRYING -- to get batchId for Logged in TP");
-//			LOGGER.debug("Sending Request to DataImportDao - getBatchDetail");
-//			return dataImportDao.getBatchDetail(userEmail);
-//		} catch (Exception e) {
-//			LOGGER.error("CATCHING -- Exception in DataImportService while getting BatchId");
-//			LOGGER.error("In DataImportService - getBatchDetail " + e);
-//			LOGGER.error("Returning null");
-//			return null;
-//		}
-//	}
 
 	/*-------------------- Submit data from MasterSheet Import into the database---------------*/
 
