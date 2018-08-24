@@ -117,11 +117,14 @@ CREATE TABLE `employerdetails` (
   `employerId` int(11) NOT NULL AUTO_INCREMENT,
   `employerName` varchar(60) DEFAULT NULL,
   `employerContactNumber` bigint(20) DEFAULT NULL,
-  `user_email` varchar(200) DEFAULT NULL,
-  `batchId` varchar(100) DEFAULT NULL,
+  `userEmail` varchar(100) DEFAULT NULL,
+  `batchId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`employerId`),
   UNIQUE KEY `batchId_UNIQUE` (`batchId`),
-  KEY `user_email` (`user_email`)
+  KEY `userEmail` (`userEmail`),
+  KEY `batchId` (`batchId`),
+  CONSTRAINT `userEmail_Employer` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`),
+  CONSTRAINT `batch_Employer` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`)
 );
 
 --
