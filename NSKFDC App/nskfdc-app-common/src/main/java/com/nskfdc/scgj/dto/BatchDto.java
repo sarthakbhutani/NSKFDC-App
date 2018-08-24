@@ -7,17 +7,17 @@ import com.nskfdc.scgj.common.BaseDto;
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private int BatchId;
+		private String BatchId;
 
-		public int getBatchId() {
+		public String getBatchId() {
 			return BatchId;
 		}
 
-		public void setBatchId(int batchId) {
+		public void setBatchId(String batchId) {
 			BatchId = batchId;
 		}
 
-		public BatchDto(int batchId) {
+		public BatchDto(String batchId) {
 			super();
 			BatchId = batchId;
 		}

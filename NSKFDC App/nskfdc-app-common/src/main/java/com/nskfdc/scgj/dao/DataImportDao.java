@@ -45,7 +45,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 	/*-------- Excel Sheet Import Method --------------*/
 
 	public Integer masterSheetImport(
-			ArrayList<MasterSheetImportDto> candidateDetails, int batchId) {
+			ArrayList<MasterSheetImportDto> candidateDetails, String batchId) {
 		int i = 0;
 		LOGGER.debug("Received array list of all the columns read from excel sheet for batchId "
 				+ batchId);
@@ -218,7 +218,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 	/*--------------- Download Master Sheet Code -------------------- */
 
 	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(
-			String userEmail, int batchId) {
+			String userEmail, String batchId) {
 
 		LOGGER.debug("Request received from service");
 		LOGGER.debug("In downloadMasterSheetDao - to get masterSheet details");
@@ -244,7 +244,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 	
-	public Collection<MasterSheetImportDto> candidateSheetDetails(int batchId){
+	public Collection<MasterSheetImportDto> candidateSheetDetails(String batchId){
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In candidateSheetDetails Dao - to get details of candidate of selected batchId");
 		
@@ -741,7 +741,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		@Override
 		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
 
-			int batchId = rs.getInt("batchId");
+			String batchId = rs.getString("batchId");
 			return new BatchDto(batchId);
 
 		}

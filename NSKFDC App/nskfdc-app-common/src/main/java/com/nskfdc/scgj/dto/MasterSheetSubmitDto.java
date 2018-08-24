@@ -8,7 +8,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer batchId;
+	private String batchId;
 	private String wardType;
 	private String wardNumber;
 	private String centreId;
@@ -38,7 +38,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public MasterSheetSubmitDto(Integer batchId, String wardType, String wardNumber, String centreId, String state,
+	public MasterSheetSubmitDto(String batchId, String wardType, String wardNumber, String centreId, String state,
 			String city, String municipality, String selectionCommitteeDate, String trainerName, String batchStartDate,
 			String batchEndDate, String assessmentDate, String medicalExamDate, String employerName,
 			String employerNumber) {
@@ -67,7 +67,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public Integer getBatchId() {
+	public String getBatchId() {
 		return batchId;
 	}
 
@@ -76,7 +76,7 @@ public class MasterSheetSubmitDto extends BaseDto{
 
 
 
-	public void setBatchId(Integer batchId) {
+	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
 

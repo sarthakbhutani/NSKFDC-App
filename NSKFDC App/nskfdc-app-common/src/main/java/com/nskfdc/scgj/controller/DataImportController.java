@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Collection;
-import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
-import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
@@ -48,7 +46,7 @@ public class DataImportController {
 	@Privilege(value= {"TP"})
 	@RequestMapping(value = "/importMasterSheet", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
 	public String masterSheetImport(@RequestParam("file") MultipartFile file,
-			@RequestParam("batchId") int batchId) throws FileNotFoundException {
+			@RequestParam("batchId") String batchId) throws FileNotFoundException {
 		LOGGER.debug("In Data import controller to read excel file");
 		try {
 			String userEmail = sessionUserUtility.getSessionMangementfromSession()
@@ -56,10 +54,7 @@ public class DataImportController {
 			if (file == null) {
 				LOGGER.debug("Null File in controller");
 				return "File is null";
-			} else if (batchId < 1) {
-				LOGGER.error("BatchID is null");
-				return "batchID is null";
-			} else
+			}  else
 				return dataImportService.masterSheetImport(file, batchId,userEmail);
 		}
 
@@ -204,7 +199,7 @@ public class DataImportController {
 	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping("/downloadFinalMasterSheet")
-	public void downloadMasterSheetController(@RequestParam("batchId") int batchId,HttpServletResponse response) {
+	public void downloadMasterSheetController(@RequestParam("batchId") String batchId,HttpServletResponse response) {
 
 		LOGGER.debug("Request received from frontend");
 		LOGGER.debug("In downloadMasterSheetController");

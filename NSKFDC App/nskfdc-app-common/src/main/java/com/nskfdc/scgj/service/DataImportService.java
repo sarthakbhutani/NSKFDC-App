@@ -76,7 +76,7 @@ public class DataImportService {
 	 * @return
 	 * @throws IOException
 	 */
-	public String masterSheetImport(MultipartFile file, int batchId, String userEmail) throws IOException {
+	public String masterSheetImport(MultipartFile file, String batchId, String userEmail) throws IOException {
 		LOGGER.debug("Request received from Controller to DataImportService");
 		LOGGER.debug("In masterSheetImport - to read Excel sheet ");
 		boolean flag = true;
@@ -173,7 +173,7 @@ public class DataImportService {
 					Cell cell = cellIterator.next();
 					if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
 						LOGGER.debug("The value of batchId from ExcelSheet is : " + cell.getNumericCellValue());
-						if (cell.getNumericCellValue() == batchId) {
+						if (cell.getStringCellValue() == batchId) {
 							LOGGER.debug("In IF -- When BatchId matched");
 						} else {
 							LOGGER.debug("In ELSE -- When BatchId doesn't matched");
@@ -571,7 +571,7 @@ public class DataImportService {
 
 	String outputFile;
 
-	public String downloadMasterSheetService(String userEmail, int batchId) {
+	public String downloadMasterSheetService(String userEmail, String batchId) {
 
 		LOGGER.debug("Request received from controller - DataImportService");
 		LOGGER.debug("To Download Final Master Sheet while generating batch");
