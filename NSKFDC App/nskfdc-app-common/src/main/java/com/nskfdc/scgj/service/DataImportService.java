@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -33,11 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.nskfdc.scgj.common.ReadApplicationConstants;
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dao.EmployerDao;
-import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
-import com.nskfdc.scgj.dto.GetBatchDetailsDto;
-import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetImportDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
@@ -170,12 +166,19 @@ public class DataImportService {
 				Iterator<Cell> cellIterator = row.cellIterator();
 
 				while (cellIterator.hasNext()) {
-					Cell cell = cellIterator.next();
 					
-					if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
-						String batchIdSheet=cell.getStringCellValue();
-						LOGGER.debug("The value of batchId from ExcelSheet is : " + cell.getStringCellValue());
-						if (batchId.equals(batchIdSheet)) {
+					Cell cell = cellIterator.next();
+					Cell batchIdAtCell = row.getCell(4);
+					
+					String sheetBatchId = batchIdAtCell.toString();
+					if(sheetBatchId == "")
+					{
+						LOGGER.error("Batch Id in sheet is null");
+						return "batch Id in sheet cannot be Empty";
+					}
+					LOGGER.debug("The batchId at cell 4 in sheet is : " + sheetBatchId);
+					
+						if (batchId.equals(sheetBatchId)) {
 							LOGGER.debug("In IF -- When BatchId matched");
 						} else {
 							LOGGER.debug("In ELSE -- When BatchId doesn't matched");
@@ -184,7 +187,6 @@ public class DataImportService {
 							return "batchId in Excel Sheet and batch Id selected does not match";
 						}
 
-					}
 				}
 			}
 
