@@ -64,22 +64,22 @@
         <h3 id="marginForSearch">Search Documents</h3>
         
     <!--  form name-->
-    <form name="searchForDocByTp">
+    <form name="searchForDocByTp" ng-submit="submitForm()">
       <div class="row background ">
         <!--button & input/dropdown  -->
         <div class="col-md-4">
-          <input type="text" class="form-control form-roundedOne placeholderfont " placeholder="Enter Batch ID" name="batchID" ng-model="batchID" >
-     <span id="searchBox"></span>
+          <select ng-click="getBatchId()"   ng-model="batchID"  class="form-control form-rounded placeholderfont "  ng-options="x for x in ids" required >
+       <option value=""disabled selected>BatchID</option>
+       </select>
      
         </div>
         
       
-        <div class="col-md-2 searchDocumentTxt">
-          <button type="submit" class="btn btn-info btncolor" ng-click="submitForm()">  
+        <div class="col-md-8 searchDocumentTxt">
+          <button type="submit" class="btn btn-info btncolor">  
           Search</button>
           <span ng-bind="searchdetailError" id="error"></span>
         </div>
-        <div class="col-md-6"></div>
       </div>
     </form>
     <div class="details-table">

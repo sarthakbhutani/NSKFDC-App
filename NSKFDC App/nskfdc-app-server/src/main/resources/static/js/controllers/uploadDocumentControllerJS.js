@@ -13,17 +13,6 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 		    });
 	
 	 $scope.submitForm = function () {
-		  
-		  if($scope.batchID==null)
-			  {
-			    
-			    document.getElementById("searchBox").innerHTML="Please enter the Batch Id";
-			    
-			  }
-		  
-		  else if($scope.batchID!=null)
-			  {
-				  
 			    $http.get('/searchDocument?batchId='+$scope.batchID)
 			    .then(function (response) {
 			    	 if(response.data.length==0){
@@ -32,17 +21,9 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 					 else{
 						 $scope.details.data= response.data;
 					 $scope.searchdetailError='';
-					 }
-			    	
-			    	 
-			    	 
+					 }	 
 			    	 
 	    });
-	    
-	  }
-			
-			 
-	    
 	  };
 
 	     $scope.uploadFile = function(){
