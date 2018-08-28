@@ -51,7 +51,7 @@ public class DataImportService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataImportService.class);
 
-	private MasterSheetImportDto masterSheetImportDto = new MasterSheetImportDto();
+	
 
 	@Autowired
 	private DataImportDao dataImportDao;
@@ -137,8 +137,8 @@ public class DataImportService {
 
 		Sheet sheet = workbook.getSheetAt(0);
 
-		/*--- Apache POI Code ----*/
-		ArrayList<MasterSheetImportDto> candidateDetails = new ArrayList<MasterSheetImportDto>();
+		
+		
 
 		Iterator<Row> rowIterator = sheet.rowIterator();
 		int numberOfRows = sheet.getPhysicalNumberOfRows();
@@ -158,6 +158,10 @@ public class DataImportService {
 		LOGGER.debug("The number of physical rows are : " + numberOfRows);
 
 		while (rowIterator.hasNext()) {
+			
+			ArrayList<MasterSheetImportDto> candidateDetails = new ArrayList<MasterSheetImportDto>();
+			 MasterSheetImportDto masterSheetImportDto = new MasterSheetImportDto();
+			 
 
 			Row row = sheet.getRow(0);
 			row = rowIterator.next();
@@ -222,7 +226,7 @@ public class DataImportService {
 						int columnNumber = cell.getColumnIndex() + 1;
 						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
 						flag = false;
-						return "Please enter salutaion at row number" + " " + rowNumber + " and column number "
+						return "Please enter salutation at row number" + " " + rowNumber + " and column number "
 								+ columnNumber;
 
 					} else {
@@ -435,7 +439,7 @@ public class DataImportService {
 		if (insertResult < 1) {
 			LOGGER.debug("In IF -- When insertResult of Excel Sheet is < 1 :" + insertResult);
 			LOGGER.debug("Returning message - 'File cannot be uplaoded'");
-			return "File cannot be uplaoded";
+			return "File cannot be uploaded";
 		}
 
 		else {

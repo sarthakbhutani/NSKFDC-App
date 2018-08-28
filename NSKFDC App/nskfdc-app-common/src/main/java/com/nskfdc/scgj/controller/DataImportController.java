@@ -60,7 +60,7 @@ public class DataImportController {
 
 		catch (Exception e) {
 			LOGGER.error("Exception is " + e);
-			return null;
+			return "File cannot be uploaded";
 		}
 	}
 
