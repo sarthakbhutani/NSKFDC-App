@@ -253,7 +253,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			 }	
 			 			break;
 			
-		case "selectionCommitteeMeeting" :
+		case "minutesOfSelectionCommitteeMeeting" :
 			
 			LOGGER.debug("Case - When document is selectionCommitteeMeeting");
 			 LOGGER.debug("Inserting batchId, userEmail & path in HashMap");
@@ -562,7 +562,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					  {
 						  LOGGER.debug("In IF -- When Folder can be made directory & Folder can be updated");
 						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
-						  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
+						  zipFileLink = zipLocationRead +"/" .concat(batchId) + ".zip";
 						  LOGGER.debug("Zipped file location" + zipFileLink);
 						  FileOutputStream fileOutputStream = null;
 					      ZipOutputStream zipOut = null;

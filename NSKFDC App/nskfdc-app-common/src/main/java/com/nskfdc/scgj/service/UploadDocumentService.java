@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,7 +143,9 @@ public class UploadDocumentService {
 			{
 				LOGGER.debug("File is not empty");
 				String separator = "-";
-				String fileName = fileType+ file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+				String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+				LOGGER.debug("The extension of file is : " + extension);
+				String fileName = fileType+separator+ batchId + "." + extension;
 				pathTillBatchId = pathToFolder + userEmail + "//" +batchId + "//";
 				
 				LOGGER.debug("Creating a new Folder at"+ pathTillBatchId);

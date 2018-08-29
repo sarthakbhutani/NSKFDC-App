@@ -7,15 +7,15 @@ public class ViewDocumentDto extends BaseDto{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private Integer batchId;
+	private String batchId;
 	private String trainingPartnerName;
 	private String uplodedOn;
 	private String zipFileLink;
 	
-	public Integer getBatchId() {
+	public String getBatchId() {
 		return batchId;
 	}
-	public void setBatchId(Integer batchId) {
+	public void setBatchId(String batchId) {
 		this.batchId = batchId;
 	}
 	public String getTrainingPartnerName() {
@@ -36,7 +36,7 @@ public class ViewDocumentDto extends BaseDto{
 	public void setZipFileLink(String zipFileLink) {
 		this.zipFileLink = zipFileLink;
 	}
-				public ViewDocumentDto(Integer batchId, String trainingPartnerName,
+				public ViewDocumentDto(String batchId, String trainingPartnerName,
 						String uplodedOn, String zipFileLink) {
 						super();
 						this.batchId = batchId;

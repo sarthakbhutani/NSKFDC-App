@@ -103,7 +103,7 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 		@Override
 		public ViewDocumentDto mapRow(ResultSet rs, int rownum) throws SQLException {
 
-			Integer batchId = rs.getInt("batchId");
+			String batchId = rs.getString("batchId");
 			String trainingPartnerName = rs.getString("trainingPartnerName");
 			String uplodedOn = rs.getString("dateUploaded");
 			Integer finalBatchReport = rs.getInt("finalBatchReport");
@@ -270,7 +270,7 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 						for (String filePath : files) {
 							File input = new File(filePath);
 							fileInputStream = new FileInputStream(input);
-							ZipEntry zipEntry = new ZipEntry(input.getName().substring(0,input.getName().lastIndexOf(".")).concat("-").concat(trainingPartnerName) + "-" + batchId+ input.getName().substring(input.getName().indexOf(".")));
+							ZipEntry zipEntry = new ZipEntry(input.getName());
 							LOGGER.debug("Zipping the file: " + zipEntry);
 							zipOut.putNextEntry(zipEntry);
 							byte[] tmp = new byte[4 * 1024];
@@ -318,7 +318,7 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 		@Override
 		public ViewDocumentDto mapRow(ResultSet rs, int rownum) throws SQLException {
 
-			Integer batchId = rs.getInt("batchId");
+			String batchId = rs.getString("batchId");
 			String scgjBatchNumber = rs.getString("scgjBatchNumber");
 			String trainingPartnerName = rs.getString("trainingPartnerName");
 			String uplodedOn = rs.getString("dateUploaded");
@@ -437,7 +437,7 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 							for (String filePath : files) {
 								File input = new File(filePath);
 								fileInputStream = new FileInputStream(input);
-								ZipEntry zipEntry = new ZipEntry(input.getName().substring(input.getName().indexOf(".")).concat(trainingPartnerName));
+								ZipEntry zipEntry = new ZipEntry(input.getName());
 								LOGGER.debug("Zipping the file: " + input.getName().concat(trainingPartnerName));
 								zipOut.putNextEntry(zipEntry);
 								byte[] tmp = new byte[4 * 1024];
