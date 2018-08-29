@@ -63,11 +63,12 @@ CREATE TABLE `batchdetails` (
   `updatedOn` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `batchId_UNIQUE` (`batchId`),
+  UNIQUE KEY `scgjBatchNumber_UNIQUE` (`scgjBatchNumber`),
   KEY `tpEmail_idx` (`userEmail`),
   KEY `centreId_idx` (`centreId`),
   CONSTRAINT `centreId` FOREIGN KEY (`centreId`) REFERENCES `centredetails` (`centreId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tpEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +130,7 @@ CREATE TABLE `centredetails` (
   UNIQUE KEY `centreId_UNIQUE` (`centreId`),
   KEY `traningPartnerEmail_idx` (`userEmail`),
   CONSTRAINT `traningPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +151,7 @@ CREATE TABLE `employerdetails` (
   KEY `user_email` (`userEmail`),
   CONSTRAINT `batchEmployer` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `userEmailEmployer` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +183,7 @@ DROP TABLE IF EXISTS `trainingpartnerdetails`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `trainingpartnerdetails` (
   `nsdcRegNumber` varchar(50) NOT NULL,
-  `trainingPartnerName` varchar(50) DEFAULT NULL,
+  `trainingPartnerName` varchar(100) DEFAULT NULL,
   `sectorSkillCouncil` varchar(50) DEFAULT NULL,
   `targets` bigint(12) DEFAULT NULL,
   `jobRole` varchar(400) DEFAULT NULL,
@@ -223,7 +224,7 @@ CREATE TABLE `uploadeddocuments` (
   KEY `batchId` (`batchId`),
   CONSTRAINT `tpmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `uploadeddocuments_ibfk_1` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,7 +242,7 @@ CREATE TABLE `user` (
   `generatedOn` date DEFAULT NULL,
   PRIMARY KEY (`userId`),
   UNIQUE KEY `trainingPartnerEmail_UNIQUE` (`userEmail`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -253,4 +254,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-25  1:05:48
+-- Dump completed on 2018-08-29 12:41:45
