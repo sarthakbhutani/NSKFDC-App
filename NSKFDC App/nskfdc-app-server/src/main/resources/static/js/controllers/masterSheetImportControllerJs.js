@@ -333,11 +333,16 @@ var url = '/getBatchIdfortrainer';
         	            $scope.errorMsg="";
         	            $scope.success = false;
         	            $scope.successMessage = false;
-        	            $scope.errorMsg=false;
-        	            
+        	            $scope.errorMsg=false;       	            
         	         }, 3000);
         			
         	}
+    	
+    	$timeout(function() {
+            $scope.centreIdErrorFlag=false;
+    		$scope.employerNumberErrorFlag=false;
+            
+         }, 3000);
     	};
     	    	
     
