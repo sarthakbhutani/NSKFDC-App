@@ -27,7 +27,6 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		        enableColumnMenus: false,
 		        enableHorizontalScrollbar: 0,
 		        enableVerticalScrollbar: 0,
-		   
 		        paginationPageSizes: [5, 10, 20, 30],
 		        paginationPageSize: 10,
 		        useExternalPagination: true,
@@ -35,7 +34,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		        columnDefs: [
 		            {
 		            	name: 'nsdcRegNumber', 
-		                displayName: 'NSDC Registration Number',
+		                displayName: 'NSDC Reg. Number',
 		             
 		            },
 		            {
