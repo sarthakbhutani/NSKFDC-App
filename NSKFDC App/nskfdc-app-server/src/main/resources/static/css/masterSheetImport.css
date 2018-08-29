@@ -22,8 +22,7 @@
 
 .panel-s
 {
-        
-   
+     
         color: white;
     
 }
@@ -150,13 +149,11 @@
     border-radius: .32rem;
     padding-left: .625rem;
     font-size: 1.125rem;
-    border: 1px solid #767171;
+    border: 1px solid #767171 !important;
 }
 
 .margin
 {
-    
-
     margin-top: 0.6rem;
 }
 #padding

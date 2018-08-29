@@ -31,6 +31,8 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
     $scope.confirmbox = false;
 	$scope.batch = {};
 	$scope.generateCandidateSheetError=false;
+	$scope.centreIdErrorFlag=false;
+	$scope.employerNumberErrorFlag=false;
 	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
@@ -259,13 +261,27 @@ var url = '/getBatchIdfortrainer';
     /*------------Submit the Data in Database------------*/
     
     $scope.submitMasterSheet=function(){
+    	
+    	//Check if center Id is number > 0
+    	if($scope.batch.centreId<=0){
+    		$scope.employerNumberErrorFlag=false;
+    		$scope.centreIdErrorFlag=true;
+    	}	
     	//Check if end start date is not null
-    	if($scope.checkEndDate())
+    	else if($scope.checkEndDate())
     	{
+    		$scope.centreIdErrorFlag=false;
+    		$scope.employerNumberErrorFlag=false;
     		$scope.batch.batchEndDate = null;
+    	}
+    	else if($scope.batch.employerContactNumber<0){
+    		$scope.centreIdErrorFlag=false;
+    		$scope.employerNumberErrorFlag=true;
     	}
     	else
     	{
+    		$scope.centreIdErrorFlag=false;
+    		$scope.employerNumberErrorFlag=false;
     		$scope.sumbitBatchDetails={
         			batchId : $scope.batchDetails.value,
         			wardType : $scope.batch.wardType,
@@ -318,6 +334,7 @@ var url = '/getBatchIdfortrainer';
         	            $scope.success = false;
         	            $scope.successMessage = false;
         	            $scope.errorMsg=false;
+        	            
         	         }, 3000);
         			
         	}

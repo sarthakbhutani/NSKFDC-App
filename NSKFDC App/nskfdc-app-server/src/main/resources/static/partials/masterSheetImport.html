@@ -130,8 +130,9 @@
       </div>
       <div class="row" id= "wrapper">
          <div class="col-sm-3" id="div">
-            <li><input  ng-disabled="batchDetails.value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="CenterId" ng-model="batch.centreId" ng-pattern="/^[0-9]{1,15}$/" required />
-         <span id="warning"  ng-show="pattern.CenterId.$error.pattern">enter only number</span> </li>
+            <li><input  ng-disabled="batchDetails.value == undefined" class="state" type="number" name="CenterId" placeholder="Center Id" id="CenterId" ng-model="batch.centreId" required />
+          	<span id="warning"  ng-show="centreIdErrorFlag">Enter valid Centre Id</span></li>
+          </li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committee"  ng-model="batch.selectionCommitteeDate
             "></li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date" ng-model="batch.assessmentDate" ></li>
@@ -184,8 +185,10 @@
             <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id11" ng-model="batch.municipality"></li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Batch End Date" ng-model="batch.batchEndDate" id="end"></li>
             <span id="warning"  ng-show="dateErrorFlag">{{dateError}}</span></li>
-            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Employer Number" name="Employer" ng-model="batch.employerContactNumber" ng-pattern="/^[0-9]{1,15}$/" id="Id13" >
-            <span id="warning"  ng-show="pattern.Employer.$error.pattern">enter only number</span></li>
+            <li>
+            <input ng-disabled="batchDetails.value == undefined" class="state" type="number" placeholder="Employer Number" id="Id13" ng-model="batch.employerContactNumber" />
+            <span id="warning"  ng-show="employerNumberErrorFlag">Enter valid contact number</span></li>
+            </li>
          </div>
       </div>
       
