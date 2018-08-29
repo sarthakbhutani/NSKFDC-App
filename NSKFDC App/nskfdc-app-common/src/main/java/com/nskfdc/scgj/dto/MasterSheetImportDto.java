@@ -22,7 +22,7 @@ public class MasterSheetImportDto extends BaseDto{
 	private long  adhaarCardNumber;
 	private String idProofType;
 	private String idProofNumber;
-	private String disabilityType;
+	private String disabilityType=null;
 	private int age;
 	private String bankName;
 	private String ifscCode;
@@ -30,7 +30,7 @@ public class MasterSheetImportDto extends BaseDto{
 	private long accountNumber;
 	private String relationWithSKMS;
 	private Date dob;
-	private String guardianType;
+	private String guardianType=null;
 	private String firstNameFather;
 	private String lastNameFather;
 	private String motherName;
@@ -51,179 +51,269 @@ public class MasterSheetImportDto extends BaseDto{
 	public void setEnrollmentNumber(String enrollmentNumber) {
 		this.enrollmentNumber = enrollmentNumber;
 	}
+	
 	public String getSalutation() {
 		return salutation;
 	}
 	public void setSalutation(String salutation) {
 		this.salutation = salutation;
 	}
+	
 	public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
 	public String getLastName() {
 		return lastName;
 	}
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		if(lastName.isEmpty()) 
+			this.lastName = null;
+		
+		else
+			this.lastName = lastName;
 	}
+	
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	
 	public long getMobileNumber() {
 		return mobileNumber;
 	}
 	public void setMobileNumber(long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
+	
 	public String getEducationQualification() {
 		return educationQualification;
 	}
 	public void setEducationQualification(String educationQualification) {
-		this.educationQualification = educationQualification;
+		if(educationQualification.isEmpty())
+			this.educationQualification=null;
+		else
+			this.educationQualification = educationQualification;
 	}
+	
 	public String getState() {
 		return state;
 	}
 	public void setState(String state) {
 		this.state = state;
 	}
+	
 	public String getDistrict() {
 		return district;
 	}
 	public void setDistrict(String district) {
-		this.district = district;
+		if(district.isEmpty())
+			this.district=null;
+		else
+			this.district = district;
 	}
+	
 	public long getAdhaarCardNumber() {
 		return adhaarCardNumber;
 	}
 	public void setAdhaarCardNumber(long adhaarCardNumber) {
 		this.adhaarCardNumber = adhaarCardNumber;
 	}
+	
 	public String getIdProofType() {
 		return idProofType;
 	}
 	public void setIdProofType(String idProofType) {
-		this.idProofType = idProofType;
+		if(idProofType.isEmpty())
+			this.idProofType=null;
+		else
+			this.idProofType = idProofType;
 	}
+	
 	public String getIdProofNumber() {
 		return idProofNumber;
 	}
 	public void setIdProofNumber(String idProofNumber) {
-		this.idProofNumber = idProofNumber;
+		if(idProofNumber.isEmpty())
+			this.idProofNumber=null;
+		else
+			this.idProofNumber = idProofNumber;
 	}
+	
 	public String getDisabilityType() {
 		return disabilityType;
 	}
 	public void setDisabilityType(String disabilityType) {
-		this.disabilityType = disabilityType;
+		if(disabilityType.isEmpty())
+			this.disabilityType=null;
+		else
+			this.disabilityType = disabilityType;
 	}
+	
 	public int getAge() {
 		return age;
 	}
 	public void setAge(int age) {
 		this.age = age;
 	}
+	
 	public String getBankName() {
 		return bankName;
 	}
 	public void setBankName(String bankName) {
-		this.bankName = bankName;
+		if(bankName.isEmpty())
+			this.bankName=null;
+		else	
+			this.bankName = bankName;
 	}
+	
 	public String getIfscCode() {
 		return ifscCode;
 	}
 	public void setIfscCode(String ifscCode) {
-		this.ifscCode = ifscCode;
+		if(ifscCode.isEmpty())
+			this.ifscCode=null;
+		else
+			this.ifscCode = ifscCode;
 	}
+	
 	public String getWorkplaceAddress() {
 		return workplaceAddress;
 	}
 	public void setWorkplaceAddress(String workplaceAddress) {
-		this.workplaceAddress = workplaceAddress;
+		if(workplaceAddress.isEmpty())
+			this.workplaceAddress=null;
+		else
+			this.workplaceAddress = workplaceAddress;
 	}
+	
 	public long getAccountNumber() {
 		return accountNumber;
 	}
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+	
 	public String getRelationWithSKMS() {
 		return relationWithSKMS;
 	}
 	public void setRelationWithSKMS(String relationWithSKMS) {
-		this.relationWithSKMS = relationWithSKMS;
+		if(relationWithSKMS.isEmpty())
+			this.relationWithSKMS=null;
+		else
+			this.relationWithSKMS = relationWithSKMS;
 	}
+	
 	public Date getDob() {
 		return dob;
 	}
 	public void setDob(Date dob) {
 		this.dob = dob;
 	}
+	
 	public String getGuardianType() {
 		return guardianType;
 	}
 	public void setGuardianType(String guardianType) {
-		this.guardianType = guardianType;
+		if(guardianType.isEmpty())
+			this.guardianType=null;
+		else
+			this.guardianType = guardianType;
 	}
+	
 	public String getFirstNameFather() {
 		return firstNameFather;
 	}
 	public void setFirstNameFather(String firstNameFather) {
-		this.firstNameFather = firstNameFather;
+		if(firstNameFather.isEmpty())
+			this.firstNameFather=null;
+		else
+			this.firstNameFather = firstNameFather;
 	}
+	
 	public String getLastNameFather() {
 		return lastNameFather;
 	}
 	public void setLastNameFather(String lastNameFather) {
-		this.lastNameFather = lastNameFather;
+		if(lastNameFather.isEmpty())
+			this.lastNameFather=null;
+		else
+			this.lastNameFather = lastNameFather;
 	}
+	
 	public String getMotherName() {
 		return motherName;
 	}
 	public void setMotherName(String motherName) {
-		this.motherName = motherName;
+		if(motherName.isEmpty())
+			this.motherName=null;
+		else
+			this.motherName = motherName;
 	}
+	
 	public String getResidentialAddress() {
 		return residentialAddress;
 	}
 	public void setResidentialAddress(String residentialAddress) {
-		this.residentialAddress = residentialAddress;
+		if(residentialAddress.isEmpty())
+			this.residentialAddress=null;
+		else
+			this.residentialAddress = residentialAddress;
 	}
+	
 	public String getMsId() {
 		return msId;
 	}
 	public void setMsId(String msId) {
-		this.msId = msId;
+		if(msId.isEmpty())
+			this.msId=null;
+		else
+			this.msId = msId;
 	}
+	
 	public String getOccupationType() {
 		return occupationType;
 	}
 	public void setOccupationType(String occupationType) {
-		this.occupationType = occupationType;
+		if(occupationType.isEmpty())
+			this.occupationType=null;
+		else
+			this.occupationType = occupationType;
 	}
+	
 	public String getEmploymentType() {
 		return employmentType;
 	}
 	public void setEmploymentType(String employmentType) {
-		this.employmentType = employmentType;
+		if(employmentType.isEmpty())
+			this.employmentType=null;
+		else
+			this.employmentType = employmentType;
 	}
+	
 	public String getAssessmentResult() {
 		return assessmentResult;
 	}
 	public void setAssessmentResult(String assessmentResult) {
-		this.assessmentResult = assessmentResult;
+		if(assessmentResult.isEmpty())
+			this.assessmentResult=null;
+		else
+			this.assessmentResult = assessmentResult;
 	}
+	
 	public String getMedicalExaminationConducted() {
 		return medicalExaminationConducted;
 	}
 	public void setMedicalExaminationConducted(String medicalExaminationConducted) {
-		this.medicalExaminationConducted = medicalExaminationConducted;
+		if(medicalExaminationConducted.isEmpty())
+			this.medicalExaminationConducted=null;
+		else
+			this.medicalExaminationConducted = medicalExaminationConducted;
 	}
 	
 	/*----- Constructor -------- */
