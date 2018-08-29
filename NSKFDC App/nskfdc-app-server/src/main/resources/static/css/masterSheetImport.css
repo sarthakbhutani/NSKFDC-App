@@ -212,8 +212,10 @@
 
 
 .importExcelMessageStyle{
-	    text-align: center;
+	    text-align: left;
     	margin: 0;
+    	font-weight: bold;
+    	font-size:10pt;
 }
 
 /*  Modal Box CSS  */
@@ -276,7 +278,7 @@ display:block;
 }
 .secondContainer{
 	background-color: #ffffff;
-	height: 30vh;
+	height: 34vh;
 }
 #successId{
 	font-weight: bold;
