@@ -4,14 +4,20 @@
 
 <nav class="navbar">
     <div class="container-fluid">
-        <div class="navbar-header navbar-brand">
-            <a class="logo">
-                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="11%" >
+        <div class="navbar-header navbar-brand row">
+        <div class="col-md-3">
+            <a href="http://sscgj.in/" class="logo" target="_blank">
+                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="43%" >
             </a>
-			<span class="nameOfUser">{{nameOfuser}}</span>
-			<a class="navbar-right">
-			<p class="userName"><b>{{username}}</b></p>
+         </div>
+         <div class="col-md-6">
+			<p class="nameOfUser">{{nameOfuser}}</p>
+		</div>
+		<div class="col-md-3" align="right" style="padding: 6pt;">
+			<a class="">
+			<p class="userName" ><b>{{username}}</b></p>
             <img src="images/logout.png" alt="logout" width="6%" >&nbsp;<span ng-click="logout()">Logout</span></a>
+        </div>
         </div>
         
     </div>
