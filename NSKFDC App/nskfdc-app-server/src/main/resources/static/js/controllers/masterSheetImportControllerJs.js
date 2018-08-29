@@ -224,9 +224,26 @@ var url = '/getBatchIdfortrainer';
     	}
     	if($scope.batch.batchEndDate< $scope.batch.batchStartDate)
     	{
-    		$scope.dateErrorFlag =true;
+    		$scope.dateErrorFlag = true;
     		$scope.dateError = "Batch End Date cannot be less than Batch Start Date";
     	}
+    	
+    	
+    	if($scope.dateErrorFlag == false)
+     	{
+    	var startDate = new Date($scope.batch.batchStartDate);
+    	var endDate = new Date($scope.batch.batchEndDate);
+    	var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+        var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    	
+    	if( dayDifference > 5)
+    		{
+    			$scope.dateErrorFlag = true;
+    			$scope.dateError = "Batch duration cannot exceed 5 days";
+    		}
+
+     	}
+    	
     	$timeout(function() {
             $scope.dateError="";
             $scope.dateErrorFlag =false;
