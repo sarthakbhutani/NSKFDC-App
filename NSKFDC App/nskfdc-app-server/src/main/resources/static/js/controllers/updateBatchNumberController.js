@@ -101,6 +101,7 @@ app.controller('updateBatchNumberController', function($scope, $http, $timeout) 
             		 $scope.batchIdforSearch="";
             		 if(response.data == null || response.data == ""){
             			 $scope.searchBNErrorMessage="No Records Found";
+            			 $scope.searchBatchNumber.data = [];
             			 
             		 }
             		 else{

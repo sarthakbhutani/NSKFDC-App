@@ -17,6 +17,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 			    .then(function (response) {
 			    	 if(response.data.length==0){
 						 $scope.searchdetailError='No Data Found';
+						 $scope.details.data=[];
 					 }
 					 else{
 						 $scope.details.data= response.data;

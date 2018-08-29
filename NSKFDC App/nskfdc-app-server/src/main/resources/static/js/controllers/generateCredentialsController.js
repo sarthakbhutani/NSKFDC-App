@@ -94,7 +94,8 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 				 
 				 if(response.data.length==0){
 					 $scope.searchError='No Data Found';
-				 }
+					 $scope.detailsData.data=[];
+					 }
 				 else{
 				 $scope.detailsData.data=response.data;
 				 $scope.searchError='';
@@ -102,6 +103,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 			});
 		 $timeout(function() {
              $scope.searchError="";
+             
           }, 4000);
 	 }
 	 

@@ -87,6 +87,7 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 				 
 				 if(response.data.length==0){
 					 $scope.searchError='No Data Found';
+					 $scope.updatedData.data=[];
 					 
 				 }
 				 else{

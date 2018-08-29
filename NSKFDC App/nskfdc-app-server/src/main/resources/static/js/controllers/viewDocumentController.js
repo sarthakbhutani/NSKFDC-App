@@ -26,6 +26,7 @@ scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 		.then(function (response) {
 			if(response.data.length==0){
 				 $scope.searchError='No Data Found';
+				 $scope.uploadedDocument.data=[];
 			 }
 			 else{
 			 $scope.uploadedDocument.data=response.data;
