@@ -3,6 +3,7 @@ var uploadDocument = angular.module('app');
 uploadDocument.controller("uploadDocumentController" , function($scope, $http, uploadFile, $timeout){
 	
 	   $scope.ids = [];
+	   $scope.batch = {};
 	    $http.get('/getBatchIdDet')
 		    .then(function(response) {
 		        let dt = response.data;
@@ -28,12 +29,12 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 	  };
 
 	     $scope.uploadFile = function(){
-
+	    	 
 	      	var file = $scope.dataImport.upload;
 	      	var fileType = $scope.fileType;
 	      	var batchId = $scope.batchId;
-	      	var scgjBatchNumber = $scope.scgjBatchNumber;
-
+	      	var scgjBatchNumber = $scope.batch.scgjBatchNumber;
+	      	console.log(scgjBatchNumber);
 	          var uploadUrl = "/uploadFile";
 	        var uploadedFile = uploadFile.uploadFileToUrl(file, uploadUrl, fileType, batchId, scgjBatchNumber);
 	      

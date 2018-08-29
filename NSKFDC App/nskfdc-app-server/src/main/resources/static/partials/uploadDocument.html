@@ -33,9 +33,12 @@
        
       </div>
        <div id="r2t2" class="col-md-2 paddingUploadDoc" ng-switch="fileType" >
-        <div ng-show="fileType=='finalBatchReport'" ng-model="fileType"> 
+                <div ng-if="fileType === 'finalBatchReport'"  id="general-1" >
+               <div >
+                   <input type="text" ng-model="batch.scgjBatchNumber" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch Number" required>
+               </div>
         
-          <input type="text" ng-click="scgj()"  ng-change="enable()" ng-model="scgjBatchNumber" class="form-control form-rounded placeholderfont" id="Second" placeholder="SCGJ Batch Number">
+         
        
         </div>
       </div>
