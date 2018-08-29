@@ -10,6 +10,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -59,7 +60,14 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 				return -299;
 			}
 
-		} catch (Exception e) {
+		} 
+		catch(DuplicateKeyException duplicateKeyException)
+		{
+			LOGGER.error("Duplicate value of scgj batch number for batch id : " + batchId);
+			LOGGER.error("returning error code -825" + duplicateKeyException);
+			return -825;
+		}
+		catch (Exception e) {
 			LOGGER.error("An error occured while checking the existence of batch number against the batch id :" + e);
 			LOGGER.error("Returning -25 as the error code");
 			return -239;
@@ -114,6 +122,12 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 			return updateStatus;
 			}
 		} 
+		catch(DuplicateKeyException dE)
+		{
+			LOGGER.error("A duplicate key exception occured while updating the batch number : " +dE );
+			LOGGER.error("Returning error code -677");
+			return -677;
+		}
 		catch (Exception e) {
 			LOGGER.error("An error occured while updating scgj batch number " + scgjBatchNumber + " " + e);
 			LOGGER.debug("Returning error code: -585");
