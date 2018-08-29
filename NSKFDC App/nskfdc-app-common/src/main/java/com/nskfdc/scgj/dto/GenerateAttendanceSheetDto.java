@@ -125,8 +125,21 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 	 */
 	public GenerateAttendanceSheetDto(String firstName, String lastName,String firstNameFather, String lastNameFather,String mobileNumber,String batchId,Date batchStartDate)
 	{
-		name = firstName+" "+lastName;
-		fatherName = firstNameFather+" "+lastNameFather;
+		if(lastName!=null)
+			name = firstName+" "+lastName;
+		else
+			name = firstName;
+		
+		if(firstNameFather!=null && lastNameFather!=null) {
+			fatherName = firstNameFather+" "+lastNameFather;
+		}else if(firstNameFather!=null) {
+			fatherName=firstNameFather;
+		}else if(lastNameFather!=null) {
+			fatherName=lastName;
+		}else {
+		fatherName=null;
+		}
+		
 		this.mobileNumber = mobileNumber;
 		this.batchId = batchId;
 		setStringdate1(batchStartDate);
@@ -135,4 +148,10 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 		setStringdate4();
 		setStringdate5();
 	}
+	public GenerateAttendanceSheetDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }
