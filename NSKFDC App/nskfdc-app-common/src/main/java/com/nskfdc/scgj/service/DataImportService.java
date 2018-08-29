@@ -267,33 +267,45 @@ public class DataImportService {
 					masterSheetImportDto.setDisabilityType(cell.getStringCellValue());
 
 				} else if (cell.getColumnIndex() == 6) {
-					if (cell.getDateCellValue() == null) {
-						LOGGER.debug("Date value not present");
-						int rowNumber = row.getRowNum() + 1;
-						int columnNumber = cell.getColumnIndex() + 1;
-						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
-						
-						return "Date of Birth cannot be empty at row number " + " " + rowNumber + " and column number " + columnNumber;
-					}
-					else
-					{
-						LOGGER.debug("Capturing value of header : DateOfBirth ");
-						if (cell.getDateCellValue().toString().isEmpty()) {
-							LOGGER.debug("Date of Birth column empty");
-							flag = false;
-							int rowNumber = row.getRowNum() + 1;
-							int columnNumber = cell.getColumnIndex() + 1;
-							LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
-							return "Date of Birth cannot be empty at row number " + " " + rowNumber + " and column number " + columnNumber;
-						
-						} else if (DateUtil.isCellDateFormatted(cell)) {
-							LOGGER.debug("Date is in date format");
-							LOGGER.debug("The date of birth is " + cell.getDateCellValue());
-							masterSheetImportDto.setDob(cell.getDateCellValue());
-						}
-					}
+							 LOGGER.debug("Capturing value of header : DateOfBirth ");
 
-				} else if (cell.getColumnIndex() == 7) {
+							 if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								{ 
+										 LOGGER.error("Cells are String formatted");
+										 return "Please set the format of date of birth as dd-mm-yyyy";	 
+								}
+							 
+							 else if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
+							 {
+								 LOGGER.error("Cells are blank formatted");
+								 flag = false;
+									int rowNumber = row.getRowNum() + 1;
+									int columnNumber = cell.getColumnIndex() + 1;
+								 return "Please insert value in the DOB Column at row : " + rowNumber + " & column number " + columnNumber;
+							 }
+							 
+							 else if(DateUtil.isCellDateFormatted(cell) == false)
+								{
+								 LOGGER.error("Cells are not date formatted");
+								 return "Please set the format of date of birth as dd-mm-yyyy";
+								}
+							 else if(DateUtil.isCellDateFormatted(cell) == true)
+								{
+									 
+								 LOGGER.error("Cells are date formatted");								
+									LOGGER.debug("Date is in date format");
+									LOGGER.debug("The date of birth is " + cell.getDateCellValue());
+									masterSheetImportDto.setDob(cell.getDateCellValue());
+							}
+							
+						
+
+						
+					
+					}
+					
+						
+					 else if (cell.getColumnIndex() == 7) {
 					LOGGER.debug("Capturing value for age");
 					LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
 					masterSheetImportDto.setAge((int) cell.getNumericCellValue());
@@ -327,14 +339,8 @@ public class DataImportService {
 					masterSheetImportDto.setEducationQualification(cell.getStringCellValue());
 				} else if (cell.getColumnIndex() == 14) {
 					LOGGER.debug("Capturing the value of header : State ");
-					if (cell.getStringCellValue().isEmpty()) {
-						LOGGER.error("State is null");
-						int rowNumber = row.getRowNum() + 1;
-						int columnNumber = cell.getColumnIndex() + 1;
-						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);						
-						flag = false;
-						return "Please enter state of the candidate at row number : " + " " + rowNumber + " and column number : " + columnNumber;
-					} else {
+					if (cell.getStringCellValue().isEmpty()) 
+					{
 						LOGGER.debug("The value of state is : " + cell.getStringCellValue());
 						masterSheetImportDto.setState(cell.getStringCellValue());
 					}
