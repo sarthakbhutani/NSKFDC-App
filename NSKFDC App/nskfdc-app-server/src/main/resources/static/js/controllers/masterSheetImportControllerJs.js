@@ -349,7 +349,8 @@ var url = '/getBatchIdfortrainer';
     		 var url='/downloadFinalMasterSheet?batchId='+$scope.batchDetails.value;  	  
          	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
          	{	
-         		
+         		if(response.data.byteLength!=0)
+        		{         		
          			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
          			var downloadURL = URL.createObjectURL(excelFile);
          			var link = document.createElement('a');
@@ -359,7 +360,16 @@ var url = '/getBatchIdfortrainer';
          			link.click();
          			
          			$scope.generateCandidateSheetError = true;
-                	$scope.generateCandidateSheetMessage = "Batch sheet generated successfully!";
+                	$scope.generateCandidateSheetMessage = "Candidate sheet generated successfully!";
+                	document.getElementById("successId").style.color = "green";
+                	
+        		}
+         		else{
+         			$scope.generateCandidateSheetError = true;
+                	$scope.generateCandidateSheetMessage = "Candidate sheet cannot be generated!";
+                	document.getElementById("successId").style.color = "red";
+                	
+         		}
          			
          	}); 
          	
