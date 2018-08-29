@@ -224,7 +224,13 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		public CandidateDetailsDto mapRow(ResultSet rs,int rowNum)throws SQLException{
 			String fn=rs.getString("firstName");
 			String ln=rs.getString("lastName");
-			String name=fn+" "+ln;
+			String name;
+			if(ln!=null) {
+			name=fn+" "+ln;
+			}
+			else {
+			name=fn;	
+			}
 			String aadharNumber=rs.getString("aadharCardNumber");
 			String mobileNumber=rs.getString("mobileNumber");
 			String candidateNumber=rs.getString("enrollmentNumber");
