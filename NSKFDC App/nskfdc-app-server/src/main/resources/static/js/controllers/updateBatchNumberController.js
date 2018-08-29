@@ -36,6 +36,12 @@ app.controller('updateBatchNumberController', function($scope, $http, $timeout) 
             			 $scope.insertBNSuccessMessage="";
             			 $scope.insertBNErrorMessage="Batch Number already present , Please update your batch number";
             		 }
+            		 else if(response.data == -825)
+            			 {
+            			 $scope.insertBNSuccessMessage="";
+            			 $scope.insertBNErrorMessage="Batch Number already exists, Please enter your unique SDMS Batch Number";
+            			 }
+            		 
             	 });
              
             	 
@@ -63,6 +69,19 @@ app.controller('updateBatchNumberController', function($scope, $http, $timeout) 
             			 $scope.updateBNSuccessMessage="";
             			 $scope.updateBNErrorMessage="Batch Number not present, Please insert batch number";
             		 }
+            		 
+            		 else if(response.data == -677)
+           		  {
+           			 $scope.updateBNSuccessMessage="";
+           			 $scope.updateBNErrorMessage="Batch Number already exists, Please enter your unique SDMS Batch Number";
+           			 
+           		 }
+           		 
+           		 else if(response.data == -585)
+           			 {
+	            			 $scope.updateBNSuccessMessage="";
+	            			 $scope.updateBNErrorMessage="SDMS Batch Number cannot be updated";
+           			 }
             	 });
              
             	 
