@@ -221,7 +221,7 @@
 	 </div>
 	 <form name="candidateSheetForm" ng-submit="generateCandidateSheet()">
 	  <div class="col-md-3">
-            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <select  ng-model="generatebatchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
             <option selected disabled value="">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>
@@ -237,7 +237,7 @@
 	 </div>
 	 <form name="uploadFile" ng-submit="uploadCandidateSheet()">
 	 <div class="col-md-3">
-            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <select ng-model="uploadCandidateDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
             <option selected disabled value="">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>

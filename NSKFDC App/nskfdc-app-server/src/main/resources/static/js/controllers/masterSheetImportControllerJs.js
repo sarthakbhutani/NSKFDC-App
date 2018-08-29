@@ -295,8 +295,6 @@ var url = '/getBatchIdfortrainer';
         					$scope.submitMsg=true;
         					$scope.errorMsg=false;
         					$scope.SuccessMessage="Batch details inserted successfully";
-        				 	
-        			    
         					
         				}
         			
@@ -339,14 +337,14 @@ var url = '/getBatchIdfortrainer';
     		 
     		 var file = $scope.masterSheet.import;
 		      	
-		      	var batchId = $scope.batchDetails.value;
+		      	var batchId = $scope.uploadCandidateDetails.value;
 		      	
 		          var importUrl = "/importMasterSheet";
 		        var fileuploaded = fileUpload.uploadFileToUrl(file, importUrl, batchId);
     	 }
     	 
     	 $scope.generateCandidateSheet= function(){
-    		 var url='/downloadFinalMasterSheet?batchId='+$scope.batchDetails.value;  	  
+    		 var url='/downloadFinalMasterSheet?batchId='+$scope.generatebatchDetails.value;  	  
          	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
          	{	
          		if(response.data.byteLength!=0)
@@ -355,7 +353,7 @@ var url = '/getBatchIdfortrainer';
          			var downloadURL = URL.createObjectURL(excelFile);
          			var link = document.createElement('a');
          			link.href = downloadURL;
-         			link.download = "Candidate Sheet_"+$scope.batchDetails.value+".xlsx"
+         			link.download = "Candidate Sheet_"+$scope.generatebatchDetails.value+".xlsx"
          			document.body.appendChild(link);
          			link.click();
          			
