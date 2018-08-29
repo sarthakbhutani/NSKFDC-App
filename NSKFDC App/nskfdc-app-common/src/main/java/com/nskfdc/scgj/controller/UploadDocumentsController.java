@@ -68,6 +68,7 @@ public class UploadDocumentsController {
 	 			{
 	 				LOGGER.debug("File Type is final batch report : " + fileType);
 	 				//To check batch number against the batch Id
+	 				LOGGER.debug("The scgj batch Number is : " + scgjBatchNumber);
 		 			int status = uploadDocumentService.scgjBatchIdField(batchId,scgjBatchNumber);
 		 			
 		 			if(status == 1)

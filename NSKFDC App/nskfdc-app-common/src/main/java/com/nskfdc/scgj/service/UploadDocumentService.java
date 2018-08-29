@@ -92,7 +92,7 @@ public class UploadDocumentService {
 		public int scgjBatchIdField(String batchId, String scgjBatchId) {
 			
 			LOGGER.debug("Request received from controller to UploadDocumentService");
-			LOGGER.debug("In scgjBatchIdField - To check existence of batchId & scgjBatchNumber");
+			LOGGER.debug("In scgjBatchIdField - To check existence of batchId & scgjBatchNumber for batch id :" +batchId+ " scgjBatchNumber" + scgjBatchId);
 			
 				try {	
 					
