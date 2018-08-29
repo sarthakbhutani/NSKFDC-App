@@ -44,6 +44,9 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 			 {
 			 $scope.dataundefined='Please enter NSDC Reg. Number and New Target';
 			 }
+		 else if($scope.data.targets<=0){
+			 $scope.dataundefined='Please enter valid target to allocate';
+		 }
 		 else if($scope.data.targets==undefined)
 			{
 			$scope.dataundefined='Please enter new target to be allocated';
