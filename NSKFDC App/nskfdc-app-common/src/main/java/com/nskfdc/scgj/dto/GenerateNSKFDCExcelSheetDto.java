@@ -213,13 +213,30 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 			String motherName,String aadharCardNumber,String residentialAddress,String mobileNumber,String occupationType,String msId,
 			String idProofType,String idProofNumber,String bankName,String ifscCode,String accountNumber, String batchId, String trainingPartnerName,String relationWithSKMS) 
 	{
-		name = firstName+" "+lastName;
+		
+		if(lastName!=null)
+			name = firstName+" "+lastName;
+		else
+			name = firstName;
+		
+		if(firstNameFather!=null && lastNameFather!=null) {
+			fatherName = firstNameFather+" "+lastNameFather;
+		}else if(firstNameFather!=null) {
+			fatherName=firstNameFather;
+		}else if(lastNameFather!=null) {
+			fatherName=lastNameFather;
+		}else {
+		fatherName=null;
+		}
+		
+		
+		
 		this.age = age;
 		this.gender = gender;
 		this.date_dob = dob;
 		this.dob = df.format(date_dob);
 		this.educationLevel = educationLevel;
-		fatherName = firstNameFather+" "+lastNameFather;
+		
 		this.motherName = motherName;
 		this.aadharCardNumber = aadharCardNumber;
 		this.residentialAddress = residentialAddress;
