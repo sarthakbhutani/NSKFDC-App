@@ -135,7 +135,7 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 		}else if(firstNameFather!=null) {
 			fatherName=firstNameFather;
 		}else if(lastNameFather!=null) {
-			fatherName=lastName;
+			fatherName=lastNameFather;
 		}else {
 		fatherName=null;
 		}
