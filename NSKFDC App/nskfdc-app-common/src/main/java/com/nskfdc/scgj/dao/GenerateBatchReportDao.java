@@ -195,6 +195,8 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	
 	private static class TrainingDetailsRowmapper implements RowMapper<TrainingDetailsDto>{
 		
+		
+		
 		@Override
 		public TrainingDetailsDto mapRow(ResultSet rs,int rowNum)throws SQLException{
 			String dateOfScreeningCommittee=rs.getString("selectionCommitteeDate");
@@ -202,12 +204,12 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			String endDateOfTraining=rs.getString("batchEndDate");
 			String trainingPartner=rs.getString("trainingPartnerName");
 			String prinicipalTrainer=rs.getString("principalTrainerName");
-			String candidatesRegistered=rs.getString("count(*)");
-			String candidatesAssessed="NA";
-			String candidatesPassed=rs.getString("count(assessmentResult)");
+			String candidatesRegistered=rs.getString("count(enrollmentNumber)");
+			String candidatesAssessed=rs.getString("candidateAssessed");
+			String candidatesPassed=rs.getString("candidatePassed");
 			String dateOfMedicalExamination=rs.getString("medicalExamDate");
-			String candidatesMedicallyExamined=rs.getString("count(medicalExamConducted)");
-			String payoutToCandidates="NEFT(HDFC)";
+			String candidatesMedicallyExamined=rs.getString("medicalExamConducted");
+			String payoutToCandidates=" ";
 			String participantHandbook="Given to all candidates";
 			
 			return new TrainingDetailsDto(dateOfScreeningCommittee, startDateOfTraining, endDateOfTraining, trainingPartner, prinicipalTrainer, candidatesRegistered, candidatesAssessed, candidatesPassed, dateOfMedicalExamination, candidatesMedicallyExamined, payoutToCandidates, participantHandbook);

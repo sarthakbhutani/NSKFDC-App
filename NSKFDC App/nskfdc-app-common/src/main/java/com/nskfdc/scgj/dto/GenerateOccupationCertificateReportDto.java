@@ -80,10 +80,24 @@ public class GenerateOccupationCertificateReportDto extends BaseDto{
 	 */
 	public GenerateOccupationCertificateReportDto(String firstName, String lastName,String gender, String age, String firstNameFather, String lastNameFather, String aadharCardNumber,	String residentialAddress, String workplaceAddress) {
 		
-		name = firstName+" "+lastName;
+		if(lastName!=null)
+			name = firstName+" "+lastName;
+		else
+			name = firstName;
+		
 		this.gender = gender;
 		this.age = age;
-		fatherName = firstNameFather+" "+lastNameFather;
+		
+		if(firstNameFather!=null && lastNameFather!=null) {
+			fatherName = firstNameFather+" "+lastNameFather;
+		}else if(firstNameFather!=null) {
+			fatherName=firstNameFather;
+		}else if(lastNameFather!=null) {
+			fatherName=lastName;
+		}else {
+			fatherName=null;
+		}
+		
 		this.aadharCardNumber = aadharCardNumber;
 		this.workplaceAddress = workplaceAddress;
 		this.residentialAddress = residentialAddress;
