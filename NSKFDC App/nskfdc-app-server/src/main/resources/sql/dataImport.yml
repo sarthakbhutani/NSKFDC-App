@@ -8,6 +8,9 @@ dataImport:
  ShowTotalTargets: >
   select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
   
+ checkCandidate: >
+  select exists (select enrollmentNumber from candidate where candidate.enrollmentNumber = :enrollmentNumber and candidate.batchid = :batchId);
+  
  ShowTargetAchieved: >
   select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (candidate.assessmentResult="pass" or candidate.assessmentResult="fail") and (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
 
