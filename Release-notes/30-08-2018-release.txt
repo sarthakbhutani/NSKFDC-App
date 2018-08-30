@@ -1,0 +1,11 @@
+This build number #640
+Fixed the bugs found in build #633
+NA-330
+NA-329
+NA-331
+NA-328
+NA-327
+
+
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail
