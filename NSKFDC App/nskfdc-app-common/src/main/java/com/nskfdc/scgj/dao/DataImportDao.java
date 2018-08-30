@@ -932,5 +932,30 @@ public class DataImportDao extends AbstractTransactionalDao {
 			return null;
 		}
 	}
+	
+	public Integer checkCandidate(String enrollmentNumber, String batchId)
+	{
+		LOGGER.debug("In method checkCandidate to check existence of candidate with enrollment number  :  " + enrollmentNumber + " and batchID : " + batchId);
+		LOGGER.debug("Creating hashmap of objects");
+		try
+		{
+			Map<String,Object> checkParams = new HashMap<>();
+			checkParams.put("enrollmentNumber", enrollmentNumber);
+			checkParams.put("batchId", batchId);
+			if(checkParams.isEmpty())
+			{
+				LOGGER.error("Parameters in method checkCandidate are empty");
+				return -399;
+			}
+			return getJdbcTemplate().queryForObject(dataImportConfig.getCheckCandidate(), checkParams, Integer.class);   
+					
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An error occured while checking the candidate with enrollment number : " + enrollmentNumber + " in method checkCandidate" + e);
+			LOGGER.error("Returning error code -622");
+			return -622;
+		}
+	}
 
 }

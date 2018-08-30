@@ -135,36 +135,78 @@ public class DataImportService {
 			workbook = new HSSFWorkbook(fileStream);
 		}
 
+		
+		
+		
 		Sheet sheet = workbook.getSheetAt(0);
-
-		
-		
-
 		Iterator<Row> rowIterator = sheet.rowIterator();
+		Integer existingCandidates = 0;
+		Integer nonExistingCandidates = 0;
+		
+		Integer remainingTargets = getRemainingTargets(userEmail);
+		while(rowIterator.hasNext())
+		{
+			Row row = sheet.getRow(0);
+			row = rowIterator.next();
+			
+			if(row.getRowNum()>6)
+			{
+				LOGGER.debug("Checking the enrollment number of the candidate");
+				Cell cell = row.getCell(0);
+				String enrollmentNumber = cell.toString();
+				if(cell.getCellType() == Cell.CELL_TYPE_BLANK )
+				{
+					int rowNumber = row.getRowNum() + 1;
+					LOGGER.error("Enrollment Number is blank");
+					return "Please insert enrollment number at row : " +rowNumber;
+				}
+				
+				Integer existence = dataImportDao.checkCandidate(enrollmentNumber, batchId);
+				if(existence == 1)
+				{
+					LOGGER.debug("Candidate with enrolment number " + enrollmentNumber +" Exists");
+					existingCandidates++;
+					LOGGER.debug("Count of existing candidates is : " + existingCandidates);
+					
+				}
+				else if(existence == 0)
+				{
+					LOGGER.debug("Candidate with enrollment number " + enrollmentNumber + " does not exists");
+					nonExistingCandidates++;
+					LOGGER.debug("Count of non existing candidates is : " + nonExistingCandidates);
+				}
+			}
+		}
+		
+		LOGGER.debug("The value of existence = " + existingCandidates);
+		LOGGER.debug("The value of non existing candidates = " + nonExistingCandidates);
+		
+		if (nonExistingCandidates > remainingTargets) {
+			int sizeOfBatch = nonExistingCandidates;
+			int remainder = remainingTargets;
+			return "Cannot create batch. Your remaining targets are " + " " + remainder + ". Please contact Sector Skill Council for more targets";
+		}
+		
 		int numberOfRows = sheet.getPhysicalNumberOfRows();
-
 		if (numberOfRows > 56) {
 			LOGGER.debug("A batch cannot have more than 50 candidates in a batch");
 
 			return "A batch cannot have more than 50 Candidates";
 
 		}
-		Integer remaningTargets = getRemainingTargets(userEmail) + 6;
-		if (numberOfRows > remaningTargets) {
-			int sizeOfBatch = numberOfRows - 6;
-			int remainder = remaningTargets - 6;
-			return "Batch can not be created for size " + sizeOfBatch + "Your remaining targets are " + remainder;
-		}
+	
+
 		LOGGER.debug("The number of physical rows are : " + numberOfRows);
 
-		while (rowIterator.hasNext()) {
+		Iterator<Row> rowIteratorReader = sheet.rowIterator();
+		while (rowIteratorReader.hasNext()) {
 			
 			ArrayList<MasterSheetImportDto> candidateDetails = new ArrayList<MasterSheetImportDto>();
 			 MasterSheetImportDto masterSheetImportDto = new MasterSheetImportDto();
 			 
 
 			Row row = sheet.getRow(0);
-			row = rowIterator.next();
+			row = rowIteratorReader.next();
 
 			if (row.getRowNum() == 2) {
 				Iterator<Cell> cellIterator = row.cellIterator();
@@ -206,7 +248,7 @@ public class DataImportService {
 				Cell cell = cellIterator.next();
 
 				if (cell.getColumnIndex() == 0) {
-					if (cell.getStringCellValue().isEmpty()) {
+					if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 						LOGGER.error("No enrollment number found");
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
@@ -214,13 +256,18 @@ public class DataImportService {
 						flag = false;
 						return "Please enter Enrollment Number at row number " + " " + rowNumber + " and column number "
 								+ columnNumber;
-					} else {
+					} 
+					else
+					{
 
 						LOGGER.debug("The cell value of enrollment number is : " + cell.getStringCellValue());
 						masterSheetImportDto.setEnrollmentNumber(cell.getStringCellValue());
 					}
-				} else if (cell.getColumnIndex() == 1) {
-					if (cell.getStringCellValue().isEmpty()) {
+				} 
+				else if (cell.getColumnIndex() == 1)
+				{
+					if (cell.getCellType() == Cell.CELL_TYPE_BLANK) 
+					{
 						LOGGER.error("Null value for salutation");
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
@@ -229,44 +276,61 @@ public class DataImportService {
 						return "Please enter salutation at row number" + " " + rowNumber + " and column number "
 								+ columnNumber;
 
-					} else {
+					}
+					else
+					{
 						LOGGER.debug("The salutation is : " + cell.getStringCellValue());
 						masterSheetImportDto.setSalutation(cell.getStringCellValue());
 					}
-				} else if (cell.getColumnIndex() == 2) {
-					if (cell.getStringCellValue().isEmpty()) {
+				}
+				else if (cell.getColumnIndex() == 2) 
+				{
+					if (cell.getCellType()==Cell.CELL_TYPE_BLANK) 
+					{
 						LOGGER.error("First Name of candidate is null");
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
 						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
 						flag = false;
 						return "Please enter first name of candidate at row number " + " " + rowNumber + " and column number " + columnNumber;
-					} else {
+					}
+					else
+					{
 						LOGGER.debug("The first name of candidate is : " + cell.getStringCellValue());
 						masterSheetImportDto.setFirstName(cell.getStringCellValue());
 					}
-				} else if (cell.getColumnIndex() == 3) {
+				}
+				else if (cell.getColumnIndex() == 3)
+				{
 					LOGGER.debug("Last Name of canididate is : " + cell.getStringCellValue());
 					masterSheetImportDto.setLastName(cell.getStringCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 4) {
-					if (cell.getStringCellValue().isEmpty()) {
+				else if (cell.getColumnIndex() == 4) 
+				{
+					if (cell.getCellType()==Cell.CELL_TYPE_BLANK) 
+					{
 						LOGGER.debug("Gender is set to null");
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
 						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
 						flag = false;
 						return "Please enter the gender at row number " + " " + rowNumber + " and column number " + columnNumber;
-					} else {
+					}
+					else
+					{
 						LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
 						masterSheetImportDto.setGender(cell.getStringCellValue());
 					}
-				} else if (cell.getColumnIndex() == 5) {
+				} 
+				else if (cell.getColumnIndex() == 5)
+				{
 					LOGGER.debug("Capturing value of header : Disability Type is : " + cell.getStringCellValue());
 					masterSheetImportDto.setDisabilityType(cell.getStringCellValue());
 
-				} else if (cell.getColumnIndex() == 6) {
+				}
+				else if (cell.getColumnIndex() == 6) 
+				{
 							 LOGGER.debug("Capturing value of header : DateOfBirth ");
 
 							 if(cell.getCellType()==Cell.CELL_TYPE_STRING)
@@ -297,63 +361,83 @@ public class DataImportService {
 									LOGGER.debug("The date of birth is " + cell.getDateCellValue());
 									masterSheetImportDto.setDob(cell.getDateCellValue());
 							}
-							
-						
 
-						
-					
 					}
-					
-						
-					 else if (cell.getColumnIndex() == 7) {
+							
+				else if (cell.getColumnIndex() == 7)
+				{
 					LOGGER.debug("Capturing value for age");
 					LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
 					masterSheetImportDto.setAge((int) cell.getNumericCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 8) {
+				else if (cell.getColumnIndex() == 8) 
+				{
 					LOGGER.debug("Capturing the value of header : Guardian Type");
 					LOGGER.debug("The value of guardian type : " + cell.getStringCellValue());
 					masterSheetImportDto.setGuardianType(cell.getStringCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 9) {
+				else if (cell.getColumnIndex() == 9) 
+				{
 					LOGGER.debug("Capturing value of header : Father's First Name");
 					LOGGER.debug("Father's first name is : " + cell.getStringCellValue());
 					masterSheetImportDto.setFirstNameFather(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 10) {
+				}
+				else if (cell.getColumnIndex() == 10)
+				{
 					LOGGER.debug("Capturing value of header : Father's Last Name");
 					LOGGER.debug("Father's last name is : " + cell.getStringCellValue());
 					masterSheetImportDto.setLastNameFather(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 11) {
+				}
+				else if (cell.getColumnIndex() == 11)
+				{
 					LOGGER.debug("Capturing value of header : Mother Name");
 					LOGGER.debug("Mother's Last Name is : " + cell.getStringCellValue());
 					masterSheetImportDto.setMotherName(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 12) {
+				}
+				else if (cell.getColumnIndex() == 12) 
+				{
 					LOGGER.debug("Capturing value of header : Mobile Number ");
 					LOGGER.debug("Mobile Number is : " + (long) cell.getNumericCellValue());
 					masterSheetImportDto.setMobileNumber((long) cell.getNumericCellValue());
-				} else if (cell.getColumnIndex() == 13) {
+				}
+				else if (cell.getColumnIndex() == 13)
+				{
 					LOGGER.debug("Capturing value for header : Education Level");
 					LOGGER.debug("Education Level is : " + cell.getStringCellValue());
 					masterSheetImportDto.setEducationQualification(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 14) {
+				}
+				else if (cell.getColumnIndex() == 14)
+				{
 					LOGGER.debug("Capturing the value of header : State ");
-					if (cell.getStringCellValue().isEmpty()) 
+					if(cell.getCellType() == Cell.CELL_TYPE_BLANK) 
+					{
+						LOGGER.error("State is null");
+						int rowNumber = row.getRowNum() + 1;
+						int columnNumber = cell.getColumnIndex() + 1;
+						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
+						flag = false;
+						return "Please enter State at row number " + " " + rowNumber + " and column number "
+								+ columnNumber;
+					}
+					else if(cell.getStringCellValue() != null)
 					{
 						LOGGER.debug("The value of state is : " + cell.getStringCellValue());
 						masterSheetImportDto.setState(cell.getStringCellValue());
 					}
 				}
 
-				else if (cell.getColumnIndex() == 15) {
+				else if (cell.getColumnIndex() == 15) 
+				{
 					LOGGER.debug("Capturing value of header : District");
 					LOGGER.debug("The value of district is : " + cell.getStringCellValue());
 					masterSheetImportDto.setDistrict(cell.getStringCellValue());
 
 				}
 
-				else if (cell.getColumnIndex() == 16) {
+				else if (cell.getColumnIndex() == 16) 
+				{
 					LOGGER.debug("Capturing the value of header : Aadhar Card");
 					LOGGER.debug("Calculating the number of digits in aadhar number");
 
@@ -361,7 +445,8 @@ public class DataImportService {
 					int count = String.valueOf(aadharNumber).length();
 					LOGGER.debug("The number of digits in aadhar number : " + count);
 
-					if (count < 12) {
+					if (count < 12) 
+					{
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
 						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
@@ -369,8 +454,8 @@ public class DataImportService {
 						flag = false;
 						return "Please enter valid 12 digit aadhar card number at row number : " + " " + rowNumber + " and column number " + columnNumber;
 					} 
-					else if (count > 12) {
-						
+					else if (count > 12)
+					{
 						int rowNumber = row.getRowNum() + 1;
 						int columnNumber = cell.getColumnIndex() + 1;
 						LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
@@ -386,50 +471,72 @@ public class DataImportService {
 					}
 				}
 
-				else if (cell.getColumnIndex() == 17) {
+				else if (cell.getColumnIndex() == 17)
+				{
 					LOGGER.debug("Capturing the value of header : ID Proof");
 					masterSheetImportDto.setIdProofType(cell.getStringCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 18) {
+				else if (cell.getColumnIndex() == 18)
+				{
 					LOGGER.debug("Capturing value of header : Id Proof Number");
 					masterSheetImportDto.setIdProofNumber(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 19) {
+				}
+				else if (cell.getColumnIndex() == 19) 
+				{
 					LOGGER.debug("Capturing value of header : Occupation Category");
 					masterSheetImportDto.setOccupationType(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 20) {
+				}
+				else if (cell.getColumnIndex() == 20) 
+				{
 					LOGGER.debug("Capturing value of header : MS ID");
 					masterSheetImportDto.setMsId(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 21) {
+				}
+				else if (cell.getColumnIndex() == 21)
+				{
 					LOGGER.debug("Capturing value of header : Relation with SK/MS");
 					masterSheetImportDto.setRelationWithSKMS(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 22) {
+				}
+				else if (cell.getColumnIndex() == 22)
+				{
 					LOGGER.debug("Capturing value of header : Bank Name");
 					masterSheetImportDto.setBankName(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 23) {
+				}
+				else if (cell.getColumnIndex() == 23)
+				{
 					LOGGER.debug("Capturing value of header : IFSC Code");
 					masterSheetImportDto.setIfscCode(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 24) {
+				}
+				else if (cell.getColumnIndex() == 24) 
+				{
 					LOGGER.debug("Capturing value of header : Bank Account Number");
 					masterSheetImportDto.setAccountNumber((long) cell.getNumericCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 25) {
+				else if (cell.getColumnIndex() == 25) 
+				{
 					LOGGER.debug("Capturing value of header : Residential Address ");
 					masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());
 				}
 
-				else if (cell.getColumnIndex() == 26) {
+				else if (cell.getColumnIndex() == 26) 
+				{
 					LOGGER.debug("Capturing value of header : Workplace Address");
 					masterSheetImportDto.setWorkplaceAddress(cell.getStringCellValue());
 
-				} else if (cell.getColumnIndex() == 27) {
+				}
+				else if (cell.getColumnIndex() == 27)
+				{
 					LOGGER.debug("Capturing value of header : Medical Examination Conducted");
 					masterSheetImportDto.setMedicalExaminationConducted(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 28) {
+				}
+				else if (cell.getColumnIndex() == 28) 
+				{
 					LOGGER.debug("Capturing the value of header : Assessmet Result");
 					masterSheetImportDto.setAssessmentResult(cell.getStringCellValue());
-				} else if (cell.getColumnIndex() == 29) {
+				} 
+				else if (cell.getColumnIndex() == 29)
+				{
 					LOGGER.debug("Capturing value of header : Employment Type");
 					masterSheetImportDto.setEmploymentType(cell.getStringCellValue());
 				}

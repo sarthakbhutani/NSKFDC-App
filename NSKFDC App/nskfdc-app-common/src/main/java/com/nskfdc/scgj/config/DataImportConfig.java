@@ -8,9 +8,10 @@ import org.springframework.stereotype.Component;
 public class DataImportConfig {
 
 	private String BatchDetails;
+	private String checkCandidateExistence;
 	private String importCandidate;
 	private String importBankDetails;
-	private String checkCandidateExistance;
+	private String checkCandidate;
 	private String checkBankExistence;
 	private String updateExistingDetails;
 	private String updateExistingBankDetails;
@@ -57,10 +58,10 @@ public class DataImportConfig {
 		this.importBankDetails = importBankDetails;
 	}
 	public String getCheckCandidateExistance() {
-		return checkCandidateExistance;
+		return checkCandidate;
 	}
 	public void setCheckCandidateExistance(String checkCandidateExistance) {
-		this.checkCandidateExistance = checkCandidateExistance;
+		this.checkCandidate = checkCandidateExistance;
 	}
 	public String getCheckBankExistence() {
 		return checkBankExistence;
@@ -164,48 +165,20 @@ public class DataImportConfig {
 	public void setUpdateBatchDetails(String updateBatchDetails) {
 		this.updateBatchDetails = updateBatchDetails;
 	}
-	public DataImportConfig(String batchDetails, String importCandidate, String importBankDetails,
-			String checkCandidateExistance, String checkBankExistence, String updateExistingDetails,
-			String updateExistingBankDetails, String candidateSheet, String insertBatchId, String showTpName,
-			String numberOfBatches, String downloadMasterSheet, String showTotalTargets, String showTargetAchieved,
-			String showFinancialYear, String generateBatch, String showbatchId, String checkCentreExistence,
-			String insertCentreDetails, String updateCentreDetails, String updateBatchDetails, String batchId) {
-		super();
-		BatchDetails = batchDetails;
-		this.importCandidate = importCandidate;
-		this.importBankDetails = importBankDetails;
-		this.checkCandidateExistance = checkCandidateExistance;
-		this.checkBankExistence = checkBankExistence;
-		this.updateExistingDetails = updateExistingDetails;
-		this.updateExistingBankDetails = updateExistingBankDetails;
-		this.candidateSheet = candidateSheet;
-		this.insertBatchId = insertBatchId;
-		this.showTpName = showTpName;
-		this.numberOfBatches = numberOfBatches;
-		this.downloadMasterSheet = downloadMasterSheet;
-		ShowTotalTargets = showTotalTargets;
-		ShowTargetAchieved = showTargetAchieved;
-		ShowFinancialYear = showFinancialYear;
-		this.generateBatch = generateBatch;
-		this.showbatchId = showbatchId;
-		this.checkCentreExistence = checkCentreExistence;
-		this.insertCentreDetails = insertCentreDetails;
-		this.updateCentreDetails = updateCentreDetails;
-		this.updateBatchDetails = updateBatchDetails;
-		this.batchId = batchId;
+	public String getCheckCandidateExistence() {
+		return checkCandidateExistence;
 	}
-	public DataImportConfig() {
-		super();
-		// TODO Auto-generated constructor stub
+	public void setCheckCandidateExistence(String checkCandidateExistence) {
+		this.checkCandidateExistence = checkCandidateExistence;
+	}
+	public String getCheckCandidate() {
+		return checkCandidate;
+	}
+	public void setCheckCandidate(String checkCandidate) {
+		this.checkCandidate = checkCandidate;
 	}
 
 	
 	
-	
-	
-
-	
-	
-
 
 }
