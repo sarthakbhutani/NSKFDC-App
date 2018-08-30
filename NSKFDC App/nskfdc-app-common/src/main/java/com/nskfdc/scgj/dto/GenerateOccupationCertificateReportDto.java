@@ -93,7 +93,7 @@ public class GenerateOccupationCertificateReportDto extends BaseDto{
 		}else if(firstNameFather!=null) {
 			fatherName=firstNameFather;
 		}else if(lastNameFather!=null) {
-			fatherName=lastName;
+			fatherName=lastNameFather;
 		}else {
 			fatherName=null;
 		}
