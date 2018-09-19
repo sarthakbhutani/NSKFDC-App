@@ -367,6 +367,19 @@ public class DataImportService {
 				else if (cell.getColumnIndex() == 7)
 				{
 					LOGGER.debug("Capturing value for age");
+					int age = (int) cell.getNumericCellValue();
+					
+					if(age<18)
+					{
+						LOGGER.debug("Age is less than 18");
+						int rowNumber = row.getRowNum() + 1;
+						flag=false;
+						
+						return("Candidate's age cannot be less than 18 years for the training at row " + rowNumber );
+						
+					}
+					
+					
 					LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
 					masterSheetImportDto.setAge((int) cell.getNumericCellValue());
 				}
