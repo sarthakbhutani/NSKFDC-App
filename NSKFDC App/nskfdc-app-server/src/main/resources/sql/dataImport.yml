@@ -24,7 +24,7 @@ dataImport:
    ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
 
  BatchDetails: >
-  SELECT DISTINCT c.centreId, c.centreState, c.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber , e.employerName, e.employerContactNumber from centredetails  c  INNER JOIN batchdetails  b LEFT JOIN employerdetails e ON (b.batchId= e.batchid and b.userEmail=e.userEmail) where  b.batchId= :batchId and b.userEmail= :userEmail and (b.userEmail = c.userEmail and b.centreId = c.centreId);
+  SELECT DISTINCT c.centreId, c.centreState, c.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber , e.employerName, e.employerContactNumber from  batchdetails b  LEFT JOIN  centredetails c  on (b.userEmail = c.userEmail and b.centreId = c.centreId)  LEFT JOIN employerdetails e ON (b.batchId= e.batchid and b.userEmail=e.userEmail) where  b.batchId= :batchId and b.userEmail= :userEmail;
 
  generateBatch: >
   insert into batchdetails(userEmail) values (:userEmail);
