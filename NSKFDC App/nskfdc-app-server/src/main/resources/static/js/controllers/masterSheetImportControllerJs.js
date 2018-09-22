@@ -160,7 +160,7 @@ var url = '/getBatchIdfortrainer';
 			}
 		else
 		{
-			$http.get("/generateBatch")
+			$http.get("/generateBatch/"+$scope.generateBatch.municipality)
             .then(function(response) {
             	$scope.success = true;
             	$scope.successMessage = "Batch " + response.data.batchId +" generated successfully!";
@@ -184,7 +184,7 @@ var url = '/getBatchIdfortrainer';
             	         }, 3000);
             	    });
          }, function(errorResponse){
-        	 $scope.$scope.errorMessage="Batch cannot be generated";
+        	 $scope.errorMessage="Batch cannot be generated";
         	 $timeout(function() {
  	        	$scope.rolling = false;
  	            $scope.success = false;
