@@ -17,10 +17,11 @@
              <span class="glyphicon glyphicon-question-sign confirmIcon"></span></div>
              <div class="col-md-10">
              <p class="modalContentPara">Are you sure you want to generate a new batch?</p>
+             <input required type="text" placeholder="Municipality" id="Id11" ng-model="generateBatch.municipality">
              </div>
              </div>
               <div class="confirmationButton">
-              <button type="button" class="btn btn-success confirmButton" data-dismiss="modal" ng-click="generateBatchId()"><span class="glyphicon glyphicon-ok"></span>  YES</button>  
+              <button type="button" class="btn btn-success confirmButton" data-dismiss="modal" ng-click="generateBatchId()" ng-disabled="generateBatch.municipality == undefined || generateBatch.municipality == null" ><span class="glyphicon glyphicon-ok"></span>  YES</button>  
               <button type="button" class="btn btn-default confirmButton" data-dismiss="modal" ng-click="genarateBatchConfirmation()"><span class="glyphicon glyphicon-remove"></span>  NO</button>    
           
            	</div>
