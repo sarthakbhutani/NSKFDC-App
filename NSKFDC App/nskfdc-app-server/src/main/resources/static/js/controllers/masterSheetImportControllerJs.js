@@ -160,7 +160,7 @@ var url = '/getBatchIdfortrainer';
 			}
 		else
 		{
-			$http.get("/generateBatch/"+$scope.generateBatch.municipality)
+			$http.get("/generateBatch")
             .then(function(response) {
             	$scope.success = true;
             	$scope.successMessage = "Batch " + response.data.batchId +" generated successfully!";

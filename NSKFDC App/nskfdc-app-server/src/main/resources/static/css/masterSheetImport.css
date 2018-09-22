@@ -245,6 +245,7 @@ display:block;
 }
 .confirmationButton{
 	text-align: center;
+	margin-top:1em;
 }
 .confirmButton{
 	margin-right: 1rem;

@@ -8,21 +8,19 @@
     
     <div class="modal-content">
     <div class="modal-header">
-    <p>Confirm Batch Generation</p>
+    <p>GENERATE BATCH</p>
     </div>
          <!-- Modal Body -->
             <div class="modal-body ">
             <div class="row">
-            <div class="col-md-2">
-             <span class="glyphicon glyphicon-question-sign confirmIcon"></span></div>
              <div class="col-md-10">
-             <p class="modalContentPara">Are you sure you want to generate a new batch?</p>
-             <input required type="text" placeholder="Municipality" id="Id11" ng-model="generateBatch.municipality">
+             <p class="modalContentPara">Please Enter municipal corporation</p>
+             <input type="text" placeholder="Municipality" id="Id11" ng-model="generateBatch.municipality" class="form-control">
              </div>
              </div>
               <div class="confirmationButton">
-              <button type="button" class="btn btn-success confirmButton" data-dismiss="modal" ng-click="generateBatchId()" ng-disabled="generateBatch.municipality == undefined || generateBatch.municipality == null" ><span class="glyphicon glyphicon-ok"></span>  YES</button>  
-              <button type="button" class="btn btn-default confirmButton" data-dismiss="modal" ng-click="genarateBatchConfirmation()"><span class="glyphicon glyphicon-remove"></span>  NO</button>    
+              <button type="button" class="btn btn-success confirmButton" data-dismiss="modal" ng-click="generateBatchId()" ng-disabled="generateBatch.municipality == undefined || generateBatch.municipality == null" ><span class="glyphicon glyphicon-ok"></span>GENERATE</button>  
+              <button type="button" class="btn btn-default confirmButton" data-dismiss="modal" ng-click="genarateBatchConfirmation()"><span class="glyphicon glyphicon-remove"></span>CANCEL</button>    
           
            	</div>
        
@@ -183,7 +181,7 @@
             <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Employer Name" id="Id10" ng-model="batch.employerName"></li>
          </div>
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id11" ng-model="batch.municipality"></li>
+            <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id11" ng-model="batch.municipality" readonly="readonly"></li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Batch End Date" ng-model="batch.batchEndDate" id="end"></li>
             <span id="warning"  ng-show="dateErrorFlag">{{dateError}}</span></li>
             <li>
