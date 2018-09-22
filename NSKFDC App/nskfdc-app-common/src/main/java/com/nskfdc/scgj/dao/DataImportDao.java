@@ -908,7 +908,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 	 * @return
 	 */
 
-	public Integer insertBatchId(String userEmail, String uniqueBatchId) {
+	public Integer insertBatchId(String userEmail, String uniqueBatchId,String municipality) {
 		// TODO Auto-generated method stub
 		LOGGER.debug("the unique batchId recieved from service is : " + uniqueBatchId);
 		try
@@ -923,6 +923,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 			Map<String,Object> uniqueBatchIdParam = new HashMap<>();
 			uniqueBatchIdParam.put("userEmail", userEmail);
 			uniqueBatchIdParam.put("batchId", uniqueBatchId);
+			uniqueBatchIdParam.put("municipality", municipality);
 			return getJdbcTemplate().update(dataImportConfig.getInsertBatchId(),uniqueBatchIdParam);
 		}
 		catch(Exception e)

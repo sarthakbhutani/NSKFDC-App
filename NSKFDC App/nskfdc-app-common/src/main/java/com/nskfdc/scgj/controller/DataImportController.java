@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -258,19 +259,31 @@ public class DataImportController {
 	 * 
 	 * @return
 	 */
-	@Privilege(value= {"TP"})
-	@RequestMapping("/generateBatch")
-	public GetBatchIdDto generateBatchController() {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	@Privilege(value= {"TP"})
+	@RequestMapping("/generateBatch/{municipality}")
+	public GetBatchIdDto generateBatchController(@PathVariable("municipality") String municipality)
+	{
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
 				.getUsername();
 		LOGGER.debug("Request received from frontend to create batch for email id : "
 				+ userEmail);
-
+		LOGGER.debug("The municipality for which batch should be generated is: " + municipality);
 		LOGGER.debug("In Import Controller to create batch for email id: "
 				+ userEmail);
 		try {
 
-			String batchId = dataImportService.getGenerateBatchService(userEmail);
+			String batchId = dataImportService.getGenerateBatchService(userEmail,municipality);
 			LOGGER.debug("The batch id generated for training partner is : " + batchId);
 			GetBatchIdDto getBatchIdDto= new GetBatchIdDto (batchId);
 			return getBatchIdDto;
@@ -294,6 +307,55 @@ public class DataImportController {
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Method to get Batch Id for training partner based on its email
 	 * @return

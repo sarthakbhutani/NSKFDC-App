@@ -30,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nskfdc.scgj.common.ReadApplicationConstants;
+import com.nskfdc.scgj.common.StringUtility;
 import com.nskfdc.scgj.dao.DataImportDao;
 import com.nskfdc.scgj.dao.EmployerDao;
 import com.nskfdc.scgj.dto.BatchImportDto;
@@ -55,12 +56,17 @@ public class DataImportService {
 
 	@Autowired
 	private DataImportDao dataImportDao;
+	
+	
 
 	@Autowired
 	private EmployerDao employerDao;
 
 	@Autowired
 	private ReadApplicationConstants readApplicationConstants;
+	
+	
+	private StringUtility stringUtility = new StringUtility();
 
 	/**
 	 * Method to import master sheet, check if batch size is greater than 50 and
@@ -788,7 +794,7 @@ public class DataImportService {
 	}
 
 	
-	public String getGenerateBatchService(String userEmail) {
+	public String getGenerateBatchService(String userEmail,String municipality) {
 
 		LOGGER.debug("Request received from Controller to create batch for logged in TP ");
 		LOGGER.debug("In DataImportService  - getGenerateBatchService");
@@ -802,7 +808,7 @@ public class DataImportService {
 			{
 				LOGGER.debug("UserEmail inserted in batch table");
 				LOGGER.debug("Calling method to get trainingpartner name");
-				return getTrainingPartnerName(userEmail);
+				return getTrainingPartnerName(userEmail,municipality);
 				
 			}
 			else
@@ -879,9 +885,9 @@ public class DataImportService {
 	 * This method returns the name of the training partner for the given userEmail
 	 * @param userEmail 
 	 */
-	public String getTrainingPartnerName(String userEmail)
+	public String getTrainingPartnerName(String userEmail,String municipality)
 	{
-		LOGGER.debug("Request recieved from controller to get training partner name for username :" + userEmail);
+		LOGGER.debug("Request recieved to get training partner name for username :" + userEmail);
 		if(userEmail==null)
 		{
 			LOGGER.error("UserEmail in method getTrainingPartnerName is null");
@@ -894,7 +900,7 @@ public class DataImportService {
 			LOGGER.debug("Calling method to get name of training partner with userName : " + userEmail);
 			String trainingPartnerName = dataImportDao.getTrainingPartnerName(userEmail);
 			LOGGER.debug("Sending request to getNumberOfBatches method in service to get Number of Batches");
-			return getNumberOfBatches(userEmail,trainingPartnerName);
+			return getNumberOfBatches(userEmail,trainingPartnerName,municipality);
 			
 		}
 		catch(Exception e)
@@ -905,14 +911,18 @@ public class DataImportService {
 		
 	}
 
+	
+	
 	/**
 	 * This method generates number of batches and also generates the unique batchID
 	 * @param userEmail
 	 * @param trainingPartnerName
 	 * @return
 	 */
-	public String getNumberOfBatches(String userEmail, String trainingPartnerName) {
+	public String getNumberOfBatches(String userEmail, String trainingPartnerName, String municipality) {
 		// TODO Auto-generated method stub
+		
+		LOGGER.debug("Batch to be created for municipality: " +municipality);
 		LOGGER.debug("Username recieved in method getNumberOfBatches is : " + userEmail + " trainingPartnerName " + trainingPartnerName);
 		LOGGER.debug("Sending params to dao to get the number of batches for email : " + userEmail);
 		Integer count = dataImportDao.getNumberOfBatches(userEmail) ;
@@ -920,10 +930,26 @@ public class DataImportService {
 		Integer latestBatch = count + 1; //the latest batch to be generated
 			LOGGER.debug("The number of batches for userEmail : " + userEmail + " are : " + count);
 			LOGGER.debug("Creating unique format for batch id ");
-			String uniqueBatchId = latestBatch.toString() + "-".concat(trainingPartnerName);
+			LOGGER.debug("Creating batch id for municipality : " + municipality);
+			LOGGER.debug("Calling String Utility method to get the unique name for training partner");
+			String[] nameArray = stringUtility.splitBySpace(trainingPartnerName);	
+			LOGGER.debug("Sending request to utility method to get the first character for each splitted string");
+			String uniqueName = stringUtility.getFirstLetter(nameArray);
+			//Gets the Training partner unique names
+			LOGGER.debug("The unique name of the user is : " + uniqueName);
+			LOGGER.debug("Calling method to get unique name for municipality");
+			LOGGER.debug("Calling method to split name ");
+			
+			String[] municipalityNameArray = stringUtility.splitBySpace(municipality);
+			LOGGER.debug("Sending request to string utility to get unique municipality name");
+			
+			String uniqueMunicipalityName = stringUtility.getUniqueMunicipalityName(municipalityNameArray);
+
+			String uniqueBatchId = uniqueName+uniqueMunicipalityName+latestBatch;
+			
 			LOGGER.debug("The unique batchId for TP with username : " + userEmail + " is : " + uniqueBatchId);
-			LOGGER.debug("Sending unique batch id & user email to Tp to insert into batch table");
-			Integer batchIdInsertStatus = dataImportDao.insertBatchId(userEmail, uniqueBatchId);
+			LOGGER.debug("Sending unique batch id ,user email and municipality to Tp to insert into batch table");
+			Integer batchIdInsertStatus = dataImportDao.insertBatchId(userEmail, uniqueBatchId, municipality);
 			
 			if(batchIdInsertStatus==1)
 			{
