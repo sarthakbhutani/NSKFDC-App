@@ -68,7 +68,7 @@ public class StringUtility {
 			  initials =  initials+firstCharacter;
 		  }
 		  
-		  String splitBySlash = initials+"-"+nsdcRegNumber+"/";
+		  String splitBySlash = initials+"_"+nsdcRegNumber+"_";
 		  
 		  return splitBySlash;
 	  }
@@ -92,7 +92,7 @@ public class StringUtility {
 		  char lastChar = Character.toUpperCase(municipalityName[(municipalityName.length)-1].charAt(0));
 		  
 		  
-		  municipalityUniqueName = municipalityUniqueName+" "+secondLastChar+lastChar+"/";
+		  municipalityUniqueName = municipalityUniqueName+" "+secondLastChar+lastChar+"_";
 		  LOGGER.debug("The municipality Unique name is : " + municipalityUniqueName);
 		  return municipalityUniqueName;
 	  }
