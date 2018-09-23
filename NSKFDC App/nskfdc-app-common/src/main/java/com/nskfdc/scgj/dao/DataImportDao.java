@@ -960,4 +960,32 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 
+
+
+
+
+
+
+	public Integer getNsdcRegNumber(String userEmail) {
+		// TODO Auto-generated method stub
+		
+		LOGGER.debug("Request recieved to fetch nsdc registration number of training partner with email: " +userEmail);
+		LOGGER.debug("Creating hash map of objects");
+		try
+		{
+			Map<String,Object> userEmailParam = new HashMap<>();
+			userEmailParam.put("userEmail", userEmail);
+			Integer nsdcRegistrationNumber = getJdbcTemplate().queryForObject(dataImportConfig.getNsdcRegNumber(),userEmailParam, Integer.class);
+			LOGGER.debug("The NSDC Registration number for user with email : " +userEmail +" is : "+ nsdcRegistrationNumber);
+			return nsdcRegistrationNumber;
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An error occured while fetching the nsdc registration number " +e );
+			LOGGER.error("Returning NULL");
+			return null;
+		}
+		
+	}
+
 }

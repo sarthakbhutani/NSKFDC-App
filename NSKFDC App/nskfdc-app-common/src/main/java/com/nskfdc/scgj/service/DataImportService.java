@@ -814,8 +814,9 @@ public class DataImportService {
 			Integer countBatches=dataImportDao.getNumberOfBatches(userEmail);
 			Integer latestBatchCount = countBatches+1;
 			String trainingPartnerName = dataImportDao.getTrainingPartnerName(userEmail);
+			Integer nsdcRegNumber = dataImportDao.getNsdcRegNumber(userEmail);
 			
-			String constructedBatchID = stringUtility.constructedBatchId(trainingPartnerName, latestBatchCount, municipality);
+			String constructedBatchID = stringUtility.constructedBatchId(trainingPartnerName, latestBatchCount, municipality,nsdcRegNumber);
 			
 			if(constructedBatchID==null)
 			{

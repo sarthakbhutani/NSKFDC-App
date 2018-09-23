@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 public class DataImportConfig {
 
 	private String BatchDetails;
+	private String nsdcRegNumber;
 	private String checkCandidateExistence;
 	private String importCandidate;
 	private String importBankDetails;
@@ -177,7 +178,14 @@ public class DataImportConfig {
 	public void setCheckCandidate(String checkCandidate) {
 		this.checkCandidate = checkCandidate;
 	}
+	public String getNsdcRegNumber() {
+		return nsdcRegNumber;
+	}
+	public void setNsdcRegNumber(String nsdcRegNumber) {
+		this.nsdcRegNumber = nsdcRegNumber;
+	}
 
+	
 	
 	
 

@@ -9,7 +9,7 @@ public class StringUtility {
 	private static final Logger LOGGER = LoggerFactory.getLogger(StringUtility.class);
 
 	
-	public String constructedBatchId(String trainingPartnerName ,Integer batchCount,String municipality) {
+	public String constructedBatchId(String trainingPartnerName ,Integer batchCount,String municipality, Integer nsdcRegNumber) {
 		
 		String batchId="";
 		LOGGER.debug("In the Utility Class - constructedBatchId() to get the name of training partner"); 
@@ -26,7 +26,7 @@ public class StringUtility {
 		String[] splittedTrainingPartnerName = splitBySpace(trainingPartnerName);
 		LOGGER.debug("Splitted the name of training parter");
 		LOGGER.debug("Sending the splitted name to getFirstLetter() to get the initials of training partner with name : " + trainingPartnerName);
-		String uniqueTrainingPartnerName = getTrainingPartnerInitials(splittedTrainingPartnerName);
+		String uniqueTrainingPartnerName = getTrainingPartnerInitials(splittedTrainingPartnerName, nsdcRegNumber);
 		LOGGER.debug("The unique name of the training partner is " +uniqueTrainingPartnerName);
 		LOGGER.debug("Calling the method -> splitbySpace to get the string array of municipality name : " +municipality);
 		String[] splittedMunicipalityName = splitBySpace(municipality);
@@ -49,16 +49,12 @@ public class StringUtility {
 		  String[] splittedString = stringToSplit.split("\\s+");
 		 
 		  return splittedString;
-				  
-				  
-				// getFirstLetter(splittedString);
-		  
 	  }
 	  
 	  
 	//To find first letter of every word of array and return
 	
-	  public String getTrainingPartnerInitials(String[] splittedString )
+	  public String getTrainingPartnerInitials(String[] splittedString,Integer nsdcRegNumber)
 	  {
 		  String initials="";
 		  int lengthOfArray = splittedString.length;
@@ -72,7 +68,7 @@ public class StringUtility {
 			  initials =  initials+firstCharacter;
 		  }
 		  
-		  String splitBySlash = initials.concat("/");
+		  String splitBySlash = initials+"-"+nsdcRegNumber+"/";
 		  
 		  return splitBySlash;
 	  }
