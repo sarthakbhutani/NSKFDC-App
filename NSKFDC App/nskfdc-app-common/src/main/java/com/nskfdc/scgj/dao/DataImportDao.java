@@ -8,7 +8,6 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -21,11 +20,9 @@ import org.springframework.stereotype.Repository;
 
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.DataImportConfig;
-import com.nskfdc.scgj.dto.BatchDto;
 import com.nskfdc.scgj.dto.BatchImportDto;
 import com.nskfdc.scgj.dto.DownloadFinalMasterSheetDto;
 import com.nskfdc.scgj.dto.FinancialDto;
-import com.nskfdc.scgj.dto.GetBatchIdDto;
 import com.nskfdc.scgj.dto.MasterSheetImportDto;
 import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 
@@ -655,71 +652,71 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
-	/*--------------------------Generate BatchId------------------------------------*/
+//	/*--------------------------Generate BatchId------------------------------------*/
+//
+//	public Integer generateBatchDao(String userEmail) {
+//
+//		LOGGER.debug("Request received from Service , to create new batch for logged in TP");
+//
+//		LOGGER.debug("In  DataImportDao - generateBatchDao");
+//
+//		Map<String, Object> parameters = new HashMap<>();
+//		LOGGER.debug("Inserting parameters in hashMap");
+//		parameters.put("userEmail", userEmail);
+//	
+//
+//		if (parameters.isEmpty()) {
+//			LOGGER.debug("In IF -- When HasMap parameters are empty");
+//			LOGGER.debug("In DataImportDao - generateBatchDao");
+//			LOGGER.error("Null Parameter");
+//		}
+//
+//		try {
+//
+//			LOGGER.debug("TRYING -- To generate batch");
+//			LOGGER.debug("Executing insert query to enter a new batch");
+//			Integer result = insert(dataImportConfig.getGenerateBatch(),
+//					parameters, "batchId");
+//			LOGGER.debug("The result of the query is : " + result);
+//			LOGGER.debug("Returning result");
+//			return result;
+//		}
+//
+//		catch (EmptyResultDataAccessException e) {
+//
+//			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
+//			LOGGER.error("In DataImportDao - generateBatchDao " + e);
+//			LOGGER.error("Returning -1");
+//			return 0;
+//		} catch (DataAccessException d) {
+//
+//			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
+//			LOGGER.error("In DataImportDao - generateBatchDao " + d);
+//			LOGGER.error("Returning -1");
+//			return -1;
+//		}
+//
+//		catch (Exception e) {
+//
+//			LOGGER.error("CATCHING -- Exception handled while generating batch");
+//			LOGGER.error("In DataImportDao - generateBatchDao " + e);
+//			LOGGER.error("Returning -1");
+//			return -2;
+//		}
+//	}
 
-	public Integer generateBatchDao(String userEmail) {
 
-		LOGGER.debug("Request received from Service , to create new batch for logged in TP");
-
-		LOGGER.debug("In  DataImportDao - generateBatchDao");
-
-		Map<String, Object> parameters = new HashMap<>();
-		LOGGER.debug("Inserting parameters in hashMap");
-		parameters.put("userEmail", userEmail);
-	
-
-		if (parameters.isEmpty()) {
-			LOGGER.debug("In IF -- When HasMap parameters are empty");
-			LOGGER.debug("In DataImportDao - generateBatchDao");
-			LOGGER.error("Null Parameter");
-		}
-
-		try {
-
-			LOGGER.debug("TRYING -- To generate batch");
-			LOGGER.debug("Executing insert query to enter a new batch");
-			Integer result = insert(dataImportConfig.getGenerateBatch(),
-					parameters, "batchId");
-			LOGGER.debug("The result of the query is : " + result);
-			LOGGER.debug("Returning result");
-			return result;
-		}
-
-		catch (EmptyResultDataAccessException e) {
-
-			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
-			LOGGER.error("In DataImportDao - generateBatchDao " + e);
-			LOGGER.error("Returning -1");
-			return 0;
-		} catch (DataAccessException d) {
-
-			LOGGER.error("CATCHING -- DataAcessException handled while generating batch");
-			LOGGER.error("In DataImportDao - generateBatchDao " + d);
-			LOGGER.error("Returning -1");
-			return -1;
-		}
-
-		catch (Exception e) {
-
-			LOGGER.error("CATCHING -- Exception handled while generating batch");
-			LOGGER.error("In DataImportDao - generateBatchDao " + e);
-			LOGGER.error("Returning -1");
-			return -2;
-		}
-	}
-
-
-
-	private static class BATCHRowmapper implements RowMapper<BatchDto> {
-
-		@Override
-		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
-
-			String batchId = rs.getString("batchId");
-			return new BatchDto(batchId);
-
-		}
-	}
+//
+//	private static class BATCHRowmapper implements RowMapper<BatchDto> {
+//
+//		@Override
+//		public BatchDto mapRow(ResultSet rs, int rowNum) throws SQLException {
+//
+//			String batchId = rs.getString("batchId");
+//			return new BatchDto(batchId);
+//
+//		}
+//	}
 
 	/*-----------------------Submit the data in database for respective batch---------------*/
 
@@ -860,6 +857,10 @@ public class DataImportDao extends AbstractTransactionalDao {
 				LOGGER.error("userParams are null in method getTrainingPartnerName");
 				LOGGER.error("Returning NULL");
 				return null;
+			}
+			if(dataImportConfig==null)
+			{
+				LOGGER.error("Object of config is null");
 			}
 			LOGGER.debug("Parameters inserted into hashmap ");
 			return getJdbcTemplate().queryForObject(dataImportConfig.getShowTpName(), userParams, String.class);

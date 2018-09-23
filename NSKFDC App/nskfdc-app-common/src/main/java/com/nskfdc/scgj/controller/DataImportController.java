@@ -254,49 +254,93 @@ public class DataImportController {
 		}
 	}
 
-	/**
-	 * Method to generate Batch on the button click by training Partner
-	 * 
-	 * @return
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/**
+generateBatchController Method
+
+What invoked this method?
+**********************************************************************************************
+This method is invoked on the click of "GenerateBatchID" from the'MasterSheetImport' screen of the Training partner homepage.
+**********************************************************************************************
+
+What does this method do?
+**********************************************************************************************
+The method first retrieves the request parameter for userEmail and then calls the service class method getGenerateBatchService().This service method takes in the userEmail, Municipality as Input in order to construct the BatchID before calling the DAO to insert the details in batchDetails table
+**********************************************************************************************
+
+What does the method return?
+**********************************************************************************************
+The method returns the batchID DTO to the Angular controller 
+	 * @return 
+**********************************************************************************************	 
 	 */
 	
 	@Privilege(value= {"TP"})
 	@RequestMapping("/generateBatch/{municipality}")
 	public GetBatchIdDto generateBatchController(@PathVariable("municipality") String municipality)
 	{
+		LOGGER.debug("Request received from frontend to generate a new batch ID -> Retrieving the userName and Municipality for the request");
+
 		String userEmail = sessionUserUtility.getSessionMangementfromSession()
 				.getUsername();
-		LOGGER.debug("Request received from frontend to create batch for email id : "
+		LOGGER.debug("The userName (email ID) retrieved from the session is  : "
 				+ userEmail);
-		LOGGER.debug("The municipality for which batch should be generated is: " + municipality);
-		LOGGER.debug("In Import Controller to create batch for email id: "
-				+ userEmail);
+		LOGGER.debug("The municipality retrieved from the path variable is: " + municipality);
+		
 		try {
-
+			LOGGER.debug("In try block to call the service method getGenerateBatchService() with the parameters : EmailID :  " + userEmail + " Municipality : "+municipality);
+			
 			String batchId = dataImportService.getGenerateBatchService(userEmail,municipality);
-			LOGGER.debug("The batch id generated for training partner is : " + batchId);
+			LOGGER.debug("Control returned to the controller after the basic information for the user " + userEmail +" has been saved in the database after the generation of batch ID " + batchId );
+			
 			GetBatchIdDto getBatchIdDto= new GetBatchIdDto (batchId);
+			LOGGER.debug("Returning the getBatchIdDto object with batch ID " +getBatchIdDto.getBatchId() + " to the frontend angular controller" );
 			return getBatchIdDto;
 
 		}
 
-		catch (DataAccessException d) {
-
-			LOGGER.error("DataAccessException in controller to create Batch"
-					+ d);
-
-			return null;
-		}
-
 		catch (Exception e) {
 
-			LOGGER.error("An error occurred while creating Batch" + e);
+			LOGGER.error("An error occurred while creating Batch with ID " + e);
 
 			return null;
 		}
 
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
