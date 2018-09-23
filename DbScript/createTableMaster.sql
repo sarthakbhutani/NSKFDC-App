@@ -24,6 +24,8 @@ USE `nskfdc`;
 -- Table structure for table `bankdetails`
 --
 
+DROP TABLE IF EXISTS `centredetails`;
+
 DROP TABLE IF EXISTS `bankdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -60,13 +62,13 @@ CREATE TABLE `batchdetails` (
   `principalTrainerName` varchar(50) DEFAULT NULL,
   `userEmail` varchar(100) NOT NULL,
   `centreId` bigint(20) DEFAULT NULL,
+  `centreState` varchar (100) NOT NULL,
+  `centreCity` varchar (100) NOT NULL,
   `updatedOn` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `batchId_UNIQUE` (`batchId`),
   UNIQUE KEY `scgjBatchNumber_UNIQUE` (`scgjBatchNumber`),
   KEY `tpEmail_idx` (`userEmail`),
-  KEY `centreId_idx` (`centreId`),
-  CONSTRAINT `centreId` FOREIGN KEY (`centreId`) REFERENCES `centredetails` (`centreId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `tpEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -111,26 +113,6 @@ CREATE TABLE `candidate` (
   KEY `batchId_idx` (`batchId`),
   CONSTRAINT `batchId` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `centredetails`
---
-
-DROP TABLE IF EXISTS `centredetails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `centredetails` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `centreId` bigint(20) DEFAULT NULL,
-  `centreState` varchar(60) DEFAULT NULL,
-  `centreCity` varchar(60) DEFAULT NULL,
-  `userEmail` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `centreId_UNIQUE` (`centreId`),
-  KEY `traningPartnerEmail_idx` (`userEmail`),
-  CONSTRAINT `traningPartnerEmail` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
