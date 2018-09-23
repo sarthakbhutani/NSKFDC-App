@@ -33,6 +33,7 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	$scope.generateCandidateSheetError=false;
 	$scope.centreIdErrorFlag=false;
 	$scope.employerNumberErrorFlag=false;
+	$scope.emptyEmployerNameCheck=false;
 	$scope.masterSheet = {};
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
@@ -283,8 +284,14 @@ var url = '/getBatchIdfortrainer';
     		$scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=true;
     	}
+    	
     	else
     	{
+    		if($scope.batch.employerContactNumber>0 && ($scope.batch.employerName==undefined || $scope.batch.employerName==null || $scope.batch.employerName=="" )){
+    			$scope.emptyEmployerNameCheck=true;
+    		}
+    		else{
+    		$scope.emptyEmployerNameCheck=false;
     		$scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=false;
     		$scope.sumbitBatchDetails={
@@ -342,10 +349,13 @@ var url = '/getBatchIdfortrainer';
         	         }, 3000);
         			
         	}
+    	}
+  
     	
     	$timeout(function() {
             $scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=false;
+    		$scope.emptyEmployerNameCheck=false;
             
          }, 3000);
     	};
