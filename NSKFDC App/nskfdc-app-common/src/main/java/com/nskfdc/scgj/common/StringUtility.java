@@ -52,9 +52,9 @@ public class StringUtility {
 		  String municipalityUniqueName = "";
 		  
 		  //getting the first names of the municipality
-		  for(int i = 0 ; i<(municipalityArrayLength-2);i++)
+		  for(int i = 0 ; i<(municipalityArrayLength-2); i++)
 		  {
-			  municipalityUniqueName = municipalityUniqueName +" " + municipalityName[i].toString();
+			  municipalityUniqueName = municipalityUniqueName+municipalityName[i].toString();
 			  LOGGER.debug("The municipality unique name is : " + municipalityUniqueName);
 		  }
 		  
@@ -64,7 +64,7 @@ public class StringUtility {
 		  char lastChar = municipalityName[(municipalityName.length)-1].charAt(0);
 		  
 		  
-		  municipalityUniqueName = municipalityUniqueName + " " +secondLastChar+lastChar+"/";
+		  municipalityUniqueName = municipalityUniqueName+secondLastChar+lastChar+"/";
 		  LOGGER.debug("The municipality Unique name is : " + municipalityUniqueName);
 		  return municipalityUniqueName;
 	  }
