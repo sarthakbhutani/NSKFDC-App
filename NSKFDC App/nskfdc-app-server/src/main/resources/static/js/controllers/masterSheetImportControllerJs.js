@@ -163,6 +163,11 @@ var url = '/getBatchIdfortrainer';
 			$http.get("/generateBatch/"+$scope.generateBatch.municipality)
             .then(function(response) {
             	$scope.success = true;
+            	if(response.data == null)
+            		{
+            		  $scope.success = false;
+            		  $scope.errorMessage="Batch cannot be generated";
+            		}
             	$scope.successMessage = "Batch " + response.data.batchId +" generated successfully!";
                 $scope.data = response.data;
                 $scope.ids = [];

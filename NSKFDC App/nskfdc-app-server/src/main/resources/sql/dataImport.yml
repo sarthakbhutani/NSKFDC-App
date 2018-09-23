@@ -15,7 +15,7 @@ dataImport:
   select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (candidate.assessmentResult="pass" or candidate.assessmentResult="fail") and (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
 
  insertBatchId: > 
-  UPDATE nskfdc.batchDetails SET batchId= :batchId, municipality= :municipality WHERE userEmail =:userEmail order  by id desc LIMIT 1;
+  insert into batchdetails(userEmail,batchId,municipality) values(:userEmail,:batchId,:municipality);
    
  ShowFinancialYear: >
   SELECT
