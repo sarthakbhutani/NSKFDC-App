@@ -720,79 +720,84 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	/*-----------------------Submit the data in database for respective batch---------------*/
 
-	public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
-		LOGGER.debug("Request receive to check centre Id existence");
-		LOGGER.debug("In DataImportDao - checkCentreExistence");
+//	public int checkCentreExistence(MasterSheetSubmitDto masterSheetSubmitDto) {
+//		LOGGER.debug("Request receive to check centre Id existence");
+//		LOGGER.debug("In DataImportDao - checkCentreExistence");
+//
+//		try {
+//			LOGGER.debug("TRYING -- To check existence of entered centre id");
+//			Map<String, Object> batchDetailsParameters = new HashMap<>();
+//			LOGGER.debug("Inserting parameters to be checked, in HashMap");
+//			batchDetailsParameters.put("centreId",
+//					masterSheetSubmitDto.getCentreId());
+//			LOGGER.debug("Exectuing query to check if entered centreId exists");
+//			return getJdbcTemplate().queryForObject(
+//					dataImportConfig.getCheckCentreExistence(),
+//					batchDetailsParameters, Integer.class);
+//		} catch (Exception e) {
+//			LOGGER.error("CATCHING -- Exception handled while checking centre existence");
+//			LOGGER.error("In DataImportDao - checkCentreExistence " + e);
+//			LOGGER.error("Returning status code -1");
+//			return -1;
+//		}
+//	}
+//
+//	public String insertCentreDetails(String userEmail,
+//			MasterSheetSubmitDto masterSheetSubmitDto) {
+//		LOGGER.debug("Request receive to insert the centre Details");
+//		LOGGER.debug("In DataImportDao - insertCentreDetails");
+//
+//		try {
+//			LOGGER.debug("TRYING -- To insert centre details");
+//			Map<String, Object> centreParameters = new HashMap<>();
+//			LOGGER.debug("Inserting parameters to be inserted, in HashMap");
+//			centreParameters
+//					.put("centreId", masterSheetSubmitDto.getCentreId());
+//			centreParameters.put("state", masterSheetSubmitDto.getState());
+//			centreParameters.put("city", masterSheetSubmitDto.getCity());
+//			centreParameters.put("userEmail", userEmail);
+//			LOGGER.debug(" Calling method to insert the details of entered centreId into database");
+//			return insertString(dataImportConfig.getInsertCentreDetails(),
+//					centreParameters, "centerId");
+//
+//		} catch (DataAccessException e) {
+//			LOGGER.error("CATCHING -- Exception handled while inserting centre details");
+//			LOGGER.error("In DataImportDao - insertCentreDetails " + e);
+//			LOGGER.error("Returning status code -1");
+//			return "-1";
+//		}
+//
+//	}
+//
+//	public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
+//		LOGGER.debug("Request receive to update the centre Details");
+//		LOGGER.debug("In DataImportDao - updateCentreDetails");
+//
+//		try {
+//			LOGGER.debug("TRYING -- To update centre details");
+//			Map<String, Object> centreParameters = new HashMap<>();
+//			LOGGER.debug("Inserting parameters to be updated in HashMap");
+//			centreParameters
+//					.put("centreId", masterSheetSubmitDto.getCentreId());
+//			centreParameters.put("state", masterSheetSubmitDto.getState());
+//			centreParameters.put("city", masterSheetSubmitDto.getCity());
+//			LOGGER.debug("Executing Update query to update the details of entered centreId");
+//			return getJdbcTemplate()
+//					.update(dataImportConfig.getUpdateCentreDetails(),
+//							centreParameters);
+//		} catch (DataAccessException e) {
+//			LOGGER.error("CATCHING -- Exception handled while updating centre details");
+//			LOGGER.error("In DataImportDao - updateCentreDetails " + e);
+//			LOGGER.error("Returning status code -1");
+//			return -1;
+//		}
+//	}
 
-		try {
-			LOGGER.debug("TRYING -- To check existence of entered centre id");
-			Map<String, Object> batchDetailsParameters = new HashMap<>();
-			LOGGER.debug("Inserting parameters to be checked, in HashMap");
-			batchDetailsParameters.put("centreId",
-					masterSheetSubmitDto.getCentreId());
-			LOGGER.debug("Exectuing query to check if entered centreId exists");
-			return getJdbcTemplate().queryForObject(
-					dataImportConfig.getCheckCentreExistence(),
-					batchDetailsParameters, Integer.class);
-		} catch (Exception e) {
-			LOGGER.error("CATCHING -- Exception handled while checking centre existence");
-			LOGGER.error("In DataImportDao - checkCentreExistence " + e);
-			LOGGER.error("Returning status code -1");
-			return -1;
-		}
-	}
-
-	public String insertCentreDetails(String userEmail,
-			MasterSheetSubmitDto masterSheetSubmitDto) {
-		LOGGER.debug("Request receive to insert the centre Details");
-		LOGGER.debug("In DataImportDao - insertCentreDetails");
-
-		try {
-			LOGGER.debug("TRYING -- To insert centre details");
-			Map<String, Object> centreParameters = new HashMap<>();
-			LOGGER.debug("Inserting parameters to be inserted, in HashMap");
-			centreParameters
-					.put("centreId", masterSheetSubmitDto.getCentreId());
-			centreParameters.put("state", masterSheetSubmitDto.getState());
-			centreParameters.put("city", masterSheetSubmitDto.getCity());
-			centreParameters.put("userEmail", userEmail);
-			LOGGER.debug(" Calling method to insert the details of entered centreId into database");
-			return insertString(dataImportConfig.getInsertCentreDetails(),
-					centreParameters, "centerId");
-
-		} catch (DataAccessException e) {
-			LOGGER.error("CATCHING -- Exception handled while inserting centre details");
-			LOGGER.error("In DataImportDao - insertCentreDetails " + e);
-			LOGGER.error("Returning status code -1");
-			return "-1";
-		}
-
-	}
-
-	public int updateCentreDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
-		LOGGER.debug("Request receive to update the centre Details");
-		LOGGER.debug("In DataImportDao - updateCentreDetails");
-
-		try {
-			LOGGER.debug("TRYING -- To update centre details");
-			Map<String, Object> centreParameters = new HashMap<>();
-			LOGGER.debug("Inserting parameters to be updated in HashMap");
-			centreParameters
-					.put("centreId", masterSheetSubmitDto.getCentreId());
-			centreParameters.put("state", masterSheetSubmitDto.getState());
-			centreParameters.put("city", masterSheetSubmitDto.getCity());
-			LOGGER.debug("Executing Update query to update the details of entered centreId");
-			return getJdbcTemplate()
-					.update(dataImportConfig.getUpdateCentreDetails(),
-							centreParameters);
-		} catch (DataAccessException e) {
-			LOGGER.error("CATCHING -- Exception handled while updating centre details");
-			LOGGER.error("In DataImportDao - updateCentreDetails " + e);
-			LOGGER.error("Returning status code -1");
-			return -1;
-		}
-	}
-
+	/**
+	 * Update details of batch
+	 * @param masterSheetSubmitDto
+	 * @return status of success or failure of updating
+	 */
 	public int updateBatchDetails(MasterSheetSubmitDto masterSheetSubmitDto) {
 		LOGGER.debug("Request receive to update the batchDetails");
 		LOGGER.debug("In DataImportDao - updateBatchDetails");
@@ -821,6 +826,9 @@ public class DataImportDao extends AbstractTransactionalDao {
 					masterSheetSubmitDto.getTrainerName());
 			batchParameters.put("centreId", masterSheetSubmitDto.getCentreId());
 			batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
+			batchParameters.put("centreState", masterSheetSubmitDto.getState());
+			batchParameters.put("centreCity", masterSheetSubmitDto.getCity());
+						
 			LOGGER.debug("Executing Update query to update the details of selected batchId");
 			return getJdbcTemplate().update(
 					dataImportConfig.getUpdateBatchDetails(), batchParameters);
@@ -844,7 +852,6 @@ public class DataImportDao extends AbstractTransactionalDao {
       * @return
       */
 	public String getTrainingPartnerName(String userEmail) {
-		// TODO Auto-generated method stub
 		LOGGER.debug("In DAO to get name of training partner with userEmail : " + userEmail);
 		try
 		{
@@ -882,9 +889,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 	 * @return
 	 */
 
-	public Integer getNumberOfBatches(String userEmail) {
-		// TODO Auto-generated method stub
-		
+	public Integer getNumberOfBatches(String userEmail) {	
 		LOGGER.debug("In method getNumberOfBatches to get the number of batches for user with email : " + userEmail);
 		try {
 			
@@ -910,7 +915,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 	 */
 
 	public Integer insertBatchId(String userEmail, String uniqueBatchId,String municipality) {
-		// TODO Auto-generated method stub
+
 		LOGGER.debug("the unique batchId recieved from service is : " + uniqueBatchId);
 		try
 		{
@@ -935,6 +940,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 	
+	/**
+	 * Check existence of candidate before inserting
+	 * @param enrollmentNumber
+	 * @param batchId
+	 * @return
+	 */
 	public Integer checkCandidate(String enrollmentNumber, String batchId)
 	{
 		LOGGER.debug("In method checkCandidate to check existence of candidate with enrollment number  :  " + enrollmentNumber + " and batchID : " + batchId);

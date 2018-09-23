@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package com.nskfdc.scgj.service;
 
 import java.io.File;
@@ -858,49 +861,56 @@ public class DataImportService {
 	/*-------------------- Submit data from MasterSheet Import into the database---------------*/
 
 	public int submitBatchDetails(String userEmail, MasterSheetSubmitDto masterSheetSubmitDto) {
-		int updatedCentre = 0;
-		String centerInserted = "";
-		LOGGER.debug("In Data Import Service");
-		LOGGER.debug("1. Check if the centre Id exists in the database");
-		int centreExistence = dataImportDao.checkCentreExistence(masterSheetSubmitDto);
-		LOGGER.debug("The response of existence" + centreExistence);
+		int batchStatus = -10;
+		int status = -10;
+		int employerStatus = -10;
+//		int updatedCentre = 0;
+//		String centerInserted = "";
+//		LOGGER.debug("In Data Import Service");
+//		LOGGER.debug("1. Check if the centre Id exists in the database");
+//		int centreExistence = dataImportDao.checkCentreExistence(masterSheetSubmitDto);
+//		LOGGER.debug("The response of existence" + centreExistence);
+//
+//		if (centreExistence == 1) {
+//			LOGGER.debug("In IF -- When Centre Id already exist");
+//			LOGGER.debug("Sending Data to DataImportDao - updateCentreDetails");
+//			updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
+//		} else {
+//			LOGGER.debug("In ELSE -- When Centre Id does not exist, hence inserting the centre id");
+//			LOGGER.debug("Sending request to DAO to insert new centreDetais");
+//			centerInserted = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
+//			LOGGER.debug("The center Id inserted is" + updatedCentre);
+//		}
+	
+		//Update details of a batch
+		batchStatus = dataImportDao.updateBatchDetails(masterSheetSubmitDto);
+		// To insert the employer if batch update was successful and 
+				if ((masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null) && batchStatus > 0) {
 
-		if (centreExistence == 1) {
-			LOGGER.debug("In IF -- When Centre Id already exist");
-			LOGGER.debug("Sending Data to DataImportDao - updateCentreDetails");
-			updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
-		} else {
-			LOGGER.debug("In ELSE -- When Centre Id does not exist, hence inserting the centre id");
-			LOGGER.debug("Sending request to DAO to insert new centreDetais");
-			centerInserted = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
-			LOGGER.debug("The center Id inserted is" + updatedCentre);
+					int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
+					if (checkEmployer == 0) {
+						LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
+						LOGGER.debug("Sending request to employerDao - to insert new employer");
+						status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(),
+								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
+								userEmail);
+						LOGGER.debug("Status of Employer insertion " + status);
+					} else if (checkEmployer == 1) {
+						LOGGER.debug("In ELSE-IF -- When Employer does exist");
+						LOGGER.debug("Sending request to employerDao - to update employer details");
+						employerStatus = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(),
+								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
+								userEmail);
+						LOGGER.debug("Status of Employer updation " + status);
+					}
+				}
+		LOGGER.debug("Status of batch update is : " + batchStatus);
+		LOGGER.debug("Status of employer update/insert is : "+employerStatus );
+		if(batchStatus > 0 && employerStatus > 0)
+		{
+			status = 1;
 		}
-
-		// To insert the employer
-		if (masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null) {
-			int status = -2;
-			int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
-			if (checkEmployer == 0) {
-				LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
-				LOGGER.debug("Sending request to employerDao - to insert new employer");
-				status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(),
-						masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-						userEmail);
-				LOGGER.debug("Status of Employer insertion " + status);
-			} else if (checkEmployer == 1) {
-				LOGGER.debug("In ELSE-IF -- When Employer does exist");
-				LOGGER.debug("Sending request to employerDao - to update employer details");
-				status = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(),
-						masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-						userEmail);
-				LOGGER.debug("Status of Employer updation " + status);
-			}
-		}
-		LOGGER.debug(
-				"Updated the centre Details, updating batch details corresponding to the selected centre id & batch id");
-		LOGGER.debug("Sending request to dataImportDao - updateBatchDetails");
-		return dataImportDao.updateBatchDetails(masterSheetSubmitDto);
-
+		return status;
 	}
 
 	/**

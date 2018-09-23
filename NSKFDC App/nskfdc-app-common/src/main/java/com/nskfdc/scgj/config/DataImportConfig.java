@@ -26,9 +26,6 @@ public class DataImportConfig {
 	private String ShowFinancialYear;
 	private String generateBatch;
 	private String showbatchId;
-	private String checkCentreExistence;
-	private String insertCentreDetails;
-	private String updateCentreDetails;
 	private String updateBatchDetails;
 	private String batchId;
 	
@@ -141,24 +138,6 @@ public class DataImportConfig {
 	}
 	public void setShowbatchId(String showbatchId) {
 		this.showbatchId = showbatchId;
-	}
-	public String getCheckCentreExistence() {
-		return checkCentreExistence;
-	}
-	public void setCheckCentreExistence(String checkCentreExistence) {
-		this.checkCentreExistence = checkCentreExistence;
-	}
-	public String getInsertCentreDetails() {
-		return insertCentreDetails;
-	}
-	public void setInsertCentreDetails(String insertCentreDetails) {
-		this.insertCentreDetails = insertCentreDetails;
-	}
-	public String getUpdateCentreDetails() {
-		return updateCentreDetails;
-	}
-	public void setUpdateCentreDetails(String updateCentreDetails) {
-		this.updateCentreDetails = updateCentreDetails;
 	}
 	public String getUpdateBatchDetails() {
 		return updateBatchDetails;
