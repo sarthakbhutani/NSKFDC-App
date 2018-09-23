@@ -178,15 +178,15 @@
          <div class="col-sm-3" id="div">
             <li><input  ng-disabled="batchDetails.value == undefined" required type="text" placeholder="City" id="Id8" ng-model="batch.centreCity"></li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" ng-model="batch.batchStartDate" placeholder="Batch Start Date"  id="start"></li>
-            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Employer Name" id="Id10" ng-model="batch.employerName"></li>
-         	<span id="warning"  ng-show="emptyEmployerNameCheck">Enter employer name</span></li>
+            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="SPOC Name" id="Id10" ng-model="batch.employerName"></li>
+         	<span id="warning"  ng-show="emptyEmployerNameCheck">Enter SPOC name</span></li>
          </div>
          <div class="col-sm-3" id="div">
             <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id11" ng-model="batch.municipality"></li>
             <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Batch End Date" ng-model="batch.batchEndDate" id="end"></li>
             <span id="warning"  ng-show="dateErrorFlag">{{dateError}}</span></li>
             <li>
-            <input ng-disabled="batchDetails.value == undefined" class="state" type="number" placeholder="Employer Number" id="Id13" ng-model="batch.employerContactNumber" />
+            <input ng-disabled="batchDetails.value == undefined" class="state" type="number" placeholder="SPOC Number" id="Id13" ng-model="batch.employerContactNumber" />
             <span id="warning"  ng-show="employerNumberErrorFlag">Enter valid contact number</span></li>
             </li>
          </div>
