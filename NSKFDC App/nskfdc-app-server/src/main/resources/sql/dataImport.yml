@@ -68,3 +68,6 @@ dataImport:
  updateExistingBankDetails: >
   UPDATE nskfdc.bankdetails set ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where accountNumber=:accountNumber;
   
+ nsdcRegNumber: >
+  select REVERSE(CAST(REVERSE(nsdcRegNumber) AS UNSIGNED)) from trainingpartnerdetails where userEmail= :userEmail;
+  
