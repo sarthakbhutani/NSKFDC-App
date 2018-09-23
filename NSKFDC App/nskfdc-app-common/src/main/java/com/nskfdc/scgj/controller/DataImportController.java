@@ -260,17 +260,7 @@ public class DataImportController {
 	 * @return
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	@Privilege(value= {"TP"})
+	@Privilege(value= {"TP"})
 	@RequestMapping("/generateBatch/{municipality}")
 	public GetBatchIdDto generateBatchController(@PathVariable("municipality") String municipality)
 	{
@@ -341,18 +331,7 @@ public class DataImportController {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
