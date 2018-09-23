@@ -935,7 +935,9 @@ public class DataImportService {
 			String[] nameArray = stringUtility.splitBySpace(trainingPartnerName);	
 			LOGGER.debug("Sending request to utility method to get the first character for each splitted string");
 			String uniqueName = stringUtility.getFirstLetter(nameArray);
+			
 			//Gets the Training partner unique names
+			
 			LOGGER.debug("The unique name of the user is : " + uniqueName);
 			LOGGER.debug("Calling method to get unique name for municipality");
 			LOGGER.debug("Calling method to split name ");
@@ -944,7 +946,6 @@ public class DataImportService {
 			LOGGER.debug("Sending request to string utility to get unique municipality name");
 			
 			String uniqueMunicipalityName = stringUtility.getUniqueMunicipalityName(municipalityNameArray);
-
 			String uniqueBatchId = uniqueName+uniqueMunicipalityName+latestBatch;
 			
 			LOGGER.debug("The unique batchId for TP with username : " + userEmail + " is : " + uniqueBatchId);
