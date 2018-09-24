@@ -891,13 +891,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 
 	}
-
-
-
-
-
-
-     /**
+  /**
       * This method returns the name of the training partner with the userEmail in session
       * @param userEmail
       * @return

@@ -906,10 +906,8 @@ public class DataImportService {
 //				}
 		LOGGER.debug("Status of batch update is : " + batchStatus);
 		LOGGER.debug("Status of employer update/insert is : "+employerStatus );
-		if(batchStatus > 0 && employerStatus > 0)
-		{
+		
 			status = 1;
-		}
 		return status;
 	}
 
