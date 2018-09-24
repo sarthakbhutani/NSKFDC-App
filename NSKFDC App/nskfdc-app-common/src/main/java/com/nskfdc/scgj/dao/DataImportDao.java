@@ -246,8 +246,8 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 	/**
-	 * 
-	 * @param batchId
+	 * Method to return data for master sheet import based on batchId
+	 * @param batchId for which master sheet needs to be generated
 	 * @return
 	 */
 	public Collection<MasterSheetImportDto> candidateSheetDetails(String batchId){
@@ -295,7 +295,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 					sectorSkillCouncil, jobRole, nsdcRegNumber, batchId);
 		}
 	}
-	
+	/**
+	 * Rowmapper class for generating candidate sheet
+	 * @author Ruchi
+	 *
+	 */
 	private static class GenerateCandidateSheetRowmapper implements
 	RowMapper<MasterSheetImportDto> {
 
@@ -348,7 +352,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	/**
 	 * Method to find out targets assigned to training partner by SCGJ based on user email
-	 * @param userEmail email addres of logged in user
+	 * @param userEmail email address of logged in user
 	 * @return Object of class integer which has value of assigned targets
 	 */
 	public Integer getTotalTargets(String userEmail) {
