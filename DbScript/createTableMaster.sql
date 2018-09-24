@@ -126,13 +126,9 @@ CREATE TABLE `employerdetails` (
   `employerId` int(11) NOT NULL AUTO_INCREMENT,
   `employerName` varchar(60) DEFAULT NULL,
   `employerContactNumber` bigint(20) DEFAULT NULL,
-  `userEmail` varchar(100) DEFAULT NULL,
   `batchId` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`employerId`),
-  UNIQUE KEY `batchId_UNIQUE` (`batchId`),
-  KEY `user_email` (`userEmail`),
-  CONSTRAINT `batchEmployer` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `userEmailEmployer` FOREIGN KEY (`userEmail`) REFERENCES `user` (`userEmail`) ON DELETE NO ACTION ON UPDATE NO ACTION
+   CONSTRAINT `batchEmployer` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
