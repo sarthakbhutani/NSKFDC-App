@@ -39,8 +39,6 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	private static final TrainingDetailsRowmapper trainingDetailsRowmapper=new TrainingDetailsRowmapper();
 	private static final CandiateDetailsRowmapper candiateDetailsRowmapper=new CandiateDetailsRowmapper();
 	
-	/* Creating object of Generate  Report Rowmapper */
-	/*private static final SearchReportRowmapper SearchReport_RowMapper = new SearchReportRowmapper();*/
 	/**
 	 
 	 *@author Samridhi Srivastava
@@ -48,7 +46,6 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	 *@return A Collection of the Batch Ids corresponding to the particular SCGJ Batch Number.
 	 
 	 **/
-	
 	public Collection<GetBatchIdDto> getBatchId(String userEmail){
      
 		 LOGGER.debug("Request received from Service");
@@ -70,7 +67,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		return null;
 	}
 	}
-	
+	/**
+	 * Method to return location details of batch based on batchId
+	 * @param batchId for which location needs to be looked for
+	 * @return Collection of location details 
+	 */
 	public Collection<LocationDetailsDto> getLocationDetails(String batchId)
 	{
 		LOGGER.debug("Request Received from GenerateBatchReportService");
@@ -92,6 +93,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		}
 	}
 	
+	/**
+	 * Method to return training details 
+	 * @param batchId
+	 * @return
+	 */
 	public Collection<TrainingDetailsDto> getTrainingDetails(String batchId){
 		LOGGER.error("Request received from GenerateBatchReportService");
 		LOGGER.debug("In GENERATE BATCH REPORT DAO, to get Training details for Final Batch Report");
@@ -112,7 +118,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			return null;
 		}
 	}
-	
+	/**
+	 * Method to return candidate dto for a batch
+	 * @param batchId
+	 * @return
+	 */
 	public Collection<CandidateDetailsDto> getCandidateDetails(String batchId){
 		
 		LOGGER.debug("Request received from GenerateBatchReportService");
@@ -132,15 +142,6 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			return null;
 		}
 	}
-	
-	/**
-	 
-	 *@author Shivangi Singh
-	 *@description This method is a DAO Method that generates the Reports of particular batchId entered.
-	 
-	 
-	 **/
-	
 	
 	
 	/**
@@ -241,7 +242,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		}
 	}
 	
-	
+	/**
+	 * Method to show SCGJ batch number for a batchId
+	 * @param batchId for which batch number needs to be searched
+	 * @return
+	 */
 	public String showScgjbatchNumber(String batchId) {
 		
 		LOGGER.debug("Request recieved from service to get scgj batch number for batch id : " + batchId);
@@ -273,6 +278,14 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 	}
 	
 
+	/**
+	 * Method to update the data of generate reports table
+	 * @param generateReportsId
+	 * @param date
+	 * @param reportType
+	 * @param batchId
+	 * @param userEmail
+	 */
 	public void updateTableGenerateReports(String generateReportsId, Date date, String reportType, String batchId, String userEmail) {
 		LOGGER.debug("Request received from Generate Report Service");
 		LOGGER.debug("In Method - updateTableGenerateReports");
@@ -304,6 +317,11 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 		
 	}
 	
+	/**
+	 * Method to check the end date of a batch
+	 * @param batchId
+	 * @return
+	 */
 	public int checkBatchEndDate(String batchId) {
 		LOGGER.debug("Request received at DAO to check if batchEndDate is less than current date");
 		LOGGER.debug("In method - checkbatchEndDate");
