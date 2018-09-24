@@ -25,7 +25,15 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 
     private static final Logger LOGGER= LoggerFactory.getLogger(UpdateTargetsDao.class);
 
+    
     private static final UpdateTargetRowMapper updateTargetRowMapper = new UpdateTargetRowMapper();
+    
+    /**
+     * Method to update targets of a training partner for a financial year
+     * @param nsdcRegNumber
+     * @param targets
+     * @return Status of updating targets
+     */
     public Integer updateTargets(String nsdcRegNumber, int targets)
     {
     	 LOGGER.debug("Request received from service to UpdateTargetsDao");
@@ -70,6 +78,11 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 
     }
 
+    /**
+     * Check existence of NSDC registration number
+     * @param nsdcRegNumber
+     * @return value of the status - 0,1,etc
+     */
     private Integer checkExistenceStatus(String nsdcRegNumber) {
 		
     	LOGGER.debug("Request received in method checkExistence for entered nsdcRegNumber");
@@ -96,7 +109,12 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 	
 	}
 
-	public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
+	/**
+	 * MEthod to update target against nsdc regsitration number
+	 * @param nsdcRegNumber
+	 * @return collection of update targets
+	 */
+    public Collection<UpdateTargetsDto> updateTargetDetails(String nsdcRegNumber) {
         LOGGER.debug("Request received from service to UpdateTargetsDao");
         LOGGER.debug("To get Target Details for training partner");
         LOGGER.debug("Against entered NSDC Reg Number");
@@ -121,6 +139,11 @@ public class UpdateTargetsDao extends AbstractTransactionalDao {
 
     }
 
+    /**
+     * Row mapper class for update targets
+     * @author Ruchi
+     *
+     */
     private static class UpdateTargetRowMapper implements RowMapper<UpdateTargetsDto> {
 
         @Override
