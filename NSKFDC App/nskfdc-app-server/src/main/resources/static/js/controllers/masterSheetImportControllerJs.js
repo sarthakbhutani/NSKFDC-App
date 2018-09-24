@@ -397,18 +397,16 @@ var url = '/getBatchIdfortrainer';
         		{   
          			 $scope.rollingGenerateCandidateSheet= false;
             		 $scope.generatingCandidateSheet="";
+            		 $scope.generateCandidateSheetError = true;
+                 	$scope.generateCandidateSheetMessage = "Candidate sheet generated successfully!";
+                 	document.getElementById("successId").style.color = "green";
          			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
          			var downloadURL = URL.createObjectURL(excelFile);
          			var link = document.createElement('a');
          			link.href = downloadURL;
          			link.download = "Candidate Sheet_"+$scope.generatebatchDetails.value+".xlsx"
          			document.body.appendChild(link);
-         			link.click();
-         			
-         			$scope.generateCandidateSheetError = true;
-                	$scope.generateCandidateSheetMessage = "Candidate sheet generated successfully!";
-                	document.getElementById("successId").style.color = "green";
-                	
+         			link.click();                	
         		}
          		else{
          			 $scope.rollingGenerateCandidateSheet= false;
@@ -427,7 +425,7 @@ var url = '/getBatchIdfortrainer';
 	            $scope.rollingGenerateCandidateSheet= false;
 	    		 $scope.generatingCandidateSheet="";
 	            $scope.generateCandidateSheetError = false;
-	         }, 3000);
+	         }, 5000);
       
     	 }
 });
