@@ -321,7 +321,11 @@ private static class BarchartRowmapper implements RowMapper<StateDetailsDto>{
 	}
 	
 }
-
+/**
+ * Row mapper class for candidates trained in last 6 months
+ * @author Ruchi
+ *
+ */
 private static class BarchartRowmapper1 implements RowMapper<CandidatesTrainedInLast6MonthsDto>{
 	
 	@Override
@@ -363,7 +367,11 @@ public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
 
 }
 
-
+/**
+ * Row mapper class for state details
+ * @author Ruchi
+ *
+ */
 private static class MapchartRowmapper implements RowMapper<StateDetailsDto>{
 
 @Override

@@ -29,7 +29,8 @@ import com.nskfdc.scgj.dto.MasterSheetSubmitDto;
 @Repository
 public class DataImportDao extends AbstractTransactionalDao {
 
-	/* Object of Master Sheet RowMapper */
+	/**
+	 * /* Object of Master Sheet RowMapper */
 	private static final GenerateMasterSheetRowmapper generateMasterSheetRowMapper = new GenerateMasterSheetRowmapper();
 	private static final GenerateCandidateSheetRowmapper generateCandidateSheetRowMapper = new GenerateCandidateSheetRowmapper();
 
