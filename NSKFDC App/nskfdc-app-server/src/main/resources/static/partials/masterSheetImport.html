@@ -233,6 +233,10 @@
          <div class="">
          	<button type="submit" class="btn btn-primary" id="candidateSheetButton">Generate</button>
          <span><p id="successId" ng-show="generateCandidateSheetError">{{generateCandidateSheetMessage}}</p></span>
+         <span ng-show="rollingGenerateCandidateSheet">
+                    <img src="gif/Progress.gif"/>
+                    {{generatingCandidateSheet}}
+                </span>
          </div>
         </form>
      <div class="subheading">
@@ -263,7 +267,17 @@
              
            </form>
            <div class="col-md-12" align="right">
+             <div class="col-md-6" id="rollinguploadCandidateSheetGif">
+             <span>
+             <img src="gif/Progress.gif"/>
+                    </span>
+                    <span>
+                   <p> Please wait while file is uploading</p></span>
+                	
+             </div>
+             <div class="col-md-6">
              <p id="importExcelMessage" class="importExcelMessageStyle"></p>
+             </div>
              </div>
 	 </div>
 	 

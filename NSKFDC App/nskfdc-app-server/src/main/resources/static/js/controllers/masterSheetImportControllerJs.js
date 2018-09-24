@@ -25,6 +25,9 @@ function checkforstate() {
 
 var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
+	
+	document.getElementById("rollinguploadCandidateSheetGif").style.display="none";
+	
 	$scope.submitMsg=false;
 	$scope.dateError="";
     $scope.dateErrorFlag =false;
@@ -35,6 +38,8 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	$scope.employerNumberErrorFlag=false;
 	$scope.emptyEmployerNameCheck=false;
 	$scope.masterSheet = {};
+	$scope.rollingGenerateCandidateSheet= false;
+	$scope.generatingCandidateSheet="";
 	$http.get('/getNameOfUser').then(function(response){
 		$rootScope.nameOfuser=response.data.trainingPartnerName;
 	});
@@ -381,11 +386,17 @@ var url = '/getBatchIdfortrainer';
     	 }
     	 
     	 $scope.generateCandidateSheet= function(){
+    		 
+    		 $scope.rollingGenerateCandidateSheet= true;
+    		 $scope.generatingCandidateSheet="Please wait generating Candidate Sheet";
+    		 
     		 var url='/downloadFinalMasterSheet?batchId='+$scope.generatebatchDetails.value;  	  
          	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
          	{	
          		if(response.data.byteLength!=0)
-        		{         		
+        		{   
+         			 $scope.rollingGenerateCandidateSheet= false;
+            		 $scope.generatingCandidateSheet="";
          			var excelFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
          			var downloadURL = URL.createObjectURL(excelFile);
          			var link = document.createElement('a');
@@ -400,6 +411,8 @@ var url = '/getBatchIdfortrainer';
                 	
         		}
          		else{
+         			 $scope.rollingGenerateCandidateSheet= false;
+            		 $scope.generatingCandidateSheet="";
          			$scope.generateCandidateSheetError = true;
                 	$scope.generateCandidateSheetMessage = "Candidate sheet cannot be generated!";
                 	document.getElementById("successId").style.color = "red";
@@ -411,6 +424,8 @@ var url = '/getBatchIdfortrainer';
         	
         	$timeout(function() {
 	            $scope.generateCandidateSheetMessage="";
+	            $scope.rollingGenerateCandidateSheet= false;
+	    		 $scope.generatingCandidateSheet="";
 	            $scope.generateCandidateSheetError = false;
 	         }, 3000);
       

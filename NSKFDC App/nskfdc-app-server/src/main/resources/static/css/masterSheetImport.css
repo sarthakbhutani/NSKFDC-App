@@ -281,3 +281,7 @@ display:block;
 #successId{
 	font-weight: bold;
 }
+
+#rollinguploadCandidateSheetGif{
+	text-align:left;
+}
