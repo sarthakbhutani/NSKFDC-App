@@ -31,7 +31,11 @@ public class LoginDao extends AbstractTransactionalDao{
 	@Autowired
 	private LoginConfigSql loginConfigSql;
 	
-	
+	/**
+	 * Check existence of user
+	 * @param userEmail
+	 * @return
+	 */
 	public int userExistence(String userEmail){
 		LOGGER.debug("Request Received from Service");
 		LOGGER.debug("In LoginDao - userExistence");
@@ -62,6 +66,11 @@ public class LoginDao extends AbstractTransactionalDao{
 
 
 
+	/**
+	 * Method to return name of logged in user
+	 * @param userEmail
+	 * @return Name of user
+	 */
 	public String getNameOfUser(String userEmail) {
 		
 		LOGGER.debug("Request Received from GetNameOfUserService to get name of the logged in user");
@@ -92,7 +101,12 @@ public class LoginDao extends AbstractTransactionalDao{
 	}
 
 	
-   public SessionManagementDto getValidUserDetails(String userEmail) {
+	/**
+	 * Check if the user is valid
+	 * @param userEmail
+	 * @return returns the user object
+	 */
+	public SessionManagementDto getValidUserDetails(String userEmail) {
 		LOGGER.debug("Request Received from LoginService");
 		LOGGER.debug("In LoginDao - getValidateLoginUser");
 		LOGGER.debug("To get login details of user to Validate");
@@ -120,7 +134,11 @@ public class LoginDao extends AbstractTransactionalDao{
 	
 	
 	
-   
+   /**
+    * Row mapper class for email and password
+    * @author Ruchi
+    *
+    */
 	private static class LoginRowMapper implements RowMapper<SessionManagementDto>
 	{
 		public SessionManagementDto mapRow(ResultSet rs, int rowNum) throws SQLException {
