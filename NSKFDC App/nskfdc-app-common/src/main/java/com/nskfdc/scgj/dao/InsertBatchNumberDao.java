@@ -27,6 +27,12 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 	private static final Logger LOGGER = LoggerFactory.getLogger(InsertBatchNumberDao.class);
 	private static final ShowDetailsRowMapper showDetailsRowMapper = new ShowDetailsRowMapper();
 
+	/**
+	 * Check if batch number exists for a given batch id
+	 * @param batchId
+	 * @param scgjBatchNumber
+	 * @return value of performed search
+	 */
 	public Integer checkBatchNumberExistence(String batchId, String scgjBatchNumber) {
 		try {
 
@@ -82,8 +88,13 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 	 * @return
 	 */
 
+	/**
+	 * Method to update the batch number for a given batchId
+	 * @param batchId
+	 * @param scgjBatchNumber
+	 * @return status of updating - number of rows affected
+	 */
 	public Integer updateScgjBatchNumber(String batchId, String scgjBatchNumber) {
-		// TODO Auto-generated method stub
 		LOGGER.debug("Request recieved to insert batch number against the batch id : " + batchId);
 
 		try {
@@ -136,7 +147,11 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 
 	}
 
-	
+	/**
+	 * Method to get batch number for a given batch Id
+	 * @param batchId
+	 * @return batch number's collection 
+	 */
 	public Collection<InsertBatchNumberDto> showBatchNumberDetails(String batchId)
 	{
 		LOGGER.debug("Request recieved from service to get details of scgj batch number against the batch id : " + batchId);
@@ -188,7 +203,11 @@ public class InsertBatchNumberDao extends AbstractTransactionalDao {
 		
 	}
 	
-	
+	/**
+	 * A Row mapper class for Batch number
+	 * @author Ruchi
+	 *
+	 */
 	private static class ShowDetailsRowMapper implements RowMapper<InsertBatchNumberDto>
 	{
 		@Override
