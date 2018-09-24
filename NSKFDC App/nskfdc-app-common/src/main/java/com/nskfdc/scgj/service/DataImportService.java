@@ -885,25 +885,25 @@ public class DataImportService {
 		//Update details of a batch
 		batchStatus = dataImportDao.updateBatchDetails(masterSheetSubmitDto);
 		// To insert the employer if batch update was successful and 
-				if ((masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null) && batchStatus > 0) {
-
-					int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
-					if (checkEmployer == 0) {
-						LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
-						LOGGER.debug("Sending request to employerDao - to insert new employer");
-						status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(),
-								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-								userEmail);
-						LOGGER.debug("Status of Employer insertion " + status);
-					} else if (checkEmployer == 1) {
-						LOGGER.debug("In ELSE-IF -- When Employer does exist");
-						LOGGER.debug("Sending request to employerDao - to update employer details");
-						employerStatus = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(),
-								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-								userEmail);
-						LOGGER.debug("Status of Employer updation " + status);
-					}
-				}
+//				if ((masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null) && batchStatus > 0) {
+//
+//					int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
+//					if (checkEmployer == 0) {
+//						LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
+//						LOGGER.debug("Sending request to employerDao - to insert new employer");
+//						status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(),
+//								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
+//								userEmail);
+//						LOGGER.debug("Status of Employer insertion " + status);
+//					} else if (checkEmployer == 1) {
+//						LOGGER.debug("In ELSE-IF -- When Employer does exist");
+//						LOGGER.debug("Sending request to employerDao - to update employer details");
+//						employerStatus = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(),
+//								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
+//								userEmail);
+//						LOGGER.debug("Status of Employer updation " + status);
+//					}
+//				}
 		LOGGER.debug("Status of batch update is : " + batchStatus);
 		LOGGER.debug("Status of employer update/insert is : "+employerStatus );
 		if(batchStatus > 0 && employerStatus > 0)

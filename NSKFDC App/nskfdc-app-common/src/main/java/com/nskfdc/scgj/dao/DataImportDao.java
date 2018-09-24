@@ -39,7 +39,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(DataImportDao.class);
 
-	/*-------- Excel Sheet Import Method --------------*/
+	/**
+	 * Method that reads each value of cell of uploaded excel
+	 * @param candidateDetails
+	 * @param batchId
+	 * @return Object of Integer class which holds the status of reading excel
+	 */
 
 	public Integer masterSheetImport(
 			ArrayList<MasterSheetImportDto> candidateDetails, String batchId) {
@@ -206,14 +211,13 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 	
-	
-	
-	
-	
-	
 
-	/*--------------- Download Master Sheet Code -------------------- */
-
+	/**
+	 * Data for  candidate details sheet
+	 * @param userEmail
+	 * @param batchId
+	 * @return collection of candidate object
+	 */
 	public Collection<DownloadFinalMasterSheetDto> downloadMasterSheetDao(
 			String userEmail, String batchId) {
 
@@ -240,7 +244,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 			return null;
 		}
 	}
-	
+	/**
+	 * 
+	 * @param batchId
+	 * @return
+	 */
 	public Collection<MasterSheetImportDto> candidateSheetDetails(String batchId){
 		LOGGER.debug("Request received from Service");
 		LOGGER.debug("In candidateSheetDetails Dao - to get details of candidate of selected batchId");
@@ -264,7 +272,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	}
 
-	/*------------------------------RowMapper to download Master/Candidate Sheet-----------------------------*/
+	/**
+	 * Row mapper class for Master sheet
+	 * @author Ruchi
+	 *
+	 */
 	private static class GenerateMasterSheetRowmapper implements
 			RowMapper<DownloadFinalMasterSheetDto> {
 
@@ -333,6 +345,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 	
 
+	/**
+	 * Method to find out targets assigned to training partner by SCGJ based on user email
+	 * @param userEmail email addres of logged in user
+	 * @return Object of class integer which has value of assigned targets
+	 */
 	public Integer getTotalTargets(String userEmail) {
 
 		LOGGER.debug("Request received from Service");
@@ -387,6 +404,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Method to find out targets achieved by training partner
+	 * @param userEmail
+	 * @return Object of class Integer which has value of remaining targets
+	 */
 	public Integer getTargetAchieved(String userEmail) {
 
 		LOGGER.debug("Request received from Service");
@@ -443,6 +465,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Method to find out remaining targets 
+	 * @param userEmail
+	 * @return integer value for remaining targets
+	 */
 	public Integer getRemainingTargets(String userEmail) {
 
 		LOGGER.debug("Request received from Service");
@@ -507,6 +534,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Method to fetch financial year 
+	 * @param userEmail
+	 * @return
+	 */
 	public Integer ShowFinancialYear(String userEmail) {
 
 		LOGGER.debug("Request received from Service to DataImportDao - ShowFinancialYear");
@@ -548,7 +580,10 @@ public class DataImportDao extends AbstractTransactionalDao {
 	}
 
 	private static final FinancialRowmapper Financial_RowMapper = new FinancialRowmapper();
-
+/**
+ * Method to return financial year
+ * @return
+ */
 	public Collection<FinancialDto> FinancialRowmapper() {
 
 		try {
@@ -569,6 +604,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Row mapper for financial year
+	 * @author Ruchi
+	 *
+	 */
 	private static class FinancialRowmapper implements RowMapper<FinancialDto> {
 
 		@Override
@@ -620,6 +660,11 @@ public class DataImportDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Row mapper class for batch details
+	 * @author Ruchi
+	 *
+	 */
 	private static class BatchDetailsRowmapper implements
 			RowMapper<BatchImportDto> {
 
@@ -828,7 +873,8 @@ public class DataImportDao extends AbstractTransactionalDao {
 			batchParameters.put("batchId", masterSheetSubmitDto.getBatchId());
 			batchParameters.put("centreState", masterSheetSubmitDto.getState());
 			batchParameters.put("centreCity", masterSheetSubmitDto.getCity());
-						
+			batchParameters.put("employerName", masterSheetSubmitDto.getEmployerName());
+			batchParameters.put("employerContactNumber", masterSheetSubmitDto.getEmployerNumber());
 			LOGGER.debug("Executing Update query to update the details of selected batchId");
 			return getJdbcTemplate().update(
 					dataImportConfig.getUpdateBatchDetails(), batchParameters);
@@ -972,13 +1018,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 	}
 
 
-
-
-
-
-
+	/**
+	 * Methid to return NSDC registration number
+	 * @param userEmail
+	 * @return object of class integer that contains value of registration number
+	 */
 	public Integer getNsdcRegNumber(String userEmail) {
-		// TODO Auto-generated method stub
 		
 		LOGGER.debug("Request recieved to fetch nsdc registration number of training partner with email: " +userEmail);
 		LOGGER.debug("Creating hash map of objects");
