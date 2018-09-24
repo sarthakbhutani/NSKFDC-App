@@ -17,14 +17,13 @@ generateReport:
    from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail= trainingpartnerdetails.userEmail left join bankdetails on bankdetails.enrollmentNumber=candidate.enrollmentNumber where batchdetails.batchId=:batchId and trainingpartnerdetails.userEmail=:userEmail;
  
  showSDMSExcelSheet: >
-  select t.nsdcRegNumber, cd.centreId, c.enrollmentNumber, c.firstName, c.lastName, c.dob,c.firstNameFather,c.lastNameFather,c.guardianType,
-   c.salutation,c.gender,c.state, c.district, c.mobileNumber, c.educationLevel, t.sectorSkillCouncil, t.jobRole, b.batchStartDate, b.batchEndDate, b.assessmentDate, e.employerName,
-    e.employerContactNumber, c.employmentType, c.aadharCardNumber, c.disabilityType  from candidate c INNER JOIN batchdetails b INNER JOIN trainingpartnerdetails t INNER JOIN centredetails cd INNER JOIN employerdetails e ON  
-     cd.userEmail = cd.userEmail and e.batchId = b.batchId and e.userEmail = b.userEmail and 
-      b.centreId=cd.centreId and c.batchId=b.batchId and b.batchId= :batchId and t.userEmail= :userEmail;
+  select t.nsdcRegNumber, b.centreId, c.enrollmentNumber, c.firstName, c.lastName, c.dob,c.firstNameFather,c.lastNameFather,c.guardianType,
+   c.salutation,c.gender,c.state, c.district, c.mobileNumber, c.educationLevel, t.sectorSkillCouncil, t.jobRole, b.batchStartDate, b.batchEndDate, b.assessmentDate, b.employerName,
+    b.employerContactNumber, c.employmentType, c.aadharCardNumber, c.disabilityType  from candidate c INNER JOIN batchdetails b INNER JOIN trainingpartnerdetails t ON  
+    c.batchId=b.batchId and b.batchId= :batchId and t.userEmail= :userEmail and b.userEmail=t.userEmail;
 
  showMinutesOfSelectionMeetingDetails: >  
-  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails join centredetails on trainingpartnerdetails.userEmail=centredetails.userEmail join batchdetails on batchdetails.centreId=centredetails.centreId where batchdetails.userEmail=:userEmail AND batchdetails.batchId=:batchId;
+  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails inner join batchdetails on batchdetails.userEmail= trainingpartnerdetails.userEmail where batchdetails.userEmail=:userEmail AND batchdetails.batchId=:batchId;
  
  updateGenerateReportsTable: >
   replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);

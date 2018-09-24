@@ -6,7 +6,7 @@ batchIdQuery:
   select distinct scgjBatchNumber from nskfdc.batchDetails where batchId = :batchId;
 
  showLocationDetails: >
-  SELECT centreState,centreCity,municipality,wardType,scgjBatchNumber,dataSheetForSDDMS FROM centredetails inner join batchdetails ON centredetails.centreId = batchdetails.centreId left join uploadeddocuments ON batchdetails.batchId = uploadeddocuments.batchId where batchdetails.batchId=:batchId;
+  SELECT centreState,centreCity,municipality,wardType,scgjBatchNumber,dataSheetForSDDMS FROM batchdetails left join uploadeddocuments ON batchdetails.batchId = uploadeddocuments.batchId where batchdetails.batchId=:batchId;
   
  showTrainingDetails: >
   select selectionCommitteeDate,batchStartDate,batchEndDate,trainingPartnerName,principalTrainerName,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND ((assessmentResult='Fail') || (assessmentResult='Pass'))) as candidateAssessed,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (assessmentResult='Pass')) as candidatePassed,medicalExamDate,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (medicalExamConducted='Yes')) as medicalExamConducted,count(enrollmentNumber) from nskfdc.batchdetails join nskfdc.candidate on batchdetails.batchId=candidate.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where batchdetails.batchId=:batchId;

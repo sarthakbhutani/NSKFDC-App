@@ -24,7 +24,7 @@ dataImport:
    ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
 
  BatchDetails: >
-  SELECT DISTINCT b.centreId, b.centreState, b.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber , e.employerName, e.employerContactNumber from  batchdetails b LEFT JOIN employerdetails e ON (b.batchId= e.batchid and b.userEmail=e.userEmail) where  b.batchId= :batchId and b.userEmail= :userEmail;
+  SELECT DISTINCT b.centreId, b.centreState, b.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber , b.employerName, b.employerContactNumber from  batchdetails b where  b.batchId= :batchId and b.userEmail= :userEmail;
 
  generateBatch: >
   insert into batchdetails(userEmail) values (:userEmail);
@@ -39,7 +39,7 @@ dataImport:
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
 
  updateBatchDetails: >
-  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName,centreId=:centreId , centreState = :centreState, centreCity =:centreCity where batchId=:batchId;
+  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName,centreId=:centreId , centreState = :centreState, centreCity =:centreCity , employerName = :employerName , employerContactNumber = :employerContactNumber where batchId=:batchId;
 
  importCandidate: >
   INSERT INTO nskfdc.candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,:guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS);
