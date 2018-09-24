@@ -66,7 +66,7 @@ CREATE TABLE `batchdetails` (
   `scgjBatchNumber` varchar(50) DEFAULT NULL,
   `principalTrainerName` varchar(50) DEFAULT NULL,
   `userEmail` varchar(100) NOT NULL,
-  `centreId` bigint(20) ,
+  `centreId` bigint(20),
   `centreState` varchar (100),
   `centreCity` varchar (100),
   `employerName` varchar(60),
