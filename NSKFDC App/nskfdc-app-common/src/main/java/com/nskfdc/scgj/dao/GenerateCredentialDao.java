@@ -31,6 +31,12 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 		@Autowired
 		private GenerateCredentialConfig generateCredentialConfig;
 		
+		/**
+		 * Method to generate credentials of a training partner 
+		 * @param generateCredentialDto
+		 * @param role
+		 * @return status of the process
+		 */
 		public Integer generateCredential(GenerateCredentialDto generateCredentialDto , String role)
 		{
 		    LOGGER.debug("Received request from service to generate new credentials for trainingpartner");
@@ -68,6 +74,11 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 		    
 		}
 		
+		/**
+		 * Method to get details of training partner
+		 * @param generateCredentialDto
+		 * @return status of process
+		 */
 		public Integer inputTrainingPartnerDetails(GenerateCredentialDto generateCredentialDto)
 		{
 			 	LOGGER.debug("Received request from service to insert training partner data while generating credential");
@@ -109,7 +120,11 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 		
 		
 	
-		
+		/**
+		 * Method to send data when search using NSDC registration number
+		 * @param nsdcRegNumber
+		 * @return result of the seach sql
+		 */
 		public Collection<GenerateCredentialSearchDto> getTrainingPartnerDetail(String nsdcRegNumber){
 			
 			LOGGER.debug("Received request from service to get credential detail");
@@ -138,7 +153,11 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 		}
 		
 		
-		
+		/**
+		 * Row mapper class for training partners details
+		 * @author Ruchi
+		 *
+		 */
 		private static class GenerateCredentialSearchRowmapper implements RowMapper<GenerateCredentialSearchDto>{
 			
 			@Override
@@ -157,6 +176,11 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 			
 		}
 
+		/**
+		 * Check for user existence before creating credentials
+		 * @param userEmail email to be searched
+		 * @return result of the search performed
+		 */
 		public Integer checkUserExistence(String userEmail) {
 			
 			LOGGER.debug("Received request in GenerateCredentialDao");
@@ -182,6 +206,11 @@ public class GenerateCredentialDao  extends AbstractTransactionalDao {
 			}
 		}
 		
+		/**
+		 * To validate if nsdc registration number is not being used
+		 * @param nsdcRegNumber 
+		 * @return value of search 
+		 */
 		public Integer checkNsdcNumberExistence(String nsdcRegNumber) {
 			
 			LOGGER.debug("Received request in GenerateCredentialDao");
