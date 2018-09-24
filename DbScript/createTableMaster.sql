@@ -25,6 +25,11 @@ USE `nskfdc`;
 --
 
 DROP TABLE IF EXISTS `centredetails`;
+--
+-- Table structure for table `employerdetails`
+--
+
+DROP TABLE IF EXISTS `employerdetails`;
 
 DROP TABLE IF EXISTS `bankdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -64,6 +69,8 @@ CREATE TABLE `batchdetails` (
   `centreId` bigint(20) ,
   `centreState` varchar (100),
   `centreCity` varchar (100),
+  `employerName` varchar(60) DEFAULT NULL,
+  `employerContactNumber` bigint(20) DEFAULT NULL,
   `updatedOn` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `batchId_UNIQUE` (`batchId`),
@@ -115,22 +122,6 @@ CREATE TABLE `candidate` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Table structure for table `employerdetails`
---
-
-DROP TABLE IF EXISTS `employerdetails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employerdetails` (
-  `employerId` int(11) NOT NULL AUTO_INCREMENT,
-  `employerName` varchar(60) DEFAULT NULL,
-  `employerContactNumber` bigint(20) DEFAULT NULL,
-  `batchId` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`employerId`),
-   CONSTRAINT `batchEmployer` FOREIGN KEY (`batchId`) REFERENCES `batchdetails` (`batchId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `generatereports`
