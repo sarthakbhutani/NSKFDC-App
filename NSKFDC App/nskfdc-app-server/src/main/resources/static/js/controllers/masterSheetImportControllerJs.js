@@ -244,7 +244,7 @@ var url = '/getBatchIdfortrainer';
     	var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
         var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
     	
-    	if( dayDifference > 5)
+    	if( dayDifference > 4)
     		{
     			$scope.dateErrorFlag = true;
     			$scope.dateError = "Batch duration cannot exceed 5 days";
