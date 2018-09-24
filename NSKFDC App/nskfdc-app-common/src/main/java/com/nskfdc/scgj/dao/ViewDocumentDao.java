@@ -37,6 +37,12 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 	@Autowired
 	private ViewDocumentConfig viewDocumentConfig;
 
+	/**
+	 * Method to get details of documents uploaded given a batch Id and training partner
+	 * @param tpName
+	 * @param batchId
+	 * @return Collection of View document object 
+	 */
 	public Collection<ViewDocumentDto> getViewTrainingPartnerDetailForBatchId(String tpName, String batchId) {
 
 		LOGGER.debug("Request received from Service to ViewDocumentsDao");
@@ -66,6 +72,12 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 
 	}
 
+	/**
+	 * Method to get Details of uploaded documents based on training partner and batch number
+	 * @param tpName
+	 * @param scgjBtNumber
+	 * @return Collection of viewDocumnet object
+	 */
 	public Collection<ViewDocumentDto> getViewTrainingPartnerDetailForSearchscgjBtNumber(String tpName,
 			String scgjBtNumber) {
 
@@ -99,6 +111,11 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 
 	static StringBuilder s2 = new StringBuilder("");
 
+	/**
+	 * Row mapper for view documents object
+	 * @author Ruchi
+	 *
+	 */
 	private static class ViewDocumentRowmapper implements RowMapper<ViewDocumentDto> {
 		@Override
 		public ViewDocumentDto mapRow(ResultSet rs, int rownum) throws SQLException {
@@ -314,6 +331,11 @@ public class ViewDocumentDao extends AbstractTransactionalDao {
 		}
 	}
 
+	/**
+	 * row mapper class for view documents based on batch number
+	 * @author Ruchi
+	 *
+	 */
 	private static class ViewDocumentSCGJNumberRowmapper implements RowMapper<ViewDocumentDto> {
 		@Override
 		public ViewDocumentDto mapRow(ResultSet rs, int rownum) throws SQLException {
