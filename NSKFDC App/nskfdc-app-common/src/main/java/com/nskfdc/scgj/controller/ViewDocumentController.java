@@ -112,7 +112,6 @@ public class ViewDocumentController {
 			LOGGER.debug("In try block DOWNLOAD" + zipFileLink + tpName
 					+ batchId);
 			int count = 0;
-			// CHANGE HERE!!!!!!
 			Collection<ViewDocumentDto> oldCollection = viewDocumentService
 					.getViewTrainingPartnerDetailForBatchId(tpName, batchId);
 			LOGGER.debug("In try block ");
