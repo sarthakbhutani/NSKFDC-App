@@ -141,7 +141,12 @@ public class DashboardDao extends AbstractTransactionalDao{
 	 * to fulfill queryForObject Syntax
 	 */
 	
-public Integer getNumberOfTrainingPartners(){
+
+	/**
+	 * Method to get number of training partners
+	 * @return
+	 */
+	public Integer getNumberOfTrainingPartners(){
 	
 	LOGGER.debug("Request received from Service - getNumberOfTrainingPartners");
 	LOGGER.debug("In DASHBOARD Dao");
@@ -299,7 +304,11 @@ public Collection<StateDetailsDto> getShowStateDetails(){
 	
 }
 
-
+/**
+ * Method to find state details
+ * @author Ruchi
+ *
+ */
 private static class BarchartRowmapper implements RowMapper<StateDetailsDto>{
 	
 	@Override
