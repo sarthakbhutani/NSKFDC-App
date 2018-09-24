@@ -15,25 +15,33 @@ import com.nskfdc.scgj.dto.*;
 @Repository
 public class GenerateReportDao extends AbstractTransactionalDao {
 	
-	/* Creating object of GenerateOccupationCertificateReportRowmapper */
+
+	/**
+	 * /* Creating object of GenerateOccupationCertificateReportRowmapper */
 	private static final GenerateOccupationCertificateReportRowmapper generateOccupationCertificateReportRowMapper = new GenerateOccupationCertificateReportRowmapper();
 	
-	/* Creating object of GenerateAttendanceSheetReportRowmapper */
+	/**
+	 * /* Creating object of GenerateAttendanceSheetReportRowmapper */
 	private static final GenerateAttendanceSheetRowmapper generateAttendanceSheetRowMapper = new GenerateAttendanceSheetRowmapper();
 	
-	/* Creating object of GenerateNSKFDCExcelSheetReportRowmapper */
+	/**
+	 * /* Creating object of GenerateNSKFDCExcelSheetReportRowmapper */
 	private static final GenerateNSKFDCExcelSheetRowmapper generateNSKFDCExcelSheetRowMapper = new GenerateNSKFDCExcelSheetRowmapper();
 	
-	/* Creating object of GenerateSDMSExcelSheetReportRowmapper */
+	/**
+	 * /* Creating object of GenerateSDMSExcelSheetReportRowmapper */
 	private static final GenerateSDMSExcelSheetRowmapper generateSDMSExcelSheetRowMapper = new GenerateSDMSExcelSheetRowmapper();
 	
-	/* Creating object of GetRecordsForAuditTableRowMapper */
+	/**
+	 * /* Creating object of GetRecordsForAuditTableRowMapper */
 	private static final GetRecordsForAuditTableRowMapper getRecordsForAuditTableRowMapper = new GetRecordsForAuditTableRowMapper();
 	
-	/* Creating object of GenerateMinutesOfSelectionRowmapper */
+	/**
+	 * /* Creating object of GenerateMinutesOfSelectionRowmapper */
 	private static final GenerateMinutesOfSelectionRowmapper generateMinutesOfSelectionRowMapper = new GenerateMinutesOfSelectionRowmapper();
 	
-	/* Creating object of BatchIdRowmapper */
+	/**
+	 * /* Creating object of BatchIdRowmapper */
 	private static final BatchIdRowmapper batchIdRowmapper= new BatchIdRowmapper();
 	
 	@Autowired
@@ -41,6 +49,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	
 	private static final Logger LOGGER= LoggerFactory.getLogger(GenerateReportDao.class);
 	
+	/**
+	 * Get batch all batch Ids for a TP based on user email
+	 * @param userEmail email of logged in TP
+	 * @return collection of BatchIds
+	 */
 	public Collection<GetBatchIdDto> getBatchId(String userEmail){
 	    
 		LOGGER.debug("Request received from Service");
@@ -65,6 +78,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}
 		}
 	
+	/**
+	 * Method to generate data for Occupation certificate based on batch Id and userEmail
+	 * @param batchId batch id for which occupation certifiacte needs to be generated
+	 * @param userEmail email of logged in user
+	 * @return
+	 */
 	public Collection<GenerateOccupationCertificateReportDto> generateOccupationCertificateReport(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service");
@@ -91,6 +110,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}
 	}	
 	
+	/**
+	 * Method to generate attendance sheet for a training partner based on email and batch Id
+	 * @param batchId for which attendance sheet needs to be generated
+	 * @param userEmail email of logged in TP
+	 * @return collection of data to be passed to jasper template of attendance sheet
+	 */
 	public Collection<GenerateAttendanceSheetDto> generateAttendanceSheet(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service");
@@ -115,7 +140,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			return null;
 		}	
 	}
-	
+	/**
+	 * Method to generate NSKFDC excel sheet based on batch Id and useremail
+	 * @param batchId for which NSKFDC excel sheet
+	 * @param userEmail emial of logged in user
+	 * @return Collection of Data to be passed to jasper template of NSKFDC
+	 */
 	public Collection<GenerateNSKFDCExcelSheetDto> generateNSKFDCExcelSheet(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service to GenerateReportDao");
@@ -140,6 +170,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
 	}
 	
+	/**
+	 * Method to return data to be used while generation of Excel SDMS Excel sheet based on batchId and user email
+	 * @param batchId for which SDMS sheet needs to be generated
+	 * @param userEmail of logged in user
+	 * @return collection of data to be sent to jasper report template
+	 */
 	public Collection<GenerateSDMSExcelSheetDto> generateSDMSExcelSheet(String batchId,String userEmail) {
 		
 		LOGGER.debug("Request received from service to GenerateReportDao");
@@ -165,6 +201,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
 	}
 	
+	/**
+	 * Method to get data for generating Minutes of selection committee based on batch id and email
+	 * @param batchId for which minutes of selection committee needs to be generated
+	 * @param userEmail email of logged in user
+	 * @return
+	 */
 	public Collection<GenerateMinutesOfSelectionDto> generateMinutesOfSelection(String batchId,String userEmail) {
 
 		LOGGER.debug("Request received from service to GenerateReportDao");
@@ -190,6 +232,14 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}
 	}
 	
+	/**
+	 * Method to insert the mark the fields for generated reports of a batch and user
+	 * @param generateReportsId id of report generated
+	 * @param generatedOn date of generation
+	 * @param reportType type of report
+	 * @param batchId for which the row needs to be filled
+	 * @param userEmail email of logged in user
+	 */
 	public void updateTableGenerateReports(String generateReportsId,Date generatedOn, String reportType, String batchId ,String userEmail) {
 		
 		LOGGER.debug("Request received from service to GenerateReportDao");
@@ -218,6 +268,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}			
 	}
 	
+	/**
+	 * Method to return data for audit table of an logged in user
+	 * @param userEmail email of logged in user
+	 * @return collection of Audit table
+	 */
 	public Collection<DisplayAuditTableRecordDto> getRecordsForAuditTable(String userEmail) {
 		
 		LOGGER.debug("Request received from service to GenerateReportDao");
@@ -242,6 +297,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}
 	}
 	
+	/**
+	 * Row mapper class for Batch Id
+	 * @author Ruchi
+	 *
+	 */
 	private static class BatchIdRowmapper implements RowMapper<GetBatchIdDto>{
 		
 		@Override
@@ -252,7 +312,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		
 	}
 	
-	/* Declaring inner class GenerateOccupationCertificateReportRowmapper */
+	/**
+	 * Row mapper class for occupation certificate
+	 * @author Ruchi
+	 *
+	 */
     private static class GenerateOccupationCertificateReportRowmapper implements RowMapper<GenerateOccupationCertificateReportDto>{
 	    
 		@Override
@@ -272,7 +336,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
     }
     
-    /* Declaring inner class GenerateAttendanceSheetRowmapper */
+    /**
+     * Row mapper class for generate attendance sheet 
+     * @author Ruchi
+     *
+     */
     private static class GenerateAttendanceSheetRowmapper implements RowMapper<GenerateAttendanceSheetDto>{
     
 		@Override
@@ -292,7 +360,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
     }
     
-    /* Declaring inner class GenerateNSKFDCExcelSheetRowmapper */
+    /**
+     * Row mapper class for NSKFDC sheet generation
+     * @author Ruchi
+     *
+     */
     private static class GenerateNSKFDCExcelSheetRowmapper implements RowMapper<GenerateNSKFDCExcelSheetDto>{
 
 		@Override
@@ -327,7 +399,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 		}	
     }
     
-    /* Declaring inner class GenerateSDMSExcelSheetRowmapper */
+    /**
+     * Row mapper class for SDMS sheet generation
+     * @author Ruchi
+     *
+     */
     private static class GenerateSDMSExcelSheetRowmapper implements RowMapper<GenerateSDMSExcelSheetDto>{
     	
     	@Override
@@ -365,7 +441,11 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     	}	
     }	
     
-    /* Declaring inner class minutes Of Selection Committee Meeting Rowmapper */
+    /**
+     * Row mapper class for minutes of slection committee
+     * @author Ruchi
+     *
+     */
     private static class GenerateMinutesOfSelectionRowmapper implements RowMapper<GenerateMinutesOfSelectionDto>{
     	
     	@Override
@@ -386,7 +466,12 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 	
     	}
     }
-    				/* Declaring inner class GetRecordsForAuditTableRowMapper */
+
+    /**
+     * Row mapper class for Audit table
+     * @author Ruchi
+     *
+     */
     private static class GetRecordsForAuditTableRowMapper implements RowMapper<DisplayAuditTableRecordDto>{
     	
     	@Override
