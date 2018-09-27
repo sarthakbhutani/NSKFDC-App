@@ -12,7 +12,18 @@ public class ReadApplicationConstants {
     private String saveExcelSheetAtLocation;
     private String saveDocumentsAtLocation;
     private String serverPathImages;
-    public String getServerPathImages() {
+    private String saveTempZip;
+    
+    
+    public String getSaveTempZip() {
+		return saveTempZip;
+	}
+
+	public void setSaveTempZip(String saveTempZip) {
+		this.saveTempZip = saveTempZip;
+	}
+
+	public String getServerPathImages() {
 		return serverPathImages;
 	}
 

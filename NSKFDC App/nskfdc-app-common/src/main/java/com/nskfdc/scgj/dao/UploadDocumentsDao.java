@@ -31,9 +31,6 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 	private static final Logger LOGGER= LoggerFactory.getLogger(UploadDocumentsDao.class);   
 	
 	private static final UploadDocumentsRowMapper uploadDocumentsRowMapper = new UploadDocumentsRowMapper();
-	
-	
-	static StringBuilder s2 = new StringBuilder("");
 
 	@Autowired
 	private UploadDocumentConfig uploadDocumentsConfig;
@@ -352,7 +349,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 		LOGGER.debug("In getSearchedDocument, to get documents for searched BatchId of TP" + batchId);
 		
 				try {
-					LOGGER.debug("TRYING -- To get Documents for entered batchId");
+					LOGGER.debug("Trying to get Documents for batchId " + batchId);
 					LOGGER.debug("Creating hashmap of objects");
 					Map<String,Object> parameters = new HashMap<>();
 					LOGGER.debug("Inserting parameters - batchId, userEmail into the hashmap");
@@ -364,8 +361,7 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 					
 				}
 				catch(Exception e) {
-					 LOGGER.error("CATCHING -- Exception handled while getting Searched documents");
-					 LOGGER.error("In UploadDocumentsDao - getSearchedDocument");
+					 
 					 LOGGER.error("Exception is :"+ e);
 					 LOGGER.error("Returning null");
 					return null;
@@ -467,207 +463,70 @@ public class UploadDocumentsDao extends AbstractTransactionalDao{
 			  String dataSheetForSDMSPath = rs.getString("dataSheetForSDMSPath");
 			  String dataSheetForNSKFCPath = rs.getString("dataSheetForNSKFCPath");
 			  String attendanceSheetPath = rs.getString("attendanceSheetPath");
-			 
+			  StringBuilder documentsUploaded = filesUploadedList(finalBatchReport,occupationCertificate,minuteOfSelectionCommittee,dataSheetForSDDMS,dataSheetForNSKFC,attendanceSheet); 
 
-			  LOGGER.debug("In UploadDocumentsRowMapper");
-	
 			  
-			  if(s2!=null){
-				  LOGGER.debug("In IF -- When STRING NOT NULL");
-				  LOGGER.debug("String string length to 0");
-				  s2.setLength(0);
-			  }else{
-				  LOGGER.debug("In ELSE -- When STRING NULL");
-			  }
-			//MANIPULATION FOR FILE 
-			  LOGGER.debug("UploadDocumentsRowMapper VARIABLE DECLARATION");
-			  LOGGER.debug("UploadDocumentsRowMapper for FinalBatchReport VARIABLE DECLARATION");
-			  if(finalBatchReport==1){
-				  s2.append("Final Batch Report, ");
-			  }
-			  LOGGER.debug("In UploadDocumentsRowMapper occupationCertificate VARIABLE DECLARATION");
-			  if(occupationCertificate==1){
-			  
-				  s2.append("Occupation Certificate, ");
-			  }
-			  LOGGER.debug("In UploadDocumentsRowMapper MinutesOfSelectionCommittee VARIABLE DECLARATION");
-			  if(minuteOfSelectionCommittee==1){
-				  s2.append("Signed Minute Of Selection Committee, ");
-			  }
-			  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForSDDMS VARIABLE DECLARATION");
-			  if(dataSheetForSDDMS==1){
-				  s2.append("Data Sheet For SDDMS, ");
-			  }
-			  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForNSKFC VARIABLE DECLARATION");
-			  if(dataSheetForNSKFC==1){
-				  s2.append("Data Sheet For NSKFC, ");
-			  }
-			  LOGGER.debug("In UploadDocumentsRowMapper AttendanceSheet VARIABLE DECLARATION");
-			  if(attendanceSheet==1){
-				  s2.append("Attendance Sheet, ");
-			  }
-			  
-			  if(s2!=null){
-			  s2.setLength(s2.length() - 2);
-			  }
-			  ArrayList<String> files = new ArrayList<String>();
+			return new UploadDocumentsDto(batchId, dateUploaded,
+					 finalBatchReport,  occupationCertificate,
+					 minuteOfSelectionCommittee,  dataSheetForSDDMS,
+					 dataSheetForNSKFC,  attendanceSheet,
+					 finalBatchReportPath,  occupationCertificatePath,
+					 minuteOfSelectionCommitteePath,
+					 dataSheetForSDMSPath, dataSheetForNSKFCPath,
+					 attendanceSheetPath, documentsUploaded);
+
 				
 
-			  LOGGER.debug("Condition to store File Paths");
-			  if(finalBatchReportPath!=null){
-				  LOGGER.debug("In IF -- When Final Batch Report Path is not NULL");
-				  files.add(finalBatchReportPath);
-			  }
-			  if(occupationCertificatePath!=null){
-				  LOGGER.debug("In IF -- When occupation Certificate Path is not NULL");
-				  files.add(occupationCertificatePath);
-			  }
-			  if(minuteOfSelectionCommitteePath!=null){
-				  LOGGER.debug("In IF -- When minute Of Selection Committee Path is not NULL");
-				  files.add(minuteOfSelectionCommitteePath);
-			  }
-			  if(dataSheetForSDMSPath!=null){
-				  LOGGER.debug("In IF -- When dataSheetForSDMSPath is not NULL");
-				  files.add(dataSheetForSDMSPath);
-			  }
-			  if(dataSheetForNSKFCPath!=null){
-				  LOGGER.debug("In IF -- When dataSheetForNSKFCPath is not NULL");
-				  files.add(dataSheetForNSKFCPath);
-			  }
-			  if(attendanceSheetPath!=null){
-				  LOGGER.debug("In IF -- When attendanceSheetPath is not NULL");
-				  files.add(attendanceSheetPath);
-			  }
-				
-			  String zipFileLink = " ";
-
-			  if(s2!=null){
-				  LOGGER.debug("In IF -- When STRING Is NOT NULL");
-			  }else{
-				  LOGGER.debug("In ELSE -- When STRING is NULL");
-			  }
-			 
-
-			  LOGGER.debug("Getting Local Working Directory");
-  			  String zipLocationRead = System.getProperty("user.dir");  
-  			  LOGGER.debug("The current working directory is " + zipLocationRead);
-			  if(s2!=null){
-				  LOGGER.debug("In IF -- When Paths of Files is Not NULL");
-  				  LOGGER.debug("Creating Folder at current Working Directory");
-				   File folder = new File(zipLocationRead);
-				  
-				  if(!folder.exists()){
-					  LOGGER.debug("In IF -- When Folder does not exists");
-					  if(folder.mkdirs() || folder.canWrite())
-					  {
-						  LOGGER.debug("In IF -- When Folder can be made directory & Folder can be updated");
-						  LOGGER.debug("FOLDER CREATED TO SAVE THE ZIP FILE");
-						  zipFileLink = zipLocationRead +"/" .concat(batchId) + ".zip";
-						  LOGGER.debug("Zipped file location" + zipFileLink);
-						  FileOutputStream fileOutputStream = null;
-					      ZipOutputStream zipOut = null;
-					      FileInputStream fileInputStream = null;
-					        try {
-					        	LOGGER.debug("TRYING -- To create Zip file");
-					            fileOutputStream = new FileOutputStream(zipFileLink);
-					            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
-					            for(String filePath:files){
-					                File input = new File(filePath);
-					                fileInputStream = new FileInputStream(input);
-					                ZipEntry zipEntry = new ZipEntry(input.getName());
-					                LOGGER.debug("Zipping the file: "+input.getName());
-					                zipOut.putNextEntry(zipEntry);
-					                byte[] tmp = new byte[4*1024];
-					                int size = 0;
-					                while((size = fileInputStream.read(tmp)) != -1){
-					                    zipOut.write(tmp, 0, size);
-					                }
-					                zipOut.flush();
-					                fileInputStream.close();
-					            }
-					            zipOut.close();
-					            LOGGER.debug("Zipped the files successfully");  					            
-					        } catch (FileNotFoundException e) {
-					        	LOGGER.error("CATCHING -- Exception handled  while Zipping the files");
-  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-  					            LOGGER.error("File not found exception :" +e);
-					        } catch (IOException e) {
-					        	LOGGER.error("CATCHING -- IOException handled  while Zipping the files");
-  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-  					            LOGGER.error(" Exception is :" +e);
-					        } finally{
-					            try{
-					            	LOGGER.debug("TRYING -- Closing the fileOutputStream");
-					                if(fileOutputStream != null) fileOutputStream.close();
-					            } catch(Exception ex){
-					            	LOGGER.error("CATCHING -- Exception handled  while Closing the fileOutputStream");
-      					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-      					            LOGGER.error("Exception is :" +ex);
-					            }
-					        }
-					  }
-						  else{
-							  LOGGER.debug("In ELSE -- When Folder cannot be made directory & Folder cannot be updated");
-	  						  LOGGER.debug("FAILED TO WRITE THE FOLDER at location: " + zipLocationRead);
-						  }
-					  
-				  }
-				  else{
-					  LOGGER.debug("In ELSE -- When Folder exists");
-					  zipFileLink = zipLocationRead +"/" + batchId + ".zip";
-					  LOGGER.debug("Location of Zipped File is :"+zipFileLink);
-					  FileOutputStream fileOutputStream = null;
-				        ZipOutputStream zipOut = null;
-				        FileInputStream fileInputStream = null;
-				        try {
-				        	LOGGER.debug("In try block of ZipFIleCreation");
-				            fileOutputStream = new FileOutputStream(zipFileLink);
-				            zipOut = new ZipOutputStream(new BufferedOutputStream(fileOutputStream));
-				            for(String filePath:files){
-				                File input = new File(filePath);
-				                fileInputStream = new FileInputStream(input);
-				                ZipEntry zipEntry = new ZipEntry(input.getName());
-				                LOGGER.debug("Zipping the file: "+input.getName());
-				                zipOut.putNextEntry(zipEntry);
-				                byte[] tmp = new byte[4*1024];
-				                int size = 0;
-				                while((size = fileInputStream.read(tmp)) != -1){
-				                    zipOut.write(tmp, 0, size);
-				                }
-				                zipOut.flush();
-				                fileInputStream.close();
-				            }
-				            zipOut.close();
-				            LOGGER.debug("Zipped the files successfully");   					            
-				        } catch (FileNotFoundException e) {
-				        		LOGGER.error("CATCHING -- Exception handled  while Zipping the files");
-					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-					            LOGGER.error("File not found exception :" +e);
-				        } catch (IOException e) {
-				        	LOGGER.error("CATCHING -- IOException handled  while Zipping the files");
-					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-					            LOGGER.error(" Exception is :" +e);
-				        } finally{
-				            try{
-				            	LOGGER.debug("TRYING -- Closing the fileOutputStream");
-				                if(fileOutputStream != null) fileOutputStream.close();
-				            } catch(Exception ex){
-				            	LOGGER.error("CATCHING -- Exception handled  while Closing the fileOutputStream");
-  					        	LOGGER.error("In UploadDocumentsDao - UploadDocumentsRowMapper");
-  					            LOGGER.error("Exception is :" +ex);  
-				            }
-				        }
-				  }
-				  
-			
-			return new UploadDocumentsDto(batchId,dateUploaded,s2,zipFileLink);
-
-				}
-			  else{
-				  LOGGER.debug("When no file path is Appended - UploadDocumentsRowMapper");
-  				  LOGGER.debug("Returning NULL");
-				  return null;
-			  }
 		}
 	}
+	
+	/**
+	 * Method to return the list of files uploaded
+	 * @param finalBatchReport
+	 * @param occupationCertificate
+	 * @param minuteOfSelectionCommittee
+	 * @param dataSheetForSDDMS
+	 * @param dataSheetForNSKFC
+	 * @param attendanceSheet
+	 * @return an Object of Stringbuilder which has comma separated list of uploaded files
+	 */
+	private static StringBuilder filesUploadedList(int finalBatchReport,int occupationCertificate, int minuteOfSelectionCommittee, int dataSheetForSDDMS,
+			  int dataSheetForNSKFC, int attendanceSheet)
+	{
+		StringBuilder documentsUploaded = new StringBuilder("");
+		 
+		  LOGGER.debug("UploadDocumentsRowMapper VARIABLE DECLARATION");
+		  LOGGER.debug("UploadDocumentsRowMapper for FinalBatchReport VARIABLE DECLARATION");
+		  if(finalBatchReport==1){
+			  documentsUploaded.append("Final Batch Report, ");
+		  }
+		  LOGGER.debug("In UploadDocumentsRowMapper occupationCertificate VARIABLE DECLARATION");
+		  if(occupationCertificate==1){
+		  
+			  documentsUploaded.append("Occupation Certificate, ");
+		  }
+		  LOGGER.debug("In UploadDocumentsRowMapper MinutesOfSelectionCommittee VARIABLE DECLARATION");
+		  if(minuteOfSelectionCommittee==1){
+			  documentsUploaded.append("Signed Minute Of Selection Committee, ");
+		  }
+		  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForSDDMS VARIABLE DECLARATION");
+		  if(dataSheetForSDDMS==1){
+			  documentsUploaded.append("Data Sheet For SDDMS, ");
+		  }
+		  LOGGER.debug("In UploadDocumentsRowMapper DataSheetForNSKFC VARIABLE DECLARATION");
+		  if(dataSheetForNSKFC==1){
+			  documentsUploaded.append("Data Sheet For NSKFC, ");
+		  }
+		  LOGGER.debug("In UploadDocumentsRowMapper AttendanceSheet VARIABLE DECLARATION");
+		  if(attendanceSheet==1){
+			  documentsUploaded.append("Attendance Sheet, ");
+		  }
+		  //To remove last space and comma
+		  if(documentsUploaded!=null)
+		  {
+			  documentsUploaded.setLength(documentsUploaded.length() - 2);
+		 }
+		  return documentsUploaded;
+	}
+
 }

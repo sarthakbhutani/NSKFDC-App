@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nskfdc.scgj.common.FileUtility;
 import com.nskfdc.scgj.common.ReadApplicationConstants;
 import com.nskfdc.scgj.dao.UploadDocumentsDao;
 import com.nskfdc.scgj.dto.BatchDto;
@@ -26,6 +28,9 @@ public class UploadDocumentService {
 
 	@Autowired
 	private UploadDocumentsDao uploadDocumentsDao;
+	
+	@Autowired
+	private FileUtility fileUtility;
 	
 	@Autowired
 	private ReadApplicationConstants readApplicationConstants;
@@ -66,6 +71,12 @@ public class UploadDocumentService {
 	}
 	
 
+	/**
+	 * Method to find out searched documents
+	 * @param batchId
+	 * @param userEmail
+	 * @return
+	 */
 		public Collection<UploadDocumentsDto> getSearchedDocument(String batchId, String userEmail){
 		
 		LOGGER.debug("Request received from Controller");
@@ -88,7 +99,14 @@ public class UploadDocumentService {
 			}
 		}	
 		
+		
 
+		/**
+		 * Method to find batch number for a batchId
+		 * @param batchId
+		 * @param scgjBatchId
+		 * @return
+		 */
 		public int scgjBatchIdField(String batchId, String scgjBatchId) {
 			
 			LOGGER.debug("Request received from controller to UploadDocumentService");
@@ -110,7 +128,11 @@ public class UploadDocumentService {
 				    return  - 25;	
 				}
 		}
-		
+		/**
+		 * 
+		 * @param batchId
+		 * @return
+		 */
 		public int BatchIdField(String batchId) {
 			
 			LOGGER.debug("Request received from controller");
@@ -130,7 +152,68 @@ public class UploadDocumentService {
 				}
 		}
 		
+		/**
+		 * Method to create zip file on a location
+		 * @param batchId
+		 * @param userEmail
+		 * @return path of zip file created
+		 */
+		public String createZipFile (String batchId, String userEmail)
+		{
+			String zipPath = null;
+			Collection<UploadDocumentsDto> searchResult = uploadDocumentsDao.getSearchedDocument(batchId, userEmail);
+			Collection<String> filesForZip = new ArrayList<String>();
+			if (searchResult.size() > 1)
+			{
+				LOGGER.error("Can not download file, There are more than one search results for batch Id : "+batchId+ " and user email : " +userEmail );
+			}
+			else
+			{
+				for(UploadDocumentsDto item : searchResult)
+				{
+					 if(item.getFinalBatchReportPath()!=null){
+						  LOGGER.debug("Adding path of Final Batch report to the lists of files to be zipped");
+						  filesForZip.add(item.getFinalBatchReportPath());
+					  }
+					  if(item.getOccupationCertificatePath()!=null){
+						  LOGGER.debug("Adding path of Occupation Certificate to the lists of files to be zipped");
+						  filesForZip.add(item.getOccupationCertificatePath());
+					  }
+					  if(item.getMinuteOfSelectionCommitteePath()!=null){
+						  LOGGER.debug("Adding path of minutes of selection committee to the lists of files to be zipped");
+						  filesForZip.add(item.getMinuteOfSelectionCommitteePath());
+					  }
+					  if(item.getDataSheetForSDMSPath()!=null){
+						  LOGGER.debug("Adding path of Data sheet for SDMS to the lists of files to be zipped");
+						  filesForZip.add(item.getDataSheetForSDMSPath());
+					  }
+					  if(item.getDataSheetForNSKFCPath()!=null){
+						  LOGGER.debug("Adding path of Data sheet for NSKFDC to the lists of files to be zipped");
+						  filesForZip.add(item.getDataSheetForNSKFCPath());
+					  }
+					  if(item.getAttendanceSheetPath()!=null){
+						  LOGGER.debug("Adding path of attendance sheet to the lists of files to be zipped");
+						  filesForZip.add(item.getAttendanceSheetPath());
+					  }
+					
+					
+				}
+			}
+			String zipLocationRead = readApplicationConstants.getSaveTempZip();  
+			zipPath = fileUtility.createZip(filesForZip,batchId,zipLocationRead);
+			return zipPath;
+		}
 		
+		/**
+		 * Method to save uploaded file
+		 * @param batchId
+		 * @param file
+		 * @param pathToFolder
+		 * @param userEmail
+		 * @param fileType
+		 * @return path of File saved
+		 * @throws IOException
+		 */
 		private String saveFile(String batchId, MultipartFile file, String pathToFolder, String userEmail,String fileType) throws IOException
 		{
 			LOGGER.debug("Request received to save File");
