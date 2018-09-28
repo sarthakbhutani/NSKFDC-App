@@ -178,11 +178,15 @@ public class GenerateBatchReportDao extends AbstractTransactionalDao {
 			String municipalCorporation=rs.getString("municipality");
 			String ward=rs.getString("wardType");
 			String scgjBatchNumber=rs.getString("scgjBatchNumber");
-			String us=rs.getString("dataSheetForSDDMS");
-			String uploadStatus="NO";
-			if("1".equals("us"))
+			//String us=rs.getString("dataSheetForSDDMS");
+			String uploadStatus;
+			if(scgjBatchNumber==null)
 			{
-			uploadStatus="Yes";
+			uploadStatus="NO";
+			}
+			else
+			{
+				uploadStatus="Yes";
 			}
 			return new LocationDetailsDto(state, city, municipalCorporation, ward, scgjBatchNumber, uploadStatus);
 		}
