@@ -277,6 +277,11 @@ display:block;
 .secondContainer{
 	background-color: #ffffff;
 	height: 34vh;
+	padding-bottom: 16.25em;
+}
+#uploadGif
+{
+	height:4rem;
 }
 #successId{
 	font-weight: bold;
@@ -284,4 +289,5 @@ display:block;
 
 #rollinguploadCandidateSheetGif{
 	text-align:left;
+	
 }

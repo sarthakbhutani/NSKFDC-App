@@ -123,7 +123,14 @@ var url = '/getBatchIdfortrainer';
         $http.get("/get-batch-details?batchId="+$scope.batchDetails.value)
         .then(function(response){        
         	$scope.batch = response;
-        	$scope.batch.centreId= response.data.centreId;
+        	if(response.data.centreId==0)
+        		{
+        		$scope.batch.centreId="";
+        		}
+        	else
+        	{
+        		$scope.batch.centreId= response.data.centreId;
+        	}
         	$scope.batch.state= response.data.state;
         	$scope.batch.centreCity=response.data.centreCity;
         	$scope.batch.municipality=response.data.municipality;
@@ -134,7 +141,15 @@ var url = '/getBatchIdfortrainer';
         	$scope.batch.assessmentDate=response.data.assessmentDate;
         	$scope.batch.medicalExamDate=response.data.medicalExamDate;
         	$scope.batch.employerName=response.data.employerName;
+        	
+        	if(response.data.employerContactNumber==0)
+        		{
+        		$scope.batch.employerContactNumber="";
+        		}
+        	else
+        		{
         	$scope.batch.employerContactNumber=response.data.employerContactNumber;
+        		}
         	$scope.batch.wardType = response.data.wardType;
         	$scope.batch.wardNumber = response.data.wardNumber;
         });
