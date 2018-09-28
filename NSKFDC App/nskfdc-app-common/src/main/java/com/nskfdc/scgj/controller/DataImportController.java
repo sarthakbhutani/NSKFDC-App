@@ -43,7 +43,13 @@ public class DataImportController {
 	@Autowired
 	private DataImportService dataImportService;
 
-	/*---------- Master Sheet Import --------------*/
+	/**
+	 * Method to import the excel sheet for candidate
+	 * @param file
+	 * @param batchId
+	 * @return success/error message as a string
+	 * @throws FileNotFoundException
+	 */
 	@Privilege(value= {"TP"})
 	@RequestMapping(value = "/importMasterSheet", method = RequestMethod.POST, consumes = MediaType.ALL_VALUE)
 	public String masterSheetImport(@RequestParam("file") MultipartFile file,
