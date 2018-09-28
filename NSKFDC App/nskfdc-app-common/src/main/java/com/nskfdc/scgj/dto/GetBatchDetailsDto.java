@@ -9,7 +9,7 @@ public class GetBatchDetailsDto  extends BaseDto{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-		int centreId;
+		Integer centreId;
 		String state;
 		String centreCity;
 		String municipality;
@@ -69,14 +69,14 @@ public class GetBatchDetailsDto  extends BaseDto{
 		
 				
 
-				public int getCentreId() {
+				public Integer getCentreId() {
 			return centreId;
 		}
 
 
 
 
-		public void setCentreId(int centreId) {
+		public void setCentreId(Integer centreId) {
 			this.centreId = centreId;
 		}
 
@@ -237,7 +237,7 @@ public class GetBatchDetailsDto  extends BaseDto{
 
 
 
-		public GetBatchDetailsDto(int centreId, String state, String centreCity, String municipality,
+		public GetBatchDetailsDto(Integer centreId, String state, String centreCity, String municipality,
 				Date selectionCommitteeDate, String principalTrainerName, Date batchStartDate, Date batchEndDate,
 				Date assessmentDate, Date medicalExamDate, String employerName, String wardNumber, String wardType,
 				Long employerContactNumber) {

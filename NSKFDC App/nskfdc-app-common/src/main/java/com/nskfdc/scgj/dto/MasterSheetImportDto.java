@@ -15,19 +15,19 @@ public class MasterSheetImportDto extends BaseDto{
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private long   mobileNumber;
+	private Long   mobileNumber;
 	private String educationQualification;
 	private String state;
 	private String district;
-	private long  adhaarCardNumber;
+	private Long  adhaarCardNumber;
 	private String idProofType;
 	private String idProofNumber;
 	private String disabilityType=null;
-	private int age;
+	private Integer age;
 	private String bankName;
 	private String ifscCode;
 	private String workplaceAddress;
-	private long accountNumber;
+	private Long accountNumber;
 	private String relationWithSKMS;
 	private Date dob;
 	private String guardianType=null;
@@ -84,10 +84,10 @@ public class MasterSheetImportDto extends BaseDto{
 		this.gender = gender;
 	}
 	
-	public long getMobileNumber() {
+	public Long getMobileNumber() {
 		return mobileNumber;
 	}
-	public void setMobileNumber(long mobileNumber) {
+	public void setMobileNumber(Long mobileNumber) {
 		this.mobileNumber = mobileNumber;
 	}
 	
@@ -118,10 +118,10 @@ public class MasterSheetImportDto extends BaseDto{
 			this.district = district;
 	}
 	
-	public long getAdhaarCardNumber() {
+	public Long getAdhaarCardNumber() {
 		return adhaarCardNumber;
 	}
-	public void setAdhaarCardNumber(long adhaarCardNumber) {
+	public void setAdhaarCardNumber(Long adhaarCardNumber) {
 		this.adhaarCardNumber = adhaarCardNumber;
 	}
 	
@@ -155,10 +155,10 @@ public class MasterSheetImportDto extends BaseDto{
 			this.disabilityType = disabilityType;
 	}
 	
-	public int getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(int age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	
@@ -192,10 +192,10 @@ public class MasterSheetImportDto extends BaseDto{
 			this.workplaceAddress = workplaceAddress;
 	}
 	
-	public long getAccountNumber() {
+	public Long getAccountNumber() {
 		return accountNumber;
 	}
-	public void setAccountNumber(long accountNumber) {
+	public void setAccountNumber(Long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
 	
@@ -316,12 +316,11 @@ public class MasterSheetImportDto extends BaseDto{
 			this.medicalExaminationConducted = medicalExaminationConducted;
 	}
 	
-	/*----- Constructor -------- */
 	
 	public MasterSheetImportDto(String enrollmentNumber, String salutation, String firstName, String lastName,
-			String gender, long mobileNumber, String educationQualification, String state, String district,
-			long adhaarCardNumber, String idProofType, String idProofNumber, String disabilityType, int age,
-			String bankName, String ifscCode, String workplaceAddress, long accountNumber, String relationWithSKMS,
+			String gender, Long mobileNumber, String educationQualification, String state, String district,
+			Long adhaarCardNumber, String idProofType, String idProofNumber, String disabilityType, Integer age,
+			String bankName, String ifscCode, String workplaceAddress, Long accountNumber, String relationWithSKMS,
 			Date dob, String guardianType, String firstNameFather, String lastNameFather, String motherName,
 			String residentialAddress, String msId, String occupationType, String employmentType,
 			String assessmentResult, String medicalExaminationConducted) {
@@ -359,7 +358,6 @@ public class MasterSheetImportDto extends BaseDto{
 	}
 	public MasterSheetImportDto() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	

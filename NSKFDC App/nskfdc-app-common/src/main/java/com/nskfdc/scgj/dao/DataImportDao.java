@@ -312,19 +312,19 @@ public class DataImportDao extends AbstractTransactionalDao {
 			 String firstName = rs.getString("firstName");
 			 String lastName = rs.getString("lastName");
 			 String gender = rs.getString("gender");
-			 long   mobileNumber = rs.getLong("mobileNumber");
+			 Long   mobileNumber = rs.getLong("mobileNumber");
 			 String educationQualification = rs.getString("educationLevel");
 			 String state = rs.getString("state");
 			 String district = rs.getString("district");
-			 long  adhaarCardNumber = rs.getLong("aadharCardNumber");
+			 Long  adhaarCardNumber = rs.getLong("aadharCardNumber");
 			 String idProofType = rs.getString("idProofType");
 			 String idProofNumber= rs.getString("idProofNumber");
 			 String disabilityType = rs.getString("disabilityType");
-			 int age = rs.getInt("age");
+			 Integer age = rs.getInt("age");
 			 String bankName = rs.getString("bankName");
 			 String ifscCode = rs.getString("ifscCode");
 			 String workplaceAddress = rs.getString("workplaceAddress");
-			 long accountNumber = rs.getLong("accountNumber");
+			 Long accountNumber = rs.getLong("accountNumber");
 			 String relationWithSKMS = rs.getString("relationWithSKMS");
 			 Date dob = rs.getDate("dob");
 			 String guardianType = rs.getString("guardianType");
@@ -677,7 +677,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 		public BatchImportDto mapRow(ResultSet rs, int rowNum)
 				throws SQLException {
 
-			int centreId = rs.getInt("centreId");
+			Integer centreId = rs.getInt("centreId");
 			String state = rs.getString("centreState");
 			String centreCity = rs.getString("centreCity");
 			String municipality = rs.getString("municipality");
@@ -692,11 +692,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 			String wardNumber = rs.getString("wardNumber");
 			Long employerContactNumber = rs.getLong("employerContactNumber");
 
-			return new BatchImportDto(batchStartDate, batchEndDate,
-					assessmentDate, medicalExamDate, selectionCommitteeDate,
-					municipality, wardType, employerContactNumber, wardNumber,
-					principalTrainerName, centreId, employerName, state,
-					centreCity);
+			return new BatchImportDto( batchStartDate, batchEndDate,
+					 assessmentDate, medicalExamDate,
+					selectionCommitteeDate, municipality,
+					wardType, employerContactNumber, wardNumber,
+					principalTrainerName, centreId, employerName,
+					state, centreCity);
 
 		}
 
