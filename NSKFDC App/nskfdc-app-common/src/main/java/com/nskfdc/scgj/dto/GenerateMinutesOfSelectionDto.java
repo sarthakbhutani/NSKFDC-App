@@ -14,7 +14,14 @@ public class GenerateMinutesOfSelectionDto extends BaseDto {
 	private String sectorSkillCouncil;
 	private String centreCity;
 	private String selectionCommitteeDate;
+	private String municipality;
 	
+	public String getMunicipality() {
+		return municipality;
+	}
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
 	public String getSelectionCommitteeDate() {
 		return selectionCommitteeDate;
 	}
@@ -61,8 +68,9 @@ public class GenerateMinutesOfSelectionDto extends BaseDto {
 	 * @param trainingPartnerName
 	 * @param sectorSkillCouncil
 	 * @param centreCity
+	 * @param municipality
 	 */
-	public  GenerateMinutesOfSelectionDto(String selectionCommitteeDate,String jobRole,String trainingPartnerName,String sectorSkillCouncil,String centreCity){
+	public  GenerateMinutesOfSelectionDto(String selectionCommitteeDate,String jobRole,String trainingPartnerName,String sectorSkillCouncil,String centreCity, String municipality){
 
 		super();
 		
@@ -71,6 +79,7 @@ public class GenerateMinutesOfSelectionDto extends BaseDto {
 		this.trainingPartnerName=trainingPartnerName;
 		this.sectorSkillCouncil=sectorSkillCouncil;
 		this.centreCity=centreCity;
+		this.municipality=municipality;
 		
 	}
 	

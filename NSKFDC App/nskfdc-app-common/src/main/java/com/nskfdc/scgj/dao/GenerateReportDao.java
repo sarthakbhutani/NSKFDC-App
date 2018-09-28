@@ -456,13 +456,13 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     		String trainingPartnerName = rs.getString("trainingPartnerName");
     		String sectorSkillCouncil=rs.getString("sectorSkillCouncil");
     		String centreCity=rs.getString("centreCity");
-    		
+    		String municipality=rs.getString("municipality");
 
     		if (selectionCommitteeDate != null && !selectionCommitteeDate.equals("")) {
-    			return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);	
+    			return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality);	
     		}
     		else
-    		return new GenerateMinutesOfSelectionDto("  ",jobRole,trainingPartnerName,sectorSkillCouncil,centreCity);
+    		return new GenerateMinutesOfSelectionDto("  ",jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality);
 	
     	}
     }
