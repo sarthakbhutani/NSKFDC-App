@@ -55,22 +55,14 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 public class DataImportService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DataImportService.class);
-
-
-
 	@Autowired
 	private DataImportDao dataImportDao;
-
-
-
 	@Autowired
 	private EmployerDao employerDao;
-
 	@Autowired
 	private ReadApplicationConstants readApplicationConstants;
-
-
-	private StringUtility stringUtility = new StringUtility();
+	@Autowired
+	private StringUtility stringUtility;
 
 	/**
 	 * Method to import master sheet, check if batch size is greater than 50 and
@@ -145,9 +137,6 @@ public class DataImportService {
 			LOGGER.debug("Creating workbook object for .xls file type");
 			workbook = new HSSFWorkbook(fileStream);
 		}
-
-
-
 
 		Sheet sheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = sheet.rowIterator();
@@ -723,45 +712,88 @@ public class DataImportService {
 				}
 				else if (cell.getColumnIndex() == 20) 
 				{
-					LOGGER.debug("Capturing value of header : MS ID");
-					masterSheetImportDto.setMsId(cell.getStringCellValue());
+					if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+					{
+						if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : MS ID");
+							masterSheetImportDto.setMsId(cell.getStringCellValue());
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Value for MS Id is not valid");
+							return "Not a valid value for   MS ID at row : " + rowNumber;
+						}
+					}
+					
 				}
 				else if (cell.getColumnIndex() == 21)
 				{
-					if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+					if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
 					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("Relation with SK/MS is numeric");
-						return "Relation with SK/MS cannot have a numeric value at row number "+rowNumber;
-					}
+						if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Relation with SK/MS is numeric");
+							return "Relation with SK/MS cannot have a numeric value at row number "+rowNumber;
+						}
 
-					else
-					{
-						LOGGER.debug("Capturing value of header : Relation with SK/MS");
-						masterSheetImportDto.setRelationWithSKMS(cell.getStringCellValue());
+						else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : Relation with SK/MS");
+							masterSheetImportDto.setRelationWithSKMS(cell.getStringCellValue());
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Not a valid value for Relation with SK/MS");
+							return "Not a valid value for Relation with SK/MS at row "+rowNumber;
+						}
 					}
+					
 
 				}
 				else if (cell.getColumnIndex() == 22)
 				{
-					if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+					if(!(cell.getCellType()== Cell.CELL_TYPE_BLANK))
 					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("Cell bank name is numeric");
-						return "Name of bank cannot have a numeric value at row number "+rowNumber;
+						if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Cell bank name is numeric");
+							return "Name of bank cannot have a numeric value at row number "+rowNumber;
+						}
+						else if (cell.getCellType()== Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : Bank Name");
+							masterSheetImportDto.setBankName(cell.getStringCellValue());
+						}	
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Not a valid value for Bank name");
+							return "Not a valid value for Bank name at row : "+rowNumber;
+						}
 					}
-					else
-					{
-						LOGGER.debug("Capturing value of header : Bank Name");
-						masterSheetImportDto.setBankName(cell.getStringCellValue());
-					}
-
-
 				}
 				else if (cell.getColumnIndex() == 23)
 				{
-					LOGGER.debug("Capturing value of header : IFSC Code");
-					masterSheetImportDto.setIfscCode(cell.getStringCellValue());
+					if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+					{
+						if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : IFSC Code");
+							masterSheetImportDto.setIfscCode(cell.getStringCellValue());
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Not a valid value for field IFSC Code");
+							return "Not a valid value for field IFSC code at row number : "+ rowNumber;
+						}
+					}
+					
 				}
 				else if (cell.getColumnIndex() == 24) 
 				{
@@ -774,10 +806,16 @@ public class DataImportService {
 							return "Bank Account number must have a numeric value at row: "+rowNumber;
 						}
 
-						else
+						else if (cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
 						{
 							LOGGER.debug("Capturing value of header : Bank Account Number");
 							masterSheetImportDto.setAccountNumber((long) cell.getNumericCellValue());
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Not a valid value for Bank account number");
+							return "Not a valid value for Bank Account number at row: "+rowNumber;
 						}
 					}					
 				}
@@ -798,11 +836,17 @@ public class DataImportService {
 						return "Residential address cannot have a numeric value at row: "+rowNumber;
 
 					}
-					else
+					else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 					{
 						LOGGER.debug("Cell type of residential address is String");
 						LOGGER.debug("Capturing value of header : Residential Address ");
 						masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());
+					}
+					else
+					{
+						int rowNumber = row.getRowNum() + 1;
+						LOGGER.error("Not a valid value for Cell type of residential address");
+						return "Not a valid value for Residential address at row : "+rowNumber;
 					}
 				}
 				else if (cell.getColumnIndex() == 26) 
@@ -821,65 +865,88 @@ public class DataImportService {
 						return "Workplace address cannot have a numeric value at row: "+rowNumber;
 
 					}
-					else
+					else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 					{
 						LOGGER.debug("Capturing value of header : Workplace Address");
 						masterSheetImportDto.setWorkplaceAddress(cell.getStringCellValue());
 					}
-
-
+					else
+					{
+						int rowNumber = row.getRowNum() + 1;
+						LOGGER.debug("Not a valid value for Workplace Address");
+						return "Not a valid value for Workplace address at row: "+rowNumber;
+					}
 				}
 				else if (cell.getColumnIndex() == 27)
 				{
 					LOGGER.debug("Checking the cell type of medical examination conducted cell");
-					if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+					
+					if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
 					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("Cell type of medical examination conducted is numeric");
-						return "Medical examination conducted canot have a numeric value at row: "+rowNumber;
-
+						if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Cell type of medical examination conducted is numeric");
+							return "Medical examination conducted canot have a numeric value at row: "+rowNumber;
+						}
+						else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : Medical Examination Conducted");
+							masterSheetImportDto.setMedicalExaminationConducted(cell.getStringCellValue());  
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Not a valid value for medical exam conducted field");
+							return "Not a valid value for Medical examination conducted column at row: "+rowNumber;
+							
+						}
 					}
-					else
-					{
-						LOGGER.debug("Capturing value of header : Medical Examination Conducted");
-						masterSheetImportDto.setMedicalExaminationConducted(cell.getStringCellValue());  
-					}
-
+					
 				}
 				else if (cell.getColumnIndex() == 28) 
 				{
-					if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+					if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
 					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("Cell type of assessment resulted is numeric");
-						return "Assessment result canot have a numeric value at row: "+rowNumber;
-
-					}
-					else
-					{
-						LOGGER.debug("Capturing the value of header : Assessment Result");
-						masterSheetImportDto.setAssessmentResult(cell.getStringCellValue());
+						if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Cell type of assessment resulted is numeric");
+							return "Assessment result canot have a numeric value at row: "+rowNumber;
+						}
+						else if(cell.getCellType() == Cell.CELL_TYPE_BLANK)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Not a valid value for assessment result column");
+							return "Not a valid value for Assessment result coulmn at row: "+rowNumber;
+						}	
 					}
 				} 
 				else if (cell.getColumnIndex() == 29)
 				{
-					if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+					if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
 					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("Cell type of employment type is numeric");
-						return "Employment type canot have a numeric value at row: "+rowNumber;
-
-					}
-					else
-					{
-						LOGGER.debug("Capturing value of header : Employment Type");
-						masterSheetImportDto.setEmploymentType(cell.getStringCellValue());
-					}
-
+						if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Cell type of employment type is numeric");
+							return "Employment type canot have a numeric value at row: "+rowNumber;
+						}
+						else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : Employment Type");
+							masterSheetImportDto.setEmploymentType(cell.getStringCellValue());
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("Not a valid value for Cell type of employment type");
+							return "Not a valid value for Employment type at row: "+rowNumber;
+						}
+					}				
 				}
 
 			}
-
 			candidateDetails.add(masterSheetImportDto);
 			insertResult = dataImportDao.masterSheetImport(candidateDetails, batchId);
 
