@@ -34,7 +34,7 @@ app.service('fileUpload', ['$http', function ($http) {
 			setTimeout(function(){
 				document.getElementById("importExcelMessage").innerHTML="";
 				document.getElementById("rollinguploadCandidateSheetGif").style.display="none";
-					},4000);
+					},7000);
             return response.data;
            
         

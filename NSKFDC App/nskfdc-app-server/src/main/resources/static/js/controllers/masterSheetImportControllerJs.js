@@ -177,7 +177,7 @@ var url = '/getBatchIdfortrainer';
     	            $scope.successMessage = "";
     	            $scope.errorMessage="";
     	            $scope.errorMsg=false;
-    	         }, 3000);
+    	         }, 5000);
 			}
 		else
 		{
@@ -207,7 +207,7 @@ var url = '/getBatchIdfortrainer';
             	            $scope.successMessage = "";
             	            $scope.errorMessage="";
             	            $scope.errorMsg=false;
-            	         }, 3000);
+            	         }, 5000);
             	    });
          }, function(errorResponse){
         	 $scope.errorMessage="Batch cannot be generated";
@@ -217,7 +217,7 @@ var url = '/getBatchIdfortrainer';
  	            $scope.successMessage = "";
  	           $scope.errorMessage="";
  	            $scope.errorMsg=false;
- 	         }, 3000);
+ 	         }, 5000);
          });
 		}	    	
 	    });   
@@ -279,7 +279,7 @@ var url = '/getBatchIdfortrainer';
             $scope.success = false;
             $scope.successMessage = false;
             $scope.errorMsg=false;
-         }, 6000);
+         }, 7000);
     	return $scope.dateErrorFlag ;
      };
     
@@ -366,7 +366,7 @@ var url = '/getBatchIdfortrainer';
         	            $scope.success = false;
         	            $scope.successMessage = false;
         	            $scope.errorMsg=false;       	            
-        	         }, 3000);
+        	         }, 5000);
         			
         	}
     	}
@@ -377,7 +377,7 @@ var url = '/getBatchIdfortrainer';
     		$scope.employerNumberErrorFlag=false;
     		$scope.emptyEmployerNameCheck=false;
             
-         }, 3000);
+         }, 5000);
     	};
     	    	
     
@@ -440,7 +440,7 @@ var url = '/getBatchIdfortrainer';
 	            $scope.rollingGenerateCandidateSheet= false;
 	    		 $scope.generatingCandidateSheet="";
 	            $scope.generateCandidateSheetError = false;
-	         }, 5000);
+	         }, 7000);
       
     	 }
 });
