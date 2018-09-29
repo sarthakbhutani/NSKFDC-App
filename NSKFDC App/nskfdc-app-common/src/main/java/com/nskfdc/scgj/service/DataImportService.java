@@ -558,9 +558,9 @@ public class DataImportService {
 				}
 				else if (cell.getColumnIndex() == 13)
 				{
-					if(!(cell.getCellType()==Cell.CELL_TYPE_STRING))
+					if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
 					{
-						if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+						if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 						{
 							LOGGER.debug("Capturing value for header : Education Level");
 							LOGGER.debug("Education Level is : " + cell.getStringCellValue());
@@ -598,20 +598,23 @@ public class DataImportService {
 				}
 				else if (cell.getColumnIndex() == 15) 
 				{
-					if(!(cell.getCellType()==Cell.CELL_TYPE_STRING))
+					if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
 					{
-						LOGGER.debug("Capturing value of header : District");
-						LOGGER.debug("The value of district is : " + cell.getStringCellValue());
-						masterSheetImportDto.setDistrict(cell.getStringCellValue());						
+						if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+						{
+							LOGGER.debug("Capturing value of header : District");
+							LOGGER.debug("The value of district is : " + cell.getStringCellValue());
+							masterSheetImportDto.setDistrict(cell.getStringCellValue());						
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.error("The cell type of district does not have valid value");
+							return "Not a valid value for District column at row number "+rowNumber;
+						}
 					}
-					else
-					{
-						int rowNumber = row.getRowNum() + 1;
-						LOGGER.error("The cell type of district does not have valid value");
-						return "Not a valid value for District column at row number "+rowNumber;
-					}
+					
 				}
-
 				else if (cell.getColumnIndex() == 16) 
 				{
 					LOGGER.debug("Capturing the value of header : Aadhaar Card");
