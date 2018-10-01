@@ -32,6 +32,9 @@ public class GenerateReportService {
 	String reportType;
 	String generateReportsId;
 	String outputFile;
+	int generateOC=0;
+	int generateNSKFDCReport=0;
+	int generateMinutesOfSelectionCommiitteeReport=0;
 	
 	public Collection<GetBatchIdDto> getBatchDetails(String userEmail){
 		LOGGER.debug("Request received from Controller");
@@ -64,6 +67,33 @@ public class GenerateReportService {
 				Collection<GenerateOccupationCertificateReportDto> occupationReportDetails = generateReportDao.generateOccupationCertificateReport(batchId,trainingPartnerEmail);
 				if (CollectionUtils.isNotEmpty(occupationReportDetails))
 				{	
+					LOGGER.debug("INSIDE IF-- When collection for occupation certificate is not empty");
+				
+					
+					/**
+					 * Calling a for loop to check if all the candidates has all the details for occupation certificate
+					 * and there is no candidate having any of the field required for the Occupation certificate is absent
+					 * then report should not be generated 
+					 * 
+					 */
+					
+					for(GenerateOccupationCertificateReportDto occupationCertificateDetails : occupationReportDetails) {
+						generateOC=0;
+					
+						if(occupationCertificateDetails.getAadharCardNumber() == null || occupationCertificateDetails.getAadharCardNumber().isEmpty() || occupationCertificateDetails.getGender()==null || occupationCertificateDetails.getGender().isEmpty() || occupationCertificateDetails.getFatherName()==null || occupationCertificateDetails.getFatherName().isEmpty() || occupationCertificateDetails.getResidentialAddress()==null || occupationCertificateDetails.getResidentialAddress().isEmpty() || occupationCertificateDetails.getWorkplaceAddress()==null || occupationCertificateDetails.getWorkplaceAddress().isEmpty() || occupationCertificateDetails.getAge()==null || occupationCertificateDetails.getAge().isEmpty() || occupationCertificateDetails.getAge().equals("0")){
+							//To check if all the details of candidate for OC Report are present
+							generateOC=0;
+							break;
+						}
+					
+						else {
+							generateOC=1;
+							
+						}
+					}							
+					
+					
+					if(generateOC==1){
 					LOGGER.debug("Create object of JRBean Collection Data Source ");
 					JRBeanCollectionDataSource occupationCertificateReportBeans = new JRBeanCollectionDataSource(occupationReportDetails);
 				
@@ -113,6 +143,15 @@ public class GenerateReportService {
 		        		LOGGER.error("In GenerateReportService - generateOccupationCertificateReport");
 		        		LOGGER.error("Exception caught is"+e);
 		        	}
+					
+					
+				}
+					
+				else {
+					outputFile=null;
+					LOGGER.debug("Collection for Occupation certificate does not have complete details");
+				}					
+					
 				} else {
 					outputFile=null;
 					LOGGER.debug("Collection is null");
@@ -214,6 +253,23 @@ public class GenerateReportService {
 				if (CollectionUtils.isNotEmpty(nSKFDCSheetDetails))
 				{
 					LOGGER.debug("In IF -- When NSKFDCSheetDetails collection is not empty");
+					
+					// Loop to check details for all the columns in NSKFDC sheet against each candidate are present
+					for(GenerateNSKFDCExcelSheetDto nskfdcExcelDetails : nSKFDCSheetDetails) {
+						
+					if(nskfdcExcelDetails.getName()==null || nskfdcExcelDetails.getName().isEmpty() || nskfdcExcelDetails.getGender()==null || nskfdcExcelDetails.getGender().isEmpty() || nskfdcExcelDetails.getEducationLevel()==null || nskfdcExcelDetails.getEducationLevel().isEmpty() || nskfdcExcelDetails.getFatherName()==null || nskfdcExcelDetails.getFatherName().isEmpty() || nskfdcExcelDetails.getMotherName()==null || nskfdcExcelDetails.getMotherName().isEmpty() || nskfdcExcelDetails.getAadharCardNumber()==null || nskfdcExcelDetails.getAadharCardNumber().isEmpty() || nskfdcExcelDetails.getResidentialAddress()==null || nskfdcExcelDetails.getResidentialAddress().isEmpty() || nskfdcExcelDetails.getMobileNumber()==null || nskfdcExcelDetails.getMobileNumber().isEmpty() || nskfdcExcelDetails.getOccupationType()==null || nskfdcExcelDetails.getOccupationType().isEmpty() || nskfdcExcelDetails.getMsId()==null || nskfdcExcelDetails.getMsId().isEmpty() || nskfdcExcelDetails.getIdProofType()==null || nskfdcExcelDetails.getIdProofType().isEmpty() || nskfdcExcelDetails.getIdProofNumber()==null || nskfdcExcelDetails.getIdProofNumber().isEmpty() || nskfdcExcelDetails.getBankName()==null || nskfdcExcelDetails.getBankName().isEmpty() || nskfdcExcelDetails.getIfscCode()==null || nskfdcExcelDetails.getIfscCode().isEmpty() || nskfdcExcelDetails.getAccountNumber()==null || nskfdcExcelDetails.getAccountNumber().isEmpty() || nskfdcExcelDetails.getBatchId()==null || nskfdcExcelDetails.getBatchId().isEmpty() || nskfdcExcelDetails.getTrainingPartnerName()==null || nskfdcExcelDetails.getTrainingPartnerName().isEmpty() || nskfdcExcelDetails.getRelationWithSKMS()==null || nskfdcExcelDetails.getRelationWithSKMS().isEmpty() || nskfdcExcelDetails.getAge()==0 || nskfdcExcelDetails.getDob()==null || nskfdcExcelDetails.getDob().isEmpty()){
+						
+						//IF any column for a candidate in a collection is null or empty
+						generateNSKFDCReport=0;	
+						break;
+						}
+						else {
+							generateNSKFDCReport=1;
+						}
+					}
+					
+					
+					if(generateNSKFDCReport==1){
 					LOGGER.debug("Creating object of JRBean Collection Data Source");
 					JRBeanCollectionDataSource nSKFDCSheetBeans = new JRBeanCollectionDataSource(nSKFDCSheetDetails);
 				
@@ -266,6 +322,14 @@ public class GenerateReportService {
 						LOGGER.error("CATCHING -- Exception handled in GenerateReportService - generateNSKFDCExcelSheet");
 						LOGGER.error("While generating NSKFDCExcelSheet"+ e);
 					}	
+				
+				
+				}else {
+					outputFile=null;
+					LOGGER.debug("Collection for NSKFDC Sheet has not complete detail of candidate");
+				}
+				
+				
 				} else {
 					LOGGER.debug("In ELSE -- Collection of NSKFDC Excel Sheet is Empty");
 					LOGGER.debug("Assigning OutFile = null");
@@ -371,11 +435,32 @@ public class GenerateReportService {
 		try {
 				LOGGER.debug("TRYING -- To Generate Minutes Of Selection Committee PDF");
 				
+				
 			    Collection<GenerateMinutesOfSelectionDto> generateMinuteofSelection=generateReportDao.generateMinutesOfSelection(batchId,userEmail);
 				
 			    if (CollectionUtils.isNotEmpty(generateMinuteofSelection))
 				{
-			    	LOGGER.debug("In IF -- When Minutes Of Selection Committee collection is not empty");
+			    	
+			    	// Loop to check if all the fields in collection for minutes of selection committee meeting report are present
+			    	for(GenerateMinutesOfSelectionDto m : generateMinuteofSelection) {
+			    		
+			    		if(m.getJobRole()==null || m.getJobRole().isEmpty() || m.getTrainingPartnerName()==null || m.getTrainingPartnerName().isEmpty() || m.getSectorSkillCouncil()==null || m.getSectorSkillCouncil().isEmpty() || m.getCentreCity()==null || m.getCentreCity().isEmpty() || m.getSelectionCommitteeDate()==null || m.getSelectionCommitteeDate().isEmpty() || m.getMunicipality()==null || m.getMunicipality().isEmpty()) {
+			    			// IF condition where any of the field is absent for minutes of selection committee report
+			    			generateMinutesOfSelectionCommiitteeReport=0;
+			    			break;
+			    		}
+			    		
+			    		else {
+			    			//Else when all fields are present 
+			    			generateMinutesOfSelectionCommiitteeReport=1;
+			    		}
+			    		
+			    	}
+			    	
+		
+			    	if(generateMinutesOfSelectionCommiitteeReport == 1) {
+			    	
+			    	LOGGER.debug("In IF -- When all fields in Minutes Of Selection Committee collection are present");
 			    	LOGGER.debug("Create object of JRBean Collection Data Source ");
 			    	JRBeanCollectionDataSource minutesOfSelectionReportBeans = new JRBeanCollectionDataSource(generateMinuteofSelection);
 				
@@ -428,13 +513,19 @@ public class GenerateReportService {
 		        		LOGGER.error("Exception caught is "+e);
 			    	}	
 			    
+			    	
+				}else {
+					outputFile=null;
+					LOGGER.debug("Report cannot be generated because all fields are not present ");
+				}
+			    	
 					} else {
 						outputFile=null;
 						LOGGER.debug("Collection is null");
 						LOGGER.debug("In GeneratereportService - generateMinutesOfSelection");
 					}
 				} catch (Exception e) {
-					LOGGER.error("CATCHING -- Exception handled - GenerateReportService - generateOccupationCertificateReport ");
+					LOGGER.error("CATCHING -- Exception handled - GenerateReportService - generateMinutesOfSelection ");
 		        	LOGGER.error("While genertaing Minutes Of Selection Committee PDF");
 		        	LOGGER.error("Exception is "+ e);
 				}

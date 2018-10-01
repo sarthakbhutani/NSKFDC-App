@@ -442,7 +442,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     }	
     
     /**
-     * Row mapper class for minutes of slection committee
+     * Row mapper class for minutes of selection committee
      * @author Ruchi
      *
      */
@@ -458,11 +458,8 @@ public class GenerateReportDao extends AbstractTransactionalDao {
     		String centreCity=rs.getString("centreCity");
     		String municipality=rs.getString("municipality");
 
-    		if (selectionCommitteeDate != null && !selectionCommitteeDate.equals("")) {
-    			return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality);	
-    		}
-    		else
-    		return new GenerateMinutesOfSelectionDto("  ",jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality);
+   			return new GenerateMinutesOfSelectionDto(selectionCommitteeDate,jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality);	
+    		
 	
     	}
     }
