@@ -29,6 +29,10 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	document.getElementById("rollinguploadCandidateSheetGif").style.display="none";
 	
 	$scope.submitMsg=false;
+	$scope.errorBatch=false;
+	$scope.errorBatchMessage ="";
+	$scope.successBatch=false;
+	$scope.successBatchMessage ="";
 	$scope.dateError="";
     $scope.dateErrorFlag =false;
     $scope.confirmbox = false;
@@ -183,32 +187,36 @@ var url = '/getBatchIdfortrainer';
 		{
 			$http.get("/generateBatch/"+$scope.generateBatch.municipality)
             .then(function(response) {
+            	$scope.rolling = false;
             	$scope.success = true;
-            	if(response.data == null)
+            	if(response.data.batchId == null)
             		{
+            		  $scope.successBatch=false;
             		  $scope.success = false;
-            		  $scope.errorMessage="Batch cannot be generated";
+            		  $scope.errorBatch = true;
+            		  $scope.errorBatchMessage="Batch cannot be generated";
             		}
-            	$scope.successMessage = "Batch " + response.data.batchId +" generated successfully!";
-                $scope.data = response.data;
-                $scope.ids = [];
-                $http.get('/getBatchIdfortrainer')
-            	    .then(function(response) {
-            	    	$scope.rolling = false;
-            		    $scope.generating = "";
-            	        let dt = response.data;
-            	        for (i in dt) {
-            	            $scope.ids.push(response.data[i].batchId);
-            	        }
-            	        
-            	        $timeout(function() {
-            	        	$scope.rolling = false;
-            	            $scope.success = false;
-            	            $scope.successMessage = "";
-            	            $scope.errorMessage="";
-            	            $scope.errorMsg=false;
-            	         }, 5000);
-            	    });
+            	else
+            	{
+            		$scope.errorBatch=false;
+            		$scope.errorBatchMessage ="";
+            		$scope.successBatch=true;
+            		$scope.successBatchMessage = "Batch " + response.data.batchId +" generated successfully!";
+            		  $scope.data = response.data;
+                      $scope.ids = [];
+                      $http.get('/getBatchIdfortrainer')
+                  	    .then(function(response) {
+                  	    	$scope.rolling = false;
+                  		    $scope.generating = "";
+                  	        let dt = response.data;
+                  	        for (i in dt) {
+                  	            $scope.ids.push(response.data[i].batchId);
+                  	        }
+                  	        
+                  	    });
+            		}
+            	
+              
          }, function(errorResponse){
         	 $scope.errorMessage="Batch cannot be generated";
         	 $timeout(function() {
@@ -217,8 +225,24 @@ var url = '/getBatchIdfortrainer';
  	            $scope.successMessage = "";
  	           $scope.errorMessage="";
  	            $scope.errorMsg=false;
+ 	           $scope.errorBatch=false;
+ 	      		$scope.errorBatchMessage ="";
+ 	      		$scope.successBatch=false;
+ 	      		$scope.successBatchMessage = "";
  	         }, 5000);
          });
+
+  	        $timeout(function() {
+  	        	$scope.rolling = false;
+  	            $scope.success = false;
+  	            $scope.successMessage = "";
+  	            $scope.errorMessage="";
+  	            $scope.errorMsg=false;
+  	          $scope.errorBatch=false;
+      		$scope.errorBatchMessage ="";
+      		$scope.successBatch=false;
+      		$scope.successBatchMessage = "";
+  	         }, 5000);
 		}	    	
 	    });   
     };
