@@ -16,20 +16,32 @@ tp.directive('ngFiles', ['$parse', function ($parse) {
 
 tp.controller("generateBatchReportController" , function($scope, $http,$timeout){
 	
-	
+	document.getElementsByClassName("filesizeError").innerHTML="";
 	var formdata = new FormData();
 	var fd = new FormData();
 	var numberPic;
+	var countValuesToTransfer=0;
+	
 	$scope.batchNumberError= false; 
 	$scope.day = "";
      
      
    /*-----Method to upload pictures -----*/  
    $scope.uploadFile = function($files) {
+	   var fizesizemessage = "error"+$scope.day;
 	   
-	   angular.forEach($files, function (value, key) {
+	   
+	   if($files[0].size>1000000){
+		  
+		   document.getElementById(fizesizemessage).innerHTML="Image size exceeding 1MB";
+	   }
+	   
+	   else{
+		   document.getElementById(fizesizemessage).innerHTML="";
+		   angular.forEach($files, function (value, key) {
 		   fd.set("file"+$scope.day, value);
        }); 
+	   }
      }
      
      
@@ -46,11 +58,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
 			 responseType : 'arraybuffer',
 			 headers: {'Content-Type': undefined},
 			 transformRequest: angular.identity
-            /* transformResponse: [function (data) {
-             	thisIsResponse=data;
-             	return data;
            
-             }]*/
     	}).then(function(response){
     	   		
     		if(response.data.byteLength!=0)
@@ -66,19 +74,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     			document.body.appendChild(link);
     			link.click();
     		}
-    		/*if(response.data.length > 0)
-    			{
-    			$scope.rolling=false;
-    			$scope.generating = "";
-    			document.getElementById("Success").innerHTML="<center> Batch Report Successfully generated ! </center>";
-    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
-    			var downloadURL = URL.createObjectURL(pdfFile);
-    			var link = document.createElement('a');
-    			link.href = downloadURL;
-    			link.download = "Final Batch Report.pdf"
-    			document.body.appendChild(link);
-    			link.click();
-    			}*/
+    		
     		else{
     			$scope.rolling=false;
     			$scope.generating = "";
@@ -103,6 +99,8 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
              }, 6000);
     	});
     	 
+    
+    
      }	    
 	
 	
@@ -142,6 +140,14 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
                   
 /*   Method to Generate report  */
           $scope.generateBatchReportwithFile = function(){
+        	  
+        	  for (var value of fd.values()) {
+         		 countValuesToTransfer++;
+         		}
+         	 
+         	 if(countValuesToTransfer==14){
+        	  
+        	  
         	  var checkDateUrl='/checkBatchEndDate?batchId='+$scope.batchId;
         	  if($scope.batchnumber == null || $scope.batchnumber== undefined || $scope.batchnumber== ""){
         		  $scope.batchNumberError= true; 
@@ -170,6 +176,16 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
       			document.getElementById("Success").innerHTML="";
       			document.getElementById("Error").innerHTML="";
                }, 6000);
+        	  
+          }else{
+        	  document.getElementById("Error").innerHTML="Please enter all the valid values";
+     		 
+     		 $timeout(function() {
+      			document.getElementById("Success").innerHTML="";
+      			$scope.generating = "";
+      			document.getElementById("Error").innerHTML="";
+               }, 6000);
+          }
           }
           
 });

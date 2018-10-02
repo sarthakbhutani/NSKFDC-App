@@ -26,7 +26,7 @@
         </div>
     <div class="container innerline">
         <div class="div-center">
-        <h5>Inaugral Day Images</h5>
+        <h5>Inaugural Day Images</h5>
         <div class="row boxes">
         	<div class="col-md-6">
             		
@@ -37,6 +37,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='11'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files11" file-model="generateReport.day1Pic1" ng-files="uploadFile($files)">
 	       				  </span>
+	       				  <span id="error11" class="filesizeError"></span>
                     </div>
                     
              </div>
@@ -49,7 +50,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='12'">	                        
 	        					   Browse <input type="file"  accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files12" file-model="generateReport.day1Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error12" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -70,7 +71,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day2Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files21" file-model="generateReport.day2Pic1" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error21" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -85,7 +86,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='22'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day2Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files22" file-model="generateReport.day2Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error22" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -106,7 +107,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files31" file-model="generateReport.day3Pic1" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error31" class="filesizeError"></span>
             			       				  
                     </div>
                    
@@ -120,7 +121,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='32'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files32" file-model="generateReport.day3Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error32" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -140,7 +141,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day4Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files41" file-model="generateReport.day4Pic1" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error41" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -154,7 +155,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='42'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day4Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files42" file-model="generateReport.day4Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error42" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -175,7 +176,7 @@
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files51" file-model="generateReport.day5Pic1" ng-files="uploadFile($files)">
 	       				  </span>
 	       				  
-            			       				  
+            			  <span id="error51" class="filesizeError"></span>     				  
                     </div>
                     
              </div>
@@ -188,7 +189,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='52'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files52" file-model="generateReport.day5Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error52" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -208,7 +209,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('medExamPic1').value = this.value.split('\\').pop().split('/').pop()" id="files61" required file-model="generateReport.day6Pic1" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error61" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -224,7 +225,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('viva').value = this.value.split('\\').pop().split('/').pop()" id="files62" file-model="generateReport.day6Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error62" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -245,7 +246,7 @@
 	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('assessPic1').value = this.value.split('\\').pop().split('/').pop()" id="files71" file-model="generateReport.day7Pic1" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error71" class="filesizeError"></span>
             			       				  
                     </div>
                     
@@ -260,7 +261,7 @@
 	                        <span class="btncolor btn btn-default btn-file" ng-click="day='72'">	                        
 	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('assessPic2').value = this.value.split('\\').pop().split('/').pop()" id="files72" file-model="generateReport.day7Pic2" ng-files="uploadFile($files)">
 	       				  </span>
-	       				  
+	       				  <span id="error72" class="filesizeError"></span>
             			       				  
                     </div>
                     

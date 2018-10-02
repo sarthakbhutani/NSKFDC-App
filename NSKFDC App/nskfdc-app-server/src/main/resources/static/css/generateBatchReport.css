@@ -122,3 +122,9 @@ input[type="text"] {
 	color: red;
 	margin-top:2rem;
 }
+
+.filesizeError{
+	font-size: 8pt;
+    color: red;
+    font-weight: bold;
+}
