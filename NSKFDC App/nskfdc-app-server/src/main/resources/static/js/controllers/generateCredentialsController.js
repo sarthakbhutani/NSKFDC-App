@@ -97,13 +97,12 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 					 $scope.detailsData.data=[];
 					 }
 				 else{
-				 $scope.detailsData.data=response.data;
-				 $scope.searchError='';
+					 $scope.detailsData.data=response.data;
+					 $scope.searchError='';
 				 }
 			});
 		 $timeout(function() {
              $scope.searchError="";
-             
           }, 4000);
 	 }
 	 

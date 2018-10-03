@@ -70,7 +70,10 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 			}
 			});
 		
+		 document.getElementById("FormUpdateTarget").reset();
 		}
+		 
+		 
 		 
 		 $timeout(function() {
              $scope.errorMessage="";
@@ -96,9 +99,11 @@ scgj.controller("updateTargetController" , function($scope, $http, $timeout){
 				 else{
 				 $scope.updatedData.data=response.data;
 				 $scope.searchError='';
-				 
+				 document.getElementById("FormSearchTarget").reset();
 				 }
+				 
 			});
+		 
 	 }
 		 $timeout(function() {
              $scope.searchError="";

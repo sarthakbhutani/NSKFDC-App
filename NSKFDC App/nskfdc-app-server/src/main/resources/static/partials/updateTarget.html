@@ -7,11 +7,11 @@
 		<h3>Update Target</h3>
 	</div>
 	<div class="updateTarget">
-	<form name="targetform" ng-submit="update()">
+	<form name="targetform" ng-submit="update()" id="FormUpdateTarget">
 	<div class="row updateTargetform">
 	
                 <div class="col-md-4">
-                    <input type="text" name="registrationNo" id="registrationNo" class="form-control form-rounded placeHolderFont" ng-model="data.nsdcRegNumber"placeholder="NSDC-Reg No-XXX" required>
+                    <input type="number" min="1" name="registrationNo" id="registrationNo" class="form-control form-rounded placeHolderFont" ng-model="data.nsdcRegNumber"placeholder="NSDC-Reg No-XXX" required>
                 </div>
                 <div class="col-md-3">
                     <input type="number" name="targetNo" id="targetNo"class="form-control form-rounded placeHolderFont" ng-model="data.targets" placeholder="New Target"  required>
@@ -38,13 +38,13 @@
 	</div>
 	
 	<div class="updatedTargets">
-	<form>
+	<form id="FormSearchTarget" ng-submit="search(nsdcRegNumber)">
 		    <div class="row updatedTargetsform">
                 <div class="col-sm-5" id="nsdcNo">
-                    <input type="text" class="form-control form-rounded placeHolderFont" ng-model="nsdcRegNumber"placeholder="NSDC Registration Number" required>
+                    <input type="number" min="1" class="form-control form-rounded placeHolderFont" ng-model="nsdcRegNumber"placeholder="NSDC Registration Number" required>
                 </div>
               <div class="col-sm-2">
-                    <button type="button" class="btn btn-info" ng-click="search(nsdcRegNumber)" id="searchbutton">Search</button>
+                    <button type="submit" class="btn btn-info" id="searchbutton">Search</button>
                 	<span ng-bind="searchError" id="error"></span>
                 	
                 </div>
