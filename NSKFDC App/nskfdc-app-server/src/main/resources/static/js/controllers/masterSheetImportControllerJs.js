@@ -25,8 +25,23 @@ function checkforstate() {
 
 var app = angular.module('app');
 app.controller('importController', function($scope, $http, $rootScope, fileUpload, $timeout) {
-	
+	$scope.generateBatch = {};
 	document.getElementById("rollinguploadCandidateSheetGif").style.display="none";
+	$scope.checkLength = function()
+	{
+		if($scope.generateBatch.municipality != undefined && $scope.generateBatch.municipality != null && $scope.generateBatch.municipality.split(' ').length < 3)
+			{
+			$scope.municipalError = true;
+			$scope.municipalErrorMessage = "Not a valid municipality value";
+			$scope.municipalSuccess = false;
+			}
+		$timeout(function(){
+			$scope.municipalError = false;
+			$scope.municipalErrorMessage = "";
+			$scope.municipalSuccess = false;
+		},5000);
+		
+	}
 	
 	var year1;
 	var year2;
@@ -38,6 +53,10 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	$scope.errorBatchMessage ="";
 	$scope.successBatch=false;
 	$scope.successBatchMessage ="";
+	$scope.municipalError = false;
+	$scope.municipalErrorMessage = "";
+	$scope.municipalSuccess = true;
+	$scope.municipalSuccessMessage = "";
 	$scope.dateError="";
     $scope.dateErrorFlag =false;
     $scope.confirmbox = false;
