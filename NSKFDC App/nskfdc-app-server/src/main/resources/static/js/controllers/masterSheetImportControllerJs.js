@@ -305,9 +305,7 @@ var url = '/getBatchIdfortrainer';
     	{
     		$scope.dateErrorFlag = true;
     		$scope.dateError = "Batch End Date cannot be less than Batch Start Date";
-    	}
-    	
-    	
+    	}   	
     	if($scope.dateErrorFlag == false)
      	{
     	var startDate = new Date($scope.batch.batchStartDate);
@@ -315,10 +313,10 @@ var url = '/getBatchIdfortrainer';
     	var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
         var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
     	
-    	if( dayDifference > 4)
+    	if( dayDifference < 4)
     		{
     			$scope.dateErrorFlag = true;
-    			$scope.dateError = "Batch duration cannot exceed 5 days";
+    			$scope.dateError = "Batch duration cannot be less than 5 days";
     		}
 
      	}
