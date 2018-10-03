@@ -358,8 +358,17 @@ public class DataImportService {
 
 							else  if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
-								LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
-								masterSheetImportDto.setGender(cell.getStringCellValue());
+								int rowNumber = row.getRowNum() + 1;
+								if(cell.getStringCellValue().equals("M") || cell.getStringCellValue().equals("F")) {
+									LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
+									masterSheetImportDto.setGender(cell.getStringCellValue());
+									
+								}
+								else {
+									LOGGER.debug("The invalid value of Gender is : " + cell.getStringCellValue());
+									return "Please enter gender value as 'M' or 'F' at" + " " + rowNumber ;
+								}
+								
 							}
 							else
 							{
