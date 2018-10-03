@@ -28,6 +28,11 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
 	
 	document.getElementById("rollinguploadCandidateSheetGif").style.display="none";
 	
+	var year1;
+	var year2;
+	$scope.minyear;
+	$scope.maxyear;
+	$scope.startDateFlag = false;
 	$scope.submitMsg=false;
 	$scope.errorBatch=false;
 	$scope.errorBatchMessage ="";
@@ -54,7 +59,10 @@ app.controller('importController', function($scope, $http, $rootScope, fileUploa
     	let year = response.data;
     	let first = year%10000;
     	let second = year/10000;
-    	
+    	year2=first;
+    	year1=Math.floor(second);
+    	$scope.minyear=(year1+"-04-01");
+    	$scope.maxyear=(year2+"-03-31");
     	$scope.financialyear = Math.floor(second) + " - " + first;
     })
    
@@ -317,20 +325,25 @@ var url = '/getBatchIdfortrainer';
     		$scope.employerNumberErrorFlag=false;
     		$scope.centreIdErrorFlag=true;
     	}	
-    	//Check if end start date is not null
+    	else if($scope.batch.batchStartDate!=undefined && ($scope.batch.batchStartDate<$scope.minyear || $scope.batch.batchStartDate>$scope.maxyear)){
+    		$scope.startDateFlag = true;
+    		$scope.startDateError = "Enter valid Batch Start Date";
+    	}
     	else if($scope.checkEndDate())
     	{
+    		$scope.startDateFlag = false;
     		$scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=false;
     		$scope.batch.batchEndDate = null;
     	}
     	else if($scope.batch.employerContactNumber<0){
+    		$scope.startDateFlag = false;
     		$scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=true;
     	}
-    	
     	else
     	{
+    		$scope.startDateFlag = false;
     		if($scope.batch.employerContactNumber>0 && ($scope.batch.employerName==undefined || $scope.batch.employerName==null || $scope.batch.employerName=="" )){
     			$scope.emptyEmployerNameCheck=true;
     		}
@@ -400,7 +413,8 @@ var url = '/getBatchIdfortrainer';
             $scope.centreIdErrorFlag=false;
     		$scope.employerNumberErrorFlag=false;
     		$scope.emptyEmployerNameCheck=false;
-            
+    		$scope.startDateFlag = false;
+    		$scope.startDateError = "";
          }, 5000);
     	};
     	    	
