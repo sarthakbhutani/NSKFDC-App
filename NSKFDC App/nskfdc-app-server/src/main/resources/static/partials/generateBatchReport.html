@@ -3,7 +3,7 @@
 </head>
 
 <div ng-controller="generateBatchReportController">
-<form name="generateBatchReportForm" ng-submit="generateBatchReportwithFile()"  enctype="multipart/form-data">
+<form name="generateBatchReportForm" ng-submit="generateBatchReportwithFile()"  enctype="multipart/form-data" id="BatchReportForm">
  <div class="container outline" >
  <h3 class="heading">Generate Batch Report</h3>
     	<div class="row"  >
@@ -12,7 +12,6 @@
                 <div class="col-md-4">
                 	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids"  ng-change="getSCGJBatchNumber()" required>
                 	<option value="" disabled selected>Batch Id</option>
-                	<span id="error_msg"></span>
                 	</select>
                 </div>
                 <div class="col-md-4">
