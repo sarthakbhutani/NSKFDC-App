@@ -40,7 +40,6 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 		var fileType = $scope.fileType;
 		var batchId = $scope.batchId;
 		var scgjBatchNumber = $scope.batch.scgjBatchNumber;
-		console.log(scgjBatchNumber);
 		var uploadUrl = "/uploadFile";
 		var uploadedFile = uploadFile.uploadFileToUrl(file, uploadUrl, fileType, batchId, scgjBatchNumber);
 
