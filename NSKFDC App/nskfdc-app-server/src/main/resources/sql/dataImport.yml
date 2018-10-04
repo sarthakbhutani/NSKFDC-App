@@ -62,3 +62,14 @@ dataImport:
  nsdcRegNumber: >
   select REVERSE(CAST(REVERSE(nsdcRegNumber) AS UNSIGNED)) from trainingpartnerdetails where userEmail= :userEmail;
   
+ checkAadharNumberExistence: >
+  SELECT EXISTS(SELECT aadharcardNumber FROM candidate WHERE batchId = :batchId and aadharCardNumber = :aadharCardNumber);
+  
+ checkMobileNumberExistence: >
+  SELECT EXISTS(SELECT mobileNumber FROM candidate WHERE batchId = :batchId and mobileNumber = :mobileNumber);
+  
+ updateCheckAadharNumberExistence: >
+  SELECT EXISTS(SELECT aadharcardNumber FROM candidate WHERE batchId = :batchId and aadharCardNumber = :aadharCardNumber and enrollmentNumber!= :enrollmentNumber);
+  
+ updateCheckMobileNumberExistence: >
+   SELECT EXISTS(SELECT mobileNumber FROM candidate WHERE batchId = :batchId and mobileNumber = :mobileNumber and enrollmentNumber!= :enrollmentNumber);
