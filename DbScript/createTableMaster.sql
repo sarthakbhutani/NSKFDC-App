@@ -32,18 +32,6 @@ DROP TABLE IF EXISTS `centredetails`;
 DROP TABLE IF EXISTS `employerdetails`;
 
 DROP TABLE IF EXISTS `bankdetails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bankdetails` (
-  `accountNumber` bigint(20) NOT NULL,
-  `ifscCode` varchar(50) DEFAULT NULL,
-  `bankName` varchar(50) DEFAULT NULL,
-  `enrollmentNumber` varchar(50) NOT NULL,
-  PRIMARY KEY (`accountNumber`),
-  KEY `enrollmentNumber_idx` (`enrollmentNumber`),
-  CONSTRAINT `enrollmentNumber` FOREIGN KEY (`enrollmentNumber`) REFERENCES `candidate` (`enrollmentNumber`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `batchdetails`
@@ -103,6 +91,9 @@ CREATE TABLE `candidate` (
   `disabilityType` varchar(50) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `dob` date DEFAULT NULL,
+  `accountNumber` bigint(20) NOT NULL,
+  `ifscCode` varchar(50) DEFAULT NULL,
+  `bankName` varchar(50) DEFAULT NULL,
   `guardianType` varchar(50) DEFAULT NULL,
   `firstNameFather` varchar(50) DEFAULT NULL,
   `lastNameFather` varchar(20) DEFAULT NULL,
