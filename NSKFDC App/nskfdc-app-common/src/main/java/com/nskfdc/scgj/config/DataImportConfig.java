@@ -9,6 +9,7 @@ public class DataImportConfig {
 
 	private String BatchDetails;
 	private String nsdcRegNumber;
+	private String checkMobileNumberExistence;
 	private String checkCandidateExistence;
 	private String importCandidate;
 	private String importBankDetails;
@@ -28,9 +29,25 @@ public class DataImportConfig {
 	private String showbatchId;
 	private String updateBatchDetails;
 	private String batchId;
+	private String checkAadharNumberExistence;
+	private String updateCheckAadharNumberExistence;
+	private String updateCheckMobileNumberExistence;
 	
 	
 	
+	
+	public String getUpdateCheckAadharNumberExistence() {
+		return updateCheckAadharNumberExistence;
+	}
+	public void setUpdateCheckAadharNumberExistence(String updateCheckAadharNumberExistence) {
+		this.updateCheckAadharNumberExistence = updateCheckAadharNumberExistence;
+	}
+	public String getUpdateCheckMobileNumberExistence() {
+		return updateCheckMobileNumberExistence;
+	}
+	public void setUpdateCheckMobileNumberExistence(String updateCheckMobileNumberExistence) {
+		this.updateCheckMobileNumberExistence = updateCheckMobileNumberExistence;
+	}
 	public String getBatchId() {
 		return batchId;
 	}
@@ -163,6 +180,21 @@ public class DataImportConfig {
 	public void setNsdcRegNumber(String nsdcRegNumber) {
 		this.nsdcRegNumber = nsdcRegNumber;
 	}
+	public String getCheckAadharNumberExistence() {
+		return checkAadharNumberExistence;
+	}
+	public void setCheckAadharNumberExistence(String checkAadharNumberExistence) {
+		this.checkAadharNumberExistence = checkAadharNumberExistence;
+	}
+	public String getCheckMobileNumberExistence() {
+		return checkMobileNumberExistence;
+	}
+	public void setCheckMobileNumberExistence(String checkMobileNumberExistence) {
+		this.checkMobileNumberExistence = checkMobileNumberExistence;
+	}
+	
+	
+	
 
 	
 	

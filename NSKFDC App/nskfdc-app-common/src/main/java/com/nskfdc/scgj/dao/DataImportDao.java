@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -47,14 +48,13 @@ public class DataImportDao extends AbstractTransactionalDao {
 	 * @return Object of Integer class which holds the status of reading excel
 	 */
 
-	public Integer masterSheetImport(
-			ArrayList<MasterSheetImportDto> candidateDetails, String batchId) {
+	public Integer masterSheetImport(ArrayList<MasterSheetImportDto> candidateDetails, String batchId) {
 		int i = 0;
+		boolean flag=true;
 		LOGGER.debug("Received array list of all the columns read from excel sheet for batchId "
 				+ batchId);
 		LOGGER.debug("Creating an Iterator to iterate through the array list elements");
 		try {
-
 			LOGGER.debug("Received array list of all the columns read from excel sheet for batchId "
 					+ batchId);
 			LOGGER.debug("Creating an Iterator to iterate through the array list elements");
@@ -66,13 +66,12 @@ public class DataImportDao extends AbstractTransactionalDao {
 			Integer bankExistence = -1;
 
 			LOGGER.debug("Inserting candidate details from Excel sheet imported");
-			while (itr.hasNext()) {
-				// Checking existence of candidate in database using enrollment
-				// number
+			while (itr.hasNext()&&flag) {
+				// Checking existence of candidate in database using enrollment number
 				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 				LOGGER.debug("Inserting batchId into hashmap to check existence of the user");
+				
 				checkCandidateExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckCandidateExistance(), parameters, Integer.class);
-
 				parameters.put("enrollmentNumber", candidateDetails.get(i).getEnrollmentNumber());
 				parameters.put("salutation", candidateDetails.get(i).getSalutation());
 				parameters.put("firstName", candidateDetails.get(i).getFirstName());
@@ -98,118 +97,250 @@ public class DataImportDao extends AbstractTransactionalDao {
 				parameters.put("employmentType", candidateDetails.get(i).getEmploymentType());
 				parameters.put("workplaceAddress", candidateDetails.get(i).getWorkplaceAddress());
 				parameters.put("assessmentResult", candidateDetails.get(i).getAssessmentResult());
+        		LOGGER.debug("The assessment result is : " +candidateDetails.get(i).getAssessmentResult());
 				parameters.put("medicalExaminationConducted", candidateDetails.get(i).getMedicalExaminationConducted());
 				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
 				parameters.put("batchId", batchId);
 
+				
+				
+				
 				if (checkCandidateExistence == 0) {
-					LOGGER.debug("TRYING -- Inserting candidate details");
-					LOGGER.debug("Executing query to insert candidate details");
-					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(),parameters);
-					Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
-					if(bankaccountNumber!=null && bankaccountNumber!=0) {
-						Map<String, Object> bankparams = new HashMap<>();
-						LOGGER.debug("In IF -- When bank account number is received from frontend");
-						bankparams.put("accountNumber", bankaccountNumber);
-						LOGGER.debug("Executing query to check if bank account number exists");
-						bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
+					
+					
+					/**
+					 * Start the review from this line
+					 */
+					
+					//Checking existence of aadhar number for the new candidate
+					
+					LOGGER.debug("Checking the existence of unique aadhar in candidate");
+					Integer candidateAadharExistence = checkAadharExistence(candidateDetails.get(i).getAdhaarCardNumber(),batchId);
+					
+					//Start review from here
+					
+					if(candidateAadharExistence == 0)
+					{
+						LOGGER.debug("Aadhar card of candidate is unique for batch id : " +batchId);
+						LOGGER.debug("Checking the existence of mobile number for batch id: "+batchId);
+						LOGGER.debug("Calling method checkMobileNumberExistence to check the existence of mobile number of candidate");
 						
-						if(bankExistence == 0) {
-							LOGGER.debug("In IF -- When bank Account number does not exists");
-							Map<String, Object> updatedParams = new HashMap<>();
-							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing insert query for new candidate bank detail while importing excel sheet");
-							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
+						Integer candidateMobileNumberExistence = checkMobileNumberExistence(candidateDetails.get(i).getMobileNumber(),batchId);
+						
+						if(candidateMobileNumberExistence==1)
+						{
+							LOGGER.error("Mobile number for candidate already exists");
+							LOGGER.error("Sending error code -425 to service");
+							flag=false;
+							return -425;
+						}
+						else 
+						{
+							LOGGER.debug("Mobile number for candidate is unique");
+							LOGGER.debug("Inserting the details of the candidates in the database");
 							
+							
+							LOGGER.debug("TRYING -- Inserting candidate details");
+							LOGGER.debug("Executing query to insert candidate details");
+							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(),parameters);
+							LOGGER.debug("Candidate Insert Status is : " +candidateInsertStatus);
+							Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
+							
+							if(bankaccountNumber!=null && bankaccountNumber!=0) 
+							{
+								Map<String, Object> bankparams = new HashMap<>();
+								LOGGER.debug("In IF -- When bank account number is received from frontend");
+								bankparams.put("accountNumber", bankaccountNumber);
+								LOGGER.debug("Executing query to check if bank account number exists");
+								bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
+								
+								if(bankExistence == 0) {
+									LOGGER.debug("In IF -- When bank Account number does not exists");
+									try {
+											
+										Map<String, Object> updatedParams = new HashMap<>();
+										updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+										updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+										updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+										updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+										LOGGER.debug("Executing insert query for new candidate bank detail while importing excel sheet");
+										return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
+									
+									}
+									
+									catch(Exception e)
+									{
+										LOGGER.error("An exception occured while inserting bank details in the database");
+										LOGGER.error("Returning error code -754");
+										return -754;
+									}
+									
+								}
+								else if(bankExistence == 1) {
+									LOGGER.debug("In ELSE -- When bank Account number does exist");
+									
+									try {
+										Map<String, Object> updatedParams = new HashMap<>();
+										updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+										updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+										updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+										updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+										LOGGER.debug("Executing update query for existing candidate bank detail while importing excel sheet");
+										return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
+									}
+									catch(Exception e)
+									{
+										LOGGER.error("An exception occured while updating the bank details of the candidates");
+										return -363;
+									}
+									
+									
+								}
+								else 
+								{
+									LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
+									flag=false;
+									return -1;
+								}
+								
+							}
+								else 
+								{
+									LOGGER.debug("Bank details are not present");
+									LOGGER.debug("Returning 1");
+									return 1;
+								}
+			
 						}
-						else if(bankExistence == 1) {
-							LOGGER.debug("In ELSE -- When bank Account number does exist");
-							Map<String, Object> updatedParams = new HashMap<>();
-							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing update query for existing candidate bank detail while importing excel sheet");
-							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
-						}
-						else {
-							LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
-							return -1;
-						}
-						
-						
-					}
-					else {
-						return 1;
+			
 					}
 					
+					else
+					{
+						LOGGER.debug("Duplicate value found for aadhar number");
+						LOGGER.debug("Returning error code -265");
+						flag=false;
+						return -265;
+					}
 					
+					//Till here for candidate who is new to the system, first checks the aadhar number and then checks the mobile number of the candidate
+	
 				}
 
 				else if (checkCandidateExistence == 1) {
 
-					LOGGER.debug("TRYING -- Updating candidate details");
-					LOGGER.debug("Executing query to update candidate details");
-					candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(),parameters);
-					Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
-					if(bankaccountNumber!=null && bankaccountNumber!=0) {
-						Map<String, Object> bankparams = new HashMap<>();
-						LOGGER.debug("In IF -- When bank account number is received from frontend");
-						bankparams.put("accountNumber", bankaccountNumber);
-						LOGGER.debug("Executing query to check if bank account number exists");
-						bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
-						
-						if(bankExistence == 0) {
-							LOGGER.debug("In IF -- When bank Account number does not exists");
-							Map<String, Object> updatedParams = new HashMap<>();
-							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing insert query for new candidate bank while importing excel sheet");
-							return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
+					
+					LOGGER.debug("Candidate exists in the system");
+					LOGGER.debug("Sending request to checkUpdateCandidateAadhar() to check whether the existing candidate has unique aadhar number");
+					
+					Integer checkAadharNumber = checkUpdateCandidateAadhar(candidateDetails.get(i).getAdhaarCardNumber(), candidateDetails.get(i).getEnrollmentNumber(), batchId);
+					
+					//If a candidate already exists and wants to update his/her details
+					//Review from here
+					if(checkAadharNumber==0)
+					{
+						LOGGER.debug("The aadhar number is unique");
+						LOGGER.debug("Checking if the mobile number is unique for batch");
+						Integer checkMobileNumber = checkUpdatedMobileNumber(candidateDetails.get(i).getMobileNumber(),candidateDetails.get(i).getEnrollmentNumber(),batchId);
+						if(checkMobileNumber == 0)
+						{
+							LOGGER.debug("Updating the existing details of the user");
+							LOGGER.debug("TRYING -- Updating candidate details");
+							LOGGER.debug("Executing query to update candidate details");
+							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(),parameters);
+							Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
 							
+							if(bankaccountNumber!=null && bankaccountNumber!=0) 
+							{
+								Map<String, Object> bankparams = new HashMap<>();
+								LOGGER.debug("In IF -- When bank account number is received from frontend");
+								bankparams.put("accountNumber", bankaccountNumber);
+								LOGGER.debug("Executing query to check if bank account number exists");
+								bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
+								
+								if(bankExistence == 0)
+								{
+									LOGGER.debug("In IF -- When bank Account number does not exists");
+									Map<String, Object> updatedParams = new HashMap<>();
+									updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+									updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+									updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+									updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+									LOGGER.debug("Executing insert query for new candidate bank while importing excel sheet");
+									return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
+									
+								}
+								else if(bankExistence == 1)
+								{
+									LOGGER.debug("In ELSE -- When bank Account number does exist");
+									Map<String, Object> updatedParams = new HashMap<>();
+									updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+									updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
+									updatedParams.put("bankName",candidateDetails.get(i).getBankName());
+									updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
+									LOGGER.debug("Executing update query for existing candidate bank while importing excel sheet");
+									return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
+								}
+								else 
+								{
+									LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
+									return -1;
+								}
+								
+								
+							}
+							
+							else {
+								LOGGER.debug("No value for bank details, updating rest of the details");
+								return 1;
+							}
 						}
-						else if(bankExistence == 1) {
-							LOGGER.debug("In ELSE -- When bank Account number does exist");
-							Map<String, Object> updatedParams = new HashMap<>();
-							updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-							updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-							updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-							updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-							LOGGER.debug("Executing update query for existing candidate bank while importing excel sheet");
-							return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
-						}
-						else {
-							LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
-							return -1;
+						
+						else if(checkMobileNumber==1)
+						{
+							LOGGER.debug("Duplicate value for mobile number found");
+							LOGGER.debug("Returning response code as -989");
+							flag=false;
+							return -989;
 						}
 						
 						
 					}
-					
-					else {
-						return 1;
+					 
+					else if(checkAadharNumber==1)
+					{   //if updated aadhar number that user is trying to insert in the system exists for an enrollment number in the same batch
+						LOGGER.debug("Duplicate value found for aadhar number");
+						LOGGER.debug("Returning response code -696");
+						flag=false;
+						return -696;
 					}
-					
-					
-				
+
 				}
+				
 				i++;
 
 			}
+		
+			//Review till here
 			LOGGER.debug("Returning insert status for Excel Sheet import"+ candidateInsertStatus);
 			return candidateInsertStatus;
-		} catch (Exception e) {
+		}
+		
+		catch(DuplicateKeyException duplicateKeyException)
+		{
+			LOGGER.error("Duplicate value found");
+			LOGGER.error("An exception occured while inserting a composite/primary key" + duplicateKeyException);
+			LOGGER.error("Returning error code -42");
+			return -42;
+		}
+		
+		
+		catch (Exception e) {
 			LOGGER.error("CATCHING -- Exception while inserting the Excel sheet");
 			LOGGER.error("In masterSheetImport" + e);
 			LOGGER.error("Returning -25");
 			return -25;
 		}
-
 	}
 	
 
@@ -1043,5 +1174,101 @@ public class DataImportDao extends AbstractTransactionalDao {
 		}
 		
 	}
+	
+	public Integer checkAadharExistence(long aadharNumber,String batchId)
+	{
+		LOGGER.debug("Request recieved in checkAadharExistence method to check the existence of aadharcard for batch id : " +batchId);
+		try
+		{
+			LOGGER.debug("In try block to check existence of aadhar number");
+			LOGGER.debug("Creating hashmap of objects");
+			Map<String,Object> existence = new HashMap<>();
+			existence.put("aadharCardNumber",aadharNumber);
+			existence.put("batchId", batchId);
+			
+			if(existence.isEmpty())
+			{
+				LOGGER.error("The hashmap is empty");
+				return null;
+			}
+			
+			LOGGER.debug("Calling jdbc template method to check the existence of aadhar number");
+			
+			return getJdbcTemplate().queryForObject(dataImportConfig.getCheckAadharNumberExistence(), existence, Integer.class);
+			
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An exception occured while checking the aadhar number for batch id: " +batchId);
+			LOGGER.error("Returning error code -200");
+			return -200;
+		}
+	}
 
+	
+	public Integer checkMobileNumberExistence(Long mobileNumber, String batchId)
+	{
+		LOGGER.debug("In method checkMobileNumberExistence to check the existence of the mobile number");
+		try
+		{
+			LOGGER.debug("In try block to check the existence of mobile number for the batch : "+batchId);
+			LOGGER.debug("Creating hashmap of objects to check the existence");
+			Map<String,Object>mobileNumberExistence = new HashMap<>();
+			mobileNumberExistence.put("mobileNumber", mobileNumber);
+			mobileNumberExistence.put("batchId",batchId);
+			return getJdbcTemplate().queryForObject(dataImportConfig.getCheckMobileNumberExistence(), mobileNumberExistence, Integer.class);
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An exception occured while checking the existence of the mobile number of candidate in batch: "+batchId);
+			LOGGER.error("Returning NULL");
+			return -625;
+		}
+		
+	}
+	
+	
+	public Integer checkUpdateCandidateAadhar(Long aadharCardNumber,String enrollmentNumber, String batchId)
+	{
+		
+		LOGGER.debug("Request recieved to check the existence of aadhar except for enrollment number "+enrollmentNumber+ " in batch : "+batchId);
+		try
+		{
+			LOGGER.debug("In try block, to check existence of aadhar number");
+			Map<String,Object>params = new HashMap<>();
+			params.put("aadharCardNumber", aadharCardNumber);
+			params.put("enrollmentNumber", enrollmentNumber);
+			params.put("batchId", batchId);
+			LOGGER.debug("Hashmap of objects created");
+			return getJdbcTemplate().queryForObject(dataImportConfig.getUpdateCheckAadharNumberExistence(), params, Integer.class);
+		}
+		catch (Exception e)
+		{
+			LOGGER.error("An exception occured while checking the existence of the candidate "+e);
+			return -55;
+			
+		}
+	}
+	
+	public Integer checkUpdatedMobileNumber(Long mobileNumber,String enrollmentNumber, String batchId)
+	{
+		LOGGER.debug("In checkUpdatedMobileNumber()- to check the existence of mobile number in batch:  "+batchId+" except for enrollment number : "+enrollmentNumber);
+		try
+		{
+			LOGGER.debug("In try block, creating hashmap of objects");
+			Map<String,Object>parameters = new HashMap<>();
+			parameters.put("mobileNumber", mobileNumber);
+			parameters.put("enrollmentNumber",enrollmentNumber);
+			parameters.put("batchId", batchId);
+			LOGGER.debug("Created hashmap of objects");
+			return getJdbcTemplate().queryForObject(dataImportConfig.getUpdateCheckMobileNumberExistence(),parameters,Integer.class);
+		}
+		catch(Exception e)
+		{
+			LOGGER.error("An exception occured while checking for mobile number existence");
+			LOGGER.error("Returning error code -621");
+			return -621;
+		}
+	}
+	
 }

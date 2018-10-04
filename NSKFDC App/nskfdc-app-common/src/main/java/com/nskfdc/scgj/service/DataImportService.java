@@ -10,7 +10,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -80,6 +82,8 @@ public class DataImportService {
 		LOGGER.debug("In masterSheetImport - to read Excel sheet ");
 		boolean flag = true;
 		Integer insertResult = -25;
+		boolean rowFlag=true; //turns false if theres an error in the row - the while loop stops
+		
 
 
 		String fileName = "Master Sheet"
@@ -146,7 +150,7 @@ public class DataImportService {
 			Integer nonExistingCandidates = 0;
 
 			Integer remainingTargets = getRemainingTargets(userEmail);
-			while(rowIterator.hasNext())
+			while(rowIterator.hasNext() && rowFlag)
 			{
 				Row row = sheet.getRow(0);
 				row = rowIterator.next();
@@ -249,7 +253,8 @@ public class DataImportService {
 
 				/*--------- Mapping Excel Sheet Columns to DTO Objects ------------*/
 
-				while (cellIterator.hasNext() && flag) {
+				while (cellIterator.hasNext() && flag) 
+				{
 					Cell cell = cellIterator.next();
 					if(cell == null)
 					{
@@ -424,7 +429,13 @@ public class DataImportService {
 								LOGGER.debug("Cells are date formatted");								
 								LOGGER.debug("Date is in date format");
 								LOGGER.debug("The date of birth is " + cell.getDateCellValue());
+								LOGGER.debug("Checking if the date of birth is not greater than current date");
+								Calendar dateOfBirth = Calendar.getInstance();
+								
 								masterSheetImportDto.setDob(cell.getDateCellValue());
+								LOGGER.debug("Calculating the age of the candidate from the date of birth");
+								//Calendar dob = Calendar.getInstance();
+								
 							}
 
 						}
@@ -647,6 +658,22 @@ public class DataImportService {
 								if(count == 12)
 								{
 									LOGGER.debug("The value of Aadhaar card number is : " + cell.getNumericCellValue());
+									
+									//Call method which checks the existence of aadhar card
+								//	LOGGER.debug("Calling method to check the existence of aadhar card number for batch Id: "+batchId);
+									//Integer aadharExistence = dataImportDao.checkAadharExistence(aadharNumber, batchId);
+//									if(aadharExistence==1)
+//									{
+//										LOGGER.debug("Duplicate entry for aadhar number found");
+//										int rowNumber = row.getRowNum() + 1;
+//										return "Duplicate entry for aadhar number found on row number: "+rowNumber;
+//									}
+//									else if(aadharExistence==null)
+//									{
+//										LOGGER.error("An exception occured while checking the existence of aadhar");
+//										return "File cannot be uploaded";
+////									}
+//									else
 									masterSheetImportDto.setAdhaarCardNumber((long) cell.getNumericCellValue());
 								}
 								else
@@ -942,7 +969,13 @@ public class DataImportService {
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.debug("Not a valid value for assessment result column");
 									return "Not a valid value for Assessment result coulmn at row: "+rowNumber+ " value should have text only";
-								}	
+								}
+								else
+								{
+									LOGGER.debug("capturing the value of assessment result");
+									LOGGER.debug("The assesment result is : " +cell.getStringCellValue());
+									masterSheetImportDto.setAssessmentResult(cell.getStringCellValue());
+								}
 							}
 						} 
 						else if (cell.getColumnIndex() == 29)
@@ -972,22 +1005,53 @@ public class DataImportService {
 				}
 				candidateDetails.add(masterSheetImportDto);
 				insertResult = dataImportDao.masterSheetImport(candidateDetails, batchId);
-			}
+			
 
 			fileStream.close();
-			if (insertResult < 1) {
+			
+			//To be reviewed
+			if(insertResult==-425)
+			{
+				LOGGER.debug("Duplicate value of mobile number is present");
+				rowFlag=false;
+				int rowNumber = row.getRowNum() + 1;
+				return "Value of Mobile Number is duplicate for batch id "+batchId+" at row number "+rowNumber;
+			}
+			else if(insertResult==-696)
+			{
+				LOGGER.debug("Duplicate value of aadhar card exists while updating");
+				rowFlag=false;
+				int rowNumber = row.getRowNum() + 1;
+				return "Value of Aadhaar Number is duplicate for batch id "+batchId+" at row number "+rowNumber;
+			}
+			else if(insertResult==-989)
+			{
+				LOGGER.debug("Duplicate value of mobile number present while updating");
+				rowFlag=false;
+				int rowNumber = row.getRowNum() + 1;
+				return "Value of Mobile Number is duplicate for batch id "+batchId+" at row number "+rowNumber;
+			}
+			else if(insertResult == -265)
+			{
+				
+				LOGGER.debug("Duplicate aadhar number found");
+				rowFlag=false;
+				int rowNumber = row.getRowNum() + 1;
+				return "Value of Aadhaar Number is duplicate for batch id "+batchId+" at row number "+rowNumber;
+			}
+			else if (insertResult < 1) {
 				LOGGER.debug("In IF -- When insertResult of Excel Sheet is < 1 :" + insertResult);
-				LOGGER.debug("Returning message - 'File cannot be uplaoded'");
+				LOGGER.debug("Returning message - 'File cannot be uploaded'");
+				rowFlag=false;
 				return "File cannot be uploaded";
 			}
 
-			else {
-				LOGGER.debug("In ELSE -- When insertResult of Excel Sheet is not <1");
-				LOGGER.debug("Returning message - 'File Uploaded Successfully'");
-				return "File Uploaded Successfully";
-			}
-
+			
 		}
+			return "File Uploaded Successfully";
+			//to be reviewed till here - end of try block
+		}
+		
 		catch(IOException io)
 		{
 			LOGGER.error("An input output error occured while reading candidate excel sheet. Exception is : "+ io);
@@ -999,6 +1063,7 @@ public class DataImportService {
 			return "An error has occured please contact administrator";
 		}
 
+	
 	}
 
 	/**
@@ -1290,7 +1355,6 @@ public class DataImportService {
 		//		if (centreExistence == 1) {
 		//			LOGGER.debug("In IF -- When Centre Id already exist");
 		//			LOGGER.debug("Sending Data to DataImportDao - updateCentreDetails");
-		//			updatedCentre = dataImportDao.updateCentreDetails(masterSheetSubmitDto);
 		//		} else {
 		//			LOGGER.debug("In ELSE -- When Centre Id does not exist, hence inserting the centre id");
 		//			LOGGER.debug("Sending request to DAO to insert new centreDetais");
