@@ -100,6 +100,10 @@ public class DataImportDao extends AbstractTransactionalDao {
         		LOGGER.debug("The assessment result is : " +candidateDetails.get(i).getAssessmentResult());
 				parameters.put("medicalExaminationConducted", candidateDetails.get(i).getMedicalExaminationConducted());
 				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
+				parameters.put("accountNumber", candidateDetails.get(i).getAccountNumber());
+				parameters.put("ifscCode",candidateDetails.get(i).getIfscCode());
+				parameters.put("bankName",candidateDetails.get(i).getBankName());
+				parameters.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
 				parameters.put("batchId", batchId);
 
 				
@@ -144,7 +148,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 							LOGGER.debug("Executing query to insert candidate details");
 							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(),parameters);
 							LOGGER.debug("Candidate Insert Status is : " +candidateInsertStatus);
-							Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
+							/*Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
 							
 							if(bankaccountNumber!=null && bankaccountNumber!=0) 
 							{
@@ -209,8 +213,9 @@ public class DataImportDao extends AbstractTransactionalDao {
 									LOGGER.debug("Bank details are not present");
 									LOGGER.debug("Returning 1");
 									return 1;
-								}
-			
+								}*/
+							LOGGER.debug("status of candidate insertion is :"+ candidateInsertStatus);
+							return candidateInsertStatus;
 						}
 			
 					}
@@ -223,7 +228,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 						return -265;
 					}
 					
-					//Till here for candidate who is new to the system, first checks the aadhar number and then checks the mobile number of the candidate
+					//Till here for candidate who is new to the system, first checks the aadhaar number and then checks the mobile number of the candidate
 	
 				}
 
@@ -248,7 +253,7 @@ public class DataImportDao extends AbstractTransactionalDao {
 							LOGGER.debug("TRYING -- Updating candidate details");
 							LOGGER.debug("Executing query to update candidate details");
 							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(),parameters);
-							Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
+							/*Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
 							
 							if(bankaccountNumber!=null && bankaccountNumber!=0) 
 							{
@@ -293,7 +298,10 @@ public class DataImportDao extends AbstractTransactionalDao {
 							else {
 								LOGGER.debug("No value for bank details, updating rest of the details");
 								return 1;
-							}
+							}*/
+							
+							LOGGER.debug("status of inserting candidate is :"+ candidateInsertStatus);
+							return candidateInsertStatus;
 						}
 						
 						else if(checkMobileNumber==1)
