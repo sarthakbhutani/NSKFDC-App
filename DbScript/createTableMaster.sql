@@ -91,7 +91,7 @@ CREATE TABLE `candidate` (
   `disabilityType` varchar(50) DEFAULT NULL,
   `age` int(11) DEFAULT NULL,
   `dob` date DEFAULT NULL,
-  `accountNumber` bigint(20) NOT NULL,
+  `accountNumber` bigint DEFAULT NULL,
   `ifscCode` varchar(50) DEFAULT NULL,
   `bankName` varchar(50) DEFAULT NULL,
   `guardianType` varchar(50) DEFAULT NULL,
