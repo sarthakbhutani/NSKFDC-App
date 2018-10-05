@@ -10,12 +10,15 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -430,51 +433,92 @@ public class DataImportService {
 								LOGGER.debug("Date is in date format");
 								LOGGER.debug("The date of birth is " + cell.getDateCellValue());
 								LOGGER.debug("Checking if the date of birth is not greater than current date");
+			
+								Calendar calendar = Calendar.getInstance();
+								int year = calendar.get(Calendar.YEAR);
+								int month = calendar.get(Calendar.MONTH)+1;
 								Calendar dateOfBirth = Calendar.getInstance();
+								dateOfBirth.set(cell.getDateCellValue().getYear(), cell.getDateCellValue().getMonth(), cell.getDateCellValue().getDate());
+								int dateOfBirthYear = dateOfBirth.get(Calendar.YEAR);
+								int dateOfBirthMonth = dateOfBirth.get(Calendar.MONTH)+1;
 								
-								masterSheetImportDto.setDob(cell.getDateCellValue());
-								LOGGER.debug("Calculating the age of the candidate from the date of birth");
-								//Calendar dob = Calendar.getInstance();
+								int age = (year - dateOfBirthYear)-1900;
 								
-							}
-
-						}
-
-						else if (cell.getColumnIndex() == 7)
-						{
-
-							LOGGER.debug("Capturing value for age");
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int age = (int) cell.getNumericCellValue();
-									if(age<18)
-									{
-										LOGGER.debug("Age is less than 18");
-										int rowNumber = row.getRowNum() + 1;
-										flag=false;
-
-										return("Candidate's age cannot be less than 18 years for the training at row " + rowNumber );
-									}
-									else 
-									{
-										LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
-										masterSheetImportDto.setAge((int) cell.getNumericCellValue());	
-									}
-
-								}
-								else
+								if(age<18)
 								{
 									int rowNumber = row.getRowNum() + 1;
-									int columnNumber = cell.getColumnIndex() + 1;
-									LOGGER.debug("Value for age is not a valid number");
-									return "Not a valid value for age at row : "+rowNumber+" column : "+columnNumber;
+									LOGGER.error("Candidate is not 18 years of age");
+									return "Candidate must be of 18 years of age: "+rowNumber;
 								}
+								
+								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH) && age == 18)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Age of candidate is less than 18");
+									return "Candidate must be of 18 years of age at row: "+rowNumber;
+								}
+								
+								else if(calendar.get(Calendar.MONTH)==dateOfBirth.get(Calendar.MONTH)&&age>=18)
+								{
+									LOGGER.debug("This month is candidate's birthday month");
+									LOGGER.debug("Incrementing the age of the candidate by 1");
+									age = age+1;
+									LOGGER.debug("The new age of the candidate is: "+age);
+									masterSheetImportDto.setDob(cell.getDateCellValue());
+									masterSheetImportDto.setAge(age);
+								}
+								else if(dateOfBirth.get(Calendar.MONTH)<calendar.get(Calendar.MONTH)&&age>=18)
+								{
+									LOGGER.debug("This is not the birthday month of the candidate");
+									LOGGER.debug("The age of the candidate is: "+age);
+									LOGGER.debug("Incrementing the age by 1");
+									age=age+1;
+									LOGGER.debug("The new age is: "+age);
+									LOGGER.debug("Setting the age and date of birth of candidate in the array list");
+									masterSheetImportDto.setDob(cell.getDateCellValue());
+									masterSheetImportDto.setAge(age);
+								}
+								
 							}
-
+							
 
 						}
+
+//						else if (cell.getColumnIndex() == 7)
+//						{
+//
+//							LOGGER.debug("Capturing value for age");
+//							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+//							{
+//								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+//								{
+//									int age = (int) cell.getNumericCellValue();
+//									if(age<18)
+//									{
+//										LOGGER.debug("Age is less than 18");
+//										int rowNumber = row.getRowNum() + 1;
+//										flag=false;
+//
+//										return("Candidate's age cannot be less than 18 years for the training at row " + rowNumber );
+//									}
+//									else 
+//									{
+//										LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
+//										masterSheetImportDto.setAge((int) cell.getNumericCellValue());	
+//									}
+//
+//								}
+//								else
+//								{
+//									int rowNumber = row.getRowNum() + 1;
+//									int columnNumber = cell.getColumnIndex() + 1;
+//									LOGGER.debug("Value for age is not a valid number");
+//									return "Not a valid value for age at row : "+rowNumber+" column : "+columnNumber;
+//								}
+//							}
+//
+//
+//						}
 						else if (cell.getColumnIndex() == 8) 
 						{
 							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
