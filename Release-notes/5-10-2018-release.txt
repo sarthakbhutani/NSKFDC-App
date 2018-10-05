@@ -1,4 +1,4 @@
-This build number #733 consists sprint scope for Sprint 3 as follows:
+This build number #734 consists sprint scope for Sprint 3 as follows:
 Development stories for Change requests from SCGJ
 NA-383
 NA-384
