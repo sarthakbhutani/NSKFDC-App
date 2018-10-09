@@ -163,6 +163,7 @@ public class DataImportService {
 					LOGGER.debug("Checking the enrollment number of the candidate");
 					Cell cell = row.getCell(0);
 					String enrollmentNumber = cell.toString();
+					
 					if(cell.getCellType() == Cell.CELL_TYPE_BLANK )
 					{
 						int rowNumber = row.getRowNum() + 1;
@@ -170,20 +171,42 @@ public class DataImportService {
 						return "Please insert enrollment number at row : " +rowNumber;
 					}
 
-					Integer existence = dataImportDao.checkCandidate(enrollmentNumber, batchId);
-					if(existence == 1)
-					{
-						LOGGER.debug("Candidate with enrolment number " + enrollmentNumber +" Exists");
-						existingCandidates++;
-						LOGGER.debug("Count of existing candidates is : " + existingCandidates);
+						if(stringUtility.splitByChar(enrollmentNumber,"/")!=null && stringUtility.splitByChar(enrollmentNumber,"/").length==2)
+						{int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Format for enrollment number is correct , at row :" + rowNumber+" checking if the format contains batch Id");
+							if(stringUtility.stringCompare(batchId, stringUtility.splitByChar(enrollmentNumber,"/")[0]))
+							{
+								LOGGER.debug("The first word in enrollment number is batchId");
+								Integer existence = dataImportDao.checkCandidate(enrollmentNumber, batchId);
+								if(existence == 1)
+								{
+									LOGGER.debug("Candidate with enrolment number " + enrollmentNumber +" Exists");
+									existingCandidates++;
+									LOGGER.debug("Count of existing candidates is : " + existingCandidates);
 
-					}
-					else if(existence == 0)
-					{
-						LOGGER.debug("Candidate with enrollment number " + enrollmentNumber + " does not exists");
-						nonExistingCandidates++;
-						LOGGER.debug("Count of non existing candidates is : " + nonExistingCandidates);
-					}
+								}
+								else if(existence == 0)
+								{
+									LOGGER.debug("Candidate with enrollment number " + enrollmentNumber + " does not exists");
+									nonExistingCandidates++;
+									LOGGER.debug("Count of non existing candidates is : " + nonExistingCandidates);
+								}
+							}
+							else
+							{
+								LOGGER.error("The first word of enrollment number is not batchId at row : " + rowNumber);
+								return "The format of enrollment number is not correct at row "+ rowNumber+" Format should be batch id/number";
+							}
+							
+							
+						}
+						else
+						{
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Incorrect format for enrollment number at row : " + rowNumber);
+							return "Incorrect format for enrollment number. at row "+ rowNumber+ "Format should be BatchId/number";
+						}
+												
 				}
 			}
 
@@ -264,10 +287,12 @@ public class DataImportService {
 						LOGGER.debug("The value of column is null, hence skipping reading it");
 					}
 					else if (cell.getColumnIndex() == 0) {
+						
 							if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
-								LOGGER.error("No enrollment number found");
 								int rowNumber = row.getRowNum() + 1;
 								int columnNumber = cell.getColumnIndex() + 1;
+								LOGGER.error("No enrollment number found");
+								
 								LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
 								flag = false;
 								return "Please enter Enrollment Number at row number " + " " + rowNumber + " and column number "
@@ -276,8 +301,29 @@ public class DataImportService {
 
 							else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
-								LOGGER.debug("The cell value of enrollment number is : " + cell.getStringCellValue());
-								masterSheetImportDto.setEnrollmentNumber(cell.getStringCellValue());
+								int rowNumber = row.getRowNum() + 1;
+								int columnNumber = cell.getColumnIndex() + 1;
+								if(stringUtility.splitByChar(cell.getStringCellValue(),"/")!=null && stringUtility.splitByChar(cell.getStringCellValue(),"/").length==2)
+								{
+									if(stringUtility.stringCompare(batchId, stringUtility.splitByChar(cell.getStringCellValue(),"/")[0]))
+									{
+										LOGGER.debug("The cell value of enrollment number is : " + cell.getStringCellValue());
+										masterSheetImportDto.setEnrollmentNumber(cell.getStringCellValue());
+									}
+									else
+									{
+										LOGGER.debug("The first word of enrollment number is not batchId");
+										return "The format of enrollment number is not correct at row "+ rowNumber+" Format should be batch id/number";
+									}
+								}
+								else
+								{
+									LOGGER.debug("The format for enrollment number is not correct");
+									return "The format of enrollment number is not correct at row "+ rowNumber+" Format should be batch id/number";
+								}
+								
+								
+								
 							}
 							else
 							{

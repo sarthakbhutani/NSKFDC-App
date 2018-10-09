@@ -40,21 +40,63 @@ public class StringUtility {
 		batchId = uniqueTrainingPartnerName+uniqueMunicipalityName+batchCount;
 		return batchId;
 	}
-	
-	
 
-	//To split with spaces and return splitted array
-	
+
+	/**
+	 * Method to split string by a space
+	 * @param stringToSplit
+	 * @return
+	 */
 	  public String[] splitBySpace(String stringToSplit)
 	  {
-		  String[] splittedString = stringToSplit.split("\\s+");
-		 
+		  String[] splittedString = null;
+		  if(stringToSplit !=null)
+		  {
+			  splittedString = stringToSplit.split("\\s+");
+		  }
 		  return splittedString;
 	  }
 	  
+	  /**
+	   * Method to split the string by passed string value
+	   * @param stringToSplit
+	   * @param splitBy
+	   * @return the splitted array
+	   */
+	  public String[] splitByChar(String stringToSplit, String splitBy)
+	  {
+		  String[] splittedArray = null;
+		  if(stringToSplit!=null && splitBy!=null)
+		  {
+			  splittedArray = stringToSplit.split(splitBy);
+		  }	 
+		  return splittedArray;
+	  }
 	  
-	//To find first letter of every word of array and return
-	
+	  /**
+	   * Method to compare two strings
+	   * @param wordOne
+	   * @param wordTwo
+	   * @return true if strings match and false if they don't
+	   */
+	  public boolean stringCompare(String wordOne, String wordTwo)
+	  {
+		  boolean result=false;
+		  if(wordOne !=null && wordTwo !=null)
+		  {
+			  if(wordOne.equals(wordTwo))
+			  {
+				  result= true;
+			  }		  
+		  }
+	  return result;
+	  }
+	  /**
+	 * Method to get initials of an string array
+	 * @param splittedString
+	 * @param nsdcRegNumber
+	 * @return
+	 */
 	  public String getTrainingPartnerInitials(String[] splittedString,Integer nsdcRegNumber)
 	  {
 		  String initials="";
@@ -74,9 +116,14 @@ public class StringUtility {
 		  return splitBySlash;
 	  }
 	
+	  /**
+	   * Get the name of Municipality
+	   * @param municipalityName
+	   * @return
+	   */
 	  public String getUniqueMunicipalityName(String[] municipalityName)
 	  {
-//		  
+		  
 		  int municipalityArrayLength = municipalityName.length;
 		  String municipalityUniqueName = "";
 		  
