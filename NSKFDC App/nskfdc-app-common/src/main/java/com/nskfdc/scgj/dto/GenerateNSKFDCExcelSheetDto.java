@@ -51,7 +51,49 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 	private String accountNumber;
 	private String batchId;
 	private String trainingPartnerName;
-	private String relationWithSKMS;
+	private String relationWithSKMS;	
+	public String getHiredByMc() {
+		return hiredByMc;
+	}
+	public void setHiredByMc(String hiredByMc) {
+		this.hiredByMc = hiredByMc;
+	}
+	public String getOutsourcedEmployerName() {
+		return outsourcedEmployerName;
+	}
+	public void setOutsourcedEmployerName(String outsourcedEmployerName) {
+		this.outsourcedEmployerName = outsourcedEmployerName;
+	}
+	public String getOutsourcedEmployerContact() {
+		return outsourcedEmployerContact;
+	}
+	public void setOutsourcedEmployerContact(String outsourcedEmployerContact) {
+		this.outsourcedEmployerContact = outsourcedEmployerContact;
+	}
+	public String getMonthlySalary() {
+		return monthlySalary;
+	}
+	public void setMonthlySalary(String monthlySalary) {
+		this.monthlySalary = monthlySalary;
+	}
+	public String getPfOrEsiProvided() {
+		return pfOrEsiProvided;
+	}
+	public void setPfOrEsiProvided(String pfOrEsiProvided) {
+		this.pfOrEsiProvided = pfOrEsiProvided;
+	}
+	public String getMunicipal() {
+		return municipal;
+	}
+	public void setMunicipal(String municipal) {
+		this.municipal = municipal;
+	}
+	private String hiredByMc;
+	private String outsourcedEmployerName;
+	private String outsourcedEmployerContact;
+	private String monthlySalary;
+	private String pfOrEsiProvided;
+	private String municipal;
 	
 	Calendar c=Calendar.getInstance();
 	DateFormat df=new SimpleDateFormat("dd-MM-yyyy");
@@ -211,7 +253,8 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 	 */
 	public GenerateNSKFDCExcelSheetDto(String firstName, String lastName,int age,String gender,Date dob,String educationLevel,String firstNameFather, String lastNameFather,
 			String motherName,String aadharCardNumber,String residentialAddress,String mobileNumber,String occupationType,String msId,
-			String idProofType,String idProofNumber,String bankName,String ifscCode,String accountNumber, String batchId, String trainingPartnerName,String relationWithSKMS) 
+			String idProofType,String idProofNumber,String bankName,String ifscCode,String accountNumber, String batchId, String trainingPartnerName,String relationWithSKMS, String hiredByMc,
+	 String outsourcedEmployerName, String outsourcedEmployerContact, String monthlySalary, String pfOrEsiProvided, String municipal) 
 	{
 		
 		if(lastName!=null)
@@ -228,15 +271,11 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 		}else {
 		fatherName=null;
 		}
-		
-		
-		
 		this.age = age;
 		this.gender = gender;
 		this.date_dob = dob;
 		this.dob = df.format(date_dob);
-		this.educationLevel = educationLevel;
-		
+		this.educationLevel = educationLevel;		
 		this.motherName = motherName;
 		this.aadharCardNumber = aadharCardNumber;
 		this.residentialAddress = residentialAddress;
@@ -251,6 +290,12 @@ public class GenerateNSKFDCExcelSheetDto extends BaseDto{
 		this.batchId = batchId;
 		this.trainingPartnerName = trainingPartnerName;
 		this.relationWithSKMS=relationWithSKMS;
+		this.hiredByMc = hiredByMc;
+		this.outsourcedEmployerName = outsourcedEmployerName;
+		this.outsourcedEmployerContact = outsourcedEmployerContact;
+		this.monthlySalary = monthlySalary;
+		this.pfOrEsiProvided = pfOrEsiProvided;
+		this.municipal = municipal;
 	}
 	/**
 	 * Default Constructor

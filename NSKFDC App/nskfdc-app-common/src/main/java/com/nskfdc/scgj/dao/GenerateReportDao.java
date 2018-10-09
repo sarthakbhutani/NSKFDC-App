@@ -3,11 +3,13 @@ package com.nskfdc.scgj.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import com.nskfdc.scgj.common.AbstractTransactionalDao;
 import com.nskfdc.scgj.config.GenerateReportConfig;
 import com.nskfdc.scgj.dto.*;
@@ -392,10 +394,17 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			String batchId=rs.getString("batchId");
 			String trainingPartnerName=rs.getString("trainingPartnerName");
 			String relationWithSKMS=rs.getString("relationWithSKMS");
+			String hiredByMc = rs.getString("hiredByMc");
+			String outsourcedEmployerName = rs.getString("outsourcedEmployerName");
+			String outsourcedEmployerContact = rs.getString("outsourcedEmployerContact");
+			String monthlySalary = rs.getString("monthlySalary");
+			String pfOrEsiProvided = rs.getString("pfOrEsiProvided");
+			String municipal = rs.getString("municipal");
 			
 			return new GenerateNSKFDCExcelSheetDto(firstName,lastName,age,gender,dob,educationLevel,firstNameFather,
 					lastNameFather,motherName,aadharCardNumber,residentialAddress,mobileNumber,occupationType,
-					msId,idProofType,idProofNumber,bankName,ifscCode,accountNumber,batchId,trainingPartnerName,relationWithSKMS);	
+					msId,idProofType,idProofNumber,bankName,ifscCode,accountNumber,batchId,trainingPartnerName,relationWithSKMS, hiredByMc,
+					 outsourcedEmployerName, outsourcedEmployerContact, monthlySalary, pfOrEsiProvided, municipal);	
 		}	
     }
     
