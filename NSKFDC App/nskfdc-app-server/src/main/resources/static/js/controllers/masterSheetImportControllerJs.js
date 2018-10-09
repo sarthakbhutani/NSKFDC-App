@@ -297,29 +297,34 @@ var url = '/getBatchIdfortrainer';
     
     $scope.checkEndDate=function(){
     	$scope.dateErrorFlag = false;
-    	if( ($scope.batch.batchStartDate == null || $scope.batch.batchStartDate == undefined) && $scope.batch.batchEndDate != null){
-    		$scope.dateErrorFlag = true;
-    		$scope.dateError = "Please fill Batch Start date first";
-    	}
-    	if($scope.batch.batchEndDate< $scope.batch.batchStartDate)
+    	if( ($scope.batch.batchStartDate == null || $scope.batch.batchStartDate == undefined || $scope.batch.batchStartDate == "") && $scope.batch.batchEndDate != null)
     	{
     		$scope.dateErrorFlag = true;
-    		$scope.dateError = "Batch End Date cannot be less than Batch Start Date";
-    	}   	
-    	if($scope.dateErrorFlag == false)
-     	{
-    	var startDate = new Date($scope.batch.batchStartDate);
-    	var endDate = new Date($scope.batch.batchEndDate);
-    	var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-        var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    	
-    	if( dayDifference < 4)
-    		{
-    			$scope.dateErrorFlag = true;
-    			$scope.dateError = "Batch duration cannot be less than 5 days";
-    		}
+    		$scope.dateError = "Please fill Batch Start date first";  	
 
      	}
+    	else if(($scope.batch.batchStartDate != null || $scope.batch.batchStartDate != undefined) && ($scope.batch.batchEndDate != null || $scope.batch.batchEndDate != undefined))
+    		{
+    		if($scope.batch.batchEndDate< $scope.batch.batchStartDate)
+        	{
+        		$scope.dateErrorFlag = true;
+        		$scope.dateError = "Batch End Date cannot be less than Batch Start Date";
+		
+        	}   	
+        	if($scope.dateErrorFlag == false)
+         	{
+        	var startDate = new Date($scope.batch.batchStartDate);
+        	var endDate = new Date($scope.batch.batchEndDate);
+        	var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+            var dayDifference = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        	
+        	if( dayDifference < 4)
+        		{
+        			$scope.dateErrorFlag = true;
+        			$scope.dateError = "Batch duration cannot be less than 5 days";
+        		}
+         	}
+    	}
     	
     	$timeout(function() {
             $scope.dateError="";
@@ -342,7 +347,7 @@ var url = '/getBatchIdfortrainer';
     		$scope.employerNumberErrorFlag=false;
     		$scope.centreIdErrorFlag=true;
     	}	
-    	else if($scope.batch.batchStartDate!=undefined && ($scope.batch.batchStartDate<$scope.minyear || $scope.batch.batchStartDate>$scope.maxyear)){
+    	else if($scope.batch.batchStartDate != null && $scope.batch.batchStartDate!=undefined && $scope.batch.batchStartDate != "" && ($scope.batch.batchStartDate<$scope.minyear || $scope.batch.batchStartDate>$scope.maxyear)){
     		$scope.startDateFlag = true;
     		$scope.startDateError = "Enter valid Batch Start Date";
     	}

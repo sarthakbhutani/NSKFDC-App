@@ -27,10 +27,12 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
    /*-----Method to upload pictures -----*/  
    $scope.uploadFile = function($files) {
 	   var fizesizemessage = "error"+$scope.day;
-	   
+	   var firstCharDay=($scope.day).charAt(0);
+	   var secondCharDay=($scope.day).charAt(1);
+	   var daysPic=("day"+firstCharDay+"Pic"+secondCharDay);
 	   
 	   if($files[0].size>1000000){
-		  
+		   document.getElementById(daysPic).value=null;
 		   document.getElementById(fizesizemessage).innerHTML="Image size exceeding 1MB";
 	   }
 	   
@@ -80,7 +82,7 @@ tp.controller("generateBatchReportController" , function($scope, $http,$timeout)
     		}    		
     		
     		/*To reset the formData*/
-    		document.getElementById("BatchReportForm").reset();
+    		 document.getElementById("myForm").reset();
     		fd.delete("file11");
     		fd.delete("file12");
     		fd.delete("file21");
