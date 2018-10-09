@@ -360,14 +360,20 @@ public class DataImportDao extends AbstractTransactionalDao {
 			 String employmentType = rs.getString("employmentType");
 			 String assessmentResult = rs.getString("assessmentResult");
 			 String medicalExaminationConducted = rs.getString("medicalExamConducted");
-			 
+			 String hiredByMc = rs.getString("hiredByMc");
+			 String outsourcedEmployerName = rs.getString("outsourcedEmployerName");
+			 Long  outsourcedEmployerContact = rs.getLong("outsourcedEmployerContact");
+			 Long monthlySalary = rs.getLong("monthlySalary");
+			 String pfOrEsiProvided = rs.getString("pfOrEsiProvided");
 			 return new MasterSheetImportDto(	 enrollmentNumber,  salutation,  firstName,  lastName,
 					 gender,  mobileNumber,  educationQualification,  state,  district,
 					 adhaarCardNumber,  idProofType,  idProofNumber,  disabilityType,  age,
 					 bankName,  ifscCode,  workplaceAddress,  accountNumber,  relationWithSKMS,
 					 dob,  guardianType,  firstNameFather,  lastNameFather,  motherName,
 					 residentialAddress,  msId,  occupationType,  employmentType,
-					 assessmentResult,  medicalExaminationConducted);
+					 assessmentResult,  medicalExaminationConducted, hiredByMc,  outsourcedEmployerName,
+						 outsourcedEmployerContact,  monthlySalary,
+						 pfOrEsiProvided);
 			
 		}
 		}

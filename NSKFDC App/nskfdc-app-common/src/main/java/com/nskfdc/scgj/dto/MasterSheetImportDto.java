@@ -40,11 +40,46 @@ public class MasterSheetImportDto extends BaseDto{
 	private String employmentType;
 	private String assessmentResult;
 	private String medicalExaminationConducted;
+	private String hiredByMc;
+	private String outsourcedEmployerName;
+	private Long outsourcedEmployerContact;
+	private Long monthlySalary;
+	private String pfOrEsiProvided;
 
 	
 	/*---- Getters and Setters --- */
 	
 	
+	public String getHiredByMc() {
+		return hiredByMc;
+	}
+	public void setHiredByMc(String hiredByMc) {
+		this.hiredByMc = hiredByMc;
+	}
+	public String getOutsourcedEmployerName() {
+		return outsourcedEmployerName;
+	}
+	public void setOutsourcedEmployerName(String outsourcedEmployerName) {
+		this.outsourcedEmployerName = outsourcedEmployerName;
+	}
+	public Long getOutsourcedEmployerContact() {
+		return outsourcedEmployerContact;
+	}
+	public void setOutsourcedEmployerContact(Long outsourcedEmployerContact) {
+		this.outsourcedEmployerContact = outsourcedEmployerContact;
+	}
+	public Long getMonthlySalary() {
+		return monthlySalary;
+	}
+	public void setMonthlySalary(Long monthlySalary) {
+		this.monthlySalary = monthlySalary;
+	}
+	public String getPfOrEsiProvided() {
+		return pfOrEsiProvided;
+	}
+	public void setPfOrEsiProvided(String pfOrEsiProvided) {
+		this.pfOrEsiProvided = pfOrEsiProvided;
+	}
 	public String getEnrollmentNumber() {
 		return enrollmentNumber;
 	}
@@ -317,13 +352,20 @@ public class MasterSheetImportDto extends BaseDto{
 	}
 	
 	
-	public MasterSheetImportDto(String enrollmentNumber, String salutation, String firstName, String lastName,
-			String gender, Long mobileNumber, String educationQualification, String state, String district,
-			Long adhaarCardNumber, String idProofType, String idProofNumber, String disabilityType, Integer age,
-			String bankName, String ifscCode, String workplaceAddress, Long accountNumber, String relationWithSKMS,
-			Date dob, String guardianType, String firstNameFather, String lastNameFather, String motherName,
-			String residentialAddress, String msId, String occupationType, String employmentType,
-			String assessmentResult, String medicalExaminationConducted) {
+	public MasterSheetImportDto(String enrollmentNumber, String salutation,
+			String firstName, String lastName, String gender,
+			Long mobileNumber, String educationQualification, String state,
+			String district, Long adhaarCardNumber, String idProofType,
+			String idProofNumber, String disabilityType, Integer age,
+			String bankName, String ifscCode, String workplaceAddress,
+			Long accountNumber, String relationWithSKMS, Date dob,
+			String guardianType, String firstNameFather, String lastNameFather,
+			String motherName, String residentialAddress, String msId,
+			String occupationType, String employmentType,
+			String assessmentResult, String medicalExaminationConducted,
+			String hiredByMc, String outsourcedEmployerName,
+			Long outsourcedEmployerContact, Long monthlySalary,
+			String pfOrEsiProvided) {
 		super();
 		this.enrollmentNumber = enrollmentNumber;
 		this.salutation = salutation;
@@ -355,6 +397,11 @@ public class MasterSheetImportDto extends BaseDto{
 		this.employmentType = employmentType;
 		this.assessmentResult = assessmentResult;
 		this.medicalExaminationConducted = medicalExaminationConducted;
+		this.hiredByMc = hiredByMc;
+		this.outsourcedEmployerName = outsourcedEmployerName;
+		this.outsourcedEmployerContact = outsourcedEmployerContact;
+		this.monthlySalary = monthlySalary;
+		this.pfOrEsiProvided = pfOrEsiProvided;
 	}
 	public MasterSheetImportDto() {
 		super();
