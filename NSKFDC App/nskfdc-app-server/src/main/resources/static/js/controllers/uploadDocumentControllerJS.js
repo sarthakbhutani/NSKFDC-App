@@ -4,6 +4,7 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 
 	$scope.ids = [];
 	$scope.batch = {};
+	$scope.acceptFileType="";
 	$http.get('/getBatchIdDet')
 	.then(function(response) {
 		let dt = response.data;
@@ -12,6 +13,16 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 
 		}
 	});
+	
+	$scope.changeTypeOfFile=function(){
+		if($scope.fileType=="occupationCertificate" || $scope.fileType=="minutesOfSelectionCommitteeMeeting" || $scope.fileType=="finalBatchReport" || $scope.fileType=="attendanceSheet"){
+		$scope.acceptFileType=".pdf";
+		}
+		else if($scope.fileType=="NSKFDCSheet" || $scope.fileType=="SDMSSheet"){
+			$scope.acceptFileType=".xls";	
+		}
+	}
+	
 
 	$scope.submitForm = function () {
 		$http.get('/searchDocument?batchId='+$scope.batchID)
@@ -42,8 +53,11 @@ uploadDocument.controller("uploadDocumentController" , function($scope, $http, u
 		var scgjBatchNumber = $scope.batch.scgjBatchNumber;
 		var uploadUrl = "/uploadFile";
 		var uploadedFile = uploadFile.uploadFileToUrl(file, uploadUrl, fileType, batchId, scgjBatchNumber);
-
-
+		
+		if($scope.fileType=="finalBatchReport")
+		$scope.batch.scgjBatchNumber=null;
+		
+		$scope.fileType=null;
 	};
 
 

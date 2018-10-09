@@ -10,11 +10,11 @@
       
   
     <div id="drop" class="row">
-    <form name="uploadform">
+    <form name="uploadform" id="uploadformid" ng-submit="uploadFile()">
     <div class="formpadding">
       <div id="r2d" class="col-md-3">
         
-          <select  class="form-control form-rounded placeholderfont" ng-model="fileType" id="d1" required>
+          <select  class="form-control form-rounded placeholderfont" ng-model="fileType" id="d1" ng-change="changeTypeOfFile()" required>
             <option value=""disabled selected>Select document to be uploaded</option>
             <option value="occupationCertificate">Occupation Certificate</option>
             <option value="minutesOfSelectionCommitteeMeeting">Signed Minutes of Selection Committee</option> 
@@ -43,31 +43,26 @@
         </div>
       </div>
                 <div class="col-md-3 btn-wrapper paddingUploadDoc" id="uploadFileDiv">
-                    <div class="form-group" ng-show="fileType == 'occupationCertificate' || fileType == 'minutesOfSelectionCommitteeMeeting' || fileType == 'finalBatchReport' || fileType == 'attendanceSheet'">
+                    <div class="form-group">
 	             		<span class="col-md-7 paddingRightUpload">
 	                  	<input type="text" name="file_name" id="file_name" class="form-control textBoxFile" required></span>
 	                 	<span class="col-md-4 paddingUploadDoc">
 	                	<button type="button" class="btn btn-info " ng-disabled="uploadform.$invalid">Browse</button></span>
-	                 	<input type="file" id="file" accept=".pdf" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
+	                 	<input type="file" id="file" accept={{acceptFileType}} class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
 	                    <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please Select a .pdf file</span>
                     </div>
                     
-                    <div class="form-group" ng-show="fileType == 'NSKFDCSheet' || fileType == 'SDMSSheet'">
-	             		 <span class="col-md-7 paddingRightUpload">
-		                 <input type="text" name="excel_file_name" id="excel_file_name" class="form-control textBoxFile" required></span>
-		                 <span class="col-md-4 paddingUploadDoc">
-		                 <button type="button" class="btn btn-info " ng-disabled="uploadform.$invalid">Browse</button></span>
-		                 <input type="file" id="excelfile" accept=".xls" class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('excel_file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
-	                     <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please select a .xls file</span>
-                    </div>
+                    
                     
                  </div>
     
       			<div>
-                    <button type="submit" class="btn-primary btn data-disable" ng-click="uploadFile()">Upload</button>
+                    <button type="submit" class="btn-primary btn data-disable" >Upload</button>
                 </div>
+                <div class="col-md-12">
                 <span id="Error"></span>
                 <span id="Success"></span>
+                </div>
              </div>   
        </form>
     </div>

@@ -7,7 +7,7 @@ scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 //	Search Document functionality
 	
 	$scope.searchDocuments=function(){
-	    if($scope.batchId!=null){
+	    if($scope.batchId!=null && $scope.batchId!="" && $scope.batchId!=undefined){
 		
 		$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
 			.then(function (response) {
@@ -21,7 +21,7 @@ scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 
 		});
 	    }
-	    else if($scope.scgjBtNumber!=null){
+	    else if($scope.scgjBtNumber!=null && $scope.scgjBtNumber!="" && $scope.scgjBtNumber!=undefined){
 		$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
 		.then(function (response) {
 			if(response.data.length==0){
@@ -39,7 +39,7 @@ scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 	    }
 		else{
 			
-			if(($scope.batchId==null)&&($scope.scgjBtNumber==null)){
+			if(($scope.batchId==null || $scope.batchId=="" || $scope.batchId==undefined)&&($scope.scgjBtNumber==null || $scope.scgjBtNumber=="" || $scope.scgjBtNumber==undefined)){
 				
 				$scope.errorMessageBatch="Please enter BatchId or SCGJ Batch Number";
 	    		}
