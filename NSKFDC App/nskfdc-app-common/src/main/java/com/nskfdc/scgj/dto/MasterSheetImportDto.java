@@ -359,7 +359,10 @@ public class MasterSheetImportDto extends BaseDto{
 	public MasterSheetImportDto() {
 		super();
 	}
-	
+	public MasterSheetImportDto(String enrollmentNumber) {
+		super();
+		this.enrollmentNumber = enrollmentNumber;
+	}
 	
 	
 }

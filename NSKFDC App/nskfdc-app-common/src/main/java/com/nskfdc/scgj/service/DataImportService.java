@@ -1259,8 +1259,16 @@ public class DataImportService {
 			if (CollectionUtils.isNotEmpty(downloadMasterSheetInformation)) {
 
 				if(CollectionUtils.isEmpty(candidateSheetInformation))
+				{
 					LOGGER.debug("No Candidate Details available");
-
+					LOGGER.debug("Adding enrollment number to excel sheet");
+					Integer batchSize = 1;
+					while(batchSize <= 50)
+					{
+						candidateSheetInformation.add(new MasterSheetImportDto(batchId+"/"+batchSize.toString()));
+						batchSize++;
+					}
+				}
 				LOGGER.debug("Creating object of JRBean Collection Data Source " );
 				JRBeanCollectionDataSource masterSheetBeans = new JRBeanCollectionDataSource(
 						downloadMasterSheetInformation);
