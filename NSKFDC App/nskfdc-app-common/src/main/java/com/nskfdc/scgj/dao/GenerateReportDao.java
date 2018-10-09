@@ -399,7 +399,7 @@ public class GenerateReportDao extends AbstractTransactionalDao {
 			String outsourcedEmployerContact = rs.getString("outsourcedEmployerContact");
 			String monthlySalary = rs.getString("monthlySalary");
 			String pfOrEsiProvided = rs.getString("pfOrEsiProvided");
-			String municipal = rs.getString("municipal");
+			String municipal = rs.getString("municipality");
 			
 			return new GenerateNSKFDCExcelSheetDto(firstName,lastName,age,gender,dob,educationLevel,firstNameFather,
 					lastNameFather,motherName,aadharCardNumber,residentialAddress,mobileNumber,occupationType,

@@ -1119,7 +1119,7 @@ public class DataImportService {
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Not a valid value for column Monthy Salary at row : "+rowNumber);
-									return "Not a valid value for column Monthy Salary at row : " + rowNumber;
+									return "Not a valid value for column Monthly Salary at row : " + rowNumber;
 								}
 							}
 							
