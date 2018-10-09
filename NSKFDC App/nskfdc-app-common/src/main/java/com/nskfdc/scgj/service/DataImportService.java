@@ -1049,12 +1049,103 @@ public class DataImportService {
 								}
 							}				
 						}
-
+						else if (cell.getColumnIndex() == 30)
+						{
+							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							{
+								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.debug("Reading value of Whether hired on ad hoc/contractual basis by the MC at row : "+ rowNumber);
+									masterSheetImportDto.setHiredByMc(cell.getStringCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid value for Cell type of Whether hired on ad hoc/contractual basis by the MC");
+									return "Not a valid value for column  : Whether hired on ad hoc/contractual basis by the MC at row : "+rowNumber;
+								}
+							}
+												
+						}
+						else if (cell.getColumnIndex() == 31)
+						{
+							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							{
+								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.debug("Reading value of Name of the Employer (In case hired through outsourced agency/Vendor) at row : "+ rowNumber);
+									masterSheetImportDto.setOutsourcedEmployerName(cell.getStringCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid value for Cell type Name of the Employer (In case hired through outsourced agency/Vendor)");
+									return "Not a valid value for column  :Name of the Employer at row : "+rowNumber;
+								}
+							}
+						}
+						else if (cell.getColumnIndex() == 32)
+						{
+							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							{
+								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.debug("Reading value of Employer Contact at row : "+ rowNumber);
+									masterSheetImportDto.setOutsourcedEmployerContact( (long)cell.getNumericCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid value for Cell type Employer Contact  at row " + rowNumber);
+									return "Not a valid value for column  : Employer Contact at row : "+rowNumber;
+								}
+							}
+							
+						}
+						else if (cell.getColumnIndex() == 33)
+						{
+							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							{
+								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.debug("Reading value of Monthly Salary at row : "+ rowNumber);
+									masterSheetImportDto.setMonthlySalary( (long)cell.getNumericCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid value for column Monthy Salary at row : "+rowNumber);
+									return "Not a valid value for column Monthy Salary at row : " + rowNumber;
+								}
+							}
+							
+						}
+						else if (cell.getColumnIndex() == 34)
+						{
+							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							{
+								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.debug("Reading value for PF/ESI Provided (Yes/No) at row : " + rowNumber);
+									masterSheetImportDto.setPfOrEsiProvided(cell.getStringCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid value for column PF/ESI Provided (Yes/No) at row : " + rowNumber);
+									return "Not a valid value for column PF/ESI Provided (Yes/No) at row : " + rowNumber;
+								}
+							}
+							
+						}
 				}
 				candidateDetails.add(masterSheetImportDto);
 				insertResult = dataImportDao.masterSheetImport(candidateDetails, batchId);
-			
-
 			fileStream.close();
 			
 			//To be reviewed
@@ -1196,7 +1287,7 @@ public class DataImportService {
 	}
 
 	/**
-	 * Method to get remaining tragets
+	 * Method to get remaining targets
 	 * 
 	 * @param userEmail
 	 * @return
