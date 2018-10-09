@@ -148,72 +148,6 @@ public class DataImportDao extends AbstractTransactionalDao {
 							LOGGER.debug("Executing query to insert candidate details");
 							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getImportCandidate(),parameters);
 							LOGGER.debug("Candidate Insert Status is : " +candidateInsertStatus);
-							/*Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
-							
-							if(bankaccountNumber!=null && bankaccountNumber!=0) 
-							{
-								Map<String, Object> bankparams = new HashMap<>();
-								LOGGER.debug("In IF -- When bank account number is received from frontend");
-								bankparams.put("accountNumber", bankaccountNumber);
-								LOGGER.debug("Executing query to check if bank account number exists");
-								bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
-								
-								if(bankExistence == 0) {
-									LOGGER.debug("In IF -- When bank Account number does not exists");
-									try {
-											
-										Map<String, Object> updatedParams = new HashMap<>();
-										updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-										updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-										updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-										updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-										LOGGER.debug("Executing insert query for new candidate bank detail while importing excel sheet");
-										return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
-									
-									}
-									
-									catch(Exception e)
-									{
-										LOGGER.error("An exception occured while inserting bank details in the database");
-										LOGGER.error("Returning error code -754");
-										return -754;
-									}
-									
-								}
-								else if(bankExistence == 1) {
-									LOGGER.debug("In ELSE -- When bank Account number does exist");
-									
-									try {
-										Map<String, Object> updatedParams = new HashMap<>();
-										updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-										updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-										updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-										updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-										LOGGER.debug("Executing update query for existing candidate bank detail while importing excel sheet");
-										return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
-									}
-									catch(Exception e)
-									{
-										LOGGER.error("An exception occured while updating the bank details of the candidates");
-										return -363;
-									}
-									
-									
-								}
-								else 
-								{
-									LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
-									flag=false;
-									return -1;
-								}
-								
-							}
-								else 
-								{
-									LOGGER.debug("Bank details are not present");
-									LOGGER.debug("Returning 1");
-									return 1;
-								}*/
 							LOGGER.debug("status of candidate insertion is :"+ candidateInsertStatus);
 							return candidateInsertStatus;
 						}
@@ -241,7 +175,6 @@ public class DataImportDao extends AbstractTransactionalDao {
 					Integer checkAadharNumber = checkUpdateCandidateAadhar(candidateDetails.get(i).getAdhaarCardNumber(), candidateDetails.get(i).getEnrollmentNumber(), batchId);
 					
 					//If a candidate already exists and wants to update his/her details
-					//Review from here
 					if(checkAadharNumber==0)
 					{
 						LOGGER.debug("The aadhar number is unique");
@@ -253,53 +186,6 @@ public class DataImportDao extends AbstractTransactionalDao {
 							LOGGER.debug("TRYING -- Updating candidate details");
 							LOGGER.debug("Executing query to update candidate details");
 							candidateInsertStatus = getJdbcTemplate().update(dataImportConfig.getUpdateExistingDetails(),parameters);
-							/*Long bankaccountNumber = candidateDetails.get(i).getAccountNumber();
-							
-							if(bankaccountNumber!=null && bankaccountNumber!=0) 
-							{
-								Map<String, Object> bankparams = new HashMap<>();
-								LOGGER.debug("In IF -- When bank account number is received from frontend");
-								bankparams.put("accountNumber", bankaccountNumber);
-								LOGGER.debug("Executing query to check if bank account number exists");
-								bankExistence = getJdbcTemplate().queryForObject(dataImportConfig.getCheckBankExistence(), bankparams, Integer.class);
-								
-								if(bankExistence == 0)
-								{
-									LOGGER.debug("In IF -- When bank Account number does not exists");
-									Map<String, Object> updatedParams = new HashMap<>();
-									updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-									updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-									updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-									updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-									LOGGER.debug("Executing insert query for new candidate bank while importing excel sheet");
-									return getJdbcTemplate().update(dataImportConfig.getImportBankDetails(),updatedParams);
-									
-								}
-								else if(bankExistence == 1)
-								{
-									LOGGER.debug("In ELSE -- When bank Account number does exist");
-									Map<String, Object> updatedParams = new HashMap<>();
-									updatedParams.put("accountNumber", candidateDetails.get(i).getAccountNumber());
-									updatedParams.put("ifscCode",candidateDetails.get(i).getIfscCode());
-									updatedParams.put("bankName",candidateDetails.get(i).getBankName());
-									updatedParams.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
-									LOGGER.debug("Executing update query for existing candidate bank while importing excel sheet");
-									return getJdbcTemplate().update(dataImportConfig.getUpdateExistingBankDetails(),updatedParams);
-								}
-								else 
-								{
-									LOGGER.debug("IN ELSE -- When Bank account existence results unexpected value");
-									return -1;
-								}
-								
-								
-							}
-							
-							else {
-								LOGGER.debug("No value for bank details, updating rest of the details");
-								return 1;
-							}*/
-							
 							LOGGER.debug("status of inserting candidate is :"+ candidateInsertStatus);
 							return candidateInsertStatus;
 						}
@@ -328,8 +214,6 @@ public class DataImportDao extends AbstractTransactionalDao {
 				i++;
 
 			}
-		
-			//Review till here
 			LOGGER.debug("Returning insert status for Excel Sheet import"+ candidateInsertStatus);
 			return candidateInsertStatus;
 		}

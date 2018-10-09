@@ -334,28 +334,21 @@ public class DataImportService {
 						} 
 						else if (cell.getColumnIndex() == 1)
 						{
-							if (cell.getCellType() == Cell.CELL_TYPE_BLANK) 
+							if (! (cell.getCellType() == Cell.CELL_TYPE_BLANK)) 
 							{
-								LOGGER.error("Null value for salutation");
-								int rowNumber = row.getRowNum() + 1;
-								int columnNumber = cell.getColumnIndex() + 1;
-								LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
-								flag = false;
-								return "Please enter salutation at row number" + " " + rowNumber + " and column number "
-								+ columnNumber;
-
+								if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+								{
+									LOGGER.debug("The salutation is : " + cell.getStringCellValue());
+									masterSheetImportDto.setSalutation(cell.getStringCellValue());
+								}
+								else
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("Not a valid Salutation");
+									return "Salutation value at row: "+rowNumber + "is not correct.";
+								}
 							}
-							else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
-							{
-								LOGGER.debug("The salutation is : " + cell.getStringCellValue());
-								masterSheetImportDto.setSalutation(cell.getStringCellValue());
-							}
-							else
-							{
-								int rowNumber = row.getRowNum() + 1;
-								LOGGER.error("Not a valid Salutation");
-								return "Salutation value at row: "+rowNumber + "is not correct.";
-							}
+							
 						}
 						else if (cell.getColumnIndex() == 2) 
 						{
@@ -530,41 +523,6 @@ public class DataImportService {
 
 						}
 
-//						else if (cell.getColumnIndex() == 7)
-//						{
-//
-//							LOGGER.debug("Capturing value for age");
-//							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-//							{
-//								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-//								{
-//									int age = (int) cell.getNumericCellValue();
-//									if(age<18)
-//									{
-//										LOGGER.debug("Age is less than 18");
-//										int rowNumber = row.getRowNum() + 1;
-//										flag=false;
-//
-//										return("Candidate's age cannot be less than 18 years for the training at row " + rowNumber );
-//									}
-//									else 
-//									{
-//										LOGGER.debug("The value for age is : " + cell.getNumericCellValue());
-//										masterSheetImportDto.setAge((int) cell.getNumericCellValue());	
-//									}
-//
-//								}
-//								else
-//								{
-//									int rowNumber = row.getRowNum() + 1;
-//									int columnNumber = cell.getColumnIndex() + 1;
-//									LOGGER.debug("Value for age is not a valid number");
-//									return "Not a valid value for age at row : "+rowNumber+" column : "+columnNumber;
-//								}
-//							}
-//
-//
-//						}
 						else if (cell.getColumnIndex() == 8) 
 						{
 							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
