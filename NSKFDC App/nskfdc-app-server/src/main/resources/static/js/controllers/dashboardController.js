@@ -171,7 +171,7 @@ scgj.controller("dashboardController" , function($scope, $http){
                             processed_json2.push(['in-mp', data[i].centers]);
                         }
                         if(data[i].states=='Gujarat'.toLowerCase()||data[i].states=='Gujarat'){
-                            processed_json2.push(['in-gj', data[i].centers]);
+                            processed_json2.push(['in-2984', data[i].centers]);
                         }
                         if(data[i].states=='Goa'.toLowerCase()||data[i].states=='Goa'){
                             processed_json2.push(['in-ga', data[i].centers]);
