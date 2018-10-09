@@ -35,23 +35,28 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		            {
 		            	name: 'nsdcRegNumber', 
 		                displayName: 'NSDC Reg. Number',
+		                width: '14%'
 		             
 		            },
 		            {
 		            	name: 'trainingPartner',
-		            	displayName: 'Training Partner'
+		            	displayName: 'Training Partner',
+		                width: '23%'
 		            },
 		            {
 		                name: 'userEmail',
-		                displayName: 'Email ID'
+		                displayName: 'Email ID',
+		                width: '30%'
 		            },
 		            {
 		                name: 'password',
-		                displayName: 'Password'
+		                displayName: 'Password',
+		                width: '20%'
 		            },
 		            {
 		                name: 'generatedOn',
-		                displayName: 'Generated On'
+		                displayName: 'Generated On',
+		                width: '16%'
 		             },
 		             
 		        ]
