@@ -475,11 +475,12 @@ public class DataImportService {
 			
 								Calendar calendar = Calendar.getInstance();
 								int year = calendar.get(Calendar.YEAR);
-								int month = calendar.get(Calendar.MONTH)+1;
+								int month = calendar.get(Calendar.MONTH);
 								Calendar dateOfBirth = Calendar.getInstance();
+	
 								dateOfBirth.set(cell.getDateCellValue().getYear(), cell.getDateCellValue().getMonth(), cell.getDateCellValue().getDate());
 								int dateOfBirthYear = dateOfBirth.get(Calendar.YEAR);
-								int dateOfBirthMonth = dateOfBirth.get(Calendar.MONTH)+1;
+								int dateOfBirthMonth = dateOfBirth.get(Calendar.MONTH);
 								
 								int age = (year - dateOfBirthYear)-1900;
 								
@@ -487,11 +488,12 @@ public class DataImportService {
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Candidate is not 18 years of age");
-									return "Candidate must be of 18 years of age: "+rowNumber;
+									return "Candidate must be of 18 years of age at row: "+rowNumber;
 								}
 								
 								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH) && age == 18)
 								{
+						
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Age of candidate is less than 18");
 									return "Candidate must be of 18 years of age at row: "+rowNumber;
@@ -499,20 +501,27 @@ public class DataImportService {
 								
 								else if(calendar.get(Calendar.MONTH)==dateOfBirth.get(Calendar.MONTH)&&age>=18)
 								{
+									
 									LOGGER.debug("This month is candidate's birthday month");
-									LOGGER.debug("Incrementing the age of the candidate by 1");
-									age = age+1;
 									LOGGER.debug("The new age of the candidate is: "+age);
+									age=age+1;
 									masterSheetImportDto.setDob(cell.getDateCellValue());
 									masterSheetImportDto.setAge(age);
 								}
 								else if(dateOfBirth.get(Calendar.MONTH)<calendar.get(Calendar.MONTH)&&age>=18)
 								{
+									
+									LOGGER.debug("This is not the birthday month of the candidate");
+									LOGGER.debug("Setting the age and date of birth of candidate in the array list");
+									masterSheetImportDto.setDob(cell.getDateCellValue());
+									masterSheetImportDto.setAge(age);
+								}
+
+								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH)&&age>18)
+								{
 									LOGGER.debug("This is not the birthday month of the candidate");
 									LOGGER.debug("The age of the candidate is: "+age);
-									LOGGER.debug("Incrementing the age by 1");
-									age=age+1;
-									LOGGER.debug("The new age is: "+age);
+									age = age-1;
 									LOGGER.debug("Setting the age and date of birth of candidate in the array list");
 									masterSheetImportDto.setDob(cell.getDateCellValue());
 									masterSheetImportDto.setAge(age);
