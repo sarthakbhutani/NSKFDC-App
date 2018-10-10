@@ -99,14 +99,17 @@ public class DataImportDao extends AbstractTransactionalDao {
 				parameters.put("assessmentResult", candidateDetails.get(i).getAssessmentResult());
         		LOGGER.debug("The assessment result is : " +candidateDetails.get(i).getAssessmentResult());
 				parameters.put("medicalExaminationConducted", candidateDetails.get(i).getMedicalExaminationConducted());
-				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());
+				parameters.put("relationWithSKMS", candidateDetails.get(i).getRelationWithSKMS());				
 				parameters.put("accountNumber", candidateDetails.get(i).getAccountNumber());
 				parameters.put("ifscCode",candidateDetails.get(i).getIfscCode());
 				parameters.put("bankName",candidateDetails.get(i).getBankName());
 				parameters.put("enrollmentNumber",candidateDetails.get(i).getEnrollmentNumber());
 				parameters.put("batchId", batchId);
-
-				
+				parameters.put("hiredByMc", candidateDetails.get(i).getHiredByMc());
+				parameters.put("outsourcedEmployerName", candidateDetails.get(i).getOutsourcedEmployerName());
+				parameters.put("outsourcedEmployerContact", candidateDetails.get(i).getOutsourcedEmployerContact());
+				parameters.put("monthlySalary", candidateDetails.get(i).getMonthlySalary());
+				parameters.put("pfOrEsiProvided", candidateDetails.get(i).getPfOrEsiProvided());				
 				
 				
 				if (checkCandidateExistence == 0) {

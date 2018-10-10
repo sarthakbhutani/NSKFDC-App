@@ -12,9 +12,9 @@ generateReport:
    JOIN batchdetails ON candidate.batchId=batchdetails.batchId where candidate.batchId= :batchId and userEmail= :userEmail;
  
  showNSKFDCExcelSheet: >
-  select batchId,firstName,lastName,age,dob,gender,educationLevel,aadharCardNumber,firstNameFather,lastNameFather,motherName,
+  select c.batchId,firstName,lastName,age,dob,gender,educationLevel,aadharCardNumber,firstNameFather,lastNameFather,motherName,
    residentialAddress,mobileNumber,occupationType,msId,idProofType,relationWithSKMS,idProofNumber,trainingPartnerName,bankName,ifscCode,accountNumber,municipality,hiredByMc,outsourcedEmployerName,outsourcedEmployerContact,monthlySalary,pfOrEsiProvided
-   from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail= trainingpartnerdetails.userEmail where batchdetails.batchId=:batchId and trainingpartnerdetails.userEmail=:userEmail;
+   from candidate c join batchdetails b on c.batchId=b.batchId join trainingpartnerdetails t on b.userEmail= t.userEmail where b.batchId=:batchId and t.userEmail=:userEmail;
  
  showSDMSExcelSheet: >
   select t.nsdcRegNumber, b.centreId, c.enrollmentNumber, c.firstName, c.lastName, c.dob,c.firstNameFather,c.lastNameFather,c.guardianType,
