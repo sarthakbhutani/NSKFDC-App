@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nskfdc.scgj.common.FileUtility;
 import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.common.SessionUserUtility;
 import com.nskfdc.scgj.dto.ViewDocumentDto;
@@ -32,6 +33,9 @@ public class ViewDocumentController {
 	private SessionUserUtility sessionUserUtility;
 	private String userEmail;
 
+	@Autowired
+	private FileUtility fileUtility;
+	
 	@Autowired
 	private ViewDocumentService viewDocumentService;
 
@@ -99,66 +103,62 @@ public class ViewDocumentController {
 		}
 	}
 
-	// adding my own code for downloadZipFileForBatchId :
+	
 	@Privilege(value= {"scgj"})
 	@RequestMapping("/downloadZipFileForBatchId")
 	public void DownloadZipFileForBatchId(
 			@RequestParam("tpName") String tpName,
 			@RequestParam("batchId") String batchId,
 			HttpServletResponse response) {
-		LOGGER.debug("In block DOWNLOAD");
 		try {
-			String zipFileLink = "j";
-			LOGGER.debug("In try block DOWNLOAD" + zipFileLink + tpName
-					+ batchId);
-			int count = 0;
-			Collection<ViewDocumentDto> oldCollection = viewDocumentService
-					.getViewTrainingPartnerDetailForBatchId(tpName, batchId);
-			LOGGER.debug("In try block ");
+				
+				LOGGER.debug("Trying to find path of Zip");
 
-			Iterator<ViewDocumentDto> iterator = oldCollection.iterator();
-			while (iterator.hasNext()) {
-				count++;
-				if (count == 3) {
-					zipFileLink = iterator.next().getZipFileLink();
+				String zipPath = viewDocumentService.createZipFileForTPandBatchId(tpName,batchId);	
+				if(zipPath !=  null)
+				{
+					LOGGER.debug("Path of zip is :"+ zipPath);
+					LOGGER.debug("Trying to download : "  + zipPath);
+					LOGGER.debug("Path of zip file" + zipPath + "for training partner : "+ tpName + "and batchID:" +batchId);
+					File file = new File(zipPath);
+
+					LOGGER.debug("Setting the content type of response");
+					response.setContentType("application/zip");
+
+					LOGGER.debug("Setting the header of response as attachment along with the filename");
+					response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+
+					LOGGER.debug("Creating buffered input stream to read file from : "+ zipPath);
+					BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
+
+					LOGGER.debug("Creating buffered output stream to append zip file in the response ");
+					BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
+
+					byte[] buffer = new byte[1024];
+					int bytesRead = 0;
+					while ((bytesRead = inStrem.read(buffer)) != -1)
+					{
+						outStream.write(buffer, 0, bytesRead);
+					}
+
+					outStream.flush();
+					inStrem.close();
+
+					//Delete File
+					fileUtility.deleteFile(zipPath);
 				}
-				System.out.print(zipFileLink);
-				LOGGER.debug("After try" + zipFileLink + tpName + batchId);
+				else
+				{
+					LOGGER.error("The path of Zip to be downloaded is empty");
+				}
+
 			}
+			catch(Exception e) {
 
-			LOGGER.debug("ZIP FILE LINK is" + zipFileLink + "batchID" + batchId);
-			System.out.print(zipFileLink);
-			LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:"
-					+ tpName + batchId);
-			File file = new File(zipFileLink);
-			response.setContentType("application/zip");
+				LOGGER.debug("An error occurred : " + e);
 
-			response.setHeader("Content-Disposition", "attachment;filename="
-					+ file.getName());
-
-			BufferedInputStream inStrem = new BufferedInputStream(
-					new FileInputStream(file));
-			BufferedOutputStream outStream = new BufferedOutputStream(
-					response.getOutputStream());
-			byte[] buffer = new byte[1024];
-			int bytesRead = 0;
-			while ((bytesRead = inStrem.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
 			}
-			outStream.flush();
-			inStrem.close();
-			if (file.delete())
-				LOGGER.debug("FILE DELETED SUCCESSFULLY");
-			else
-				LOGGER.debug("COULD NOT DELETE FILE");
-
-		} catch (Exception e) {
-
-			LOGGER.debug("An error occurred" + e);
-
 		}
-
-	}
 
 	/**
 	 * Method to download zip with training partner name and scgj batch number
@@ -174,55 +174,52 @@ public class ViewDocumentController {
 			@RequestParam("tpName") String tpName,
 			@RequestParam("scgjBtNumber") String scgjBtNumber,
 			HttpServletResponse response) {
-		LOGGER.debug("In block DOWNLOAD");
 		try {
 			
-			  String zipFileLink="j"; LOGGER.debug("In try block DOWNLOAD" +
-			  zipFileLink + tpName + scgjBtNumber);
-			 
-			int count = 0;
-			// CHANGE HERE!!!!!!
-			Collection<ViewDocumentDto> oldCollection = viewDocumentService
-					.getViewTrainingPartnerDetailForscgjBtNumber(tpName,
-							scgjBtNumber);
+			LOGGER.debug("Trying to find path of Zip");
 
-			LOGGER.debug("In try block ");
-			Iterator<ViewDocumentDto> iterator = oldCollection.iterator();
-			while (iterator.hasNext()) {
-				count++;
-				if (count == 4)
-					zipFileLink = iterator.next().getZipFileLink();
-				System.out.print(zipFileLink);
-				LOGGER.debug("After try" + zipFileLink + tpName + scgjBtNumber);
+			String zipPath = viewDocumentService.createZipFileForTPandBatchNumber(tpName,scgjBtNumber);	
+			if(zipPath !=  null)
+			{
+				LOGGER.debug("Path of zip is :"+ zipPath);
+				LOGGER.debug("Trying to download : "  + zipPath);
+				LOGGER.debug("Path of zip file" + zipPath + " training partner : "+ tpName +"and batch Number:" +scgjBtNumber);
+				File file = new File(zipPath);
+
+				LOGGER.debug("Setting the content type of response");
+				response.setContentType("application/zip");
+
+				LOGGER.debug("Setting the header of response as attachment along with the filename");
+				response.setHeader("Content-Disposition", "attachment;filename=" + file.getName());
+
+				LOGGER.debug("Creating buffered input stream to read file from : "+ zipPath);
+				BufferedInputStream inStrem = new BufferedInputStream(new FileInputStream(file));
+
+				LOGGER.debug("Creating buffered output stream to append zip file in the response ");
+				BufferedOutputStream outStream = new BufferedOutputStream(response.getOutputStream());  
+
+				byte[] buffer = new byte[1024];
+				int bytesRead = 0;
+				while ((bytesRead = inStrem.read(buffer)) != -1)
+				{
+					outStream.write(buffer, 0, bytesRead);
+				}
+
+				outStream.flush();
+				inStrem.close();
+
+				//Delete File
+				fileUtility.deleteFile(zipPath);
 			}
-
-			System.out.print(zipFileLink);
-			LOGGER.debug("Checking for zip value" + zipFileLink + "batchID:"
-					+ tpName + scgjBtNumber);
-			File file = new File(zipFileLink);
-			response.setContentType("application/zip");
-
-			response.setHeader("Content-Disposition", "attachment;filename="
-					+ file.getName());
-
-			BufferedInputStream inStrem = new BufferedInputStream(
-					new FileInputStream(file));
-			BufferedOutputStream outStream = new BufferedOutputStream(
-					response.getOutputStream());
-			byte[] buffer = new byte[1024];
-			int bytesRead = 0;
-			while ((bytesRead = inStrem.read(buffer)) != -1) {
-				outStream.write(buffer, 0, bytesRead);
-			}
-			outStream.flush();
-			inStrem.close();
-			if (file.delete())
-				LOGGER.debug("FILE DELETED SUCCESSFULLY");
 			else
-				LOGGER.debug("NOT DELETED FILE");
-		} catch (Exception e) {
+			{
+				LOGGER.error("The path of Zip to be downloaded is empty");
+			}
 
-			LOGGER.debug("An error occurred" + e);
+		}
+		catch(Exception e) {
+
+			LOGGER.debug("An error occurred : " + e);
 
 		}
 	}
