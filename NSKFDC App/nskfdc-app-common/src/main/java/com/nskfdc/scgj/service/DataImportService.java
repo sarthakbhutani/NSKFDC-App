@@ -10,14 +10,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -504,7 +499,6 @@ public class DataImportService {
 									
 									LOGGER.debug("This month is candidate's birthday month");
 									LOGGER.debug("The new age of the candidate is: "+age);
-									age=age+1;
 									masterSheetImportDto.setDob(cell.getDateCellValue());
 									masterSheetImportDto.setAge(age);
 								}
@@ -517,7 +511,7 @@ public class DataImportService {
 									masterSheetImportDto.setAge(age);
 								}
 
-								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH)&&age>18)
+								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH) && age>18)
 								{
 									LOGGER.debug("This is not the birthday month of the candidate");
 									LOGGER.debug("The age of the candidate is: "+age);
@@ -1155,7 +1149,7 @@ public class DataImportService {
 				}
 				candidateDetails.add(masterSheetImportDto);
 				insertResult = dataImportDao.masterSheetImport(candidateDetails, batchId);
-			fileStream.close();
+			    fileStream.close();
 			
 			//To be reviewed
 			if(insertResult==-425)
