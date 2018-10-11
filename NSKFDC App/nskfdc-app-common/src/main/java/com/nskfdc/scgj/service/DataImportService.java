@@ -281,7 +281,8 @@ public class DataImportService {
 					{
 						LOGGER.debug("The value of column is null, hence skipping reading it");
 					}
-					else if (cell.getColumnIndex() == 0) {
+					else if (cell.getColumnIndex() == 0)
+					{
 						
 							if (cell.getCellType() == Cell.CELL_TYPE_BLANK) {
 								int rowNumber = row.getRowNum() + 1;
@@ -298,6 +299,14 @@ public class DataImportService {
 							{
 								int rowNumber = row.getRowNum() + 1;
 								int columnNumber = cell.getColumnIndex() + 1;
+								
+								if(cell.getStringCellValue()=="" || cell.getStringCellValue()==null)
+								{
+									LOGGER.error("Null or blank value for enrollment number");
+									flag = false;
+									return "Enrollment Number cannot be left blank at row: "+rowNumber;
+								}
+								
 								if(stringUtility.splitByChar(cell.getStringCellValue(),"/")!=null && stringUtility.splitByChar(cell.getStringCellValue(),"/").length==2)
 								{
 									if(stringUtility.stringCompare(batchId, stringUtility.splitByChar(cell.getStringCellValue(),"/")[0]))
@@ -329,20 +338,33 @@ public class DataImportService {
 						} 
 						else if (cell.getColumnIndex() == 1)
 						{
-							if (! (cell.getCellType() == Cell.CELL_TYPE_BLANK)) 
+							if ((cell.getCellType() == Cell.CELL_TYPE_BLANK)) 
 							{
-								if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Cell is blank");
+								LOGGER.debug("Do Nothing");
+							}
+					
+							else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 								{
-									LOGGER.debug("The salutation is : " + cell.getStringCellValue());
-									masterSheetImportDto.setSalutation(cell.getStringCellValue());
+									if(cell.getStringCellValue()==null|| cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Doing nothing, The salutation has null or empty value");
+									}
+									else
+									{
+										LOGGER.debug("The salutation is : " + cell.getStringCellValue());
+										masterSheetImportDto.setSalutation(cell.getStringCellValue());	
+									}
+									
 								}
+				
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Not a valid Salutation");
-									return "Salutation value at row: "+rowNumber + "is not correct.";
+									return "Salutation value at row: "+rowNumber + " is not correct.";
 								}
-							}
+							
 							
 						}
 						else if (cell.getColumnIndex() == 2) 
@@ -356,26 +378,52 @@ public class DataImportService {
 								flag = false;
 								return "Please enter first name of candidate at row number " + " " + rowNumber + " and column number " + columnNumber;
 							}
-							else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 							{
-								LOGGER.debug("The first name of candidate is : " + cell.getStringCellValue());
-								masterSheetImportDto.setFirstName(cell.getStringCellValue());
+								LOGGER.debug("Checking if the first name is null or empty");
+								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+								{
+									int rowNumber = row.getRowNum() + 1;
+									LOGGER.error("First Name is Null");
+									return "First Name cannot be empty at row: " +rowNumber;
+								}
+								else
+								{
+									LOGGER.debug("Reading the value of first name");
+									masterSheetImportDto.setFirstName(cell.getStringCellValue());
+								}
 							}
-							else 
+							else
 							{
-								LOGGER.error("Not a valid value for Gender");
+								LOGGER.error("Invalid format for first name");
 								int rowNumber = row.getRowNum() + 1;
-								return "Not a valid value for Gender at row : " +rowNumber+ " . Value should be text only";
+								return "Invalid value for first name at row: "+rowNumber;
 							}
+
+
 						}
 						else if (cell.getColumnIndex() == 3)
 						{
-							if (!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if ((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Cell is blank");
+								
+								
+							}	
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 								{
-									LOGGER.debug("Last Name of candidate is : " + cell.getStringCellValue());
-									masterSheetImportDto.setLastName(cell.getStringCellValue());
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell type is null");
+									}
+									else
+									{
+										LOGGER.debug("Last Name of candidate is : " + cell.getStringCellValue());
+										masterSheetImportDto.setLastName(cell.getStringCellValue());
+										
+									}
+									
 								}
 								else 
 								{
@@ -383,7 +431,7 @@ public class DataImportService {
 									LOGGER.error("Not a valid value for last name");
 									return "Not a valid value for Last name of candidate at row : "+rowNumber +" Value should have text only"; 
 								}
-							}
+							
 
 						}
 						else if (cell.getColumnIndex() == 4) 
@@ -392,59 +440,86 @@ public class DataImportService {
 							{
 								LOGGER.debug("Gender is set to null");
 								int rowNumber = row.getRowNum() + 1;
-								int columnNumber = cell.getColumnIndex() + 1;
-								LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
+								
+								LOGGER.error("The row number is " + rowNumber);
 								flag = false;
-								return "Please enter the gender at row number " + " " + rowNumber + " and column number " + columnNumber;
+								return "Please enter the gender at row number " + " " + rowNumber;
 							}
 
 							else  if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
-								int rowNumber = row.getRowNum() + 1;
-								if(cell.getStringCellValue().equals("M") || cell.getStringCellValue().equals("F")) {
-									LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
-									masterSheetImportDto.setGender(cell.getStringCellValue());
+								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+								{
+									LOGGER.debug("Value for Gender is null");
+									int rowNumber = row.getRowNum()+1;
+									return "Gender cannot be null at row: "+rowNumber;
 									
 								}
-								else {
-									LOGGER.debug("The invalid value of Gender is : " + cell.getStringCellValue());
-									return "Please enter gender value as 'M' or 'F' at" + " " + rowNumber ;
-								}
-								
+								else if(cell.getStringCellValue().equals("M") || cell.getStringCellValue().equals("F")) 
+									{
+										LOGGER.debug("The value of Gender is : " + cell.getStringCellValue());
+										masterSheetImportDto.setGender(cell.getStringCellValue());
+										
+									}
+									else 
+									{
+										int rowNumber = row.getRowNum() + 1;
+										LOGGER.debug("The invalid value of Gender is : " + cell.getStringCellValue());
+										return "Please enter gender value as 'M' or 'F' at" + " " + rowNumber ;
+									}
+
 							}
 							else
 							{
 								int rowNumber = row.getRowNum() + 1;
 								LOGGER.error("Not a valid value for gender");
-								return "Not a valid value for Gender at row: "+rowNumber+ " value should have text only";
+								return "Not a valid value for Gender at row: "+rowNumber+ ", value should have text only";
 							}
 						} 
 						else if (cell.getColumnIndex() == 5)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType() == Cell.CELL_TYPE_BLANK))
 							{
-								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Disability type is blank");
+							}
+								
+							else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 								{
-
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell is null and does not have any value");
+									}
+									else
+									{
 									LOGGER.debug("Capturing value of header : Disability Type is : " + cell.getStringCellValue());
 									masterSheetImportDto.setDisabilityType(cell.getStringCellValue());
 								}
+							}
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Not a valid value for disability type");
-									return "Not a valid value for Disability type at row : "+rowNumber+ " . Value should have text only";
+									return "Not a valid value for Disability type at row : "+rowNumber+ ", Value should have text only";
 								}
 							}
-						}
+						
 						else if (cell.getColumnIndex() == 6) 
 						{
 							LOGGER.debug("Capturing value of header : DateOfBirth ");
 
 							if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 							{ 
-								LOGGER.error("Cells are String formatted");
-								return "Please set the format of date of birth as dd-mm-yyyy";	 
+								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+								{
+									LOGGER.error("Cells are string formatted");
+									return "Please set format of date of birth as dd-mm-yyyy";
+								}
+								else
+								{
+									LOGGER.error("Cells are String formatted");
+									return "Please set the format of date of birth as dd-mm-yyyy";		
+								}
+								 
 							}
 
 							else if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
@@ -528,14 +603,23 @@ public class DataImportService {
 
 						else if (cell.getColumnIndex() == 8) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								LOGGER.debug("Capturing the value of header : Guardian Type");
-
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Capturing the value of header");
+								LOGGER.debug("Cells are blank");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 								{
-									LOGGER.debug("The value of guardian type : " + cell.getStringCellValue());
-									masterSheetImportDto.setGuardianType(cell.getStringCellValue());
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Guardian is null or empty");
+									}
+									else
+									{
+										LOGGER.debug("The value of guardian type : " + cell.getStringCellValue());
+										masterSheetImportDto.setGuardianType(cell.getStringCellValue());
+									}
+									
 								}
 								else
 								{
@@ -545,23 +629,34 @@ public class DataImportService {
 								}
 							}
 
-						}
+						
 
 						else if (cell.getColumnIndex() == 9) 
 						{
 							LOGGER.debug("Capturing the value for father/husband first name");
 							if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
 							{
-								LOGGER.error("First Name of father/husband blank");
+								LOGGER.error("First Name of father/husband is blank");
 								int rowNumber = row.getRowNum() + 1;
-								return "Please enter the first name of father/husband at row : "+rowNumber;
+								return "Please enter the first name of father/husband at row: "+rowNumber;
 							}
 
 							if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
 								LOGGER.debug("Father/Husband first name is of string type");
-								LOGGER.debug("Father's first name is : " + cell.getStringCellValue());
-								masterSheetImportDto.setFirstNameFather(cell.getStringCellValue());
+								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+								{
+									LOGGER.error("First Name of father/husband null or empty");
+									int rowNumber = row.getRowNum()+1;
+									return "Please enter first name of father/husband at row: "+rowNumber;
+								}
+								else 
+								{
+									LOGGER.debug("Father's first name is : " + cell.getStringCellValue());
+									masterSheetImportDto.setFirstNameFather(cell.getStringCellValue());
+								}
+								
+								
 							}
 							else 
 							{
@@ -574,92 +669,160 @@ public class DataImportService {
 						else if (cell.getColumnIndex() == 10)
 						{
 
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
 								LOGGER.debug("Checking the cell type of father's last name");
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Father's Last Name");
-									LOGGER.debug("Father's last name is : " + cell.getStringCellValue());
-									masterSheetImportDto.setLastNameFather(cell.getStringCellValue());
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								{ 
+								
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Last Name of father is null or empty");
+									}
+									else
+									{
+									
+										LOGGER.debug("Capturing value of header : Father's Last Name");
+										LOGGER.debug("Father's last name is : " + cell.getStringCellValue());
+										masterSheetImportDto.setLastNameFather(cell.getStringCellValue());
+									}
+									
 								}
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("The cell type of father's last name does not have a valid value");
-									return "Not a valid value of Father's last name at row number "+rowNumber+ " value should have text only";
+									return "Not a valid value of Father's last name at row number "+rowNumber+ ", value should have text only";
 								}
 							}
 
-						}
 						else if (cell.getColumnIndex() == 11)
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								LOGGER.debug("Checking cell type of mothers name column");
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Mother name is null");
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 								{
-									LOGGER.debug("Capturing value of header : Mother Name");
-									LOGGER.debug("Mother's Last Name is : " + cell.getStringCellValue());
-									masterSheetImportDto.setMotherName(cell.getStringCellValue());
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell is null or empty");
+									}
+									else
+									{
+										LOGGER.debug("Capturing value of header : Mother Name");
+										LOGGER.debug("Mother's Last Name is : " + cell.getStringCellValue());
+										masterSheetImportDto.setMotherName(cell.getStringCellValue());
+									}
+									
+									
 								}
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("The cell type of mother's name does not have a valid value");
-									return "Not a valid value for Mother's name column at row number :"+rowNumber+ " value should have text only";	
+									return "Not a valid value for Mother's name column at row number: " +rowNumber+ ", value should have text only";	
 								}
-							}
-
-
 						}
+					
 						else if (cell.getColumnIndex() == 12) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+								LOGGER.debug("Cell is blank");
+							}
+								
+							else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
+							{
+								LOGGER.debug("Cell is string type");
+								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
 								{
-									LOGGER.debug("Capturing value of header : Mobile Number ");
-									LOGGER.debug("Mobile Number is : " + (long) cell.getNumericCellValue());
-									masterSheetImportDto.setMobileNumber((long) cell.getNumericCellValue());
-
+									LOGGER.debug("Cell is string type with null or empty");
 								}
 								else
+								{
+									int rowNumber = row.getRowNum()+1;
+									LOGGER.error("Invalid format for mobile number");
+									return "Invalid format for mobile number at row: "+rowNumber;
+								}
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
+								{
+									long mobileNumber = (long) cell.getNumericCellValue();
+									long count = String.valueOf(mobileNumber).length();
+									if(count<10)
+									{
+										int rowNumber = row.getRowNum() + 1;
+										LOGGER.error("Mobile Number is less than 10 digits");
+										return "Mobile Number cannot be less than 10 digits at row: "+rowNumber;
+									}
+									else 
+									{
+										LOGGER.debug("Capturing value of header : Mobile Number ");
+										LOGGER.debug("Mobile Number is : " + (long) cell.getNumericCellValue());
+										masterSheetImportDto.setMobileNumber((long) cell.getNumericCellValue());
+
+									}
+									
+								}
+								else 
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("The cell type of mobile number does not have a valid value");
 									return "Not a valid value for Mobile number column at row : "+rowNumber+ " value should have digits only";
 								}
 							}
-						}
+						
 						else if (cell.getColumnIndex() == 13)
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value for header : Education Level");
-									LOGGER.debug("Education Level is : " + cell.getStringCellValue());
-									masterSheetImportDto.setEducationQualification(cell.getStringCellValue());
+								LOGGER.debug("Cell type is blank");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								{ 
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell is empty or null");
+									}
+									else
+									{
+										LOGGER.debug("Capturing value for header : Education Level");
+										LOGGER.debug("Education Level is : " + cell.getStringCellValue());
+										masterSheetImportDto.setEducationQualification(cell.getStringCellValue());
+									}
+									
 								}
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("The cell type of education qualitfication is numeric");
-									return "Not a valid  value for Education Qualification column at row number "+rowNumber+ " value should have text";
+									return "Not a valid  value for Education Qualification at row: "+rowNumber+", It should be a text value ";
 								}
 							}
 
-						}
+						
 						else if (cell.getColumnIndex() == 14)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType() == Cell.CELL_TYPE_BLANK))
 							{
-								LOGGER.debug("Capturing the value of header : State ");
-								if(cell.getCellType() == Cell.CELL_TYPE_STRING && cell.getStringCellValue() != null) 
+								LOGGER.debug("Cell type for state is blank");
+							}
+							
+							else if(cell.getCellType() == Cell.CELL_TYPE_STRING) 
 								{
-									LOGGER.debug("The value of state is : " + cell.getStringCellValue());
-									masterSheetImportDto.setState(cell.getStringCellValue());
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell is null or empty");
+									}
+									else
+									{
+										LOGGER.debug("The value of state is : " + cell.getStringCellValue());
+										masterSheetImportDto.setState(cell.getStringCellValue());
+									}
+									
 								}
 								else
 								{
@@ -668,29 +831,39 @@ public class DataImportService {
 									int columnNumber = cell.getColumnIndex() + 1;
 									LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
 									flag = false;
-									return "Not a valid value for State column at row "+rowNumber+ " vallue should have text only";
+									return "Not a valid value for State column at row "+rowNumber+ ", value should have text only";
 								}
 							}
-						}
+						
 						else if (cell.getColumnIndex() == 15) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
+							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
+								LOGGER.debug("Cell is blank");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 								{
-									LOGGER.debug("Capturing value of header : District");
-									LOGGER.debug("The value of district is : " + cell.getStringCellValue());
-									masterSheetImportDto.setDistrict(cell.getStringCellValue());						
+									if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
+									{
+										LOGGER.debug("Cell is null or empty");
+									}
+									else
+									{
+										LOGGER.debug("Capturing value of header : District");
+										LOGGER.debug("The value of district is : " + cell.getStringCellValue());
+										masterSheetImportDto.setDistrict(cell.getStringCellValue());
+									}
+															
 								}
 								else
 								{
 									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("The cell type of district does not have valid value");
-									return "Not a valid value for District column at row number "+rowNumber+ " value should have text only";
+									return "Not a valid value for District column at row: "+rowNumber+ ", value should have text only";
 								}
 							}
 
-						}
+						
 						else if (cell.getColumnIndex() == 16) 
 						{
 							LOGGER.debug("Capturing the value of header : Aadhaar Card");
