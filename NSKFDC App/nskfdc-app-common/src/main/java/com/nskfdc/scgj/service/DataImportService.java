@@ -25,6 +25,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -505,19 +506,21 @@ public class DataImportService {
 						
 						else if (cell.getColumnIndex() == 6) 
 						{
+							
 							LOGGER.debug("Capturing value of header : DateOfBirth ");
-
+							int rowNumber = row.getRowNum() + 1;
+							
 							if(cell.getCellType()==Cell.CELL_TYPE_STRING)
 							{ 
 								if(cell.getStringCellValue()==null||cell.getStringCellValue().isEmpty())
 								{
-									LOGGER.error("Cells are string formatted");
-									return "Please set format of date of birth as dd-mm-yyyy";
+									LOGGER.error("Cells are string formatted and empty");
+									return "Please fill Date of Birth at row : "+rowNumber;
 								}
 								else
 								{
 									LOGGER.error("Cells are String formatted");
-									return "Please set the format of date of birth as dd-mm-yyyy";		
+									return "Please set the format of date of birth as dd-mm-yyyy at row : "+rowNumber;		
 								}
 								 
 							}
@@ -526,14 +529,13 @@ public class DataImportService {
 							{
 								LOGGER.error("Cells are blank formatted");
 								flag = false;
-								int rowNumber = row.getRowNum() + 1;
 								int columnNumber = cell.getColumnIndex() + 1;
 								return "Please insert value in the DOB Column at row : " + rowNumber + " & column number " + columnNumber;
 							}
 							else if(DateUtil.isCellDateFormatted(cell) == false)
 							{
 								LOGGER.error("Cells are not date formatted");
-								return "Please set the format of date of birth as dd-mm-yyyy";
+								return "Please set the format of date of birth as dd-mm-yyyy at row : "+rowNumber;
 							}
 							else if(DateUtil.isCellDateFormatted(cell) == true)
 							{
@@ -556,7 +558,6 @@ public class DataImportService {
 								
 								if(age<18)
 								{
-									int rowNumber = row.getRowNum() + 1;
 									LOGGER.error("Candidate is not 18 years of age");
 									return "Candidate must be of 18 years of age at row: "+rowNumber;
 								}
@@ -564,7 +565,7 @@ public class DataImportService {
 								else if(dateOfBirth.get(Calendar.MONTH)>calendar.get(Calendar.MONTH) && age == 18)
 								{
 						
-									int rowNumber = row.getRowNum() + 1;
+									
 									LOGGER.error("Age of candidate is less than 18");
 									return "Candidate must be of 18 years of age at row: "+rowNumber;
 								}
@@ -605,7 +606,7 @@ public class DataImportService {
 						{
 							if((cell.getCellType()==Cell.CELL_TYPE_BLANK))
 							{
-								LOGGER.debug("Capturing the value of header");
+								LOGGER.debug("Capturing the value of header : Guardian");
 								LOGGER.debug("Cells are blank");
 							}
 							else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
@@ -866,465 +867,685 @@ public class DataImportService {
 						
 						else if (cell.getColumnIndex() == 16) 
 						{
-							LOGGER.debug("Capturing the value of header : Aadhaar Card");
-							LOGGER.debug("Calculating the number of digits in Aadhaar number");
-							if(cell.getCellType()==Cell.CELL_TYPE_BLANK)
-							{
-								int rowNumber = row.getRowNum() + 1;
-								LOGGER.error("Aadhaar number null");
+							LOGGER.debug("Reading the column Aadhaar Card Number");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking if Aadhaar number consists value");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								
+								LOGGER.error("Aadhar Number does not have any value");
 								return "Aadhaar card number cannot be blank at row: "+rowNumber;
+								
 							}
-							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-							{
-								long aadharNumber = (long) cell.getNumericCellValue();
-								int count = String.valueOf(aadharNumber).length();
-								LOGGER.debug("The number of digits in Aadhaar number : " + count);
-								if(count == 12)
-								{
-									LOGGER.debug("The value of Aadhaar card number is : " + cell.getNumericCellValue());
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="") {
+									LOGGER.error("Aadhar Number does not have any value");
+									return "Aadhaar card number cannot be blank at row: "+rowNumber;
+								}
+								else {
+									LOGGER.error("Aadhar Number has string value");
+									return "Please enter numeric value for Aadhaar card number at row: "+rowNumber;
+								}
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								
+								if(cell.getNumericCellValue()<=0 ) {
 									
-									//Call method which checks the existence of aadhar card
-								//	LOGGER.debug("Calling method to check the existence of aadhar card number for batch Id: "+batchId);
-									//Integer aadharExistence = dataImportDao.checkAadharExistence(aadharNumber, batchId);
-//									if(aadharExistence==1)
-//									{
-//										LOGGER.debug("Duplicate entry for aadhar number found");
-//										int rowNumber = row.getRowNum() + 1;
-//										return "Duplicate entry for aadhar number found on row number: "+rowNumber;
-//									}
-//									else if(aadharExistence==null)
-//									{
-//										LOGGER.error("An exception occured while checking the existence of aadhar");
-//										return "File cannot be uploaded";
-////									}
-//									else
-									masterSheetImportDto.setAdhaarCardNumber((long) cell.getNumericCellValue());
+									LOGGER.error("Aadhaar Number has numeric value less than or equal to zero"+cell.getNumericCellValue());
+									return "Aadhaar card number is invalid at row : "+rowNumber;
+								
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									int columnNumber = cell.getColumnIndex() + 1;
-									LOGGER.error("The row number is " + rowNumber + " and column Number is : " + columnNumber);
-									LOGGER.error("Aadhaar Card Number is not valid");
-									flag = false;
-									return "Please enter a valid 12 digit Aadhaar Card number column at row: "+ rowNumber;
+								else {
+									
+									long aadharNumber = (long) cell.getNumericCellValue();
+									int count = String.valueOf(aadharNumber).length();
+									LOGGER.debug("The number of digits in Aadhaar number : " + count);
+									
+									if(count==12) {
+										LOGGER.debug("Aadhaar number is of 12 digits :" + cell.getNumericCellValue());
+										masterSheetImportDto.setAdhaarCardNumber((long) cell.getNumericCellValue());
+									}
+									else {
+										LOGGER.error("Aadhaar  number is not of 12digits :"+ cell.getNumericCellValue());
+										LOGGER.error("Returing error message to enter 12 digits valid aadhaar number");
+										return "Please enter 12 digits Aadhaar card number at row : "+rowNumber ;
+									}
+									
 								}
+								
+								
 							}
-							else
-							{
-								int rowNumber = row.getRowNum()+1;
-								LOGGER.error("Aadhaar card does not has a valid value");
-								return "Not a valid value for Aadhaar card number column at row : "+rowNumber + " value should have digits only";
+							else {
+								LOGGER.error("Aadhaar card number is invalid");
+								return "Invalid Aadhaar card number at row : "+row;
+								
 							}
+				
 						}
+					
+					
 						else if (cell.getColumnIndex() == 17)
 						{
+							LOGGER.debug("Reading the column id proof type");
+							
+							int rowNumber = row.getRowNum() + 1;
 							LOGGER.debug("Checking the cell type of id proof type");
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("ID Proof type is numeric");
-									return "ID Proof type cannot have a numeric value at row number "+rowNumber;
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The id proof type is blank, so skipping the insertion of id proof type value");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The id proof type has empty string, so skipping the insertion of id proof type value");
 								}
-
-								else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Cell type of ID Proof is string");
-									LOGGER.debug("Capturing the value of header : ID Proof");
+								else {
+									LOGGER.debug("The id proof type is string has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setIdProofType(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for ID Proof type column");
-									return "Not a valid value for ID Proof type column at row number "+rowNumber + " value should have text only";
-								}
+								
 							}
+							else {
+								LOGGER.error("The id proof type is not blank and not String");
+								LOGGER.error("Returning message: The id proof type has invalid format");
+								return "Id proof type has invalid format at row : "+rowNumber;
+								
+							}
+
 						}
+					
+					
 						else if (cell.getColumnIndex() == 18)
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING && cell.getStringCellValue()!=null)
-								{
-									LOGGER.debug("Capturing value of header : Id Proof Number");
+							LOGGER.debug("Reading the column id proof number");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of id proof number");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The id proof number is blank, so skipping the insertion of id proof number value");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue()=="" || cell.getStringCellValue().isEmpty()  ) {
+									LOGGER.debug("The id proof number has empty string, so skipping the insertion of id proof number value");
+								}
+								else {
+									LOGGER.debug("The id proof number is string has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setIdProofNumber(cell.getStringCellValue());
 								}
-								else if (cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-								{
-									LOGGER.debug("Capturing value of header : Id Proof Number");
-									Integer proofNumber = (int)cell.getNumericCellValue(); 
-									masterSheetImportDto.setIdProofNumber(proofNumber.toString());
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								if(cell.getNumericCellValue()>0) {
+									Long idProofNumber= (long) cell.getNumericCellValue();
+									LOGGER.debug("The id proof number is a number, has value :"+ cell.getNumericCellValue());
+									masterSheetImportDto.setIdProofNumber(idProofNumber.toString());
 								}
-								else
-								{
-									LOGGER.error("Not a valid value for id proof number");
-									int rowNumber = row.getRowNum() + 1;
-									return "Not a valid value for Id Proof Number column at row number : "+ rowNumber+ " value should have text and digits only";
+								else {
+									LOGGER.debug("The id proof number has numeric value less than 1 :" +cell.getNumericCellValue());
 								}
+							}
+							else {
+								LOGGER.error("The id proof number is not blank and not String");
+								LOGGER.error("Returning message: The id proof number has invalid format");
+								return "Id proof number has invalid format at row : "+rowNumber;
+								
 							}
 
 						}
 						else if (cell.getColumnIndex() == 19) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Occupation Category");
+							LOGGER.debug("Reading the column Occupation / Category");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Occupation / Category");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The Occupation / Category is blank, so skipping the insertion of Occupation / Category");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Occupation / Category has empty string, so skipping the insertion of Occupation / Category");
+								}
+								else {
+									LOGGER.debug("The Occupation / Category is string has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setOccupationType(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Occupation category is not valid");
-									return "Not a valid value for Occupation Category at row number "+rowNumber+ " value should have text only";
-								}
+								
 							}
+							else {
+								LOGGER.error("The Occupation / Category is not blank and not String");
+								LOGGER.error("Returning message: The Occupation / Category has invalid format");
+								return "Occupation / Category has invalid format at row : "+rowNumber;
+								
+							}
+
 						}
 						else if (cell.getColumnIndex() == 20) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : MS ID");
+							LOGGER.debug("Reading the column MS ID");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of MS ID");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column MS ID is blank, so skipping the insertion of MS ID");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The MS ID has empty string, so skipping the insertion of MS ID");
+								}
+								else {
+									LOGGER.debug("The MS ID is string has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setMsId(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Value for MS Id is not valid");
-									return "Not a valid value for   MS ID at row : " + rowNumber+ " value should have text and digits only";
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								if(cell.getNumericCellValue()>0) {
+									Long msId = (long) cell.getNumericCellValue();
+									LOGGER.debug("The MS Id has value : "+cell.getNumericCellValue());
+									masterSheetImportDto.setMsId(msId.toString());
 								}
+								else {
+									LOGGER.debug("MS ID has value less than 1, so skipping the insertion of Monthly Salary");
+								}
+								
+							}
+							else {
+								LOGGER.error("The MS ID is not blank and not String");
+								LOGGER.error("Returning message: The MS ID has invalid format");
+								return "MS ID has invalid format at row : "+rowNumber;
+								
 							}
 
 						}
 						else if (cell.getColumnIndex() == 21)
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Relation with SK/MS is numeric");
-									return "Relation with SK/MS cannot have a numeric value at row number "+rowNumber;
+							LOGGER.debug("Reading the column Relation with SK/MS");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Relation with SK/MS");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Relation with SK/MS blank, so skipping the insertion of value for Relation with SK/MS");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Relation with SK/MS has empty string, so skipping the insertion of value for Relation with SK/MS");
 								}
-
-								else if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Relation with SK/MS");
+								else {
+									LOGGER.debug("The Relation with SK/MS is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setRelationWithSKMS(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Not a valid value for Relation with SK/MS");
-									return "Not a valid value for Relation with SK/MS at row "+rowNumber+ " value should have text and digits only";
-								}
+								
 							}
-
+							else {
+								LOGGER.error("The Relation with SK/MS is not blank and not String");
+								LOGGER.error("Returning message: The Relation with SK/MS has invalid format");
+								return "Relation with SK/MS has invalid format at row : "+rowNumber;
+								
+							}
 
 						}
 						else if (cell.getColumnIndex() == 22)
 						{
-							if(!(cell.getCellType()== Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Cell bank name is numeric");
-									return "Name of bank cannot have a numeric value at row number "+rowNumber;
-								}
-								else if (cell.getCellType()== Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Bank Name");
-									masterSheetImportDto.setBankName(cell.getStringCellValue());
-								}	
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Not a valid value for Bank name");
-									return "Not a valid value for Bank name at row : "+rowNumber+ " value should have text only";
-								}
+							LOGGER.debug("Reading the column Bank Name");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Bank Name");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Bank Name is blank, so skipping the insertion of value for Bank Name");
 							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Bank Name has empty string, so skipping the insertion of value for Bank Name");
+								}
+								else {
+									LOGGER.debug("The Bank Name is string, has value :"+ cell.getStringCellValue());
+									masterSheetImportDto.setBankName(cell.getStringCellValue());
+								}
+								
+							}
+							else {
+								LOGGER.error("The Bank Name is not blank and not String");
+								LOGGER.error("Returning message: The Bank Name has invalid format");
+								return "Bank Name has invalid format at row : "+rowNumber;
+								
+							}
+
 						}
 						else if (cell.getColumnIndex() == 23)
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : IFSC Code");
+							LOGGER.debug("Reading the column IFSC Code");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of IFSC Code");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column IFSC Code is blank, so skipping the insertion of value for IFSC Code");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The IFSC Code has empty string, so skipping the insertion of value for IFSC Code");
+								}
+								else {
+									LOGGER.debug("The IFSC Code is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setIfscCode(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for field IFSC Code");
-									return "Not a valid value for field IFSC code at row number : "+ rowNumber+ " value should have text and digits only";
-								}
+								
+							}
+							
+							else {
+								LOGGER.error("The IFSC Code is not blank and not String");
+								LOGGER.error("Returning message: The IFSC Code has invalid format");
+								return "IFSC Code has invalid format at row : "+rowNumber;
+								
 							}
 
 						}
 						else if (cell.getColumnIndex() == 24) 
 						{
-							if(!(cell.getCellType()==Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType()==Cell.CELL_TYPE_STRING)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Bank account number is string type");
-									return "Bank Account number must have a numeric value at row: "+rowNumber;
+							LOGGER.debug("Reading the column Bank A/C number");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Bank A/C number");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Bank A/C number is blank, so skipping the insertion of value for Bank A/C number");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Bank A/C number has empty string, so skipping the insertion of Bank A/C number");
 								}
-
-								else if (cell.getCellType()==Cell.CELL_TYPE_NUMERIC)
-								{
-									LOGGER.debug("Capturing value of header : Bank Account Number");
+								else {
+									LOGGER.error("The Bank A/C number has value string :"+ cell.getStringCellValue());
+									return "Invalid Bank A/C Number format at row : "+rowNumber+". Please enter numeric value";
+								}
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								if(cell.getNumericCellValue()>0) {
+									LOGGER.debug("The Bank A/C no. has value : "+cell.getNumericCellValue());
 									masterSheetImportDto.setAccountNumber((long) cell.getNumericCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for Bank account number");
-									return "Not a valid value for Bank Account number at row: "+rowNumber+ " value should have digits only";
+								else {
+									LOGGER.debug("Bank A/C no. has value less than 1, so skipping the insertion of Bank A/C no.");
 								}
-							}					
+								
+							}
+							else {
+								LOGGER.error("The Bank A/C number is not blank and not number");
+								LOGGER.error("Returning message: The Bank A/C number has invalid format");
+								return "Bank A/C number has invalid format at row : "+rowNumber;
+								
+							}
+							
 						}
 
 						else if (cell.getColumnIndex() == 25) 
 						{
-							LOGGER.debug("Checking the cell type of residential address");
+							LOGGER.debug("Reading the cell residential address");
+							int rowNumber = row.getRowNum() + 1;
 							if(cell.getCellType() == Cell.CELL_TYPE_BLANK)
 							{
-								int rowNumber = row.getRowNum() + 1;
+								
 								LOGGER.error("Cell type of residential address is empty");
 								return "Please enter residential address of candidate at row: "+rowNumber;
 							}
 							else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
 							{
-								int rowNumber = row.getRowNum() + 1;
+								
 								LOGGER.error("Cell type of residential address is numeric");
 								return "Residential address cannot have a numeric value at row: "+rowNumber;
 
 							}
 							else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
-								LOGGER.debug("Cell type of residential address is String");
-								LOGGER.debug("Capturing value of header : Residential Address ");
-								masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.error("Residential address has no value");
+									LOGGER.error("Returning message: Please enter residential address of candidate");
+									return "Please enter residential address of candidate at row: "+rowNumber;
+								}
+								else {
+									LOGGER.debug("Cell type of residential address is String");
+									LOGGER.debug("Capturing value of header : Residential Address : "+cell.getStringCellValue());
+									masterSheetImportDto.setResidentialAddress(cell.getStringCellValue());
+								}
+								
 							}
 							else
 							{
-								int rowNumber = row.getRowNum() + 1;
 								LOGGER.error("Not a valid value for Cell type of residential address");
-								return "Not a valid value for Residential address at row : "+rowNumber +" value should have text and digits";
+								return "Invalid value for Residential address at row : "+rowNumber +" value should have text and digits";
 							}
 						}
 						else if (cell.getColumnIndex() == 26) 
 						{
-							LOGGER.debug("Checking the cell type of workplace address");
+							LOGGER.debug("Reading the cell workplace address");
+							int rowNumber = row.getRowNum() + 1;
 							if(cell.getCellType() == Cell.CELL_TYPE_BLANK)
 							{
-								int rowNumber = row.getRowNum() + 1;
+								
 								LOGGER.error("Cell type of workplace address is empty");
 								return "Please enter workplace address of candidate at row: "+rowNumber;
 							}
 							else if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
 							{
-								int rowNumber = row.getRowNum() + 1;
 								LOGGER.error("Cell type of workplace address is numeric");
 								return "Workplace address cannot have a numeric value at row: "+rowNumber;
 
 							}
 							else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
 							{
-								LOGGER.debug("Capturing value of header : Workplace Address");
-								masterSheetImportDto.setWorkplaceAddress(cell.getStringCellValue());
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.error("Workplace address has no value");
+									LOGGER.error("Returning message: Please enter Workplace address of candidate");
+									return "Please enter Workplace address of candidate at row: "+rowNumber;
+								}
+								else {
+									LOGGER.debug("Capturing value of header : Workplace Address "+cell.getStringCellValue());
+									masterSheetImportDto.setWorkplaceAddress(cell.getStringCellValue());
+								}
+								
 							}
 							else
 							{
-								int rowNumber = row.getRowNum() + 1;
 								LOGGER.debug("Not a valid value for Workplace Address");
-								return "Not a valid value for Workplace address at row: "+rowNumber+ " value should have text and digits";
+								return "Invalid value for Workplace address at row: "+rowNumber+ " value should have text and digits";
 							}
 						}
 						else if (cell.getColumnIndex() == 27)
 						{
-							LOGGER.debug("Checking the cell type of medical examination conducted cell");
-
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Cell type of medical examination conducted is numeric");
-									return "Medical examination conducted canot have a numeric value at row: "+rowNumber;
+							LOGGER.debug("Reading the column Medical Examination Conducted");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Medical Examination Conducted");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Medical Examination Conducted is blank, so skipping the insertion of value for Medical Examination Conducted");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Medical Examination Conducted has empty string, so skipping the insertion of value for Medical Examination Conducted");
 								}
-								else if (cell.getCellType() == Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Medical Examination Conducted");
-									masterSheetImportDto.setMedicalExaminationConducted(cell.getStringCellValue());  
+								else {
+									LOGGER.debug("The Medical Examination Conducted is string, has value :"+ cell.getStringCellValue());
+									masterSheetImportDto.setMedicalExaminationConducted(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Not a valid value for medical exam conducted field");
-									return "Not a valid value for Medical examination conducted column at row: "+rowNumber+ " value should have text only";
-
-								}
+								
+							}
+							else {
+								LOGGER.error("The Medical Examination Conducted is not blank and not String");
+								LOGGER.error("Returning message: The Medical Examination Conducted has invalid format");
+								return "Medical Examination Conducted has invalid format at row : "+rowNumber;
+								
 							}
 
 						}
 						else if (cell.getColumnIndex() == 28) 
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Cell type of assessment resulted is numeric");
-									return "Assessment result canot have a numeric value at row: "+rowNumber;
+							LOGGER.debug("Reading the column Assessment Result");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Assessment Result");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Assessment Result is blank, so skipping the insertion of value for Assessment Result");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Assessment Result has empty string, so skipping the insertion of value for Assessment Result");
 								}
-								else if(cell.getCellType() == Cell.CELL_TYPE_BLANK)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Not a valid value for assessment result column");
-									return "Not a valid value for Assessment result coulmn at row: "+rowNumber+ " value should have text only";
-								}
-								else
-								{
-									LOGGER.debug("capturing the value of assessment result");
-									LOGGER.debug("The assesment result is : " +cell.getStringCellValue());
+								else {
+									LOGGER.debug("The Assessment Result is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setAssessmentResult(cell.getStringCellValue());
 								}
+								
 							}
+							else {
+								LOGGER.error("The Assessment Result is not blank and not String");
+								LOGGER.error("Returning message: The Assessment Result has invalid format");
+								return "Assessment Result has invalid format at row : "+rowNumber;
+								
+							}
+
 						} 
 						else if (cell.getColumnIndex() == 29)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Cell type of employment type is numeric");
-									return "Employment type canot have a numeric value at row: "+rowNumber;
+							LOGGER.debug("Reading the column Employment Type");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Employment Type");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Employment Type is blank, so skipping the insertion of value for Employment Type");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Employment Type has empty string, so skipping the insertion of value for Employment Type");
 								}
-								else if(cell.getCellType() == Cell.CELL_TYPE_STRING)
-								{
-									LOGGER.debug("Capturing value of header : Employment Type");
+								else {
+									LOGGER.debug("The Employment Type is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setEmploymentType(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for Cell type of employment type");
-									return "Not a valid value for Employment type at row: "+rowNumber+ " value should have text only";
-								}
-							}				
+								
+							}
+							else {
+								LOGGER.error("The Employment Type is not blank and not String");
+								LOGGER.error("Returning message: The Employment Type has invalid format");
+								return "Invalid Employment Type format at row : "+rowNumber;
+								
+							}
+
 						}
 						else if (cell.getColumnIndex() == 30)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Reading value of Whether hired on ad hoc/contractual basis by the MC at row : "+ rowNumber);
+							LOGGER.debug("Reading the column Whether hired on ad hoc / contractual basis by the MC directly (Yes/No)");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Whether hired on ad hoc / contractual basis by the MC directly (Yes/No)");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) is blank, so skipping the insertion of this value");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) has empty string, so skipping the insertion of this value");
+								}
+								else if(cell.getStringCellValue().length()>3) {
+									LOGGER.error("The Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) has more than 3 letter");
+									LOGGER.error("Returning error message: Please enter 'Yes' or 'No' for Whether hired on ad hoc / contractual basis by the MC directly ");
+									return "Please enter 'Yes' or 'No' for Whether hired on ad hoc / contractual basis by the MC directly at row : "+rowNumber;
+								}
+								else {
+									LOGGER.debug("The Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setHiredByMc(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for Cell type of Whether hired on ad hoc/contractual basis by the MC");
-									return "Not a valid value for column  : Whether hired on ad hoc/contractual basis by the MC at row : "+rowNumber;
-								}
+								
 							}
-												
+							else {
+								LOGGER.error("The Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) is not blank and not String");
+								LOGGER.error("Returning message: The Whether hired on ad hoc / contractual basis by the MC directly (Yes/No) has invalid format");
+								return "Column 'Whether hired on ad hoc' has invalid format at row : "+rowNumber;
+								
+							}
+
 						}
 						else if (cell.getColumnIndex() == 31)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Reading value of Name of the Employer (In case hired through outsourced agency/Vendor) at row : "+ rowNumber);
+							LOGGER.debug("Reading the column Name of Employer");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the type of column Name of Employer");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Name of Employer is blank, so skipping the insertion of this value");
+							}
+							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Name of Employer has empty string, so skipping the insertion of this value");
+								}
+								else {
+									LOGGER.debug("The Name of Employer is string, has value :"+ cell.getStringCellValue());
 									masterSheetImportDto.setOutsourcedEmployerName(cell.getStringCellValue());
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for Cell type Name of the Employer (In case hired through outsourced agency/Vendor)");
-									return "Not a valid value for column  :Name of the Employer at row : "+rowNumber;
-								}
+								
 							}
+							else {
+								LOGGER.error("The Name of Employer is not blank and not String");
+								LOGGER.error("Returning message: The Name of Employer has invalid format");
+								return "Invalid format of Name of Employer at row : "+rowNumber;
+								
+							}
+
 						}
 						else if (cell.getColumnIndex() == 32)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Reading value of Employer Contact at row : "+ rowNumber);
-									masterSheetImportDto.setOutsourcedEmployerContact( (long)cell.getNumericCellValue());
+							LOGGER.debug("Reading the column Employer Contact Number");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Employer Contact Number");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Employer Contact Number is blank, so skipping the insertion of value for Employer Contact Number");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Employer Contact Number has empty string, so skipping the insertion of Employer Contact Number");
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for Cell type Employer Contact  at row " + rowNumber);
-									return "Not a valid value for column  : Employer Contact at row : "+rowNumber;
+								else {
+									LOGGER.error("TheEmployer Contact Number has value string :"+ cell.getStringCellValue());
+									return "Invalid format Employer Contact Number at row : "+rowNumber+", Please enter numeric value";
 								}
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								if(cell.getNumericCellValue()>0) {
+									LOGGER.debug("The Employer Contact Number has value : "+cell.getNumericCellValue());
+									masterSheetImportDto.setOutsourcedEmployerContact((long) cell.getNumericCellValue());
+								}
+								else {
+									LOGGER.debug("Employer Contact Number has value less than 1, so skipping the insertion of Employer Contact Number");
+								}
+								
+							}
+							else {
+								LOGGER.error("The Employer Contact Number is not blank and not number");
+								LOGGER.error("Returning message: The Employer Contact Number has invalid format");
+								return "Invalid format of Employer Contact Number at row : "+rowNumber;
+								
 							}
 							
 						}
 						else if (cell.getColumnIndex() == 33)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_NUMERIC)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Reading value of Monthly Salary at row : "+ rowNumber);
-									masterSheetImportDto.setMonthlySalary( (long)cell.getNumericCellValue());
+							LOGGER.debug("Reading the column Monthly Salary");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the cell type of Monthly Salary");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column Monthly Salary is blank, so skipping the insertion of value for Monthly Salary");
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The Monthly Salary has empty string, so skipping the insertion of Employer Contact Number");
 								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for column Monthy Salary at row : "+rowNumber);
-									return "Not a valid value for column Monthly Salary at row : " + rowNumber;
+								else {
+									LOGGER.error("The Monthly Salary has value string :"+ cell.getStringCellValue());
+									return "Invalid format of Monthly Salary at row : "+rowNumber+". Please enter numeric value";
 								}
+								
+							}
+							else if(cell.getCellType()==Cell.CELL_TYPE_NUMERIC) {
+								if(cell.getNumericCellValue()>0) {
+									LOGGER.debug("The Monthly Salary has value : "+cell.getNumericCellValue());
+									masterSheetImportDto.setMonthlySalary((long) cell.getNumericCellValue());
+								}
+								else {
+									LOGGER.debug("Monthly Salary has value less than 1, so skipping the insertion of Monthly Salary");
+								}
+								
+							}
+							else {
+								LOGGER.error("The Monthly Salary is not blank and not number");
+								LOGGER.error("Returning message: The Employer Contact Number has invalid format");
+								return "Invalid format Employer Contact Number at row : "+rowNumber;
+								
 							}
 							
 						}
 						else if (cell.getColumnIndex() == 34)
 						{
-							if(!(cell.getCellType() == Cell.CELL_TYPE_BLANK))
-							{
-								if(cell.getCellType() == Cell.CELL_TYPE_STRING)
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.debug("Reading value for PF/ESI Provided (Yes/No) at row : " + rowNumber);
-									masterSheetImportDto.setPfOrEsiProvided(cell.getStringCellValue());
-								}
-								else
-								{
-									int rowNumber = row.getRowNum() + 1;
-									LOGGER.error("Not a valid value for column PF/ESI Provided (Yes/No) at row : " + rowNumber);
-									return "Not a valid value for column PF/ESI Provided (Yes/No) at row : " + rowNumber;
-								}
+							LOGGER.debug("Reading the column PF/ESI Provided");
+							
+							int rowNumber = row.getRowNum() + 1;
+							LOGGER.debug("Checking the type of column PF/ESI Provided");
+							
+							if(cell.getCellType() == Cell.CELL_TYPE_BLANK) {
+								LOGGER.debug("The column PF/ESI Provided is blank, so skipping the insertion of this value");
 							}
 							
+							else if(cell.getCellType()==Cell.CELL_TYPE_STRING) {
+								
+								if(cell.getStringCellValue()==null || cell.getStringCellValue().isEmpty() || cell.getStringCellValue()=="" ) {
+									LOGGER.debug("The PF/ESI Provided has empty string, so skipping the insertion of this value");
+								}
+								else if(cell.getStringCellValue().length()>3) {
+									LOGGER.error("The PF/ESI Provided(Yes/No) has more than 3 letter");
+									LOGGER.error("Returning error message: Please enter 'Yes' or 'No' for PF/ESI Provided");
+									return "Please enter 'Yes' or 'No' for PF/ESI Provided at row : "+rowNumber;
+								}
+								else {
+									LOGGER.debug("The PF/ESI Provided is string, has value :"+ cell.getStringCellValue());
+									masterSheetImportDto.setPfOrEsiProvided(cell.getStringCellValue());
+								}
+								
+							}
+							else {
+								LOGGER.error("The PF/ESI Provided is not blank and not String");
+								LOGGER.error("Returning message: The PF/ESI Provided has invalid format");
+								return "PF/ESI Provided has invalid format at row : "+rowNumber;
+								
+							}
+
 						}
 				}
 				candidateDetails.add(masterSheetImportDto);
 				insertResult = dataImportDao.masterSheetImport(candidateDetails, batchId);
 			    fileStream.close();
 			
-			//To be reviewed
 			if(insertResult==-425)
 			{
 				LOGGER.debug("Duplicate value of mobile number is present");
@@ -1601,8 +1822,8 @@ public class DataImportService {
 	}
 	/**
 	 * This method is used to - 
- 1. First construct the batch ID as per the requirements using utility methods
- 2. Invoke the DAO to insert the record in the batchDetails table.
+	 1. First construct the batch ID as per the requirements using utility methods
+	 2. Invoke the DAO to insert the record in the batchDetails table.
 
 	 * @param userEmail
 	 * @param municipality
@@ -1668,45 +1889,9 @@ public class DataImportService {
 		int batchStatus = -10;
 		int status = -10;
 		int employerStatus = -10;
-		//		int updatedCentre = 0;
-		//		String centerInserted = "";
-		//		LOGGER.debug("In Data Import Service");
-		//		LOGGER.debug("1. Check if the centre Id exists in the database");
-		//		int centreExistence = dataImportDao.checkCentreExistence(masterSheetSubmitDto);
-		//		LOGGER.debug("The response of existence" + centreExistence);
-		//
-		//		if (centreExistence == 1) {
-		//			LOGGER.debug("In IF -- When Centre Id already exist");
-		//			LOGGER.debug("Sending Data to DataImportDao - updateCentreDetails");
-		//		} else {
-		//			LOGGER.debug("In ELSE -- When Centre Id does not exist, hence inserting the centre id");
-		//			LOGGER.debug("Sending request to DAO to insert new centreDetais");
-		//			centerInserted = dataImportDao.insertCentreDetails(userEmail, masterSheetSubmitDto);
-		//			LOGGER.debug("The center Id inserted is" + updatedCentre);
-		//		}
 
-		//Update details of a batch
 		batchStatus = dataImportDao.updateBatchDetails(masterSheetSubmitDto);
-		// To insert the employer if batch update was successful and 
-		//				if ((masterSheetSubmitDto.getEmployerName() != null || masterSheetSubmitDto.getEmployerName() != null) && batchStatus > 0) {
-		//
-		//					int checkEmployer = employerDao.employerExists(masterSheetSubmitDto.getBatchId().toString(), userEmail);
-		//					if (checkEmployer == 0) {
-		//						LOGGER.debug("In IF -- When Employer does not exist for this entered batch");
-		//						LOGGER.debug("Sending request to employerDao - to insert new employer");
-		//						status = employerDao.insertEmployer(masterSheetSubmitDto.getEmployerName(),
-		//								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-		//								userEmail);
-		//						LOGGER.debug("Status of Employer insertion " + status);
-		//					} else if (checkEmployer == 1) {
-		//						LOGGER.debug("In ELSE-IF -- When Employer does exist");
-		//						LOGGER.debug("Sending request to employerDao - to update employer details");
-		//						employerStatus = employerDao.updateEmployer(masterSheetSubmitDto.getEmployerName(),
-		//								masterSheetSubmitDto.getEmployerNumber(), masterSheetSubmitDto.getBatchId().toString(),
-		//								userEmail);
-		//						LOGGER.debug("Status of Employer updation " + status);
-		//					}
-		//				}
+
 		LOGGER.debug("Status of batch update is : " + batchStatus);
 		LOGGER.debug("Status of employer update/insert is : "+employerStatus );
 
@@ -1714,87 +1899,5 @@ public class DataImportService {
 		return status;
 	}
 
-	/**
-	 * This method returns the name of the training partner for the given userEmail
-	 * @param userEmail 
-	 */
-	//	public String getTrainingPartnerName(String userEmail,String municipality)
-	//	{
-	//		LOGGER.debug("Request recieved to get training partner name for username :" + userEmail);
-	//		if(userEmail==null)
-	//		{
-	//			LOGGER.error("UserEmail in method getTrainingPartnerName is null");
-	//			LOGGER.error("Returning Null");
-	//			return null;
-	//		}
-	//		try
-	//		{
-	//			LOGGER.debug("In try block to get TP Name for user : " + userEmail);
-	//			LOGGER.debug("Calling method to get name of training partner with userName : " + userEmail);
-	//			String trainingPartnerName = dataImportDao.getTrainingPartnerName(userEmail);
-	//			LOGGER.debug("Sending request to getNumberOfBatches method in service to get Number of Batches");
-	//			return getNumberOfBatches(userEmail,trainingPartnerName,municipality);
-	//			
-	//		}
-	//		catch(Exception e)
-	//		{
-	//			LOGGER.error("An exception occured while fetching training partner name : "+ e);
-	//			return null;
-	//		}
-	//		
-	//	}
 
-
-
-	//	/**
-	//	 * This method generates number of batches and also generates the unique batchID
-	//	 * @param userEmail
-	//	 * @param trainingPartnerName
-	//	 * @return
-	//	 */
-	//	public String getNumberOfBatches(String userEmail, String trainingPartnerName, String municipality) {
-	//		// TODO Auto-generated method stub
-	//		
-	//		LOGGER.debug("Batch to be created for municipality: " +municipality);
-	//		LOGGER.debug("Username recieved in method getNumberOfBatches is : " + userEmail + " trainingPartnerName " + trainingPartnerName);
-	//		LOGGER.debug("Sending params to dao to get the number of batches for email : " + userEmail);
-	//		Integer count = dataImportDao.getNumberOfBatches(userEmail) ;
-	//		LOGGER.debug("The number of batches are : " + count);
-	//		Integer latestBatch = count + 1; //the latest batch to be generated
-	//			LOGGER.debug("The number of batches for userEmail : " + userEmail + " are : " + count);
-	//			LOGGER.debug("Creating unique format for batch id ");
-	//			LOGGER.debug("Creating batch id for municipality : " + municipality);
-	//			LOGGER.debug("Calling String Utility method to get the unique name for training partner");
-	//			String[] nameArray = stringUtility.splitBySpace(trainingPartnerName);	
-	//			LOGGER.debug("Sending request to utility method to get the first character for each splitted string");
-	//			String uniqueName = stringUtility.getFirstLetter(nameArray);
-	//			
-	//			//Gets the Training partner unique names
-	//			
-	//			LOGGER.debug("The unique name of the user is : " + uniqueName);
-	//			LOGGER.debug("Calling method to get unique name for municipality");
-	//			LOGGER.debug("Calling method to split name ");
-	//			
-	//			String[] municipalityNameArray = stringUtility.splitBySpace(municipality);
-	//			LOGGER.debug("Sending request to string utility to get unique municipality name");
-	//			
-	//			String uniqueMunicipalityName = stringUtility.getUniqueMunicipalityName(municipalityNameArray);
-	//			String uniqueBatchId = uniqueName+uniqueMunicipalityName+latestBatch;
-	//			
-	//			LOGGER.debug("The unique batchId for TP with username : " + userEmail + " is : " + uniqueBatchId);
-	//			LOGGER.debug("Sending unique batch id ,user email and municipality to Tp to insert into batch table");
-	//			Integer batchIdInsertStatus = dataImportDao.insertBatchId(userEmail, uniqueBatchId, municipality);
-	//			
-	//			if(batchIdInsertStatus==1)
-	//			{
-	//				LOGGER.debug("Batch id inserted successfully");
-	//				return uniqueBatchId;
-	//			}
-	//			else
-	//			{
-	//				LOGGER.error("Cannot insert batch id" );
-	//				return null;
-	//			}
-	//	
-	//	}
 }
