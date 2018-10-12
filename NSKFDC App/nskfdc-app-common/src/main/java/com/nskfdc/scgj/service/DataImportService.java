@@ -1750,10 +1750,20 @@ public class DataImportService {
 					LOGGER.debug("No Candidate Details available");
 					LOGGER.debug("Adding enrollment number to excel sheet");
 					Integer batchSize = 1;
+			
+					
 					while(batchSize <= 50)
 					{
-						candidateSheetInformation.add(new MasterSheetImportDto(batchId+"/"+batchSize.toString()));
-						batchSize++;
+						
+						if(batchSize<10)
+						{
+							candidateSheetInformation.add(new MasterSheetImportDto(batchId+"/"+"0"+batchSize.toString()));
+						}
+						else if(batchSize>=10)
+						{
+							candidateSheetInformation.add(new MasterSheetImportDto(batchId+"/"+batchSize.toString()));
+						}
+							batchSize++;
 					}
 				}
 				LOGGER.debug("Creating object of JRBean Collection Data Source " );
