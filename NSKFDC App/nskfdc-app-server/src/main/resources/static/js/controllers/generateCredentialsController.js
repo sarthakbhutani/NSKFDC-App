@@ -25,7 +25,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		        enableFiltering: false,
 		        enableCellEdit: false,
 		        enableColumnMenus: false,
-		        enableHorizontalScrollbar: 0,
+		        enableHorizontalScrollbar: true,
 		        enableVerticalScrollbar: 0,
 		        paginationPageSizes: [5, 10, 20, 30],
 		        paginationPageSize: 10,
@@ -41,12 +41,12 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 		            {
 		            	name: 'trainingPartner',
 		            	displayName: 'Training Partner',
-		                width: '23%'
+		                width: '40%'
 		            },
 		            {
 		                name: 'userEmail',
 		                displayName: 'Email ID',
-		                width: '30%'
+		                width: '40%'
 		            },
 		            {
 		                name: 'password',
@@ -115,7 +115,7 @@ scgj.controller("generateCredentialsController" , function($scope, $http, $timeo
 	 
 	 /*----------- Grid Height -------------*/
 	 $scope.getTableHeight=function(){
-		 var rowHeight=30;
+		 var rowHeight=50;
 		 var headerHeight=30;
 		
 		 return{
