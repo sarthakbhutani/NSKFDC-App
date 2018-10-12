@@ -463,7 +463,7 @@ var url = '/getBatchIdfortrainer';
     	 $scope.generateCandidateSheet= function(){
     		 
     		 $scope.rollingGenerateCandidateSheet= true;
-    		 $scope.generatingCandidateSheet="Please wait generating Candidate Sheet";
+    		 $scope.generatingCandidateSheet="Please wait while we generate Candidate Sheet for you";
     		 
     		 var url='/downloadFinalMasterSheet?batchId='+$scope.generatebatchDetails.value;  	  
          	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)

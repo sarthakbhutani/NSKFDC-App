@@ -73,7 +73,7 @@ scgj.controller("dashboardController" , function($scope, $http){
             	 enabled : false
              },
              title: {
-                 text: "Top 5 States with maximum training centers"
+                 text: "Top 5 States with Maximum Training Centers"
              },
              colors:["#927571"],
              xAxis: {
