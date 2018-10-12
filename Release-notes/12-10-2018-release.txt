@@ -1,0 +1,9 @@
+These are the release notes for build number #774
+Fixed the bugs found in build #766
+NA-414
+NA-421
+Unexpected behavior while reading columns of Candidate Excel sheet has been fixed for Story
+NA-432
+
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail
