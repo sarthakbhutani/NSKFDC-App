@@ -1,4 +1,4 @@
-These are the release notes for build number #777
+These are the release notes for build number #778
 Fixed the bugs found in build #766
 NA-414
 NA-421
