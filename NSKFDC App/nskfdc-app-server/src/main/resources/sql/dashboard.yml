@@ -4,9 +4,7 @@ DashboardStatistics:
 
   
  showNumberOfOngoingTrainings: >
-  Select Count(*) from batchdetails where 
-   batchStartDate<=Curdate()
-    AND batchEndDate>Curdate();
+  select Count(*) from batchdetails where Curdate() BETWEEN batchStartDate AND batchEndDate;
    
  showNumberOfTrainingPartners: >
   Select Count(*) from trainingpartnerdetails;
