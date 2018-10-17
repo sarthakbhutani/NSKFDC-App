@@ -1,0 +1,5 @@
+These are the release notes for build number #789
+Fixed the bugs found in build #785
+NA-450
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail
