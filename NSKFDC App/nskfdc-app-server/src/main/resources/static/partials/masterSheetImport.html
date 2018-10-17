@@ -226,7 +226,8 @@
 	 <div class="subheading">
 	 <h4>Generate Candidate Sheet</h4>
 	 </div>
-	 <form name="candidateSheetForm" ng-submit="generateCandidateSheet()">
+	
+	 	<form name="candidateSheetForm" ng-submit="generateCandidateSheet()">
 	  <div class="col-md-3">
             <select  ng-model="generatebatchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
             <option selected disabled value="">Enter Batch ID</option>
@@ -234,16 +235,18 @@
             </select>
             
          </div>
-         <div class="">
-         	<button type="submit" class="btn btn-primary" id="candidateSheetButton">Generate</button>
+         <div class="col-md-9">
+        <button type="submit" class="btn btn-primary" id="candidateSheetButton">Generate</button>	
          <span><p id="successId" ng-show="generateCandidateSheetError">{{generateCandidateSheetMessage}}</p></span>
          <span ng-show="rollingGenerateCandidateSheet">
-                    <img src="gif/Progress.gif"/>
+                    <img src="gif/Progress.gif" id="generateSheetgif"/>
                     {{generatingCandidateSheet}}
                 </span>
          </div>
         </form>
-     <div class="subheading">
+	 
+	 
+     <div class="subheading col-md-12">
 	 	<h4>Upload Candidate Details</h4>
 	 </div>
 	 <form name="uploadFile" ng-submit="uploadCandidateSheet()">
@@ -271,7 +274,7 @@
              
            </form>
            <div class="col-md-12" align="right">
-             <div class="col-md-6" id="rollinguploadCandidateSheetGif">
+             <div class="col-md-4" id="rollinguploadCandidateSheetGif">
              <span>
              <img src="gif/Progress.gif" id="uploadGif"/>
                     </span>
@@ -279,7 +282,7 @@
                    <p> Please wait while file is uploading</p></span>
                 	
              </div>
-             <div class="col-md-6">
+             <div class="col-md-8">
              <p id="importExcelMessage" class="importExcelMessageStyle"></p>
              </div>
              </div>
