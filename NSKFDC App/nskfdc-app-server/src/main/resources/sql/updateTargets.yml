@@ -2,6 +2,6 @@ updateTargets:
  updateTargets: >
   UPDATE trainingpartnerdetails SET targets = targets + :updatedTargets , targetApprovalDate = curDate() WHERE nsdcRegNumber= :nsdcRegNumber;
  updatedTargetDetails: >
-  select Distinct nsdcRegNumber,trainingPartnerName,targets,targetApprovalDate from nskfdc.trainingpartnerdetails where nsdcRegNumber= :nsdcRegNumber;
+  select Distinct nsdcRegNumber,trainingPartnerName,targets,targetApprovalDate from trainingpartnerdetails where nsdcRegNumber= :nsdcRegNumber;
  checkUserExistence: >
-  select exists ( Select 1 from nskfdc.trainingpartnerdetails where trainingpartnerdetails.nsdcRegNumber = :nsdcRegNumber);
+  select exists ( Select 1 from trainingpartnerdetails where trainingpartnerdetails.nsdcRegNumber = :nsdcRegNumber);

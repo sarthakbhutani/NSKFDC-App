@@ -1,14 +1,14 @@
 insertBatchNumber: 
  checkBatchNumberExistence: >
-  select scgjBatchNumber from batchDetails where batchId= :batchId;
+  select scgjBatchNumber from batchdetails where batchId= :batchId;
  
  updateBatchNumber: >
-  UPDATE nskfdc.batchDetails SET scgjBatchNumber= :scgjBatchNumber , updatedOn = curdate() WHERE batchId= :batchId;
+  UPDATE batchdetails SET scgjBatchNumber= :scgjBatchNumber , updatedOn = curdate() WHERE batchId= :batchId;
   
  showBatchNumberDetails: >
-  SELECT batchDetails.batchId as batchId, batchDetails.scgjBatchNumber as SDMSBatchNumber,batchDetails.updatedOn as updatedOn, trainingpartnerdetails.trainingPartnerName as trainingPartnerName FROM batchDetails
+  SELECT batchdetails.batchId as batchId, batchdetails.scgjBatchNumber as SDMSBatchNumber,batchdetails.updatedOn as updatedOn, trainingpartnerdetails.trainingPartnerName as trainingPartnerName FROM batchdetails
    INNER JOIN trainingpartnerdetails
     ON batchdetails.userEmail=trainingpartnerdetails.userEmail where batchId = :batchId; 
  
  checkBatchNumberForBatchId: >
-  SELECT scgjBatchNumber FROM nskfdc.batchdetails WHERE batchId = :batchId;
+  SELECT scgjBatchNumber FROM batchdetails WHERE batchId = :batchId;

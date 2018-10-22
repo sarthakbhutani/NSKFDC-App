@@ -11,28 +11,28 @@ uploadDocuments:
   Select 1 from batchdetails where batchId = :batchId;
   
  checkExistence: >
-  SELECT exists (Select 1 from nskfdc.uploadedDocuments where uploadedDocuments.batchId = :batchId and uploadedDocuments.userEmail = :userEmail);
+  SELECT exists (Select 1 from uploadeddocuments where uploadeddocuments.batchId = :batchId and uploadeddocuments.userEmail = :userEmail);
   
  insertUserDetails: >
-  INSERT INTO nskfdc.uploadeddocuments(userEmail,batchId) VALUES (:userEmail,:batchId);
+  INSERT INTO uploadeddocuments(userEmail,batchId) VALUES (:userEmail,:batchId);
   
  updateOccupationCertificatePath: >
-  UPDATE nskfdc.uploadeddocuments SET occupationCertificate=1,dateUploaded = curdate(),occupatioCertificatePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  UPDATE uploadeddocuments SET occupationCertificate=1,dateUploaded = curdate(),occupatioCertificatePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
   
  updateFinalBatchReportPath: >
-  UPDATE nskfdc.uploadeddocuments SET finalBatchReport = 1,dateUploaded = curdate(), finalBatchReportPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  UPDATE uploadeddocuments SET finalBatchReport = 1,dateUploaded = curdate(), finalBatchReportPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
   
  updateAttendanceSheetPath: >
-  UPDATE nskfdc.uploadeddocuments SET attendanceSheet = 1,dateUploaded = curdate(), attendanceSheetPath = :path WHERE batchId = :batchId and userEmail = :userEmail; 
+  UPDATE uploadeddocuments SET attendanceSheet = 1,dateUploaded = curdate(), attendanceSheetPath = :path WHERE batchId = :batchId and userEmail = :userEmail; 
  
  updateNSKFDCSheet: >
-  UPDATE nskfdc.uploadeddocuments SET dataSheetForNSKFC = 1,dateUploaded = curdate(), dataSheetForNSKFCPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  UPDATE uploadeddocuments SET dataSheetForNSKFC = 1,dateUploaded = curdate(), dataSheetForNSKFCPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
  
  updateSDMSSheet: >
-  UPDATE nskfdc.uploadeddocuments SET dataSheetForSDDMS = 1,dateUploaded = curdate(), dataSheetForSDMSPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  UPDATE uploadeddocuments SET dataSheetForSDDMS = 1,dateUploaded = curdate(), dataSheetForSDMSPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
  
  updateMinuteOfSelectionCommittee: >
-  UPDATE nskfdc.uploadeddocuments SET minuteOfSelectionCommittee = 1,dateUploaded = curdate(), minuteOfSelectionCommitteePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  UPDATE uploadeddocuments SET minuteOfSelectionCommittee = 1,dateUploaded = curdate(), minuteOfSelectionCommitteePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
   
    
   

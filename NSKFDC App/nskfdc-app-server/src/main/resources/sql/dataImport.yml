@@ -33,7 +33,7 @@ dataImport:
   select distinct trainingPartnerName from trainingpartnerdetails where userEmail = :userEmail;
   
  numberOfBatches: > 
-  select COUNT(batchId) from batchDetails where batchDetails.userEmail= :userEmail;
+  select COUNT(batchId) from batchdetails where userEmail= :userEmail;
 
  showbatchId: >
   SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
@@ -42,10 +42,10 @@ dataImport:
   UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName,centreId=:centreId , centreState = :centreState, centreCity =:centreCity , employerName = :employerName , employerContactNumber = :employerContactNumber where batchId=:batchId;
 
  importCandidate: >
-  INSERT INTO nskfdc.candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob ,accountNumber, ifscCode, bankName, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS,hiredByMc,outsourcedEmployerName,outsourcedEmployerContact,monthlySalary,pfOrEsiProvided) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,  :accountNumber, :ifscCode, :bankName, :guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS,:hiredByMc,:outsourcedEmployerName,:outsourcedEmployerContact,:monthlySalary,:pfOrEsiProvided);
+  INSERT INTO candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob ,accountNumber, ifscCode, bankName, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS,hiredByMc,outsourcedEmployerName,outsourcedEmployerContact,monthlySalary,pfOrEsiProvided) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,  :accountNumber, :ifscCode, :bankName, :guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS,:hiredByMc,:outsourcedEmployerName,:outsourcedEmployerContact,:monthlySalary,:pfOrEsiProvided);
   
  importBankDetails: >
-  INSERT INTO nskfdc.bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
+  INSERT INTO bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
    
  checkCandidateExistance: >
   SELECT EXISTS(SELECT 1 FROM candidate WHERE candidate.enrollmentNumber = :enrollmentNumber);  
@@ -57,7 +57,7 @@ dataImport:
   UPDATE candidate set salutation =:salutation,firstName =:firstName,lastName =:lastName,gender =:gender,mobileNumber=:mobileNumber,educationLevel=:educationLevel,state=:state,district=:district,aadharCardNumber=:aadharCardNumber,idProofType=:idProofType,idProofNumber=:idProofNumber,disabilityType=:disabilityType,age=:age,dob=:dob,guardianType=:guardianType,firstNameFather=:firstNameFather,lastNameFather=:lastNameFather,motherName=:motherName,residentialAddress=:residentialAddress,msId=:msId,occupationType=:occupationType,employmentType=:employmentType,workplaceAddress=:workplaceAddress,assessmentResult=:assessmentResult,medicalExamConducted=:medicalExaminationConducted,relationWithSKMS=:relationWithSKMS,batchId=:batchId, ifscCode=:ifscCode,bankName=:bankName , accountNumber = :accountNumber,hiredByMc = :hiredByMc,outsourcedEmployerName = :outsourcedEmployerName,outsourcedEmployerContact = :outsourcedEmployerContact,monthlySalary = :monthlySalary, pfOrEsiProvided = :pfOrEsiProvided where enrollmentNumber =:enrollmentNumber;
   
  updateExistingBankDetails: >
-  UPDATE nskfdc.bankdetails set ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where accountNumber=:accountNumber;
+  UPDATE bankdetails set ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where accountNumber=:accountNumber;
   
  nsdcRegNumber: >
   select REVERSE(CAST(REVERSE(nsdcRegNumber) AS UNSIGNED)) from trainingpartnerdetails where userEmail= :userEmail;

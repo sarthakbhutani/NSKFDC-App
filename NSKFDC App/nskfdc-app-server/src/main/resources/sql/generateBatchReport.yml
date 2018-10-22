@@ -3,16 +3,16 @@ batchIdQuery:
   select batchId from batchdetails where userEmail=:userEmail;
   
  showUpdateBatchNumber: >
-  select distinct scgjBatchNumber from nskfdc.batchDetails where batchId = :batchId;
+  select distinct scgjBatchNumber from batchdetails where batchId = :batchId;
 
  showLocationDetails: >
   SELECT centreState,centreCity,municipality,wardType,scgjBatchNumber FROM batchdetails left join uploadeddocuments ON batchdetails.batchId = uploadeddocuments.batchId where batchdetails.batchId=:batchId;
   
  showTrainingDetails: >
-  select selectionCommitteeDate,batchStartDate,batchEndDate,trainingPartnerName,principalTrainerName,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND ((assessmentResult='Fail') || (assessmentResult='Pass'))) as candidateAssessed,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (assessmentResult='Pass')) as candidatePassed,medicalExamDate,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (medicalExamConducted='Yes')) as medicalExamConducted,count(enrollmentNumber) from nskfdc.batchdetails join nskfdc.candidate on batchdetails.batchId=candidate.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where batchdetails.batchId=:batchId;
+  select selectionCommitteeDate,batchStartDate,batchEndDate,trainingPartnerName,principalTrainerName,(select count(*) from candidate where (candidate.batchId=:batchId) AND ((assessmentResult='Fail') || (assessmentResult='Pass'))) as candidateAssessed,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (assessmentResult='Pass')) as candidatePassed,medicalExamDate,(select count(*) from nskfdc.candidate where (candidate.batchId=:batchId) AND (medicalExamConducted='Yes')) as medicalExamConducted,count(enrollmentNumber) from nskfdc.batchdetails join nskfdc.candidate on batchdetails.batchId=candidate.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where batchdetails.batchId=:batchId;
   
  showCandidateDetails: >
-  select firstName,lastName,aadharCardNumber,mobileNumber,enrollmentNumber from nskfdc.candidate where (batchId=:batchId AND assessmentResult='PASS');
+  select firstName,lastName,aadharCardNumber,mobileNumber,enrollmentNumber from candidate where (batchId=:batchId AND assessmentResult='PASS');
   
  showReport: >
   select batchId,userEmail from batchdetails where batchdetails.batchId= :batchId and userEmail= :userEmail;
