@@ -6,6 +6,44 @@ import com.nskfdc.scgj.common.BaseDto;
 
 public class GenerateAttendanceSheetDto extends BaseDto{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public Calendar getC() {
+		return c;
+	}
+	public void setC(Calendar c) {
+		this.c = c;
+	}
+	public DateFormat getDf() {
+		return df;
+	}
+	public void setDf(DateFormat df) {
+		this.df = df;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+	public void setStringdate1(String stringdate1) {
+		this.stringdate1 = stringdate1;
+	}
+	public void setStringdate2(String stringdate2) {
+		this.stringdate2 = stringdate2;
+	}
+	public void setStringdate3(String stringdate3) {
+		this.stringdate3 = stringdate3;
+	}
+	public void setStringdate4(String stringdate4) {
+		this.stringdate4 = stringdate4;
+	}
+	public void setStringdate5(String stringdate5) {
+		this.stringdate5 = stringdate5;
+	}
+
 	private String name;
 	private String fatherName;
 	private String mobileNumber;
@@ -75,11 +113,33 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 		stringdate5=df.format(c.getTime());
 	}
 	
-	/*------CONSTRUCTOR-------------*/
+	/**
+	 * Parameterized Constructor
+	 * @param firstName
+	 * @param lastName
+	 * @param firstNameFather
+	 * @param lastNameFather
+	 * @param mobileNumber
+	 * @param batchId
+	 * @param batchStartDate
+	 */
 	public GenerateAttendanceSheetDto(String firstName, String lastName,String firstNameFather, String lastNameFather,String mobileNumber,String batchId,Date batchStartDate)
 	{
-		name = firstName+" "+lastName;
-		fatherName = firstNameFather+" "+lastNameFather;
+		if(lastName!=null)
+			name = firstName+" "+lastName;
+		else
+			name = firstName;
+		
+		if(firstNameFather!=null && lastNameFather!=null) {
+			fatherName = firstNameFather+" "+lastNameFather;
+		}else if(firstNameFather!=null) {
+			fatherName=firstNameFather;
+		}else if(lastNameFather!=null) {
+			fatherName=lastNameFather;
+		}else {
+		fatherName=null;
+		}
+		
 		this.mobileNumber = mobileNumber;
 		this.batchId = batchId;
 		setStringdate1(batchStartDate);
@@ -88,4 +148,10 @@ public class GenerateAttendanceSheetDto extends BaseDto{
 		setStringdate4();
 		setStringdate5();
 	}
+	public GenerateAttendanceSheetDto() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
 }

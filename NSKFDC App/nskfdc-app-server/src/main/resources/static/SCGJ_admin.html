@@ -1,22 +1,22 @@
-<div>
+<div ng-controller="mainController">
 
  <link rel="stylesheet" href="css/SCGJ_admin.css">
-
 <nav class="navbar">
     <div class="container-fluid">
-        <div class="container-fluid">
-        <div class="navbar-header navbar-brand">
-            <a class="logo">
-                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="13%" >
+        <div class="navbar-header navbar-brand row">
+        <div class="col-md-3">
+            <a href="http://sscgj.in/" class="logo" target="_blank">
+                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="43%" >
             </a>
-
-			<a class="navbar-right">
-            <img src="images/logout.png" alt="logout" width="6%" >&nbsp;<span>Logout</span></a>
+         </div>
+        
+		<div class="col-md-3 col-md-offset-6" align="right" style="padding: 6pt;">
+			<a class="">
+			<p class="userName" ><b>{{username}}</b></p>
+            <img src="images/logout.png" alt="logout" width="6%" >&nbsp;<span ng-click="logout()">Logout</span></a>
         </div>
-
-
         </div>
-      
+        
     </div>
 </nav>
 
@@ -24,28 +24,28 @@
     <!-- Sidebar Holder -->
     <nav id="sidebar">
         <ul class="list-unstyled components">
-            <li class="active">
-                <a ng-click="page='dashboard'">
+            <li>
+                <a ng-click="page='dashboard'; alpha=true; beta=false; gamma=false; delta=false;" ng-class="{alpha : alpha}">
                     <img src="images/dashboard.png" alt="faq" width="10%">&nbsp;
                     Dashboard
                 </a>
             </li>
             <li>
-                <a ng-click="page='faq'">
-                    <img src="images/faq.png" alt="faq" width="10%">&nbsp;
-                    FAQ
-                </a>
-            </li>
-            <li>
-                <a ng-click="page='viewDocuments'">
+                <a ng-click="page='viewDocuments'; alpha=false; beta=true; gamma=false; delta=false;" ng-class="{beta: beta}">
                     <img src="images/view.png" alt="document" width="10%">&nbsp;
                     View Documents
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateCredentials'">
+                <a ng-click="page='generateCredentials'; alpha=false; beta=false; gamma=true; delta=false;" ng-class="{gamma: gamma}">
                     <img src="images/credential.png" alt="faq" width="10%">&nbsp;
                     Generate Credentials
+                </a>
+            </li>
+             <li>
+                <a ng-click="page='updateTarget'; alpha=false; beta=false; gamma=false; delta=true;" ng-class="{delta: delta}">
+                    <img src="images/target.png" alt="faq" width="10%">&nbsp;
+                    Update Target
                 </a>
             </li>
         </ul>
@@ -70,6 +70,10 @@
                 <div ng-switch-when="generateCredentials">
 
                     <div ng-include src="'partials/generateCredentials.html'"></div>
+                </div>
+                <div ng-switch-when="updateTarget">
+
+                    <div ng-include src="'partials/updateTarget.html'"></div>
                 </div>
                 
             </div>

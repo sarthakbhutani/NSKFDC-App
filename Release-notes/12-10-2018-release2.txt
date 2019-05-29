@@ -1,0 +1,9 @@
+This build number #785 consists of
+bugs fixed that were identified in build #785
+NA-443
+NA-444
+NA-445
+NA-446
+NA-447
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail

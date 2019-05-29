@@ -5,6 +5,10 @@ import com.nskfdc.scgj.common.BaseDto;
 public class BatchIdDto extends BaseDto{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String batchId;
 
 	public String getBatchId() {

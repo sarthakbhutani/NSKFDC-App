@@ -1,0 +1,79 @@
+<head>
+ <link href="css/updateBatchNumber.css" type="text/css" rel="stylesheet">
+</head>
+
+<div ng-controller="updateBatchNumberController">
+	<div class="heading">
+		<h3>Insert Batch Number</h3>
+	</div>
+		<form name = "insertBatchNumberForm" ng-submit="insertBatchNumberFunc()">
+		<div class="row insertBatchNumber">
+		<div class="col-md-4">
+   			<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" required>
+                	<option value="" disabled selected>Batch Id</option>
+                	
+             </select>
+  			
+  		</div>
+  		
+  		<div class="col-md-4">	
+  			<input class="form-control txt" type="text" name="batchnumber" ng-model="insertbatchnumber" placeholder=" Enter SDMS Batch Number" required>
+ 		</div>
+ 		<div >
+ 		<button class= "btn btn-md insertBNButton" type="submit">Insert Batch Number</button>
+ 		</div>
+	  	<span class="message1 success_msg" ><b>{{insertBNSuccessMessage}}</b></span>
+        <span class="message1 error_msg" ><b>{{insertBNErrorMessage}}</b></span>
+	  	
+	  	</div>
+	  
+	  	
+	  	</form>
+  	
+  	<div class="heading">
+		<h3>Update Batch Number</h3>
+	</div>
+		<form name = "updateBatchNumberForm" ng-submit="updateBatchNumberFunc()">
+		<div class="row insertBatchNumber">
+		<div class="col-md-4">
+   			<select ng-model="batchIdforUpdate" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" required>
+                	<option value="" disabled selected>Batch Id</option>
+                	
+             </select>
+  			
+  		</div>
+  		
+  		<div class="col-md-4">	
+  			<input class="form-control txt" type="text" name="batchnumber" ng-model="updatebatchnumber" placeholder=" Enter SDMS Batch Number" required>
+ 		</div>
+ 		<div >
+ 		<button class= "btn btn-md btn-primary " type="submit">Update Batch Number</button>
+ 		</div>
+ 		<span class="message1 success_msg" ><b>{{updateBNSuccessMessage}}</b></span>
+        <span class="message1 error_msg" ><b>{{updateBNErrorMessage}}</b></span>
+  	</div>
+  	</form>
+  	
+  	<div class="heading">
+		<h3>Search Updated Batch Number</h3>
+	</div>
+	<form name = "searchUBN" ng-submit="getUpdatedBatchNumberFunc()">
+	<div class="row searchBatchNumberDiv">
+		<div class="col-md-4">	
+  			<select ng-model="batchIdforSearch" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids" required>
+                	<option value="" disabled selected>Batch Id</option>
+                	<span id="error_msg"></span>
+             </select>
+ 		</div>
+ 		<div >
+ 		<button class= "btn btn-md insertBNButton" type="submit">Search</button>
+ 		<span class="message1 error_msg" ><b>{{searchBNErrorMessage}}</b></span>
+ 		</div>
+ 		
+        
+ 	</div>
+	</form>
+	<div class="gridTable">
+		<div ui-grid="searchBatchNumber"  class="grid grid-align" ui-grid-auto-resize ></div> 
+	</div>  
+</div>

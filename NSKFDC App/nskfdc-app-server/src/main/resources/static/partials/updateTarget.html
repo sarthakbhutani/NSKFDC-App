@@ -1,0 +1,61 @@
+<head>
+    <link href="css/updateTarget.css" type="text/css" rel="stylesheet">
+</head>
+
+<div ng-controller="updateTargetController">
+	<div class="heading">
+		<h3>Update Target</h3>
+	</div>
+	<div class="updateTarget">
+	<form name="targetform" ng-submit="update()" id="FormUpdateTarget">
+	<div class="row updateTargetform">
+	
+                <div class="col-md-4">
+                    <input type="number" min="1" name="registrationNo" id="registrationNo" class="form-control form-rounded placeHolderFont" ng-model="data.nsdcRegNumber"placeholder="NSDC-Reg No-XXX" required>
+                </div>
+                <div class="col-md-3">
+                    <input type="number" name="targetNo" id="targetNo"class="form-control form-rounded placeHolderFont" ng-model="data.targets" placeholder="New Target"  required>
+                    <span id="warning"  ng-show="targetform.targets.$error.pattern">Enter only number</span>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-info" id="updatebutton">Update Target</button>
+                </div>
+                <div class="col-md-3">
+                </div>
+                
+            
+	
+	</div>
+	</form>
+	<span ng-show="errorMessage" id="error"> Training partner with NSDC Registration Number does not exist</span>
+                <span ng-show="successMessage" id="success">Target updated successfully!</span>
+                <span ng-bind="dataundefined" id="error"></span>
+	
+	</div>
+	
+	<div class="heading">
+	<h3>Updated Targets</h3>
+	</div>
+	
+	<div class="updatedTargets">
+	<form id="FormSearchTarget" ng-submit="search(nsdcRegNumber)">
+		    <div class="row updatedTargetsform">
+                <div class="col-sm-5" id="nsdcNo">
+                    <input type="number" min="1" class="form-control form-rounded placeHolderFont" ng-model="nsdcRegNumber"placeholder="NSDC Registration Number" required>
+                </div>
+              <div class="col-sm-2">
+                    <button type="submit" class="btn btn-info" id="searchbutton">Search</button>
+                	<span ng-bind="searchError" id="error"></span>
+                	
+                </div>
+                <div class="col-sm-5">
+                </div>
+            </div>
+            <span ng-bind="searchundefined" id="error"></span>
+	</form>
+            <div class="searchTable">
+                <div ui-grid="updatedData" ui-if="updatedData.data.length>0" class="grid grid-align" ui-grid-auto-resize ng-style="getTableHeight()"></div>
+            </div>
+      
+ </div>
+	</div>

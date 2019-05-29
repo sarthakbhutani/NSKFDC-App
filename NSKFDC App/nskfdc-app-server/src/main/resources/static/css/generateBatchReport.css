@@ -1,45 +1,63 @@
-.outline{
-	background-color:#E2E2E2;
+.heading{
+		color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+}.outline{
+	
 	margin-top:1%;
-	width:70%;
+	width:90%;
 	height:inherit;
 	margin-left:-1%
+}
+
+.div-center
+{
+	 border:1px solid #ddd;
+	 border-radius:1em;
+	 margin-bottom:1em;
+	 padding : 1em;
+}
+.div-center h5{
+	color:#8c8c8c;
 }
 .innerline{
 	background-color:#FFF;
 	margin:1%;
 	width:95%;
-	height:80%;
-	padding-top:2%;
+	height:100%;
+	padding:2%;
 }
 .txt{
-	padding-top:3%;
+	padding-top:1%;
 	margin-top:6%;
+	border: 1px solid lightgrey !important;
+	
 }
 .boxes{
 	padding-top:1%;
-	margin-top:0.5%;
+	margin-top:0.25%;
+}
+.boxes1{
+	padding-top:1%;
+	margin-bottom:0.5%;
+	margin-left: 45%;
+	padding:0.65rem;
 }
 .btncolor{
-	background-color: #33ccff;
-	width: 100%;
-	height:50%;
+	background-color: #02B0F0;
+	margin-top:0.5rem;
+	width: 8rem;
+    font-size: 1.5rem;
+    padding:0rem;
 }
-.grid{
-	
-	width: 100%;
-	height: 30%;
-	margin-top: 2%;
-	margin-left:-1.5%;
-	border-collapse: separate;
-    border-spacing: 2% 2%;
-	text-align: center;
+.btncolor1{
+	background-color: #02B0F0;
+	margin-top:2.5rem;
+	width: 8rem;
+    font-size: 1.5rem;
+    padding:0rem;
 }
 
-div.ui-grid-header-cell-row{
-	background-color:#19b2cc;
-	color:#ffffff;
-}
 h4{
 	color:black;
 	padding-top:1rem;
@@ -50,4 +68,63 @@ h4{
 .btn-primary {
     color: #fff;
     border-color: #ffffff5c;
+}
+input[type="text"] {
+  font-size: 1.2rem;
+}
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+
+.btn-primary{
+	height:50%;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    background-color: #00B0F0;
+    color: white;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 2;
+    min-width: 90%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.btn-upload{
+    background-color: #4472C4;
+}
+.disp{
+	display:flex;
+}
+#Error{
+	color:red;
+	font-size: 1.75rem;
+	font-weight: bold;
+}
+#Success{
+	color:green;
+	font-size: 1.75rem;
+	font-weight: bold;
+}
+#error_msg
+{
+	color: red;
+	margin-top:2rem;
+}
+
+.filesizeError{
+	font-size: 8pt;
+    color: red;
+    font-weight: bold;
 }

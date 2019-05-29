@@ -1,14 +1,3 @@
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-
-
-
-
-
-
-.file {
-  visibility: hidden;
-  position: absolute;
-}
 
 .r2d{
     
@@ -42,47 +31,17 @@
 	z-index: -1;
 }
 #drop{
-    background-color: white;
-    margin-left: 1rem;
-    margin-right: 2rem;
+	 background-color: #ffffff;
+	margin:1%;
 }
-#d1{
-	width : 24rem;
-    margin-top: 1rem;
-}
-#r2t1{
-    margin-top: .5rem;
-}
-#r2t2{
-    margin-top: .5rem;
-}
-#r2b1{
-    
-    margin-top: .5rem;
-}
-#r2b2{
-    margin-top:.5rem;
-}
+
+
+
 .btn-file {
     position: relative;
     overflow: hidden;
     background-color: #00B0F0;
     color: white;
-}
-.btn-file input[type=file] {
-    position: absolute;
-    top: 0;
-    right: 0;
-    min-width: 100%;
-    min-height: 100%;
-    font-size: 100px;
-    text-align: right;
-    filter: alpha(opacity=0);
-    opacity: 0;
-    outline: none;
-    background: white;
-    cursor: inherit;
-    display: block;
 }
 .btn-upload{
     background-color: #4472C4;
@@ -90,37 +49,45 @@
 #d1{
     
     background-color: white;
-
-        height: 2.5rem;
-    width: 28rem;
 }
-
+.btnbrws{
+    font-size: 1.5rem;
+    height: 3.5rem;
+    margin-bottom: 3pt;
+}
 
 
 .btncolor{
-    background-color: #02B0F0;
-    width: 12rem;
-    font-size: 1.7rem;
-    padding: 0.3rem;
+    width: 11rem;
+    font-size: 1.5rem;
+    height: 3.5rem;
 }
-
-
-.background{
-background: #fbfbfb;
-    padding-right: 0px;
-    padding-left: 0px;
-    padding-top: 20px;
-    padding-bottom: 0px;
+.btn{
+	padding: 4px 12px;
 }
 
 #marginForSearch{
-    margin-left: 2rem;
-
+  color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+}
+#marginForUpload{
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
 }
 
-.form-rounded {
-border-radius: 1rem;
-}
+/* .form-rounded {
+border-radius: .5rem;
+    height: 2.8rem;
+    padding:0px;
+    
+} */
+
+/* .form-roundedOne{
+	border-radius: .5rem;
+    height: 2.8rem;
+} */
 
 .paddingrem{
 	padding-left: 0px;
@@ -139,23 +106,14 @@ border-radius: 1rem;
 }
 
 .pointer{
-	width : 10%;
-	margin-left: 10rem;
+	width : 15%;
 }
 
 
 .ui-grid-row{
 	background : green;
+	background : black;
 	
-}
-.ng-scope{
-	/*background : #e7e6e6;*/
-}
-
-.table1{
-	 border-color: #ffffff;
-    height : 2rem;
-    padding:2%;
 }
 
 .ui-grid-header-cell{
@@ -200,8 +158,137 @@ h3{
 }
 
 #content {
-    width: 95%;
-    padding: 0px;
-    min-height: 80vh;
-    transition: all 0.3s;
+    min-height: 87vh;
+    width: 99%;
+}
+.ui-grid-header-cell-label{
+    font-size: 1.3rem;	
+}
+
+.searchDocumentTxt{
+	   /* margin-left: 15px; */
+}
+.placeholderfont{
+	font-size:85%;
+	color:#8c8c8c;
+	text-align: center;
+	border-color: #8c8c8c;
+}
+
+
+.ui-grid-render-container-body .ui-grid-header-cell,
+.ui-grid-render-container-left .ui-grid-header-cell,
+.grid .ui-grid-row,
+.grid .ui-grid-cell,
+.grid .ui-grid-cell .ui-grid-vertical-bar {
+ 
+  font-size: 11px;
+  text-align: center;
+  /*line-height: 30px;*/
+  
+}
+
+.ui-grid-row:nth-child(odd) .ui-grid-cell {
+    background-color: #e7e6e6; 
+}
+
+#error_msg1{
+	color: red;
+    margin-top: .5rem;
+    margin-right: 5rem;
+    font-size: 1.1rem;
+    height: 3.3rem;
+    width: 20rem;
+   
+}
+#successful{
+	color: green;
+    margin-top: .5rem;
+   
+    font-size: 1.1rem;
+    height: 3rem;
+    width: 5rem;
+   
+}
+
+#searchBox
+{
+	font-size: 1.5rem;
+	color: red;
+}
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+	font-size: 1.5rem;
+}
+#error{
+	color:red;
+	font-weight: bold;
+}
+#success{
+	color:green;
+	font-weight: bold;
+}
+#Error{
+	color:red;
+	font-weight: bold;
+}
+#Success{
+	color:green;
+	font-weight: bold;
+}
+/* #uploadButton
+{
+    max-width: 100%;
+} */
+.btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline;
+}
+
+
+.btn-wrapper input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+        margin-left: 2%;
+    cursor: pointer;
+}
+.formpadding{
+	padding:1%;
+	margin-top:2%;
+}
+#uploadButtonDiv{
+	margin-left:-8%;
+}
+.background{
+	margin-left:1%;
+	margin-right:1%;
+}
+.details-table{
+	margin:1%;
+}
+	
+.paddingUploadDoc{
+	padding-left:2pt !important;
+}
+.paddingRightUpload{
+	padding-right: 0;
+}
+.textBoxFile{
+	height:23pt;
+	font-size:8pt;
+}
+.pointer{
+	cursor:pointer;
 }

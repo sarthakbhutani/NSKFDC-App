@@ -1,14 +1,31 @@
 var scgj = angular.module("app");
 
-scgj.controller("generateCredentialsController" , function($scope, $http){
+scgj.controller("generateCredentialsController" , function($scope, $http, $timeout){
 	
+	$scope.credentialTable= false;
+	
+	
+	/*---------------------------- EYE TOGGLE --------------------------------*/
+	$scope.inputTypePassword="password";
+	$scope.eyeToggleGenerateCredential=function(){
+		if($scope.inputTypePassword=="password"){
+			$scope.inputTypePassword="text";
+		}
+		else{
+			$scope.inputTypePassword="password";
+		}
+	}
+	
+	
+	
+	$scope.credentialErrorMessage=false;
 	 $scope.detailsData = {
 		        enableGridMenus: false,
 		        enableSorting: false,
 		        enableFiltering: false,
 		        enableCellEdit: false,
 		        enableColumnMenus: false,
-		        enableHorizontalScrollbar: 0,
+		        enableHorizontalScrollbar: true,
 		        enableVerticalScrollbar: 0,
 		        paginationPageSizes: [5, 10, 20, 30],
 		        paginationPageSize: 10,
@@ -16,51 +33,95 @@ scgj.controller("generateCredentialsController" , function($scope, $http){
 
 		        columnDefs: [
 		            {
-		            	name: 'NSDC Registration Number', 
+		            	name: 'nsdcRegNumber', 
 		                displayName: 'NSDC Reg. Number',
+		                width: '14%'
 		             
 		            },
 		            {
-		            	name: 'Training Partner',
-		            	displayName: 'Training Partner'
+		            	name: 'trainingPartner',
+		            	displayName: 'Training Partner',
+		                width: '40%'
 		            },
 		            {
-		                name: 'Email ID',
-		                displayName: 'Email ID'
+		                name: 'userEmail',
+		                displayName: 'Email ID',
+		                width: '40%'
 		            },
 		            {
-		                name: 'Password',
-		                displayName: 'Password'
+		                name: 'password',
+		                displayName: 'Password',
+		                width: '20%'
 		            },
 		            {
-		                name: 'Generated on',
-		                displayName: 'Generated On'
+		                name: 'generatedOn',
+		                displayName: 'Generated On',
+		                width: '16%'
 		             },
 		             
 		        ]
 		    };
 	 
-	 $http.get('')
-	 .then(function (response) {
-	 	 $scope.detailsData.data= response.data;
-
-	 });
-		   
-		    
-	var pwd = document.getElementById('password')
-	var eye = document.getElementById('eye')
-
-
-	 eye.addEventListener('click',togglePass);
-
-	 function togglePass()
+	 
+	 $scope.check=function()
 	 {
-        eye.classList.toggle('active');	    
-	     pwd.type == ('password') ? pwd.type = 'text' :
-	        pwd.type = 'password';
+		 var generatecredential="/getGenerateCredential";
+		 $http({
+			 url: generatecredential,
+			 method: "POST",
+			 data: angular.toJson($scope.data),
+			 headers: {
+				 'Content-Type': 'application/json'
+			 }
+		 }).then(function(response){
+			if(response.data==-25)
+				{
+				$scope.credentialErrorMessage=true;
+				$scope.credentialSuccessMessage=false;
+				}
+			else
+				{
+				$scope.credentialErrorMessage=false;
+				$scope.credentialSuccessMessage=true;
+				$scope.data=null;
+				}
+		 });
+		 $timeout(function() {
+             $scope.credentialErrorMessage="";
+             $scope.credentialSuccessMessage="";
+          }, 4000);
+
 	 }
-
-	 $scope.emailadd = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-
+	 
+	 $scope.search=function(nsdcRegNumber) {
+		 $http.get("/SearchService?nsdcRegNumber="+$scope.nsdcRegNumber)
+			.then(function (response) {	
+				 
+				 if(response.data.length==0){
+					 $scope.searchError='No Data Found';
+					 $scope.detailsData.data=[];
+					 }
+				 else{
+					 $scope.detailsData.data=response.data;
+					 $scope.searchError='';
+				 }
+			});
+		 $timeout(function() {
+             $scope.searchError="";
+          }, 4000);
+	 }
+	 
+	
+	 
+	 /*----------- Grid Height -------------*/
+	 $scope.getTableHeight=function(){
+		 var rowHeight=50;
+		 var headerHeight=30;
+		
+		 return{
+			 height:($scope.detailsData.data.length * rowHeight + headerHeight)+"px"
+		 };
+	
+	 };
 
 });

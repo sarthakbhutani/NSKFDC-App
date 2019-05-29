@@ -1,8 +1,60 @@
 var scgj = angular.module("app");
 
-scgj.controller("viewDocumentController" , function($scope, $http){
+scgj.controller("viewDocumentController" , function($scope, $http, $timeout){
 	
 	$scope.errorMessage="";
+	
+//	Search Document functionality
+	
+	$scope.searchDocuments=function(){
+	    if($scope.batchId!=null && $scope.batchId!="" && $scope.batchId!=undefined && $scope.tpName!=null && $scope.tpName!="" && $scope.tpName!=undefined){
+		
+		$http.get('/getTrainingPartnerDetailForSearchbatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId)
+			.then(function (response) {
+				if(response.data.length==0){
+					 $scope.searchError='No Data Found';
+				 }
+				 else{
+				 $scope.uploadedDocument.data=response.data;
+				 $scope.searchError='';
+				 }
+
+		});
+	    }
+	    else if($scope.scgjBtNumber!=null && $scope.scgjBtNumber!="" && $scope.scgjBtNumber!=undefined && $scope.tpName!=null && $scope.tpName!="" && $scope.tpName!=undefined){
+		$http.get('/getTrainingPartnerDetailForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber)
+		.then(function (response) {
+			if(response.data.length==0){
+				 $scope.searchError='No Data Found';
+				 $scope.uploadedDocument.data=[];
+			 }
+			 else{
+			 $scope.uploadedDocument.data=response.data;
+			 $scope.searchError='';
+			 }
+
+			 
+
+		});
+	    }
+		else{
+			
+			if(($scope.batchId==null || $scope.batchId=="" || $scope.batchId==undefined)&&($scope.scgjBtNumber==null || $scope.scgjBtNumber=="" || $scope.scgjBtNumber==undefined)){
+				
+				$scope.errorMessageBatch="Please enter BatchId or SCGJ Batch Number";
+	    		}
+			else{
+				$scope.errorMessageBatch="Please enter valid details";
+			}
+
+		}
+	    $timeout(function() {
+	        $scope.searchError="";
+	        $scope.errorMessageBatch="";
+	     }, 3000);
+	}
+	
+//	Uploaded Document table code starts
 	
     $scope.uploadedDocument = {
     enableGridMenus: false,
@@ -15,59 +67,103 @@ scgj.controller("viewDocumentController" , function($scope, $http){
     paginationPageSizes: [5, 10, 20, 30],
     paginationPageSize: 10,
     useExternalPagination: true,
-
+    
     columnDefs: [
         {
-        	name: 'Batch_Id', 
+        	name: 'batchId', 
             displayName: 'Batch Id'
+            	
         },
         {
-        	name: 'trainingPartner',
+        	name: 'trainingPartnerName',
         	displayName: 'Training Partner'
         },
         {
-            name: 'uploadedOn',
+            name: 'uplodedOn',
             displayName: 'Uploaded On'
         },
         
         {
-       	 name: 'tpDocUrl', 
-       	 displayName: 'Download Zip File', 
-       	 cellTemplate: '<a ng-href="{{row.entity.tpDocUrl}}" target="_blank" download><img src="images/zipImage.png" class="pointer"></a>'
+       	 name: 'zipFileLink', 
+       	 displayName: 'Download Zip File' ,
+       	 cellTemplate: '<img src="images/rar_icon_noBackground.png" alt="Zip Icon" ng-click="grid.appScope.DownloadZipFileForBatchId()" class="pointer">'
         }
         
         
         ]
 };
+//	Uploaded Document table code ends
+    
+  //Zip download start FileForBatchId and SCGJ Batch Number
+	  $scope.DownloadZipFileForBatchId = function(){
+		  if($scope.batchId!=null && $scope.batchId!=""  && $scope.batchId!=undefined && $scope.tpName!=null && $scope.tpName!="" && $scope.tpName!=undefined){
+		  var url='/downloadZipFileForBatchId?tpName='+$scope.tpName+'&batchId='+$scope.batchId;
+		  $http.get(url, { responseType : 'arraybuffer' })
+		  .then(function(response){
+			  
+			  
+			  if(response.data.byteLength!=0){
+				  var zipFile = new Blob([response.data], { type : 'application/zip' })
+				  var downloadURL = URL.createObjectURL(zipFile);
+				  var link = document.createElement('a');
+				  link.href = downloadURL;
+				  link.download =$scope.tpName +$scope.batchId + '.zip';
+				  document.body.appendChild(link);
+				  link.click();
+				 $scope.uploadedDocument.data=response.data;
+				 $scope.zipSuccess='File downloaded successfully';
+					
+				 }
+				 else{
+				
+					 $scope.zipError='File not found';	
+				 }
+		  });
+	  }
+		  else if($scope.scgjBtNumber!=null && $scope.scgjBtNumber!="" && $scope.scgjBtNumber!=undefined && $scope.tpName!=null && $scope.tpName!="" && $scope.tpName!=undefined){
+			  var url='/downloadZipFileForSearchscgjBtNumber?tpName='+$scope.tpName+'&scgjBtNumber='+$scope.scgjBtNumber;
+			  $http.get(url, { responseType : 'arraybuffer' })
+			  .then(function(response){
+				  
+				  if(response.data.byteLength!=0){
+						  var zipFile = new Blob([response.data], { type : 'application/zip' })
+						  var downloadURL = URL.createObjectURL(zipFile);
+						  var link = document.createElement('a');
+						  //from here:: move the rest from up
+						  link.href = downloadURL;
+						  link.download =$scope.tpName +$scope.scgjBtNumber + '.zip';
+						  document.body.appendChild(link);
+						  link.click();
+						  $scope.uploadedDocument.data=response.data;
+						  $scope.zipSuccess='File downloaded successfully';
+						
+					 }
+					 else{
+						 $scope.zipError='File not found';
+					 }
+				  
+				
+			  });
+		  }
+		  else{
+			  $scope.zipError='Please fill all the details required';  
+		  }
+		  $timeout(function() {
+		        $scope.zipError="";
+		        $scope.zipSuccess=""
+		     }, 3000);
+	  };
+	  //zip download end
 
 
-
-
-$http.get('')
-.then(function (response) {
-	 $scope.details.data= response.data;
-
-});
-
-$scope.searchDocuments=function(){
-	console.log("working");
-	if($scope.tpName==null){
-		$scope.errorMessage="Please enter Training Partner Name";
-		
-	}
-	else{
-		$scope.errorMessage="";
-		if(($scope.batchId==null)&&($scope.scgjBtNumber==null)){
-			console.log("working");
-    		$scope.errorMessage="Please enter Batch Id or SCGJ Batch Number";
-    		}
-    	else{
-    		$scope.errorMessage="";
-    		
-    	}
-	}
+/*----------- Grid Height -------------*/
+$scope.getTableHeight=function(){
+	 var rowHeight=30;
+	 var headerHeight=30;
 	
-	
-}
+	 return{
+		 height:($scope.uploadedDocument.data.length * rowHeight + headerHeight)+"px"
+	 };
 
+};
 });

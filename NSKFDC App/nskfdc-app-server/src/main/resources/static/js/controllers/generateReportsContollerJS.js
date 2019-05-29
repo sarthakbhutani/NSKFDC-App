@@ -1,70 +1,182 @@
 var report = angular.module('app');
 	
-report.controller('reportController',function($scope, $http) {
+report.controller('reportController',function($scope, $http, $timeout) {
 	
-	var url1='/generateOccupationCertificateReport?trainingPartnerEmail=abc@gmail.com&batchId=';
-    console.log("Entered in controller");
-    $scope.ngSubmit1=function(batchId){
-    console.log("Entered in ngSubmit()");	
-	console.log($scope.batchId);
 	
-	$http.get(url1+$scope.batchId)
-	.then(function (response){
-		$scope.status= response.data;
-		if($scope.status==1 && $scope.batchId!=null){
-			
-			console.log("Occupation Certificate generated successfully");
-		}else{
-			console.log("Occupation Certificate not generated");
-			
-		}	
-	});
-    }
-   
-    var url2='/generateAttendanceSheet?trainingPartnerEmail=abc@gmail.com&batchId=';
-    console.log("Entered in controller");
-    $scope.ngSubmit2=function(batchId){
-
-    console.log("Entered in ngSubmit()");	
-	console.log($scope.batchId);
-	
-	$http.get(url2+$scope.batchId)
-	.then(function (response){
-		$scope.status= response.data;
-		
-		console.log($scope.status);
-		
-		if($scope.status==1 && $scope.batchId!=null){
-			
-			console.log("Attendance Sheet generated successfully");
-		}else{
-			console.log("Attendance Sheet not generated");
-		
+    $scope.Submit1=function(batchId){
+    	if($scope.batchId==null)
+    		{
+    		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+    		}
+    	else{
+    	var url='/generateOccupationCertificateReport?batchId='+$scope.batchId;	  
+    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+    	{
+    		if(response.data.byteLength!=0)
+    		{
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";
+    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Occupation Certificate"+ "-" + $scope.batchId + ".pdf"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    		else{
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
+    		}
+    		$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
+    };
+    
+    $scope.Submit2=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
 		}
-	});
-    }
-	
+	else{
+    	var url='/generateAttendanceSheet?batchId='+$scope.batchId; 	  
+    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+    	{
+    		if(response.data.byteLength!=0)
+    		{
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
+    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Attendance Sheet" + "-" + $scope.batchId + ".pdf"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    		else{
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
+    		}
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
+    };
     
+    $scope.Submit3=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
+    	var url='/generateNSKFDCSheet?batchId='+$scope.batchId;  	  
+    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+    	{
+    		if(response.data.byteLength!=0)
+    		{
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";
+    			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "NSKFDC Sheet" + "-" + $scope.batchId + ".xls"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    		else{
+    			document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
+    		}
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
+    };
     
-    $scope.onSearch = function (batchId1) {
-	var batch=batchId1;
-	$http.get('/getReports?trainingPartnerEmail=abc@gmail.com&batchId='+batch)
-	.then(function (response) {
-	$scope.searchReport.data= response.data;
-	 
-	  		});
-	  	}
+    $scope.Submit4=function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
+    	var url='/generateSDMSSheet?batchId='+$scope.batchId; 	  
+    	$http.get(url, { responseType : 'arraybuffer' }).then(function(response)
+    	{	
+    		if(response.data.byteLength!=0)
+    		{
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
+    			var pdfFile = new Blob([response.data], { type : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "SDMS Sheet" + "-" + $scope.batchId + ".xls"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    	else{
+				document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
+			}
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
+    };
     
-    var app = angular.module('application', ['ngRoute','ui.grid',
-        'ui.grid.edit',
-        'ui.grid.cellNav',
-        'ui.grid.autoResize',
-        'ui.bootstrap',
-        'ui.grid.pagination']);
+    $scope.submitMinutes = function(batchId){
+    	if($scope.batchId==null)
+		{
+		document.getElementById("error_msg").innerHTML="Please enter Batch ID";
+		}
+	else{
+    	var urlReq='/generateMinutesOfSelectionCommitteeDetails?batchId='+$scope.batchId; 	  
+    	$http.get(urlReq, { responseType : 'arraybuffer' }).then(function(response)
+    	{	
+    		if(response.data.byteLength!=0)
+    		{
+    			/*console.log("the length of response is " + response.data.byteLength)*/
+    			document.getElementById("success_msg").innerHTML="Report successfully generated!";	
+    			var pdfFile = new Blob([response.data], { type : 'application/pdf' })
+    			var downloadURL = URL.createObjectURL(pdfFile);
+    			var link = document.createElement('a');
+    			link.href = downloadURL;
+    			link.download = "Minutes of Selection Committee" + "-" + $scope.batchId + ".pdf"
+    			document.body.appendChild(link);
+    			link.click();
+    		}
+    	else{
+    			/*console.log("the length of response is " + response.data.byteLength)*/
+				document.getElementById("error_msg").innerHTML="Data Not Found, Report cannot be generated";
+			}
+	$scope.onLoad();
+    		
+    	}); 
+    	}
+    	
+    	$timeout(function() {
+			document.getElementById("success_msg").innerHTML="";
+			document.getElementById("error_msg").innerHTML="";
+         }, 4000);
+    };
 
-
-
-    $scope.searchReport = {
+    
+    $scope.auditTable = {
     		enableGridMenus: false,
     		enableSorting: false,
     		enableFiltering: false,
@@ -81,26 +193,51 @@ report.controller('reportController',function($scope, $http) {
     				name: 'batchId', 
     				displayName: 'Batch Id'
     			},
-    			
     			{
-    				name: 'type', 
-    				displayName: 'Type'
+    				name: 'type',
+    				displayName: 'Report Type'
     			},
-    			
     			{
     				name: 'generatedOn',
     				displayName: 'Generated On'
     			},
     			{
-    				name: 'trainingPartnerEmail',
+    				name: 'generatedBy',
     				displayName: 'Generated By'
-    			},
-    			{
-    				name: 'viewReport',	
-    				displayName: 'View Report'
     			}
-
     			]
-    			};
+    	};
     
+		$scope.onLoad = function () {	
+			$http.get('/getAuditTableRecords')
+			.then(function (response) {	
+				$scope.auditTable.data= response.data;
+	  		});
+	  	}
+
+	  	$scope.onLoad();
+    
+	    var url1='/getBatchIdDetailsForGenerateReport';       	
+       	$scope.ids = [];
+               $http.get(url1)
+               .then(function (response) {
+             	  
+               	let dt = response.data;	
+               	for(i in dt){
+               		$scope.ids.push(response.data[i].batchId); 
+               	}
+               	let length=$scope.ids.length;
+               	/*console.log(length);*/
+           	});
+               
+               /*----------- Grid Height -------------*/
+               $scope.getTableHeight=function(){
+               	 var rowHeight=30;
+               	 var headerHeight=30;
+               	
+               	 return{
+               		 height:($scope.auditTable.data.length * rowHeight + headerHeight)+"px"
+               	 };
+
+               };
 });

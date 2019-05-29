@@ -1,0 +1,19 @@
+This build number #602 consists sprint scope for Sprint 2 as follows:
+Development stories for Change requests from SCGJ
+NA-204
+NA-206
+NA-207
+NA-209
+NA-210
+NA-212
+NA-211
+NA-216
+NA-217
+NA-219
+
+Fixed the 3 bugs found in build #537
+NA-126
+NA-182
+NA-176
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail

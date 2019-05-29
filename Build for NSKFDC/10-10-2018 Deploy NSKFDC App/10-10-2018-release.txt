@@ -1,0 +1,19 @@
+This build number #734 consists sprint scope for Sprint 3 as follows:
+Development stories for Change requests from SCGJ
+NA-432
+NA-423
+
+Fixed the 10 bugs found in build #691
+NA-412 
+NA-413
+NA-414
+NA-415
+NA-421
+NA-424 
+NA-425 
+NA-298
+NA-308
+NA-325
+
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail

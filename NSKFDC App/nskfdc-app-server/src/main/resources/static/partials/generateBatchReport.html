@@ -3,130 +3,289 @@
 </head>
 
 <div ng-controller="generateBatchReportController">
- <div class="container outline">
-    	<div class="row" >
-        	<div class="col-md-11">
-            	<div class="col-md-5">
-                	<label><h4>Generate Batch Report</h4></label>
-                </div>
-                <div class="col-md-3">
-                	<select ng-model="selectedName" class="form-control txt" placeholder="Batch Id"  ng-options="x for x in ids" >
-                	<span id="Error"></span>
+<form id="myForm" name="generateBatchReportForm" ng-submit="generateBatchReportwithFile()"  enctype="multipart/form-data" >
+ <div class="container outline" >
+ <h3 class="heading">Generate Batch Report</h3>
+    	<div class="row"  >
+        	<div class="col-md-12">
+            	
+                <div class="col-md-4">
+                	<select ng-model="batchId" class="form-control txt" ng-init=" batchId = option.id" placeholder="Batch Id"  ng-options="x for x in ids"  ng-change="getSCGJBatchNumber()" required>
+                	<option value="" disabled selected>Batch Id</option>
                 	</select>
                 </div>
-                <div class="col-md-3">
-                	<input ng-blur="ngBlur(batchnumber)" class="form-control txt" type="text" placeholder="Enter SCGJ NUmber" name="batchnumber" ng-model="batchnumber" required>
+                <div class="col-md-4">
+                	<input class="form-control txt" type="text" name="batchnumber" ng-model="batchnumber"  readonly placeholder="SDMS Batch Number">
+                 	
                  </div>
+                 <div class="col-md-4">
+                	<span id="error_msg" ng-show="batchNumberError">Please insert SDMS Batch Number</span>
+                </div>
             </div>
         </div>
-        <div class="container innerline">
+    <div class="container innerline">
+        <div class="div-center">
+        <h5>Inaugural Day Images</h5>
         <div class="row boxes">
-        	<div class="col-md-10">
+        	<div class="col-md-6">
             		
                 	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 1" />
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day1Pic1" placeholder="Upload image 1 of Day 1" required />
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='11'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files11" file-model="generateReport.day1Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error11" class="filesizeError"></span>
+                    </div>
+                    
+             </div>
+             <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day1Pic2" placeholder="Upload image 2 of Day 1" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='12'">	                        
+	        					   Browse <input type="file"  accept="image/jpeg,image/jpg" onchange="document.getElementById('day1Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files12" file-model="generateReport.day1Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error12" class="filesizeError"></span>
+            			       				  
                     </div>
                     
              </div>
         </div>
+        </div>
+        
+        <div class="div-center">
+        <h5>Mechanized Cleaning : Vacuum cleaner Training</h5>
         <div class="row boxes">
-        	<div class="col-md-10">
+        	<div class="col-md-6">
             		
                 	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 2" />
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day2Pic1" placeholder="Upload image 1 of Day 2" required />
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='21'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day2Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files21" file-model="generateReport.day2Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error21" class="filesizeError"></span>
+            			       				  
                     </div>
                     
              </div>
-        </div>
-        <div class="row boxes">
-        	<div class="col-md-10">
+             
+              <div class="col-md-6">
             		
                 	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 3" />
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day2Pic2" placeholder="Upload image 2 of Day 2" required>
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='22'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day2Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files22" file-model="generateReport.day2Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error22" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+             
+        </div>
+        </div>
+      <div class="div-center">
+      <h5>Mopping Technique</h5>
+       <div class="row boxes">
+        	<div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day3Pic1" placeholder="Upload image 1 of Day 3" required/>
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='31'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files31" file-model="generateReport.day3Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error31" class="filesizeError"></span>
+            			       				  
                     </div>
                    
              </div>
+              <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day3Pic2" placeholder="Upload image 2 of Day 3" required/>
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='32'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day3Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files32" file-model="generateReport.day3Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error32" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
         </div>
+      </div>
+        <div class="div-center">
+        <h5>Mechanization training on sweeper machine</h5>
         <div class="row boxes" >
-        	<div class="col-md-10">
+        	<div class="col-md-6">
             		
                 	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 4" />
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day4Pic1" placeholder="Upload image 1 of Day 4" required />
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='41'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('day4Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files41" file-model="generateReport.day4Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error41" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+              <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day4Pic2" placeholder="Upload image 2 of Day 4" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='42'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day4Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files42" file-model="generateReport.day4Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error42" class="filesizeError"></span>
+            			       				  
                     </div>
                     
              </div>
         </div>
-         <div class="row boxes">
-        	<div class="col-md-10">
+        </div>
+       <div class="div-center">
+       <h5>Activity on communication skills</h5>
+       <div class="row boxes">
+        	<div class="col-md-6">
             		
                 	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Day 5" />
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day5Pic1" placeholder="Upload image 1 of Day 5" required />
                     </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='51'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic1').value = this.value.split('\\').pop().split('/').pop()" id="files51" file-model="generateReport.day5Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  
+            			  <span id="error51" class="filesizeError"></span>     				  
+                    </div>
+                    
+             </div>
+              <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="day5Pic2" placeholder="Upload image 2 of Day 5" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='52'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('day5Pic2').value = this.value.split('\\').pop().split('/').pop()" id="files52" file-model="generateReport.day5Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error52" class="filesizeError"></span>
+            			       				  
                     </div>
                     
              </div>
         </div>
-        <div class="row boxes">
-        	<div class="col-md-10">
-            		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Assessment" />
-                    </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
-                    </div>
-                    
-             </div>
-        </div>
-        <div class="row boxes">
-        	<div class="col-md-10">
-            		
-                	<div class="col-md-6">
-                    	<input type="text" class="form-control" placeholder="Enter Images of Medical Exam" />
-                    </div>
-                    <div class="col-md-3">
-                      <button class="btn btn-primary btncolor">Browse</button>
-                    </div>
-                    
-             </div>
-        </div>
-        <center><button class="btn btn-primary boxes" >Generate Report</button></center>
-        </div>
-     <div class="container">
-        <div class="row col-md-4">
-        	<h4>&nbsp;Search Report</h4>
-        </div>
-        <div class="row">
-        	<div class="col-md-12">
-            		
-                	<div class="col-md-5">
-                    	<input type="text" class="form-control" placeholder="Enter Batch Id" />
-                    </div>
-                    <div class="col-md-2">
-                      <button class="btn btn-primary btncolor">Search</button>
-                    </div>
-                    <div class="col-md-3"></div>
-             </div>
-        </div>
-        <div class="table">
-		    
-		    <div ui-grid="details"  class="grid grid-align properties " ui-grid-auto-resize></div> 
-		</div>
        </div>
+        <div class="div-center">
+        <h5>Medical & Viva Examination </h5>
+        <div class="row boxes">
+        	<div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="medExamPic1" placeholder="Upload image of Medical Examination" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='61'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('medExamPic1').value = this.value.split('\\').pop().split('/').pop()" id="files61" required file-model="generateReport.day6Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error61" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+			 
+			 <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="viva" placeholder="Upload image of Viva Examination" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='62'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('viva').value = this.value.split('\\').pop().split('/').pop()" id="files62" file-model="generateReport.day6Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error62" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+        </div>
+        </div>
+         
+        <div class="div-center">
+        <h5>Assessment of candidates</h5>
+        <div class="row boxes">
+        	<div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="assessPic1" placeholder="Upload image 1 of Assessment" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='71'">
+	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg"  onchange="document.getElementById('assessPic1').value = this.value.split('\\').pop().split('/').pop()" id="files71" file-model="generateReport.day7Pic1" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error71" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+             
+              <div class="col-md-6">
+            		
+                	<div class="col-md-6">
+                    	<input type="text" class="form-control form-rounded placeholderfont"  id="assessPic2" placeholder="Upload image 2 of Assessment" required />
+                    </div>
+                  <div class="col-md-6">
+	                        <span class="btncolor btn btn-default btn-file" ng-click="day='72'">	                        
+	        					   Browse <input type="file" accept="image/jpeg,image/jpg" onchange="document.getElementById('assessPic2').value = this.value.split('\\').pop().split('/').pop()" id="files72" file-model="generateReport.day7Pic2" ng-files="uploadFile($files)">
+	       				  </span>
+	       				  <span id="error72" class="filesizeError"></span>
+            			       				  
+                    </div>
+                    
+             </div>
+        </div>
+        </div>       
+        <div>
+        <div ng-show="rolling">
+                    <img src="gif/Progress.gif"/>
+                    {{generating}}
+                </div>
+        <span id="Error"></span>
+        <span id="Success"></span>
+        </div>
+        <div>
+        <button class="btn btn-primary boxes1"  >Generate Report</button>
+        </div>
+        
+       
+        </div>
+
+
     </div>
 
+
+</form>
 </div>
+

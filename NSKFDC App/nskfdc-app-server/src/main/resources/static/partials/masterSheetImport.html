@@ -2,164 +2,291 @@
    <link href="css/masterSheetImport.css" type="text/css" rel="stylesheet">
 </head>
 <div  ng-controller="importController">
-   <div class="row" id="headmargin">
+<!-- Pop Up box for Generate Batch Id -->
+<div class="modal fade in modalCss" id="myFormModal" role="dialog" ng-show="confirmbox">
+    <div class="modal-dialog confirmationPopup">
+    
+    <div class="modal-content">
+    <div class="modal-header">
+    <p>GENERATE BATCH</p>
+    </div>
+         <!-- Modal Body -->
+            <div class="modal-body ">
+            <div class="row">
+             <div class="col-md-10">
+             <p class="modalContentPara">Please Enter municipal corporation</p>
+             <input type="text" placeholder="Municipality" id="Id11" ng-model="generateBatch.municipality" class="form-control" ng-blur="checkLength()"/>
+             </div>
+             </div>
+             <div id="error" ng-show="municipalError">{{municipalErrorMessage}}</div>
+              <div class="confirmationButton">
+              <button type="button" class="btn btn-success confirmButton" data-dismiss="modal" ng-click="generateBatchId()" ng-disabled="generateBatch.municipality == undefined || generateBatch.municipality == null || generateBatch.municipality.split(' ').length < 3" ><span class="glyphicon glyphicon-ok"></span>GENERATE</button>  
+              <button type="button" class="btn btn-default confirmButton" data-dismiss="modal" ng-click="genarateBatchConfirmation()"><span class="glyphicon glyphicon-remove"></span>CANCEL</button>    
+          
+           	</div>
+       
+            </div>
+        	</div>
+   		 </div>
+		</div>
+
+
+<div class="container-fluid">
+   <div class="row">
       <div class="col-sm-6" >
          <div class="heading">
-            <font size="4">Overall Information</font>
+            <h3>Overall Information</h3>
          </div>
       </div>
       <div class="col-sm-6" >
          <div class="col-sm-5" ></div>
-         <div class="col-sm-6" >
-            <div><button id="button" type="button" class="btn btn-info" ng-click="showAlert()">Generate Batch ID</button>
-            </div>
+         <div class="pull-right" >
+         <a class="uploadGuidelinesLink" href="Guidelines MASTER SHEET IMPORT.pdf" target="_blank">Guidelines</a>
+            
+            
          </div>
+
+
+                    
+                    
+                    
       </div>
    </div>
-   <div class="row"  "cointainer-fluid" id="panel" >
-      <div class="col-sm-3">
+<div ng-show="rolling">
+                    <img src="gif/Progress.gif"/>
+                    {{generating}}
+                </div>
+                <div ng-show="successBatch" id="success">{{successBatchMessage}}</div>
+                <div ng-show="errorBatch" id="error">{{errorBatchMessage}}</div>
+   <div class="row" id="panel" >
+      <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-1">
             <div class="panel-body">
-               <font size="4">2018-19</font>
+               <font size="4.5">{{financialyear}}</font>
             </div>
-            <div class="panel_footer"><font size="1.5">Financial Year</font></div>
+            <div class="panel_footer"><font size="2.5">Financial Year</font></div>
          </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-2">
             <div class="panel-body">
-               <font size="4">90</font>
+               <font size="4.5">{{totaltargets}}</font>
             </div>
-            <div class="panel_footer" id><font size="1.5">Total Target</font></div>
+            <div class="panel_footer" id><font size="2.5">Total Target</font></div>
          </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-3">
             <div class="panel-body">
-               <font size="4">80</font>
+               <font size="4.5">{{targetachieved}}</font>
             </div>
-            <div class="panel_footer"><font size="1.5">Target Achieved</font></div>
+            <div class="panel_footer"><font size="2.5">Target Achieved</font></div>
          </div>
       </div>
-      <div class="col-sm-3">
+      <div class="col-md-3">
          <div class="panel-s panel-default" id="panel-4">
             <div class="panel-body">
-               <font size="4">10</font>
+               <font size="4.5">{{remainingtargets}}</font>
             </div>
-            <div class="panel_footer"><font size="1.5">Remaining Target</font></div>
+            <div class="panel_footer"><font size="2.5">Remaining Target</font></div>
          </div>
       </div>
    </div>
    <!--       text feild section-->
-   <form name="personForm" novalidate ng-submit="personForm.$valid &&sendForm()" >
-      <div class="row" "cointainer-fluid" id="style">
+   <div class="heading">
+  <span> <h3>Batch Details</h3></span>
+   <span class="pull-right"><button id="button" type="button" class="btn btn-info" ng-click="genarateBatchConfirmation()">Generate Batch ID</button></span>
+   </div>
+   <div class="importContainers">
+   <form class="info" name="pattern" method="post" ng-submit="submitMasterSheet()" onsubmit="return checkforward() || checkforstate()">
+      <div class="row" id="style">
          <div class="col-sm-3" >
-            <font size="4">Update Existing Batch</font>
+            
          </div>
          <div class="col-sm-3">
-            <select  ng-change="enable()" ng-model="value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
+            <select  ng-change="enable()" ng-model="batchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" >
             <option selected disabled value="">Enter Batch ID</option>
                 <span id="Error"></span>
             </select>
+            
+            
          </div>
          <div class="col-sm-3">
-            <select  ng-disabled="value == undefined"  class="state form-control" name="Type"  ng-model="myVar" >
-               <option value="none" selected  >Choose Ward Type</option>
+                        <select name="Loca" id="Loca" onchange="checkforward()" ng-disabled="batchDetails.value == undefined"  class="state form-control" name="Type"  ng-model="batch.wardType">
+              <option value="" disabled selected >Choose Ward Type</option>
                <option value="Single Ward" >Single Ward</option>
                <option value="Multiple Ward">Multiple Ward</option>
             </select>
-            <span style="color:red; font-size:1.2rem;">{{msg}}</span>
+            
+            
          </div>
          <div class="col-sm-3">
-            <div ng-if="myVar === 'Single Ward'"  id="general-1" >
+            <div ng-if="batch.wardType === 'Single Ward'"  id="general-1" >
                <div >
-                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" >
+                  <input type="text" name="type" class=" state" name="Ward Number" required  placeholder="Ward Number" ng-model="batch.wardNumber">
                </div>
             </div>
          </div>
       </div>
       <div class="row" id= "wrapper">
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="value == undefined" class="state" type="text" name="CenterId" required placeholder="Center Id" id="Id1" ng-model="txtId" ng-pattern="/^[0-9]{1,15}$/" required />
-           <span style="color:Red; font-size=1.2rem;" ng-show="personForm.CenterId.$dirty&&personForm.CenterId.$error.pattern">Only Numbers Allowed</span></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committe"  ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date"  ></li>
+            <li><input  ng-disabled="batchDetails.value == undefined" class="state" type="number" name="CenterId" placeholder="Center Id" id="CenterId" ng-model="batch.centreId" required />
+          	<span id="warning"  ng-show="centreIdErrorFlag">Enter valid Centre Id</span></li>
+          </li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Date of Selection Committee"  ng-model="batch.selectionCommitteeDate
+            "></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text"  onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Assessment Date" ng-model="batch.assessmentDate" ></li>
          </div>
          <div class="col-sm-3 margin" id="div" >
             <li>
-               <select name="Location" id="Location" onchange="checkforblank()" required ng-disabled="value == undefined"  required class="state form-control" name="Type">
-                  <option value="State">State</option>
-                  <option value="AP">Andra Pradesh</option>
-                  <option value="AP">Arunachal Pradesh</option>
-                  <option value="AS">Assam</option>
+               <select  required name="State" id="State" onchange="checkforstate()" ng-model="batch.state" ng-disabled="batchDetails.value == undefined"  required class="state form-control" name="Type" >
+                  <option value=""selected disabled>State</option>
+                  <option value="Andhra Pradesh">Andhra Pradesh</option>
+                  <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                  <option value="Assam">Assam</option>
                   <option value="Bihar">Bihar</option>
                   <option value="Chhattisgarh">Chhattisgarh</option>
+                  <option value="Delhi">Delhi</option>
                   <option value="Goa">Goa</option>
                   <option value="Gujarat">Gujarat</option>
                   <option value="Haryana">Haryana</option>
-                  <option value="HM">Himachal Pradesh</option>
-                  <option value="J&K">Jammu and Kashmir</option>
+                  <option value="Himachal Pradesh">Himachal Pradesh</option>
+                  <option value="Jammu and Kashmir">Jammu and Kashmir</option>
                   <option value="Jharkhand">Jharkhand</option>
                   <option value="Karnataka">Karnataka</option>
                   <option value="Kerala">Kerala</option>
-                  <option value="MP">Madya Pradesh</option>
+                  <option value="Madhya Pradesh">Madhya Pradesh</option>
                   <option value="Maharashtra">Maharashtra</option>
                   <option value="Manipur">Manipur</option>
-                  <option value="Meghalaya">Mizoram</option>
+                  <option value="Mizoram">Mizoram</option>
+                   <option value="Meghalaya">Meghalaya</option>
                   <option value="Nagaland">Nagaland</option>
-                  <option value="Orissa">Orissa</option>
+                  <option value="Odisha">Odisha</option>
                   <option value="Punjab">Punjab</option>
                   <option value="Rajasthan">Rajasthan</option>
                   <option value="Sikkim">Sikkim</option>
                   <option value="Tamil Nadu">Tamil Nadu</option>
+                  <option value="Telangana">Telangana</option>
                   <option value="Tripura">Tripura</option>
-                  <option value="Uttaranchal">Uttaranchal</option>
+                  <option value="Uttarakhand">Uttarakhand</option>
                   <option value="Uttar Pradesh">Uttar Pradesh</option>
                   <option value="West Bengal">West Bengal</option>
-                  <option value="Telangana">Telangana</option>
+                  
                </select>
             </li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Trainer Name" id="Id6" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" ng-model="batch.principalTrainerName" type="text" placeholder="Trainer Name" id="Id6" ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Medical Exam. Date"  ng-model="batch.medicalExamDate"></li>
          </div>
          <div class="col-sm-3" id="div">
-            <li><input  ng-disabled="value == undefined" required type="text" placeholder="City" id="Id8" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch Start Date"  ></li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Name" id="Id10" ></li>
+            <li><input  ng-disabled="batchDetails.value == undefined" required type="text" placeholder="City" id="Id8" ng-model="batch.centreCity"></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" ng-model="batch.batchStartDate" placeholder="Batch Start Date" min={{minyear}} max={{maxyear}} id="start">
+             <span id="warning"  ng-show="startDateFlag">{{startDateError}}</span>
+            </li>
+            <li><input ng-disabled="batchDetails.value == undefined"  type="text" placeholder="Municipality SPOC Name" id="Id10" ng-model="batch.employerName"></li>
+         	<span id="warning"  ng-show="emptyEmployerNameCheck">Enter Municipality SPOC name</span></li>
          </div>
          <div class="col-sm-3" id="div">
-            <li><input ng-disabled="value == undefined" required type="text" placeholder="Municipality" id="Id11" ></li>
-            <li><input ng-disabled="value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"  placeholder="Batch End Date"  ></li>
-            <li><input ng-disabled="value == undefined"  type="text" placeholder="Employer Number" id="Id13" ></li>
+            <li><input ng-disabled="batchDetails.value == undefined" required type="text" placeholder="Municipality" id="Id12" ng-model="batch.municipality"></li>
+            <li><input ng-disabled="batchDetails.value == undefined" class="state" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="Batch End Date" ng-model="batch.batchEndDate" id="end"></li>
+            <span id="warning"  ng-show="dateErrorFlag">{{dateError}}</span></li>
+            <li>
+            <input ng-disabled="batchDetails.value == undefined" class="state" type="number" placeholder="SPOC Number" id="Id13" ng-model="batch.employerContactNumber" />
+            <span id="warning"  ng-show="employerNumberErrorFlag">Enter valid contact number</span></li>
+            </li>
          </div>
       </div>
-      <div id="padding">
-         <div class="row" >
-            <div class="col-sm-4" > 
-            </div>
-            <div class="col-sm-6">
-               <input type="file" name="img[]" class="file">
-               <div class="input-group col-xs-12" id="upload">
-                  <input type="text" id="uploadFile" required  placeholder="Upload .xls File" {{theFile.name}} disabled="disabled" />
-                  <button class="btn btn-default btn-file btn-primary" ng-disabled="value == undefined" type="button" ng-click="browse()">
-                  Browse <input type="file"
-                     onchange="angular.element(this).scope().setFile(this)">
-                  </button>
-                  <br>
-                  {{FileMessage}}
-               </div>
-            </div>
+      
+
+             
             <div class="row">
-               <div class="col-sm-4"></div>
-               <div class="col-sm-4">
-                  <div id="color" ng-disabled="value == undefined" class="fileUpload btn btn-primary">
-                     <div class="col-xs-4">  <span>Submit</span>
+               <div class="col-sm-5"></div>
+               <div class="col-sm-7">
+                  <div  class="fileUpload ">
+                     <div class="col-sm-12"> 
+                     <button id="uploadBtn" ng-disabled="batchDetails.value == undefined" type="submit"  class="upload btn btn-primary" >Submit</button>
+                      <span ng-show="submitMsg" id="success">{{SuccessMessage}}</span>
+             		<span ng-show="errorMsg" id="error">{{errorMessage}}</span>
                      </div>
-                     <input id="uploadBtn" ng-disabled="value == undefined" ng-click="checkselection()"  type="submit"  class="upload" />
                   </div>
                </div>
+              
+               <div class="col-sm-5"></div>
             </div>
-         </div>
-      </div>
    </form>
+   </div>
+   
+   
+   
+   
+   
+    <div class="heading">
+	 <h3>Candidate Details</h3>
+	 </div>
+	 <div class="secondContainer">
+	 <div class="subheading">
+	 <h4>Generate Candidate Sheet</h4>
+	 </div>
+	
+	 	<form name="candidateSheetForm" ng-submit="generateCandidateSheet()">
+	  <div class="col-md-3">
+            <select  ng-model="generatebatchDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <option selected disabled value="">Enter Batch ID</option>
+                <span id="Error"></span>
+            </select>
+            
+         </div>
+         <div class="col-md-9">
+        <button type="submit" class="btn btn-primary" id="candidateSheetButton">Generate</button>	
+         <span><p id="successId" ng-show="generateCandidateSheetError">{{generateCandidateSheetMessage}}</p></span>
+         <span ng-show="rollingGenerateCandidateSheet">
+                    <img src="gif/Progress.gif" id="generateSheetgif"/>
+                    {{generatingCandidateSheet}}
+                </span>
+         </div>
+        </form>
+	 
+	 
+     <div class="subheading col-md-12">
+	 	<h4>Upload Candidate Details</h4>
+	 </div>
+	 <form name="uploadFile" ng-submit="uploadCandidateSheet()">
+	 <div class="col-md-3">
+            <select ng-model="uploadCandidateDetails.value" name="Type" class="state form-control" placeholder="Batch Id"  ng-options="x for x in ids" required>
+            <option selected disabled value="">Enter Batch ID</option>
+                <span id="Error"></span>
+            </select>
+            
+         </div>
+             <div class="col-md-4 btn-wrapper">
+             <div class="form-group">
+             <span>
+             	<input type="text" name="file_name" id="file_name" class="form-control" required>
+             </span>
+             <span>
+             <button type="button" class="btn browseButton">Browse</button>
+             </span>
+             <input type="file" id ="uploadSheet" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="masterSheet.import"/>
+             </div>
+             </div>             
+             <div class="col-md-2">
+             <button type="submit" class="btn btn-primary" >Upload</button>
+             </div>
+             
+           </form>
+           <div class="col-md-12" align="right">
+             <div class="col-md-4" id="rollinguploadCandidateSheetGif">
+             <span>
+             <img src="gif/Progress.gif" id="uploadGif"/>
+                    </span>
+                    <span>
+                   <p> Please wait while file is uploading</p></span>
+                	
+             </div>
+             <div class="col-md-8">
+             <p id="importExcelMessage" class="importExcelMessageStyle"></p>
+             </div>
+             </div>
+	 </div>
+	 
+   </div>
 </div>

@@ -1,0 +1,37 @@
+This build number #632
+Fixed the bugs found in build #602
+NA-324
+NA-323
+NA-321
+NA-313
+NA-317
+NA-310
+NA-307
+NA-306
+NA-304
+NA-302
+NA-299
+NA-295
+NA-292
+NA-291
+NA-288
+NA-287
+NA-289
+NA-316
+NA-315
+NA-312
+NA-296
+NA-293
+NA-303
+NA-301
+NA-300
+NA-311
+NA-285
+NA-305
+NA-322
+NA-309
+NA-319
+NA-294
+
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail

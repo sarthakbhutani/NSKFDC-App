@@ -1,0 +1,39 @@
+.heading h3{
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+}
+.updateTarget, .updatedTargets{
+	background-color:#ffffff;
+	padding:1%;
+	margin:1%;
+}
+.updateTargetform, .updatedTargetsform{
+	padding:1%;
+}
+.searchTable{
+	margin-top:1%;
+}
+.ui-grid-header-cell-primary-focus{
+	background-color:#0090af;
+	color: white;
+	text-align: center;
+}
+.ui-grid-cell-contents{
+    text-align: center;
+}
+#error{
+	color:red;
+	font-weight: bold;
+}
+#success{
+	color:green;
+	font-weight: bold;
+}
+#warning
+{
+	color:Red; font-size:1.2rem
+}
+  input.ng-invalid {
+    border: 1px solid #ccc;
+}

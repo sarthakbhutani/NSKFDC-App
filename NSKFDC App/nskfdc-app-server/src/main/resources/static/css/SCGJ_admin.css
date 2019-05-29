@@ -1,5 +1,9 @@
 @import "https://fonts.googleapis.com/css?family=Open+Sans";
 
+.userName{
+	    font-size: 10pt !important;
+    	margin-bottom: 0pt !important;
+}
 
 body {
     font-family: 'Open Sans', sans-serif;
@@ -10,6 +14,9 @@ body {
         width: 1488px;
     }
 }
+.alpha, .beta, .gamma, .delta{
+	background-color : #0a90a8;
+}
 p {
     font-family: 'Open Sans', sans-serif;
     font-size: 1.1em;
@@ -17,11 +24,11 @@ p {
     line-height: 1.7em;
     color: #999;
 }
-
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
     transition: all 0.3s;
+    cursor: pointer;
 }
 a span{
     font-size: 10pt;
@@ -54,6 +61,7 @@ i, span {
     border-color: #e7e7e7;
     text-align: center;
 }
+
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
@@ -63,6 +71,13 @@ i, span {
     align-items: stretch;
 }
 
+a:focus {
+    color: #ffffff;
+    background-color: #0a90a8;
+}
+#sidebar ul li .active-div{
+	background-color : red; 
+}
 #sidebar {
     min-width: 188pt;
     max-width: 188pt;
@@ -76,7 +91,7 @@ i, span {
 }
 
 #sidebar ul.components {
-    padding: 4% 5%;
+/*     padding: 4% 5%; */
 
 }
 
@@ -109,7 +124,7 @@ i, span {
 ----------------------------------------------------- */
 #content {
     width:100%;
-    padding: 20px;
+    padding: 1%;
     min-height: 80vh;
     transition: all 0.3s;
 }
@@ -238,12 +253,4 @@ h6{
         padding: 10pt !important;
     }
 
-    /*   #sidebar a[aria-expanded="false"]::before, #sidebar a[aria-expanded="true"]::before {
-           top: auto;
-           bottom: 5px;
-           right: 50%;
-           -webkit-transform: translateX(50%);
-           -ms-transform: translateX(50%);
-           transform: translateX(50%);
-       }*/
 }

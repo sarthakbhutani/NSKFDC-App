@@ -1,23 +1,36 @@
- #bg-image {
-     height:100%;
-     width: 100%;
-     background-size: cover;
+
+#google_translate_element {
+  	position: absolute;
+    z-index: 99999;
+    margin: 30% 0 0 -5%;
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.backgroundImageForLogin{
+	 background-image: url("../images/loginBackground.jpg");
+	 background-size: cover;
+	  height:100vh;
+ 
+   
 }
  .form {
-     height:55%;
+     height:52%;
      background-color:#ffffff;
      position: absolute;
      top: 25%;
-     width:41%;
-     margin-left:57%;
+     width:38%;
+     margin-left:60%;
+     border-radius:4pt;
 }
  input.ng-invalid {
      border: 1px solid red;
 }
  #scgj-logo {
-     height:18%;
-     width:35%;
-     display:inline;
+    height: 23%;
+    width: 47%;
+    display: inline;
 }
  #valid-email {
      margin-left:50%;
@@ -31,47 +44,48 @@
      box-shadow: 0 0 0;
      border-radius: 0;
      color: #555555;
-     padding: 7px 0;
      height:auto;
-     margin-bottom: -4%;
 }
  .login .form-control::-webkit-input-placeholder {
      color: #A9A9A9;
 }
  .login .username-text {
-     padding-right: 20px;
-     width:90%;
+     width:95%;
      border:none;
      outline:none;
      border-bottom: 2px solid #ccc;
 }
  .login .password-text {
-     padding-right: 20px;
-     width:90%;
+     width:95%;
      border:none;
      outline:none;
      border-bottom: 2px solid #ccc;
 }
  .login-button {
-     width: 100%;
+     width: 50%;
      background-color:#3279C0;
      color: #ffffff;
      padding: 1.5%;
      text-align: center;
      text-decoration: none;
      display: inline-block;
-     font-size: 12px;
+     font-size: 12pt;
      border-radius:5px;
      border: none;
-     margin-top:5%;
+     margin-top:2%;
+     margin-left:24%;
 }
+
+
  .user-icon {
-     margin-left:110%;
-     margin-bottom:2%;
+     margin-left:102%;
+     margin-top:2%;
+     cursor:auto;
 }
  .password-icon {
-     margin-left: 115%;
-     margin-bottom:6%;
+     margin-left: 105%;
+     margin-top:2%;
+     margin-bottom:4%;
 }
  .valid {
      margin-left:65%;
@@ -82,10 +96,16 @@
      display:inline;
 }
  #nskfdc-logo {
-     height:17%;
-     width:15%;
-     display:inline;
-     margin-left: 40%;
-     margin-top:4%;
+    height: 16%;
+    width: 11%;
+    display: inline;
+    margin-left: 35%;
+    margin-top: 1%;
+}
+
+#errorMessage{
+	color:red;
+	font-size: 9pt;
+	font-weight: bold;
 }
  

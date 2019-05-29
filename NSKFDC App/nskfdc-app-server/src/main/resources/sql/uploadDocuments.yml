@@ -1,3 +1,39 @@
 uploadDocuments:
- showBatchIdDetails: >
-  select batchId from batchdetails join user where batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
+ uploadDocumentsQuery: >
+  select * from uploadeddocuments where batchId= :batchId and userEmail= :userEmail;
+  
+
+  
+ showScgjDetails: >
+  select exists (Select 1 from batchdetails where batchId = :batchId and scgjBatchNumber = :scgjBatchNumber);
+
+ batchidDetails: >
+  Select 1 from batchdetails where batchId = :batchId;
+  
+ checkExistence: >
+  SELECT exists (Select 1 from uploadeddocuments where uploadeddocuments.batchId = :batchId and uploadeddocuments.userEmail = :userEmail);
+  
+ insertUserDetails: >
+  INSERT INTO uploadeddocuments(userEmail,batchId) VALUES (:userEmail,:batchId);
+  
+ updateOccupationCertificatePath: >
+  UPDATE uploadeddocuments SET occupationCertificate=1,dateUploaded = curdate(),occupatioCertificatePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  
+ updateFinalBatchReportPath: >
+  UPDATE uploadeddocuments SET finalBatchReport = 1,dateUploaded = curdate(), finalBatchReportPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  
+ updateAttendanceSheetPath: >
+  UPDATE uploadeddocuments SET attendanceSheet = 1,dateUploaded = curdate(), attendanceSheetPath = :path WHERE batchId = :batchId and userEmail = :userEmail; 
+ 
+ updateNSKFDCSheet: >
+  UPDATE uploadeddocuments SET dataSheetForNSKFC = 1,dateUploaded = curdate(), dataSheetForNSKFCPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+ 
+ updateSDMSSheet: >
+  UPDATE uploadeddocuments SET dataSheetForSDDMS = 1,dateUploaded = curdate(), dataSheetForSDMSPath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+ 
+ updateMinuteOfSelectionCommittee: >
+  UPDATE uploadeddocuments SET minuteOfSelectionCommittee = 1,dateUploaded = curdate(), minuteOfSelectionCommitteePath = :path WHERE batchId = :batchId and userEmail = :userEmail;
+  
+   
+  
+  

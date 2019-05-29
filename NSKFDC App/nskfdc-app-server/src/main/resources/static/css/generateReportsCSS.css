@@ -8,17 +8,22 @@
 	padding-top: 1%;
 	padding-bottom: 1%;
 }
-h4{
-	color:#8c8686;
-	padding-left:3%;
-	padding-bottom:3%;
-	padding-top:3%;
+.heading{
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
 }
+.auditTable{
+	color: #999;
+	font-size: 2.4rem;
+	padding:1%;
+	margin-top:2%;
+}
+
 .generateReports{
-	background-color: white;
-	padding-top: 2%;
-	padding-bottom: 2%;
-	margin-left: 2%;
+	background-color: #ffffff;
+	padding:1.5%;
+	margin:1%;	
 }
 input.ng-invalid {
     border: 1px solid #AAAAAA;
@@ -29,17 +34,14 @@ input.ng-invalid {
 .search{
 	margin-left:16%;
 }
-.searchreport{
-	height:10%;
-	margin-left:2%;
-	margin-right:1%;
-	margin-bottom:2%;
-}
+
 .searchRow{
 	margin-bottom:3%;
 }
-.table{
-	margin-left: 2%;
+.gridTable{
+	margin-top:1%;
+	margin-left:1%;
+	margin-right:1%;
 }
 .ui-grid-header-cell-primary-focus{
 	background-color: rgb(0,139,172);
@@ -47,4 +49,15 @@ input.ng-invalid {
 }
 .ui-grid-header-cell-label{
 	color:white;
+}
+#error_msg{
+	color: red;
+    font-weight: bold;
+}
+#success_msg{
+	color: green;
+	font-weight: bold;
+}
+.ui-grid-cell-contents{
+    text-align: center;
 }

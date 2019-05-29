@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
+import com.nskfdc.scgj.common.Privilege;
 import com.nskfdc.scgj.dto.CandidatesTrainedInLast6MonthsDto;
 import com.nskfdc.scgj.dto.StateDetailsDto;
 import com.nskfdc.scgj.service.DashboardService;
@@ -23,56 +22,67 @@ import com.nskfdc.scgj.service.DashboardService;
 	@Autowired
 	private DashboardService dashboardService;
 	
+	
 	/**
 	 * @author Shivanshu Garg
 	 * @return total Number of candidates trained
 	 * @description Method to Get Number of candidates trained 
 	 */
+	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfCandidatesTrained")
-	public int getNumberOfCandidatesTrained(){
-		
-		LOGGER.debug("Request received from frontend to get Number of Candidates Trained");
-		LOGGER.debug("In get Number of CandidatesTrained Controller");
+	public Integer getNumberOfCandidatesTrained(){
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("To get NUMBER OF CANDIDATES TRAINED");
 		
 		try {
 			
-			LOGGER.debug("In try block to get Number of CandidatesTrained");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get Number of Candidates Trained");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getNumberOfCandidatesTrained");
 			return dashboardService.getNumberOfCandidatesTrained();
 			
 			}
 		catch(Exception e) {
+			LOGGER.error("CATCHING -- EXCEPTION in DASHBOARD Controller");
+			LOGGER.error("Catch while getNumberOfCandidatesTrained");
+			LOGGER.error("An exception occurred is" + e);
+			return null;
 			
-			LOGGER.error("An exception occurred while getting the Number of CandidatesTrained" + e);
-			return 0;
-			
-							}
+			}
 	}
+	
+	
+	
 	
 	/**
 	 * @author Shivanshu Garg
 	 * @return Number of Training Partners
 	 * @description Method to get Number of Training Partners
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfTrainingPartners")
-	public int getNumberOfTrainingPartners(){
-		
-		LOGGER.debug("Request received from frontend to get Number of Training partners");
-		LOGGER.debug("In get Number of TrainingPartners Controller to get Number of training Partners");
-		
+	public Integer getNumberOfTrainingPartners(){
+			LOGGER.debug("In DASHBOARD Controller");
+			LOGGER.debug("To get NUMBER OF TRAINING PARTNERS");
 		try {
 			
-			LOGGER.debug("In try block to get Number of TrainingPartners");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get Number of Training Partners");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getNumberOfTrainingPartners");
 			return dashboardService.getNumberOfTrainingPartners();
-			
 		}catch(Exception e) {
 			
-			LOGGER.error("An exception occurred while getting the Number of TrainingPartners" + e);
-			return 0;
+			LOGGER.error("CATCHING -- EXCEPTION in DASHBOARD Controller");
+			LOGGER.error("Catch while getNumberOfTrainingPartners");
+			LOGGER.error("An exception occurred is" + e);
+			return null;
 			
 		}
 	}
+	
+	
+	
 	
 	
 	/**
@@ -80,24 +90,26 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Number of Upcoming assessments
 	 * @description Method to find Number of Upcoming Assessments 
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfUpcomingAssessments")
-	public int getNumberOfUpcomingAssessments(){
+	public Integer getNumberOfUpcomingAssessments(){
 		
-		LOGGER.debug("Request received from frontend to get number of Upcoming assessments");
-		LOGGER.debug("In get Number of UpcomingAssessments Controller");
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("To get NUMBER OF UPCOMING ASSESSMENTS");
 		
 		try {
-			
-			LOGGER.debug("In try block to get Number of UpcomingAssessments ");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get Number of Upcoming Assessments");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getNumberOfUpcomingAssessments");
 			return dashboardService.getNumberOfUpcomingAssessments();
 			
 		}
 		catch(Exception e) {
 			
-			LOGGER.error("An exception occurred while getting the Number of UpcomingAssessments" + e);
-			return 0;
+			LOGGER.error("CATCHING -- EXCEPTION in DASHBOARD Controller");
+			LOGGER.error("Catch while in getNumberOfUpcomingAssessments");
+			LOGGER.error("An exception occurred is" + e);
+			return null;
 			
 		}
 	}
@@ -107,73 +119,125 @@ import com.nskfdc.scgj.service.DashboardService;
 	 * @return Number of Ongoing Trainings
 	 * @desciption Method to get Number of Ongoing Trainings
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getNumberOfOngoingTrainings")
-	public int getNumberOfOngoingTrainings(){
+	public Integer getNumberOfOngoingTrainings(){
 		
-		LOGGER.debug("Request received from frontend to get Number of Ongoing Trainings");
-		LOGGER.debug("In get Number of OngoingTrainings Controller");
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("To get NUMBER OF ONGOING TRAININGS");
 		
 		try {
-			
-			LOGGER.debug("In try block to get Number of OngoingTrainings");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get Number of Ongoing Trainings");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getNumberOfOngoingTrainings");			
 			return dashboardService.getNumberOfOngoingTrainings();
 			
 		}catch(Exception e) {
 			
-			LOGGER.error("An exception occurred while getting the Number Of OngoingTrainings" + e);
-			return 0;
+			LOGGER.error("CATCHING -- EXCEPTION in DASHBOARD Controller");
+			LOGGER.error("Catch while in getNumberOfOngoingTrainings");
+			LOGGER.error("An exception occurred is" + e);
+			return null;
 			
 		}
 	}
+	
+	
+	
+	
+	
 
 	/**
 	 * @author Shivanshu Garg
 	 * @return Total number of candidates trained in last 6 months
 	 * 
 	 */
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getTotalNumberOfCandidatesTrainedInLast6Months")
 	public Collection<CandidatesTrainedInLast6MonthsDto> getTotalNumberOfCandidatesTrainedInLast6Months(){
-		LOGGER.debug("Request received from frontend to get Total Number Of Candidates Trained In Last 6 Months");
-		LOGGER.debug("In total number of Candidates Trained in last 6 months Controller");
-
+		
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("For BAR CHART- 2");
+		LOGGER.debug("In controller method - getTotalNumberOfCandidatesTrainedInLast6Months");
+		
 		
 		try {
-			LOGGER.debug("In try block to get Number of Candidates Trained in last 6 months");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get Total number of Candidates trained in last 6 months");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getShowTotalNumberOfCandidatesTrainedInLast6Months");
 			return dashboardService.getShowTotalNumberOfCandidatesTrainedInLast6Months();
 			}
 		
 		catch(Exception e) {
+			LOGGER.error("CATCHING -- Exception in Dasboard Controller");
+			LOGGER.error("In getTotalNumberOfCandidatesTrainedInLast6Months");
+			LOGGER.error("An Exception occured is "+e);
 			return null;
 			
-							}
+			}
 	}
 
+	
+	
 	
 	/**
 	 * @author Aman
 	 * @description method to get details of states
 	 */
-	
+	@Privilege(value= {"scgj"})
 	@RequestMapping("/getStateDetails")
 	public Collection<StateDetailsDto> getdetails(){
-		LOGGER.debug("Request received from frontend");
-		LOGGER.debug("In State Controller");
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("For BAR CHART- 1");
+		LOGGER.debug("To Get Top 5 states with maximum Training Centers");
+		LOGGER.debug("In controller method - getdetails");
 
 		
 		try {
-			LOGGER.debug("In try block to get State details");
-			LOGGER.debug("Sending request to service");
+			LOGGER.debug("TRYING -- Get TOP 5 states with maximum Training Centers");
+			LOGGER.debug("Sending request to Dashboard service");
+			LOGGER.debug("Method - getShowStateDetails");
 			return dashboardService.getShowStateDetails();
 			
 		}catch(Exception e) {
+			LOGGER.error("CATCHING Exception in Dashboard Controller");
+			LOGGER.error("In Method getdetails");
+			LOGGER.error("An exception occurred is "+e);
 			return null;
 			
 		}
 	}
 
+	
+	
+	/**
+	 * @author Aman
+	 * @description method to get details of Map
+	 */
+	@Privilege(value= {"scgj"})
+	@RequestMapping("/getshowStateDetailsForMapChart")
+	public Collection<StateDetailsDto> getshowStateDetailsForMapChart(){
+		LOGGER.debug("In DASHBOARD Controller");
+		LOGGER.debug("For MAP CHART - Get Number of Training Centers in each state");
+		LOGGER.debug("In method - getshowStateDetailsForMapChart");
+
+		
+		try {
+			LOGGER.debug("TRYING -- Get Number of Training Centers in each state");
+			LOGGER.debug("Sending request to DASHBOARD service");
+			LOGGER.debug("Method- getshowStateDetailsForMapChart");
+			return dashboardService.getshowStateDetailsForMapChart();
+			
+		}catch(Exception e) {
+			LOGGER.error("CATCHING -- Exception in Dashboard Controller");
+			LOGGER.error("In method - getshowStateDetailsForMapChart");
+			LOGGER.error("An exception occurred is"+e);
+			return null;
+			
+		}
+	}
+
+	
 	}
 
 

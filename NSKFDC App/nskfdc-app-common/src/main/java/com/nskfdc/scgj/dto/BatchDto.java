@@ -1,28 +1,30 @@
-
-	package com.nskfdc.scgj.dto;
-
-	import com.nskfdc.scgj.common.BaseDto;
+package com.nskfdc.scgj.dto;
+import com.nskfdc.scgj.common.BaseDto;
 
 	public class BatchDto extends BaseDto{
-		public BatchDto(String batchId) {
-			super();
-			this.batchId = batchId;
-		}
-
-		private String batchId;
+    
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private String BatchId;
 
 		public String getBatchId() {
-			return batchId;
+			return BatchId;
 		}
 
 		public void setBatchId(String batchId) {
-			this.batchId = batchId;
+			BatchId = batchId;
+		}
+
+		public BatchDto(String batchId) {
+			super();
+			BatchId = batchId;
 		}
 
 		public BatchDto() {
 			super();
-			// TODO Auto-generated constructor stub
 		}
-
+		
 
 	}

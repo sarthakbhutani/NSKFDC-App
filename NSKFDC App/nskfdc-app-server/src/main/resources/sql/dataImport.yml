@@ -1,12 +1,75 @@
 dataImport:
- generateBatch: >
-  insert into batchdetails(trainingPartnerEmail) values (:trainingPartnerEmail);
- showbatchId: > 
-  SELECT batchId FROM batchdetails JOIN user WHERE batchdetails.trainingPartnerEmail = user.trainingPartnerEmail;
+ downloadMasterSheet: >
+  select trainingPartnerName,sectorSkillCouncil,jobRole,nsdcRegNumber,batchId from batchdetails join trainingpartnerdetails on trainingpartnerdetails.userEmail=batchdetails.userEmail where batchId= :batchId;
+ 
+ candidateSheet: >
+  select enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber, idProofType, idProofNumber, disabilityType, age, dob, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType, employmentType, workplaceAddress, assessmentResult, medicalExamConducted, relationWithSKMS, accountNumber, ifscCode, bankName, hiredByMc, outsourcedEmployerName, outsourcedEmployerContact, monthlySalary, pfOrEsiProvided from candidate where batchId= :batchId;
+ 
+ ShowTotalTargets: >
+  select targets from trainingpartnerdetails where (userEmail=:userEmail) and (targetApprovalDate between :date1 and :date2);
   
- 
+ checkCandidate: >
+  select exists (select enrollmentNumber from candidate where candidate.enrollmentNumber = :enrollmentNumber and candidate.batchid = :batchId);
+  
+ ShowTargetAchieved: >
+  select count(*) from candidate join batchdetails on candidate.batchId=batchdetails.batchId join trainingpartnerdetails on batchdetails.userEmail=trainingpartnerdetails.userEmail where (candidate.assessmentResult="pass" or candidate.assessmentResult="fail") and (batchdetails.userEmail= :userEmail) and (batchdetails.batchEndDate<curdate()) and (batchdetails.batchendDate between :date1 and :date2);
 
+ insertBatchId: > 
+  insert into batchdetails(userEmail,batchId,municipality) values(:userEmail,:batchId,:municipality);
+   
+ ShowFinancialYear: >
+  SELECT
+   CASE WHEN MONTH(curdate())>=4 THEN
+          concat(YEAR(curdate()),YEAR(curdate())+1)
+   ELSE concat(YEAR(curdate())-1,YEAR(curdate())) END AS financial_year;
 
- 
- 
+ BatchDetails: >
+  SELECT DISTINCT b.centreId, b.centreState, b.centreCity, b.batchId, b.municipality, b.selectionCommitteeDate, b.principalTrainerName, b.batchStartDate, b.batchEndDate,b.assessmentDate, b.medicalExamDate, b.wardType, b.wardNumber , b.employerName, b.employerContactNumber from  batchdetails b where  b.batchId= :batchId and b.userEmail= :userEmail;
 
+ generateBatch: >
+  insert into batchdetails(userEmail) values (:userEmail);
+  
+ showTpName: >
+  select distinct trainingPartnerName from trainingpartnerdetails where userEmail = :userEmail;
+  
+ numberOfBatches: > 
+  select COUNT(batchId) from batchdetails where userEmail= :userEmail;
+
+ showbatchId: >
+  SELECT distinct batchId FROM batchdetails JOIN user WHERE batchdetails.userEmail= :userEmail;
+
+ updateBatchDetails: >
+  UPDATE batchdetails set batchStartDate=:batchStartDate,batchEndDate=:batchEndDate,assessmentDate=:assessmentDate,medicalExamDate=:medicalExamDate,selectionCommitteeDate=:selectionCommitteeDate,municipality=:municipality,wardType=:wardType,wardNumber=:wardNumber,principalTrainerName=:trainerName,centreId=:centreId , centreState = :centreState, centreCity =:centreCity , employerName = :employerName , employerContactNumber = :employerContactNumber where batchId=:batchId;
+
+ importCandidate: >
+  INSERT INTO candidate (enrollmentNumber, salutation, firstName, lastName, gender, mobileNumber, educationLevel, state, district, aadharCardNumber,idProofType, idProofNumber, disabilityType, age, dob ,accountNumber, ifscCode, bankName, guardianType, firstNameFather, lastNameFather, motherName, residentialAddress, msId, occupationType,employmentType, workplaceAddress, assessmentResult, medicalExamConducted, batchId, relationWithSKMS,hiredByMc,outsourcedEmployerName,outsourcedEmployerContact,monthlySalary,pfOrEsiProvided) VALUES(:enrollmentNumber,:salutation,:firstName,:lastName,:gender,:mobileNumber,:educationLevel,:state,:district ,:aadharCardNumber,:idProofType,:idProofNumber,:disabilityType ,:age,:dob,  :accountNumber, :ifscCode, :bankName, :guardianType,:firstNameFather,:lastNameFather,:motherName,:residentialAddress,:msId,:occupationType,:employmentType,:workplaceAddress,:assessmentResult,:medicalExaminationConducted,:batchId,:relationWithSKMS,:hiredByMc,:outsourcedEmployerName,:outsourcedEmployerContact,:monthlySalary,:pfOrEsiProvided);
+  
+ importBankDetails: >
+  INSERT INTO bankDetails (accountNumber, ifscCode, bankName, enrollmentNumber) VALUES (:accountNumber,:ifscCode,:bankName,:enrollmentNumber);
+   
+ checkCandidateExistance: >
+  SELECT EXISTS(SELECT 1 FROM candidate WHERE candidate.enrollmentNumber = :enrollmentNumber);  
+  
+ checkBankExistence: >
+  SELECT EXISTS(SELECT 1 FROM bankdetails WHERE bankdetails.accountNumber = :accountNumber);
+  
+ updateExistingDetails: >
+  UPDATE candidate set salutation =:salutation,firstName =:firstName,lastName =:lastName,gender =:gender,mobileNumber=:mobileNumber,educationLevel=:educationLevel,state=:state,district=:district,aadharCardNumber=:aadharCardNumber,idProofType=:idProofType,idProofNumber=:idProofNumber,disabilityType=:disabilityType,age=:age,dob=:dob,guardianType=:guardianType,firstNameFather=:firstNameFather,lastNameFather=:lastNameFather,motherName=:motherName,residentialAddress=:residentialAddress,msId=:msId,occupationType=:occupationType,employmentType=:employmentType,workplaceAddress=:workplaceAddress,assessmentResult=:assessmentResult,medicalExamConducted=:medicalExaminationConducted,relationWithSKMS=:relationWithSKMS,batchId=:batchId, ifscCode=:ifscCode,bankName=:bankName , accountNumber = :accountNumber,hiredByMc = :hiredByMc,outsourcedEmployerName = :outsourcedEmployerName,outsourcedEmployerContact = :outsourcedEmployerContact,monthlySalary = :monthlySalary, pfOrEsiProvided = :pfOrEsiProvided where enrollmentNumber =:enrollmentNumber;
+  
+ updateExistingBankDetails: >
+  UPDATE bankdetails set ifscCode=:ifscCode,bankName=:bankName,enrollmentNumber =:enrollmentNumber where accountNumber=:accountNumber;
+  
+ nsdcRegNumber: >
+  select REVERSE(CAST(REVERSE(nsdcRegNumber) AS UNSIGNED)) from trainingpartnerdetails where userEmail= :userEmail;
+  
+ checkAadharNumberExistence: >
+  SELECT EXISTS(SELECT aadharcardNumber FROM candidate WHERE batchId = :batchId and aadharCardNumber = :aadharCardNumber);
+  
+ checkMobileNumberExistence: >
+  SELECT EXISTS(SELECT mobileNumber FROM candidate WHERE batchId = :batchId and mobileNumber = :mobileNumber);
+  
+ updateCheckAadharNumberExistence: >
+  SELECT EXISTS(SELECT aadharcardNumber FROM candidate WHERE batchId = :batchId and aadharCardNumber = :aadharCardNumber and enrollmentNumber!= :enrollmentNumber);
+  
+ updateCheckMobileNumberExistence: >
+   SELECT EXISTS(SELECT mobileNumber FROM candidate WHERE batchId = :batchId and mobileNumber = :mobileNumber and enrollmentNumber!= :enrollmentNumber);

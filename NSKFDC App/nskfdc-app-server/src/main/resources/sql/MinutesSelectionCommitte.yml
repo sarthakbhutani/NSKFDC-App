@@ -1,0 +1,3 @@
+generateSheet:
+ showMinutesOfSelectionMeetingDetails: >  
+  select jobRole,trainingPartnerName,sectorSkillCouncil,centreCity from trainingpartnerdetails INNER JOIN centredetails ON trainingpartnerdetails.userEmail = centredetails.userEmail;

@@ -1,0 +1,21 @@
+This build includes bug fixes for  - 
+NA-136
+NA-137
+NA-142
+NA-138
+NA-153
+NA-140
+NA-147
+NA-149
+NA-150
+NA-145
+NA-146
+NA-148
+NA-139
+NA-143
+NA-171
+NA-173
+
+
+
+https://smaltandberyl.atlassian.net/secure/RapidBoard.jspa?rapidView=61&projectKey=NA&view=planning.nodetail

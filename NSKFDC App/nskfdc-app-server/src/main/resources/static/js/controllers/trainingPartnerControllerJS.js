@@ -1,8 +1,12 @@
 var trainingPartner = angular.module("app");
 
-trainingPartner.controller("trainingPartnerController" , function($scope, $http){
+trainingPartner.controller("trainingPartnerController" , function($scope, $http,$rootScope){
 	
-	//write your code here
+	$rootScope.mainTemplate=false;
+	$scope.alpha = true;
+	$scope.beta = false;
+	$scope.gamma = false;
+	$scope.delta = false;
 
 	
 });

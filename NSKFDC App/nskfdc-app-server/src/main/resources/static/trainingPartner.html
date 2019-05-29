@@ -1,16 +1,23 @@
-<div>
-
+<div ng-controller="mainController">
+ 
  <link rel="stylesheet" href="css/trainingPartner.css">
 
 <nav class="navbar">
     <div class="container-fluid">
-        <div class="navbar-header navbar-brand">
-            <a class="logo">
-                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="13%" >
+        <div class="navbar-header navbar-brand row">
+        <div class="col-md-3">
+            <a href="http://sscgj.in/" class="logo" target="_blank">
+                <img src="images/SCGJlogo.png" alt="SCGJ logo" width="43%" >
             </a>
-
-			<a class="navbar-right">
-            <img src="images/logout.png" alt="logout" width="6%" >&nbsp;<span>Logout</span></a>
+         </div>
+         <div class="col-md-6">
+			<p class="nameOfUser">{{nameOfuser}}</p>
+		</div>
+		<div class="col-md-3" align="right" style="padding: 6pt;">
+			<a class="">
+			<p class="userName" ><b>{{username}}</b></p>
+            <img src="images/logout.png" alt="logout" width="6%" >&nbsp;<span ng-click="logout()">Logout</span></a>
+        </div>
         </div>
         
     </div>
@@ -21,29 +28,36 @@
     <nav id="sidebar">
         <ul class="list-unstyled components">
             <li class="active">
-                <a ng-click="page='masterSheetImport'">
+                <a ng-click="page='masterSheetImport'; alpha=true; beta=false; gamma=false; delta=false; epsilon=false;" ng-class="{alpha : alpha}">
                     <img src="images/import.png" alt="import" width="10%">&nbsp;
                     Master Sheet Import
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateReports'">
+                <a ng-click="page='generateReports'; alpha=false; beta=true; gamma=false; delta=false;epsilon=false;" ng-class="{beta: beta}">
                     <img src="images/generate.png" alt="import" width="10%">&nbsp;
                     Generate Reports
                 </a>
             </li>
             <li>
-                <a ng-click="page='uploadDocuments'">
+                <a ng-click="page='uploadDocuments';alpha=false; beta=false; gamma=true; delta=false; epsilon=false;" ng-class="{gamma: gamma}">
                     <img src="images/upload.png" alt="import" width="10%">&nbsp;
                     Upload Documents
                 </a>
             </li>
             <li>
-                <a ng-click="page='generateBatchReport'">
+                <a ng-click="page='updateBatchNumber'; alpha=false; beta=false; gamma=false; delta=false; epsilon=true;" ng-class="{epsilon: epsilon}">
+                    <img src="images/updateBatchNumber.png" alt="import" width="10%">&nbsp;
+                    SDMS Batch Number
+                </a>
+            </li>
+            <li>
+                <a ng-click="page='generateBatchReport';alpha=false; beta=false; gamma=false; delta=true; epsilon=false;" ng-class="{delta: delta}">
                     <img src="images/batch.png" alt="import" width="10%">&nbsp;
                     Generate Batch Report
                 </a>
             </li>
+            
         </ul>
     </nav>
 
@@ -66,6 +80,10 @@
                 <div ng-switch-when="generateBatchReport">
 
                     <div ng-include src="'partials/generateBatchReport.html'"></div>
+                </div>
+                <div ng-switch-when="updateBatchNumber">
+
+                    <div ng-include src="'partials/updateBatchNumber.html'"></div>
                 </div>
                 
             </div>

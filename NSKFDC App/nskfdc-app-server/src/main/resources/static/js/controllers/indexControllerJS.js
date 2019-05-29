@@ -12,6 +12,7 @@ var app = angular.module('app', ['ngRoute',
 // Application Configuration
 app.config(function($routeProvider, $httpProvider){
 	
+
 	$routeProvider.when('/scgj', {
 	    templateUrl : 'SCGJ_admin.html',
 	    controller : 'SCGJUserController'
@@ -29,22 +30,105 @@ app.config(function($routeProvider, $httpProvider){
 });
 
 
-// main controller of the App
-app.controller('mainController', function($scope, $http) {
-		
-//	var pwd = document.getElementById('password')
-//	var eye = document.getElementById('eye')
-//	
-//	eye.addEventListener('click',togglePass);
-//	function togglePass()
-//	{
-//		eye.classList.toggle('active');
-//		
-//		(pwd.type == 'password') ? pwd.type = 'text' :
-//		pwd.type = 'password';
-//	}
-//	
 
+
+// main controller of the App
+app.controller('mainController', function($rootScope, $scope, $http, $location, $route, $window, $timeout)  {
+		
+	$rootScope.mainTemplate=true;
+	$scope.invalidErrorMessage="";
+	$scope.credential={userEmail: '',password:''}
+	
+//	var nameOfUser = function()
+//	{
+//		$http.get('/getNameOfUser')
+//		.then(function(response){
+//			
+//		});
+//	}
+	
+	
+	
+	var authenticate = function(credentials){
+		
+		var headers = credentials? { authorization : "Basic " + btoa(credentials.userEmail + ":" + credentials.password)}:{};
+	
+		$http.get('/user', {headers : headers}).then(function(response){
+		
+			
+			
+			
+			$rootScope.userRole = JSON.stringify(response.data.authorities[0].authority);	
+			$rootScope.username = response.data.principal.username;	
+			$rootScope.mainTemplate=false;
+			
+			if(credentials){
+				
+				$http.get('/getNameOfUser').then(function(nameOfUser){
+					$rootScope.nameOfuser=nameOfUser.data.trainingPartnerName;
+					
+					
+				},function(error){
+					
+				});
+				
+			}
+
+	// Routing between templates based on user-role
+			
+			if($rootScope.userRole == '"scgj"'){
+				$rootScope.mainTemplate=false;
+				$location.path("/scgj");
+			}
+			else if($rootScope.userRole == '"TP"'){
+				$rootScope.mainTemplate=false;
+				$location.path("/trainingPartner");
+			}
+			else
+				$location.path("/");
+
+		
+			
+		}, function(data){
+			// function which executes when the user is not authenticated
+			$rootScope.mainTemplate= true;
+			if(credentials){
+				$scope.invalidErrorMessage="Invalid Username/ Password";
+			}
+			else{
+				$scope.invalidErrorMessage="";
+			}
+			$timeout(function() {
+		         $scope.invalidErrorMessage="";
+		      }, 3000);
+		});
+	}
+	
+	// Calling authenticate function, if user is already logged in and gave the reload command
+	authenticate();
+	
+	$scope.login= function(){
+		authenticate($scope.credential);
+		
+	}
+	
+	
+	
+	// function for logout action
+	$scope.logout = function($route) {
+        $rootScope.type = "logout"; 	
+        $http.post('logout', {}).finally(function() {
+        $rootScope.mainTemplate= true;
+        $location.path("/");
+        	
+        });
+	}
+	
+	 
+	
 	
 });
+
+
+
 

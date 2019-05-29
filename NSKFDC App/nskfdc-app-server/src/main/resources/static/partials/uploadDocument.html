@@ -1,82 +1,99 @@
 <head>
   <link href="css/uploadDocumentCSS.css" type="text/css" rel="stylesheet">
-  
+
 </head>
 <div ng-app="app">
 <div ng-controller="uploadDocumentController">
-  <div id="content" class="container-fluid background">
-    <div id="r1" class="row">
-      <div  class="col-md-10">
-        <h3>Upload Documents</h3>
-      </div>
-      <div id="r1c2" class="col-md-2">
-        <p><a><u id ="upguide">Upload Guidelines</u></a></p>
-      </div>
-    </div>
+
+
+        <h3 id="marginForUpload">Upload Documents</h3>
+      
+  
     <div id="drop" class="row">
-      <div id="r2d" class="col-md-5">
-        <form>
-          <select ng-model="myVar" id="d1" required>
-            <option value=""disabled selected>Select document to be uploaded
-            <option value="oc">Occupation Certificate
-            <option value="msc">Signed Minutes of Selection Committee 
-            <option value="dsnsk">Data Sheet forNSKFDC
-            <option value="dssdms">Data Sheet for SDMS
-            <option value="fbr">Final Batch Report
-            <option value="as">Attendence Sheet
+    <form name="uploadform" id="uploadformid" ng-submit="uploadFile()">
+    <div class="formpadding">
+      <div id="r2d" class="col-md-3">
+        
+          <select  class="form-control form-rounded placeholderfont" ng-model="fileType" id="d1" ng-change="changeTypeOfFile()" required>
+            <option value=""disabled selected>Select document to be uploaded</option>
+            <option value="occupationCertificate">Occupation Certificate</option>
+            <option value="minutesOfSelectionCommitteeMeeting">Signed Minutes of Selection Committee</option> 
+            <option value="NSKFDCSheet">Data Sheet for NSKFDC</option>
+            <option value="SDMSSheet">Data Sheet for SDMS</option>
+            <option value="finalBatchReport">Final Batch Report</option>
+            <option value="attendanceSheet">Attendance Sheet</option>
           </select>
-        </form>
+        
       </div>
-      <div id="r2t1" class="col-md-2">
-        <select ng-click="getBatchId()" ng-model="myVa2r"  class="form-control"  ng-options="x for x in ids" >
-        </select>
+      <div id="r2t1" class="col-md-3 paddingUploadDoc" >
+       <select ng-click="getBatchId()"   ng-model="batchId"  class="form-control form-rounded placeholderfont "  ng-options="x for x in ids" required >
+       <option value=""disabled selected>BatchID</option>
+       </select>
+       
+       
       </div>
-      <div id="r2t2" class="col-md-2" ng-switch="myVar" >
-        <div ng-switch-when="fbr">
-          <input type="text" class="form-control" id="First" placeholder="SCGJ Batch ID" required>
+       <div id="r2t2" class="col-md-2 paddingUploadDoc" ng-switch="fileType" >
+                <div ng-if="fileType === 'finalBatchReport'"  id="general-1" >
+               <div >
+                   <input type="text" ng-model="batch.scgjBatchNumber" class="form-control form-rounded placeholderfont" id="Second" placeholder="SDMS Batch Number" required>
+               </div>
+        
+         
+       
         </div>
       </div>
-      <div id="r2b1" class="col-md-2">
-        <span class="btn btn-default btn-file">Browse<input type="file">
-        </span>
-      </div>
-      <div id="r2b2" class="col-md-1">
-        <button type="submit" class="btn btn-primary btn-upload">Upload</button>
-      </div>
+                <div class="col-md-3 btn-wrapper paddingUploadDoc" id="uploadFileDiv">
+                    <div class="form-group">
+	             		<span class="col-md-7 paddingRightUpload">
+	                  	<input type="text" name="file_name" id="file_name" class="form-control textBoxFile" required></span>
+	                 	<span class="col-md-4 paddingUploadDoc">
+	                	<button type="button" class="btn btn-info " ng-disabled="uploadform.$invalid">Browse</button></span>
+	                 	<input type="file" id="file" accept={{acceptFileType}} class="file"  ng-model=" browse" ng-disabled="uploadform.$invalid" onchange="document.getElementById('file_name').value = this.value.split('\\').pop()" file-model="dataImport.upload" />
+	                    <span ng-show="uploadform.fileName.$touched && uploadform.fileName.$invalid">Please Select a .pdf file</span>
+                    </div>
+                    
+                    
+                    
+                 </div>
+    
+      			<div>
+                    <button type="submit" class="btn-primary btn data-disable" >Upload</button>
+                </div>
+                <div class="col-md-12">
+                <span id="Error"></span>
+                <span id="Success"></span>
+                </div>
+             </div>   
+       </form>
     </div>
-    <!-- <button type="button" ng-click="click()" class="btn btn-primary">Click me</button>  -->
-    <div class="row">
-      <!-- heading -->
-      <div class="col-md-12 paddingrem">
+   
+     <!-- heading --> 
         <h3 id="marginForSearch">Search Documents</h3>
-      </div>
-    </div>
-    <!-- form name -->
-    <form name="searchForDocByTp">
+        
+    <!--  form name-->
+    <form name="searchForDocByTp" ng-submit="submitForm()">
       <div class="row background ">
-        <!-- button & input/dropdown -->
-        <div class="col-md-6 ">
-          <input type="text" class="form-control form-rounded" placeholder="Enter Batch ID" name="batchID" ng-model="batchID">
-          <!--  <span style="color:red" ng-show="searchForDocByTp.formData.batchID.$touched">
-            <span ng-show="searchForDocByTp.batchID.$error.required">Invalid Batch ID.</span>
-            </span> -->
+        <!--button & input/dropdown  -->
+        <div class="col-md-4">
+          <select ng-click="getBatchId()"   ng-model="batchID"  class="form-control form-rounded placeholderfont "  ng-options="x for x in ids" required >
+       <option value=""disabled selected>BatchID</option>
+       </select>
+     
         </div>
-        <div class="col-md-6 ">
-          <button type="submit" class="btn btn-primary btncolor" ng-disabled="searchForDocByTp.$invalid" ng-click="submitForm()">  
+        
+      
+        <div class="col-md-8 searchDocumentTxt">
+          <button type="submit" class="btn btn-info btncolor">  
           Search</button>
+          <span ng-bind="searchdetailError" id="error"></span>
+          <span ng-bind="downloadError" id="error"></span>
         </div>
       </div>
     </form>
-    <div class="r1">
-      <!-- grid via angular --> 
-      <div class="col-sm-12">
-        <div id="t1" class="table1">
-          <div ui-grid="details"  class="grid grid-align grid-small " ui-grid-auto-resize ></div>
-        </div>
+    <div class="details-table">
+      <!-- grid via angular -->
+      
+          <div ui-grid="details"  class="grid grid-align " ui-grid-auto-resize ></div>
       </div>
     </div>
   </div>
-</div>
-</div>
-
-<script type="text/javascript" src="js/controllers/uploadDocumentsControllerJS.js"></script>

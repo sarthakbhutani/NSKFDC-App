@@ -1,10 +1,34 @@
 generateReport:
+
+ showBatchId: >
+   select batchId from batchdetails where userEmail=:userEmail;
+
  showOccupationCertificateReportDetails: >
-  select firstName,lastName,gender,age,firstNameFather,lastNameFather,aadharCardNumber,residentialAddress,workplaceAddress from candidate JOIN batchdetails ON candidate.batchId=batchdetails.batchId where batchdetails.batchId= :batchId and trainingPartnerEmail= :trainingPartnerEmail;
+  select firstName,lastName,gender,age,firstNameFather,lastNameFather,aadharCardNumber,residentialAddress,workplaceAddress 
+   from candidate JOIN batchdetails ON candidate.batchId=batchdetails.batchId where batchdetails.batchId= :batchId and userEmail= :userEmail;
   
  showAttendanceSheetDetails: >  
-  select candidate.batchId, batchStartDate,firstName,lastName,firstNameFather,lastNameFather,mobileNumber FROM candidate JOIN batchdetails ON candidate.batchId=batchdetails.batchId where batchdetails.batchId= :batchId and trainingPartnerEmail= :trainingPartnerEmail; 
- showReport: >
-  select batchId,trainingPartnerEmail from batchdetails where batchdetails.batchId= :batchId and trainingPartnerEmail= :trainingPartnerEmail;
+  select candidate.batchId,batchStartDate,firstName,lastName,firstNameFather,lastNameFather,mobileNumber FROM candidate
+   JOIN batchdetails ON candidate.batchId=batchdetails.batchId where candidate.batchId= :batchId and userEmail= :userEmail;
+ 
+ showNSKFDCExcelSheet: >
+  select c.batchId,firstName,lastName,age,dob,gender,educationLevel,aadharCardNumber,firstNameFather,lastNameFather,motherName,
+   residentialAddress,mobileNumber,occupationType,msId,idProofType,relationWithSKMS,idProofNumber,trainingPartnerName,bankName,ifscCode,accountNumber,municipality,hiredByMc,outsourcedEmployerName,outsourcedEmployerContact,monthlySalary,pfOrEsiProvided
+   from candidate c join batchdetails b on c.batchId=b.batchId join trainingpartnerdetails t on b.userEmail= t.userEmail where b.batchId=:batchId and t.userEmail=:userEmail;
+ 
+ showSDMSExcelSheet: >
+  select t.nsdcRegNumber, b.centreId, c.enrollmentNumber, c.firstName, c.lastName, c.dob,c.firstNameFather,c.lastNameFather,c.guardianType,
+   c.salutation,c.gender,c.state, c.district, c.mobileNumber, c.educationLevel, t.sectorSkillCouncil, t.jobRole, b.batchStartDate, b.batchEndDate, b.assessmentDate, b.employerName,
+    b.employerContactNumber, c.employmentType, c.aadharCardNumber, c.disabilityType  from candidate c INNER JOIN batchdetails b INNER JOIN trainingpartnerdetails t ON  
+    c.batchId=b.batchId and b.batchId= :batchId and t.userEmail= :userEmail and b.userEmail=t.userEmail;
+
+ showMinutesOfSelectionMeetingDetails: >  
+  select selectionCommitteeDate, jobRole,trainingPartnerName,sectorSkillCouncil,centreCity,municipality from trainingpartnerdetails inner join batchdetails on batchdetails.userEmail= trainingpartnerdetails.userEmail where batchdetails.userEmail=:userEmail AND batchdetails.batchId=:batchId;
+ 
+ updateGenerateReportsTable: >
+  replace into generatereports values ( :generateReportsId, :reportType, :generatedOn, :userEmail, :batchId);
   
-    
+ showAuditTableRecords: >
+  select batchId, generatedOn, reportType ,trainingPartnerName from trainingpartnerdetails JOIN generatereports 
+   ON trainingpartnerdetails.userEmail=generatereports.userEmail where generatereports.userEmail= :userEmail;
+  
